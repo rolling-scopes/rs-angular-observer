@@ -161,28 +161,6 @@
   }
   .split-text-left .latin-row { font-size: 1.6em; margin: 1em 0 .4em; }
 
-  /* === rotated photo (file content is sideways; rotate via CSS) === */
-  .photo-rotate-frame {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .photo-rotate-frame img {
-    transform: rotate(-90deg);
-    /* file is portrait 1800x2400, content rotated 90° CW.
-       After CSS rotate(-90deg) the visual is 2400×1800 landscape (upright).
-       Pre-rotation height becomes the visual width — fit it to the slide height. */
-    height: 95%;
-    width: auto;
-    object-fit: contain;
-  }
-
   .latin-row {
     margin: 1.2em 0 .6em;
     font-size: 1.5em; font-weight: 300;
@@ -328,10 +306,10 @@
     </section>
 
     <!-- ====== 8b · firmitas · utilitas · venustas + Arena ====== -->
-    <section data-background-color="#000">
-      <div class="photo-rotate-frame">
-        <img src="images/arena-nimes.jpg" alt="Arena de Nîmes">
-      </div>
+    <section data-background-image="images/arena-nimes.jpg"
+             data-background-size="48% auto"
+             data-background-position="right center"
+             data-background-color="#000">
       <div class="split-text-left">
         <p class="tiny">From De Architectura</p>
         <div class="latin-row">
