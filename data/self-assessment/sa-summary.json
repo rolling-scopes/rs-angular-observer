@@ -1,0 +1,7201 @@
+{
+  "analysisDate": "2026-04-22T09:58:25.012Z",
+  "members": [
+    {
+      "github": "angelinavakkasova",
+      "teamName": "111 Blind Kittens",
+      "claimedTotal": 190,
+      "confirmedCount": 3,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Practice System",
+        "Settings System"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "meta-framework",
+          "label": "Meta-Framework (Next/Nuxt/Analog)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "bukt0r",
+      "teamName": "404 Skill Not Found",
+      "claimedTotal": 165,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "useCountdown — кастомный хук таймера обратного отсчёта",
+        "useSpeech — хук озвучивания текста голосом"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Bulbashok",
+      "teamName": "asyncmind",
+      "claimedTotal": 115,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Quiz Widget",
+        "Login & Register Pages"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "JesterAV",
+      "teamName": "asyncmind",
+      "claimedTotal": 140,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Async Sorter",
+        "Widget Render"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "NickKool",
+      "teamName": "asyncmind",
+      "claimedTotal": 165,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Landing Page",
+        "Library Page"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Al-E-xXx",
+      "teamName": "Auto-Team 3",
+      "claimedTotal": 110,
+      "confirmedCount": 0,
+      "contradictedCount": 3,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Собственный сервис регистрации/авторизации",
+        "Страница профиля пользователя"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "ArtemovEgor",
+      "teamName": "Auto-Team 3",
+      "claimedTotal": 210,
+      "confirmedCount": 1,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "AI Chat UI & LLM Logic (Complex Component)",
+        "AI Backend Service & Infrastructure (Custom Backend + Docker)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "EkaterynaVolkova",
+      "teamName": "Auto-Team 3",
+      "claimedTotal": 140,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Widget Engine",
+        "Dashboard — SkillMastery"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "AzizShik",
+      "teamName": "Auto-Team 4",
+      "claimedTotal": 75,
+      "confirmedCount": 0,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "AI Team Lead Chat (Probation Gameplay Screen)",
+        "ResultDialogWidget (Smart Dialog)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "isaluk",
+      "teamName": "Auto-Team 4",
+      "claimedTotal": 125,
+      "confirmedCount": 0,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Custom State Manager & Routing System",
+        "Core Game Loop & EventBus"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "afedziukovich",
+      "teamName": "Auto-Team 5",
+      "claimedTotal": 155,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Выпадающее меню пользователя в AppHeader",
+        "Users table (Таблица лидеров)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Thrapis",
+      "teamName": "Auto-Team 5",
+      "claimedTotal": 190,
+      "confirmedCount": 6,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Task Solution Space",
+        "Solution Judgment and Evaluation System"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "meta-framework",
+          "label": "Meta-Framework (Next/Nuxt/Analog)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "dariapusovskaya",
+      "teamName": "Auto-Team 7",
+      "claimedTotal": 65,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "login page",
+        "statistics page"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "NataliItaly",
+      "teamName": "Auto-Team 7",
+      "claimedTotal": 145,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Router",
+        "Dashboard and filters form"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Ch-alexandra",
+      "teamName": "Auto-Team 9",
+      "claimedTotal": 135,
+      "confirmedCount": 1,
+      "contradictedCount": 4,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Widget Engine (QuestionModal)",
+        "Rich UI Screen (Clans Page)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Orgris",
+      "teamName": "Auto-Team 9",
+      "claimedTotal": 130,
+      "confirmedCount": 0,
+      "contradictedCount": 4,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Auth Page (Complex Component)",
+        "Main Screen (Rich UI Screen)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "DmitryAstapenko",
+      "teamName": "CodePain",
+      "claimedTotal": 200,
+      "confirmedCount": 8,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Страница профиля пользователя",
+        "Система обучения на главной странице"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "GorodeN",
+      "teamName": "CodePain",
+      "claimedTotal": 225,
+      "confirmedCount": 9,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Auth UI + валидация + PrivateRoute",
+        "AuthStore + backend auth flow"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "kupzov2000",
+      "teamName": "Dev Journey",
+      "claimedTotal": 145,
+      "confirmedCount": 0,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Test Overview",
+        "Test Run Page"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "lertti",
+      "teamName": "Dev Journey",
+      "claimedTotal": 200,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Async Sorter (Event Loop Engine)",
+        "Dashboard (D3.js Statistics)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "sabinabatrakova",
+      "teamName": "Dev Journey",
+      "claimedTotal": 140,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Authentication flow (Supabase) + Router",
+        "True/False widget"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Webis-2022",
+      "teamName": "DevBand",
+      "claimedTotal": 185,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Results page",
+        "Hints"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Andrey-Yurchuk",
+      "teamName": "DevCraft",
+      "claimedTotal": 250,
+      "confirmedCount": 3,
+      "contradictedCount": 6,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Пайплайн Discord-ассистента",
+        "MCP-сервер и база знаний для Dify Tools"
+      ],
+      "features": [
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 90,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-rag",
+          "label": "AI RAG",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-tool-use",
+          "label": "Tool Use / Function Calling",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Maria2721",
+      "teamName": "DevCraft",
+      "claimedTotal": 230,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Registration/Login Forms",
+        "Theoretical question"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 150,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "bariydev",
+      "teamName": "Devtones",
+      "claimedTotal": 190,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "LeaderboardView.vue — Таблица лидеров",
+        "QuizSummaryCard.vue — Экран итогов квиза"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 125,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "konfuzz",
+      "teamName": "Devtones",
+      "claimedTotal": 250,
+      "confirmedCount": 5,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Виджет «AI-интервьюер»",
+        "Алгоритм взвешенного случайного выбора (Backend)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 120,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "confirmed"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-tool-use",
+          "label": "Tool Use / Function Calling",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "anelka777",
+      "teamName": "Gang of Four",
+      "claimedTotal": 105,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Meaning Matcher Widget",
+        "Dashboard Page"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "nginit",
+      "teamName": "Gang of Four",
+      "claimedTotal": 220,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Widget Quiz",
+        "Widget Bug Hunter"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "NotDmitry",
+      "teamName": "Gang of Four",
+      "claimedTotal": 85,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Library with WidgetRenderer",
+        "BaaS Auth (Firebase)"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "swetlanaang",
+      "teamName": "Gang of Four",
+      "claimedTotal": 135,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Login page",
+        "Async Sorter Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "rika-milew",
+      "teamName": "GrowLab",
+      "claimedTotal": 150,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Widget Engine",
+        "Quiz Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "dukhd",
+      "teamName": "JSGods",
+      "claimedTotal": 250,
+      "confirmedCount": 2,
+      "contradictedCount": 4,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Smart UI Kit Engine",
+        "Adaptive Navigation System"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "elrouss",
+      "teamName": "JSGods",
+      "claimedTotal": 250,
+      "confirmedCount": 2,
+      "contradictedCount": 5,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Quiz module",
+        "Challenges Code Editor / Sandbox Runner"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "mikhalenkadaniil",
+      "teamName": "JSGods",
+      "claimedTotal": 250,
+      "confirmedCount": 1,
+      "contradictedCount": 5,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "AI Chat (Backend + Frontend)",
+        "AI Settings (Backend + Frontend)"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-local-llm",
+          "label": "Local LLM",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "nck1969",
+      "teamName": "JSGods",
+      "claimedTotal": 135,
+      "confirmedCount": 3,
+      "contradictedCount": 3,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Authentication Pages (Sign-In / Sign-Up)",
+        "Internationalization (i18n) с Transloco"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "Pchyolan",
+      "teamName": "JustBuildIt",
+      "claimedTotal": 50,
+      "confirmedCount": 0,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Quiz Widget",
+        "True / False Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "thefoxtale",
+      "teamName": "JustBuildIt",
+      "claimedTotal": 200,
+      "confirmedCount": 3,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Memory Game (Сборщик мусора)",
+        "TicketPageController (Билетная система)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "bssier",
+      "teamName": "Legendary frontend developers",
+      "claimedTotal": 135,
+      "confirmedCount": 3,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Страница статистики для пользователя",
+        "Страница статистики для администратора"
+      ],
+      "features": [
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "MegaRostBLR1",
+      "teamName": "Legendary frontend developers",
+      "claimedTotal": 170,
+      "confirmedCount": 3,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Создаём услуги с AI",
+        "Сервисы"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Morevna",
+      "teamName": "Legendary frontend developers",
+      "claimedTotal": 185,
+      "confirmedCount": 5,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Admin User Control & Role Management",
+        "Order Lifecycle"
+      ],
+      "features": [
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "Alena1409",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 250,
+      "confirmedCount": 6,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Login Page + Auth Flow",
+        "Merge Game"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "AlexGorSer",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 250,
+      "confirmedCount": 8,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Custom Auth Module (JWT + OAuth)",
+        "Key-Storage Module"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 150,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "kozochkina82",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 175,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Main Page",
+        "Hangman Game"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Oksi2510",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 155,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Игра Word Chain (Cities Game)",
+        "Страница регистрации"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "pavelkuvsh1noff",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 250,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Header + I18N + Theme Switcher",
+        "Decrypto game"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 125,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "WhaleisaJoy",
+      "teamName": "ngKittyDebug",
+      "claimedTotal": 250,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "User Profile",
+        "Event Loop Game"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 125,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "mvavilin",
+      "teamName": "Nova",
+      "claimedTotal": 205,
+      "confirmedCount": 1,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "RouterAPI",
+        "SocketClient / BaseSocketClient"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Peccopa",
+      "teamName": "Nova",
+      "claimedTotal": 180,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "ComponentsAPI",
+        "StateAPI"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Walle908",
+      "teamName": "Nova",
+      "claimedTotal": 135,
+      "confirmedCount": 1,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "BaseForm",
+        "InputForm"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "oreopk",
+      "teamName": "Outstanding Alex And Smeshariki",
+      "claimedTotal": 125,
+      "confirmedCount": 2,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "A page for writing solution task",
+        "Backend"
+      ],
+      "features": [
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "S-Arashu",
+      "teamName": "Outstanding Alex And Smeshariki",
+      "claimedTotal": 180,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Auth Module (Firebase Auth + Google OAuth)",
+        "AI Chat Interface"
+      ],
+      "features": [
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-local-llm",
+          "label": "Local LLM",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "AlexeyDmt",
+      "teamName": "RainbowUnicorn",
+      "claimedTotal": 70,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Validation + AppError",
+        "Single Choice Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Artem-WebDeveloper",
+      "teamName": "RainbowUnicorn",
+      "claimedTotal": 135,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Страница /Library (Rich UI Screen)",
+        "Виджет True/False (Complex Component)"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "exppx",
+      "teamName": "RainbowUnicorn",
+      "claimedTotal": 130,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Code Completion Widget",
+        "Async Sorter Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Igel-k",
+      "teamName": "RainbowUnicorn",
+      "claimedTotal": 165,
+      "confirmedCount": 2,
+      "contradictedCount": 3,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Сложный бэкенд-сервис: Пользователи и их регистрация и авторизация",
+        "Сложный бэкенд-сервис: Модели квизов и их представления"
+      ],
+      "features": [
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "mightyprinces",
+      "teamName": "RainbowUnicorn",
+      "claimedTotal": 95,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Code Ordering Widget",
+        "Страница Results"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "27moon",
+      "teamName": "RSSAgents",
+      "claimedTotal": 90,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Widget \"This\" Quiz",
+        "Global i18n & Theme System"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "D15ND",
+      "teamName": "RSSAgents",
+      "claimedTotal": 135,
+      "confirmedCount": 6,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Stack Widget (Complex Component)",
+        "Code Editor (Monaco)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Fayzullo05",
+      "teamName": "RSSAgents",
+      "claimedTotal": 110,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Fill Blanks Widget",
+        "Auth Flow (Login + Register)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "oneilcode",
+      "teamName": "RSSAgents",
+      "claimedTotal": 150,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Console Widget",
+        "Point System (Балльная система)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "solarsungai",
+      "teamName": "RSSAgents",
+      "claimedTotal": 250,
+      "confirmedCount": 6,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "AI Agent - Chat UI + Interview Logic",
+        "Supabase - полная интеграция с базой данных"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "AnnaDzig",
+      "teamName": "SAA Cat",
+      "claimedTotal": 240,
+      "confirmedCount": 5,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Lessons Flow (LessonsPage + LessonPage)",
+        "Quiz System (QuizPage + Firebase integration)"
+      ],
+      "features": [
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "dzzuze",
+      "teamName": "SAA Cat",
+      "claimedTotal": 125,
+      "confirmedCount": 5,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Header",
+        "LoginPage + RegisterPage"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "sidoryakasergey",
+      "teamName": "SAA Cat",
+      "claimedTotal": 165,
+      "confirmedCount": 5,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Markdown Renderer + Topic Page",
+        "Auth + Profile + Firestore Integration"
+      ],
+      "features": [
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "anastan588",
+      "teamName": "SkillsZen team",
+      "claimedTotal": 245,
+      "confirmedCount": 3,
+      "contradictedCount": 4,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Система аутентификации и управления доступом (Auth/Login)",
+        "Модуль управления профилем и персональными данными (Profile User Data Page)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "chebupell",
+      "teamName": "SkillsZen team",
+      "claimedTotal": 65,
+      "confirmedCount": 2,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Dashboard",
+        "Library"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "t-gladkaya",
+      "teamName": "SkillsZen team",
+      "claimedTotal": 120,
+      "confirmedCount": 1,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "CoursePage",
+        "TsCardsPage"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "coicoin",
+      "teamName": "Strict Mode",
+      "claimedTotal": 175,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Quiz Widget Page",
+        "TrueFalse Widget Page"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "dilmun1101",
+      "teamName": "Strict Mode",
+      "claimedTotal": 130,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Страница регистрации",
+        "Output Predictor"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "FierceSloth",
+      "teamName": "Strict Mode",
+      "claimedTotal": 185,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Roadmap",
+        "CodeArena + ExecutionController"
+      ],
+      "features": [
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "artkoro94",
+      "teamName": "Team42",
+      "claimedTotal": 100,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Login Page (Аутентификация)",
+        "History Page"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "kanoplich",
+      "teamName": "Team42",
+      "claimedTotal": 160,
+      "confirmedCount": 5,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Полноценная интеграция Supabase (BaaS слой)",
+        "Страница тренировки интервью"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "rockabil",
+      "teamName": "Team42",
+      "claimedTotal": 65,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Разработка Protected Router",
+        "Разработка страницы Topics (тем)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "sevasmith",
+      "teamName": "Team42",
+      "claimedTotal": 180,
+      "confirmedCount": 4,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "AI Edge Function (judge)",
+        "Dashboard"
+      ],
+      "features": [
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-tool-use",
+          "label": "Tool Use / Function Calling",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "docker",
+          "label": "Docker",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "prompt-engineering",
+          "label": "Prompt Engineering",
+          "points": 15,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "sunyuna00",
+      "teamName": "Team42",
+      "claimedTotal": 145,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Landing Page с интерактивными секциями",
+        "Профиль пользователя с прогрессом и достижениями"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "vadim-troian",
+      "teamName": "Team42",
+      "claimedTotal": 90,
+      "confirmedCount": 3,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Модуль аутентификации (Registration & Password Recovery)",
+        "Система переключения тем (Dark/Light Mode)"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "hamsterk",
+      "teamName": "Tuple Trouble",
+      "claimedTotal": 120,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Flip Card Component",
+        "BigO Component"
+      ],
+      "features": [
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "canvas-2d",
+          "label": "Canvas 2D",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "meta-framework",
+          "label": "Meta-Framework (Next/Nuxt/Analog)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "mero93",
+      "teamName": "Tuple Trouble",
+      "claimedTotal": 250,
+      "confirmedCount": 6,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Authorization Page",
+        "Admin Panel"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 75,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "meta-framework",
+          "label": "Meta-Framework (Next/Nuxt/Analog)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "tosigaeva",
+      "teamName": "Tuple Trouble",
+      "claimedTotal": 250,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Widget Engine",
+        "Code Ordering Widget"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 225,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "meta-framework",
+          "label": "Meta-Framework (Next/Nuxt/Analog)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "JasonScriptLord",
+      "teamName": "Typocalypse",
+      "claimedTotal": 160,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Profile",
+        "Progress"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "romanplis",
+      "teamName": "Typocalypse",
+      "claimedTotal": 85,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Layout",
+        "Модальное окно AI чата"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "yermekyerden",
+      "teamName": "Typocalypse",
+      "claimedTotal": 165,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Contextual Assistant Chat UI",
+        "Context-aware Assistant Backend / AI Context Manager"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "architect",
+          "label": "Architect (ADR)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "YessetHumanMan",
+      "teamName": "Typocalypse",
+      "claimedTotal": 125,
+      "confirmedCount": 3,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Code Runner",
+        "Leaderboard"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "karinavd",
+      "teamName": "Unexpected Case",
+      "claimedTotal": 70,
+      "confirmedCount": 1,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Login & Registration (with validation)",
+        "Interactive Dashboard and Card System"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "maksimdolgonosov",
+      "teamName": "VueJS Tandem",
+      "claimedTotal": 165,
+      "confirmedCount": 6,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Цех (Workshop Quiz Component — тест, кодинг, открытый ответ с AI-проверкой)",
+        "Online Mini-Game (мультиплеерная викторина по веб-разработке на WebSocket/socket.io)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "confirmed"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "rich-text-editor",
+          "label": "Rich Text Editor",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "obemgcabazn",
+      "teamName": "VueJS Tandem",
+      "claimedTotal": 110,
+      "confirmedCount": 3,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "ProfileView (Rich UI Screen)",
+        "Система авторизации (Custom Auth + API Layer)"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "vue",
+          "label": "Vue",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "anastasiashlyk",
+      "teamName": "Алекс и его друзья",
+      "claimedTotal": 225,
+      "confirmedCount": 0,
+      "contradictedCount": 4,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "AI-интервьюер (Chat UI + Backend)",
+        "Code Completion Game (Widget)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "realtime",
+          "label": "Real-time (WebSocket/SSE)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "ai-chat-ui",
+          "label": "AI Chat UI",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-streaming",
+          "label": "AI Streaming",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "ai-raw-llm",
+          "label": "Raw LLM API",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "a11y",
+          "label": "Accessibility (a11y)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "imagineapril",
+      "teamName": "Алекс и его друзья",
+      "claimedTotal": 200,
+      "confirmedCount": 0,
+      "contradictedCount": 2,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Страница глобальной статистики (/statistic)",
+        "Авторизация и регистрация"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 140,
+          "status": "unverifiable"
+        },
+        {
+          "id": "advanced-animations",
+          "label": "Advanced Animations",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "nasteew",
+      "teamName": "Алекс и его друзья",
+      "claimedTotal": 250,
+      "confirmedCount": 1,
+      "contradictedCount": 7,
+      "verdict": "red",
+      "twoPersonalComponents": [
+        "Custom Auth (Backend)",
+        "Profile Page (Backend + Frontend)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 90,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-auth",
+          "label": "Custom Auth (JWT)",
+          "points": 20,
+          "status": "contradicted"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "contradicted"
+        },
+        {
+          "id": "custom-backend",
+          "label": "Custom Backend",
+          "points": 30,
+          "status": "contradicted"
+        },
+        {
+          "id": "backend-framework",
+          "label": "Backend Framework",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "api-docs",
+          "label": "API Documentation (Swagger)",
+          "points": 5,
+          "status": "contradicted"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "contradicted"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "dromari",
+      "teamName": "Джунгли зовут!",
+      "claimedTotal": 210,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Toast Notification System",
+        "Profile Module"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 160,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "KarpovDmitriy",
+      "teamName": "Джунгли зовут!",
+      "claimedTotal": 240,
+      "confirmedCount": 7,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Widget Engine (+ Quiz Widget, Code Ordering Widget)",
+        "API Service Layer (Auth + Profile + Dashboard)"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 25,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 80,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "audio-api",
+          "label": "Audio API",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "theme-switcher",
+          "label": "Theme Switcher",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "e2e-tests",
+          "label": "E2E Tests",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "state-manager",
+          "label": "State Manager",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "points": 5,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "aliakseidrob",
+      "teamName": "Дрим Тим",
+      "claimedTotal": 160,
+      "confirmedCount": 4,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Code Golf",
+        "Sandbox"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "backend-service",
+          "label": "Backend Service",
+          "points": 30,
+          "status": "unverifiable"
+        },
+        {
+          "id": "baas-crud",
+          "label": "BaaS CRUD",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "code-editor",
+          "label": "Code Editor",
+          "points": 15,
+          "status": "confirmed"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "shoblinsky",
+      "teamName": "Дрим Тим",
+      "claimedTotal": 100,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "type-investigator",
+        "reverse-code-review"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "i18n",
+          "label": "i18n (Localization)",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "angular",
+          "label": "Angular",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "amelur",
+      "teamName": "Т-8",
+      "claimedTotal": 15,
+      "confirmedCount": 0,
+      "contradictedCount": 1,
+      "verdict": "yellow",
+      "twoPersonalComponents": [
+        "Страница авторизации (Login Page, Register Page, Forgot Password, Update Password)",
+        "Механизм управления состоянием пользователя через Supabase"
+      ],
+      "features": [
+        {
+          "id": "baas-auth",
+          "label": "BaaS Auth (Firebase/Supabase)",
+          "points": 15,
+          "status": "contradicted"
+        }
+      ]
+    },
+    {
+      "github": "Atikin132",
+      "teamName": "Т-8",
+      "claimedTotal": 175,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Dashboard",
+        "Widget Engine"
+      ],
+      "features": [
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 100,
+          "status": "unverifiable"
+        },
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 20,
+          "status": "unverifiable"
+        },
+        {
+          "id": "drag-and-drop",
+          "label": "Drag & Drop",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "unit-tests-full",
+          "label": "Unit Tests (50%+)",
+          "points": 10,
+          "status": "confirmed"
+        },
+        {
+          "id": "design-patterns",
+          "label": "Design Patterns",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        }
+      ]
+    },
+    {
+      "github": "Nastya-Student",
+      "teamName": "Т-8",
+      "claimedTotal": 95,
+      "confirmedCount": 2,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "Страница профиля",
+        "Страница результатов"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 60,
+          "status": "unverifiable"
+        },
+        {
+          "id": "leaderboard",
+          "label": "Leaderboard",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "auto-deploy",
+          "label": "Auto-deploy",
+          "points": 5,
+          "status": "confirmed"
+        },
+        {
+          "id": "api-layer",
+          "label": "API Layer",
+          "points": 10,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "github": "Ulya10",
+      "teamName": "Т-8",
+      "claimedTotal": 105,
+      "confirmedCount": 1,
+      "contradictedCount": 0,
+      "verdict": "green",
+      "twoPersonalComponents": [
+        "True/False Widget",
+        "Code Completion Widget"
+      ],
+      "features": [
+        {
+          "id": "rich-ui-screen",
+          "label": "Rich UI Screen",
+          "points": 40,
+          "status": "unverifiable"
+        },
+        {
+          "id": "complex-component",
+          "label": "Complex Component",
+          "points": 50,
+          "status": "unverifiable"
+        },
+        {
+          "id": "responsive",
+          "label": "Responsive Design",
+          "points": 5,
+          "status": "unverifiable"
+        },
+        {
+          "id": "unit-tests-basic",
+          "label": "Unit Tests (20%+)",
+          "points": 10,
+          "status": "confirmed"
+        }
+      ]
+    }
+  ]
+}

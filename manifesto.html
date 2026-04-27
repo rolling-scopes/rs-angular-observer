@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>В дефиците — не код · RS School 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f7f1e8;
+  --bg-warm: #efe8dc;
+  --bg-dark: #1a1410;
+  --text: #1a1410;
+  --text-light: #5c4f43;
+  --text-faint: #8a7d70;
+  --accent: #7a1830;
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+body { overflow-x: hidden; }
+
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); width: 0%; z-index: 100; transition: width .15s ease-out; }
+
+.r { opacity: 0; transform: translateY(20px); transition: opacity .9s ease-out, transform .9s ease-out; }
+.r.v { opacity: 1; transform: translateY(0); }
+.r.d1 { transition-delay: .15s; }
+.r.d2 { transition-delay: .3s; }
+.r.d3 { transition-delay: .45s; }
+.r-slow { opacity: 0; transition: opacity 2.5s ease-out; }
+.r-slow.v { opacity: 1; }
+
+.page { max-width: 640px; margin: 0 auto; padding: 0 28px; }
+
+/* === HERO (dark) === */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 80px 28px; position: relative;
+  background: var(--bg-dark); overflow: hidden;
+}
+.scroll-hint {
+  margin-top: 64px; font-size: 11px; color: rgba(255,255,255,.25);
+  letter-spacing: .2em; text-transform: uppercase;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity:.3 } 50% { opacity:.8 } }
+
+.anchor-quote {
+  font-family: var(--serif); font-size: clamp(24px, 4vw, 32px);
+  font-style: italic; font-weight: 300; color: rgba(255,255,255,.85);
+  line-height: 1.45; max-width: 560px;
+}
+.anchor-cite {
+  font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,.4);
+  margin-top: 28px; letter-spacing: .05em;
+}
+.anchor-cite a { color: rgba(255,255,255,.5); text-decoration: underline; text-underline-offset: 3px; }
+
+/* === Section divider === */
+.section-divider {
+  background: var(--bg-dark);
+  margin: 64px calc(-50vw + 50%) 48px;
+  width: 100vw;
+  padding: 64px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.section-epigraph {
+  font-family: var(--sans); font-size: 15px; font-style: italic;
+  color: rgba(255,255,255,.5); letter-spacing: .03em;
+  max-width: 460px; margin: 0 auto; line-height: 1.8;
+}
+.section-label {
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  color: var(--accent); letter-spacing: .3em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+/* === Body === */
+.lede {
+  font-family: var(--serif); font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 400; color: var(--text); line-height: 1.5;
+  margin: 40px 0 24px;
+}
+.lede em { color: var(--accent); font-style: italic; }
+
+.body-text {
+  font-size: 16px; color: var(--text-light); line-height: 1.9;
+  margin-bottom: 24px;
+}
+.body-text strong { color: var(--text); font-weight: 600; }
+.body-text em { color: var(--accent); font-style: italic; }
+.body-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.pull {
+  font-family: var(--serif); font-size: clamp(22px, 3vw, 28px);
+  font-style: italic; color: var(--text); line-height: 1.5;
+  padding: 24px 0 24px 28px;
+  border-left: 3px solid var(--accent);
+  margin: 40px 0;
+}
+
+/* === Practitioner card === */
+.practitioner {
+  margin: 40px 0; padding: 28px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.practitioner:last-of-type { border-bottom: 1px solid rgba(0,0,0,.08); }
+.practitioner-name {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  color: var(--text); margin-bottom: 6px;
+}
+.practitioner-role {
+  font-size: 12px; color: var(--accent); letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.practitioner-text {
+  font-size: 16px; color: var(--text-light); line-height: 1.9;
+}
+.practitioner-text strong { color: var(--text); font-weight: 600; }
+.practitioner-text em { color: var(--accent); font-style: italic; }
+.practitioner-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* === Closing === */
+.closing {
+  min-height: 90vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 80px 28px;
+  background: var(--bg-dark); position: relative; overflow: hidden;
+}
+.closing-lede {
+  font-family: var(--serif); font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 300; color: rgba(255,255,255,.7);
+  line-height: 1.6; max-width: 460px;
+}
+.closing-punchline {
+  font-family: var(--serif); font-size: clamp(28px, 5vw, 40px);
+  font-weight: 600; color: rgba(255,255,255,.95);
+  margin-top: 48px; max-width: 540px; line-height: 1.4;
+  font-style: italic;
+}
+.closing-coda {
+  font-family: var(--sans); font-size: 15px;
+  color: rgba(255,255,255,.45); margin-top: 40px; line-height: 1.8;
+  max-width: 380px;
+}
+
+/* === Footer === */
+.footer {
+  text-align: center; padding: 40px 28px 80px;
+  font-size: 13px; color: rgba(255,255,255,.25);
+  background: var(--bg-dark);
+}
+.footer a { color: rgba(255,255,255,.25); text-decoration: none; margin: 0 8px; }
+.footer a:hover { color: rgba(255,255,255,.5); }
+
+@media (max-width: 600px) {
+  .hero::before, .hero::after { width: 40px; }
+  .pull { font-size: 20px; padding-left: 20px; }
+  .practitioner-name { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ===== COVER ===== -->
+<section class="hero" style="min-height: 100vh;">
+  <div class="r" style="font-family: var(--serif); font-size: 14px; font-weight: 400; color: rgba(255,255,255,.45); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 36px;">
+    RS School · 2026
+  </div>
+  <div class="r d1" style="font-family: var(--serif); font-size: clamp(48px, 10vw, 88px); font-weight: 300; color: rgba(255,255,255,.9); line-height: 1.1; letter-spacing: -1.5px;">
+    В дефиците —<br>не код.
+  </div>
+  <div class="r d2" style="font-family: var(--serif); font-size: 20px; font-style: italic; color: rgba(255,255,255,.45); margin-top: 32px; max-width: 520px; line-height: 1.7;">
+    Раньше код был дефицитом.<br>
+    Сейчас — нет.<br>
+    В дефиците осталось то, что в дефиците всегда:<br>
+    <span style="color: rgba(255,255,255,.75);">люди, которые умеют думать инженерно.</span>
+  </div>
+  <div class="scroll-hint r d3">↓ scroll</div>
+</section>
+
+<!-- ===== JOBS FRAME ===== -->
+<section class="hero" style="min-height: auto; padding: 140px 28px;">
+  <div class="r" style="font-size: 13px; color: rgba(255,255,255,.35); max-width: 480px; margin-bottom: 48px; line-height: 1.9; letter-spacing: .04em;">
+    Прежде чем мы расскажем, что школа делает в 2026 году, — одна мысль.
+  </div>
+
+  <div class="anchor-quote r d1">
+    «Всё, что вы зовёте жизнью вокруг,<br>
+    придумали люди — не умнее вас.<br>
+    Вы можете это менять. Можете строить своё.»
+  </div>
+  <div class="anchor-cite r d2">
+    — Стив Джобс, 1995
+  </div>
+  <div class="r d3" style="font-size: 14px; font-style: italic; color: rgba(255,255,255,.4); margin-top: 56px; max-width: 460px; line-height: 1.8;">
+    Дальше — про двенадцать таких людей.<br>
+    Шесть учителей. Шесть инженеров.<br>
+    На их плечах стоит то, что мы здесь делаем.
+  </div>
+  <div class="scroll-hint r d3">↓</div>
+</section>
+
+<!-- ===== I. TEACHERS · DIVIDER ===== -->
+<div class="section-divider r">
+  <div class="section-label">Часть I</div>
+  <div class="section-epigraph">Сначала — учителя. На которых стоит школа.</div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="lede">
+  В образовании есть имена, которые любая хорошая школа узнаёт сама. Не потому что их «положено знать» — а потому что без них школа повторяет ошибки <em>столетней давности</em>.
+</div>
+<div class="body-text">
+  Шесть имён ниже — это люди, у которых мы что-то взяли. Каждый решал свою конкретную задачу: где не хватало уважения, где не хватало среды, где не хватало голоса ученика. И каждый <strong>что-то сделал</strong> — школу, метод, движение, книгу, — а не только сформулировал.
+</div>
+</div>
+
+<!-- TEACHER 1: Korczak -->
+<div class="practitioner r">
+  <div class="practitioner-name">Януш Корчак</div>
+  <div class="practitioner-role">Варшава · 1912–1942 · врач, педагог</div>
+  <div class="practitioner-text">
+    Тридцать лет вёл сиротский дом в Варшаве. Когда нацисты пришли за двумястами его еврейскими детьми, он отказался от предложений спасти лично себя — и пошёл с ними в Треблинку, в газовую камеру. Принцип, который он повторял: <strong>уважение к ребёнку — не награда за хорошее поведение, а базовое условие</strong>. Даже когда ставишь ноль. Даже когда сердишься. Уважение либо есть, либо нет; половины не бывает.<br><br>
+    Мы взяли это так: команда, которая буксует, — заслуживает того же тона, что команда, которая летит. Никогда — с презрением. <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%80%D1%87%D0%B0%D0%BA,_%D0%AF%D0%BD%D1%83%D1%88" target="_blank" rel="noopener">О Корчаке</a>.
+  </div>
+</div>
+
+<!-- TEACHER 2: Montessori -->
+<div class="practitioner r">
+  <div class="practitioner-name">Мария Монтессори</div>
+  <div class="practitioner-role">Рим · 1907 · одна из первых женщин-врачей Италии</div>
+  <div class="practitioner-text">
+    В 1907-м открыла Casa dei Bambini в рабочем районе Рима — школу для детей трущоб, которым никто не давал шанса. Сделала простую вещь: убрала учительскую кафедру, поставила столы и шкафы по росту детей, разложила <strong>материалы, с которыми ребёнок может работать сам</strong>. Учитель — не источник знания, а конструктор среды. Дети, которых считали безнадёжными, начали читать и считать раньше своих сверстников из обычных школ.<br><br>
+    Мы взяли это так: хорошая среда сильнее любой лекции. Дашборд, проекты, peer review, ритуалы — это и есть среда, которая делает половину работы. <a href="https://en.wikipedia.org/wiki/Maria_Montessori" target="_blank" rel="noopener">О Монтессори</a>.
+  </div>
+</div>
+
+<!-- TEACHER 3: Dewey -->
+<div class="practitioner r">
+  <div class="practitioner-name">Джон Дьюи</div>
+  <div class="practitioner-role">Чикаго · 1896 · философ, основатель Lab School</div>
+  <div class="practitioner-text">
+    Открыл при Чикагском университете <strong>Lab School</strong> — лабораторную школу, где можно было проверить идею: дети учатся не из учебника, а через совместное действие. Дети там не «проходили предметы» — они вместе готовили еду (математика появлялась естественно), строили бумажные модели (геометрия — тоже). Из его наблюдений выросла целая ветвь education-исследований XX века.<br><br>
+    Мы взяли это так: командный проект — это не «дополнительная активность к лекциям», это <em>и есть</em> образование. Конфликт в команде — не помеха обучению, а часть обучения. <a href="https://en.wikipedia.org/wiki/John_Dewey" target="_blank" rel="noopener">О Дьюи</a>.
+  </div>
+</div>
+
+<!-- TEACHER 4: Freire -->
+<div class="practitioner r">
+  <div class="practitioner-name">Паулу Фрейре</div>
+  <div class="practitioner-role">Бразилия · 1960-е · философ образования</div>
+  <div class="practitioner-text">
+    Учил неграмотных бразильских крестьян читать — и ставил рекорды: люди овладевали грамотой за <strong>сорок пять дней</strong>. Не потому что у него был секретный метод. Потому что он начинал с разговора об их жизни — об урожае, бедности, отношениях с землевладельцем — и из этих разговоров вырастали слова, которые человек хотел научиться читать. В книге «Pedagogy of the Oppressed» (1968) он сформулировал: студент — не пустой сосуд, который преподаватель наполняет. Студент — собеседник, и образование — это диалог.<br><br>
+    Мы взяли это так: дневник студента, его голос — не дополнение, а основа. Кто рассказал — того видно. Кто молчит — невидим, потому что без голоса нечего наблюдать, не из злобы и не как наказание. <a href="https://en.wikipedia.org/wiki/Paulo_Freire" target="_blank" rel="noopener">О Фрейре</a>.
+  </div>
+</div>
+
+<!-- TEACHER 5: Hahn -->
+<div class="practitioner r">
+  <div class="practitioner-name">Курт Хан</div>
+  <div class="practitioner-role">Германия / Шотландия · 1941 · основатель Outward Bound</div>
+  <div class="practitioner-text">
+    Немецкий педагог, бежавший от нацистов в Британию. Основал в 1941-м <strong>Outward Bound</strong> — программу, где подростков выводили в горы и в море, давали реальные физические трудности и учили их с этими трудностями работать. Не наказание, не армейская муштра — среда, в которой характер формируется быстрее, чем в классе. Из его школ вышли тысячи людей; модель Outward Bound сейчас работает в 35 странах.<br><br>
+    Мы взяли это так: дедлайны, чекпоинты, защиты, публичный дашборд — это <em>трудность</em>, а не наказание. Через трудность — рост. <a href="https://en.wikipedia.org/wiki/Kurt_Hahn" target="_blank" rel="noopener">О Хане</a>.
+  </div>
+</div>
+
+<!-- TEACHER 6: Papert -->
+<div class="practitioner r">
+  <div class="practitioner-name">Сеймур Пейперт</div>
+  <div class="practitioner-role">MIT · 1980 · ученик Пиаже, основатель Media Lab</div>
+  <div class="practitioner-text">
+    В MIT построил среду, где дети учили математику не из учебника, а программируя черепашку на языке <strong>Logo</strong> — рисуя ей на экране круги, дома, фракталы. Из его лаборатории выросли LEGO Mindstorms (LEGO выкупила название его книги «Mindstorms», 1980) и Scratch, на котором сегодня учатся миллионы детей. Главная мысль Пейперта: <em>«мы не учим французскому, заставляя зубрить грамматику в шестом классе, — мы даём поехать во Францию. А математику мы преподаём по модели зубрёжки. Компьютер может стать такой же страной для математики».</em><br><br>
+    Мы взяли это так: знание строится сильнее всего, когда ученик одновременно <strong>строит что-то во внешнем мире</strong>. Поэтому курс — это не туториал, а реальный публичный проект. <a href="https://en.wikipedia.org/wiki/Seymour_Papert" target="_blank" rel="noopener">О Пейперте</a>.
+  </div>
+</div>
+
+<div class="r">
+<div class="pull" style="margin-top: 56px;">
+  От Корчака — уважение. От Монтессори — среду. От Дьюи — команду.<br>
+  От Фрейре — диалог. От Хана — трудность. От Пейперта — построить.
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== INTERLUDE: NATO 1968 ===== -->
+<div class="section-divider r">
+  <div class="section-label">Между</div>
+  <div class="section-epigraph">Один год, один город — момент, когда профессия осознала себя.</div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="lede">
+  В 1968 году в баварской деревне Гармиш-Партенкирхен <em>собрались пятьдесят лучших программистов мира</em>.
+</div>
+
+<div class="body-text">
+  Среди них — Edsger Dijkstra, Tony Hoare, Niklaus Wirth, Brian Randell, Doug McIlroy. Конференция длилась неделю, организовывало её НАТО. Они впервые произнесли вслух: <strong>«у нас кризис»</strong>. Программные проекты массово опаздывали, превышали бюджеты, не давали полезного результата. Doug McIlroy сказал: <em>«мы производим программное обеспечение средневековыми методами — где-то ниже наиболее отсталых отраслей строительства»</em>.
+</div>
+
+<div class="body-text">
+  Из этой комнаты вышло само понятие <strong>software engineering</strong>. Не как техническая дисциплина — как протест. Как заявление, что профессия должна стать дисциплиной с собственным языком честности.
+</div>
+
+<div class="pull">
+  Шесть инженеров ниже наследуют этот разговор.
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== II. ENGINEERS · DIVIDER ===== -->
+<div class="section-divider r">
+  <div class="section-label">Часть II</div>
+  <div class="section-epigraph">И на их плечах — то, что мы понимаем под инженерией.</div>
+</div>
+
+<div class="page">
+
+<!-- ENGINEER 1: Vitruvius -->
+<div class="practitioner r">
+  <div class="practitioner-name">Витрувий</div>
+  <div class="practitioner-role">Рим · I век до н. э. · военный инженер Юлия Цезаря и Августа</div>
+  <div class="practitioner-text">
+    Строил баллисты для римских легионов, потом — гражданские здания. В конце жизни написал «Десять книг об архитектуре» — единственный сохранившийся трактат античной инженерии. Сформулировал три качества, без которых нет постройки: <strong>firmitas, utilitas, venustas</strong> — то, что должно <em>стоять</em>, быть <em>полезным</em>, быть <em>красивым</em>.<br><br>
+    Это не теория. Спустя несколько десятилетий после него римляне построили <strong>Пон-дю-Гар</strong> — акведук на юге Франции, по которому вода шла к городу Ним. Он стоит до сих пор. Стоят и Колизей, и многие из 400 километров римских акведуков. Это и есть инженерное наследие в чистом виде: то, что ты сделал, переживает тебя на тысячелетия. <a href="https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D1%82%D1%80%D1%83%D0%B2%D0%B8%D0%B9" target="_blank" rel="noopener">О Витрувии</a>, <a href="https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BD-%D0%B4%D1%8E-%D0%93%D0%B0%D1%80" target="_blank" rel="noopener">о Пон-дю-Гар</a>.
+  </div>
+</div>
+
+<!-- ENGINEER 2: Hopper -->
+<div class="practitioner r">
+  <div class="practitioner-name">Грейс Хоппер</div>
+  <div class="practitioner-role">US Navy · 1952 · контр-адмирал, изобретатель компилятора</div>
+  <div class="practitioner-text">
+    В сорок шесть лет — старше большинства своих коллег — Грейс Хоппер написала <strong>первый компилятор</strong> (A-0, 1952). До этого считалось, что программы можно писать только в машинных кодах; «программа, переводящая программу» казалась абсурдом. Через несколько лет её команда создала COBOL — язык, на котором до сих пор работают банки и страховые компании. <em>«Easier to ask forgiveness than it is to get permission»</em> — её принцип.<br><br>
+    В 1947 году её команда вытащила из реле компьютера Mark II мотылька, мешавшего работе, аккуратно приклеила его в журнал и подписала: <em>«first actual case of bug being found»</em>. Так слово «debug» вошло в профессию. Этот мотылёк сейчас лежит в Smithsonian. <a href="https://en.wikipedia.org/wiki/Grace_Hopper" target="_blank" rel="noopener">О Хоппер</a>.
+  </div>
+</div>
+
+<!-- ENGINEER 3: Dijkstra -->
+<div class="practitioner r">
+  <div class="practitioner-name">Эдсгер Дейкстра</div>
+  <div class="practitioner-role">Нидерланды · 1956–1972 · автор алгоритма Дейкстры, премия Тьюринга</div>
+  <div class="practitioner-text">
+    В 1956 году, в кафе в Амстердаме, за двадцать минут на бумажной салфетке набросал <strong>алгоритм поиска кратчайшего пути в графе</strong>. Этот алгоритм сейчас работает в каждом маршрутизаторе и в каждом GPS-навигаторе. Учат его на любом компьютерном факультете мира.<br><br>
+    Был в той самой комнате в Гармише-1968. Через год опубликовал статью «Go To Statement Considered Harmful» — короткое письмо, которое заставило индустрию переписывать программы. Главная мысль, которую он повторял: <em>«хороший программист — это тот, кто остро сознаёт собственные ограничения. И организует программу так, чтобы не превышать их»</em>. <strong>Скромность как профессиональная этика, а не как вежливость.</strong> <a href="https://en.wikipedia.org/wiki/Edsger_W._Dijkstra" target="_blank" rel="noopener">О Дейкстре</a>.
+  </div>
+</div>
+
+<!-- ENGINEER 4: Feynman -->
+<div class="practitioner r">
+  <div class="practitioner-name">Ричард Фейнман</div>
+  <div class="practitioner-role">Калтех · 1965 · нобелевский лауреат по физике</div>
+  <div class="practitioner-text">
+    Когда в 1986-м взорвался шаттл Челленджер, Фейнман попал в комиссию по расследованию. Инженеры NASA подозревали резиновый O-ring — но доказать ничего не могли. На пресс-конференции, в прямом эфире, Фейнман <strong>опустил кусочек O-ring в стакан с холодной водой со льдом</strong>. Через минуту вынул и показал, что резина потеряла упругость. Вопрос был закрыт. Не теорией — простым экспериментом, который любой мог увидеть глазами.<br><br>
+    Главный его принцип, повторявшийся всю жизнь: <em>«первое правило — не дать себя обмануть. А вы — самый лёгкий объект для обмана»</em>. Всю жизнь вёл тетради, в которые своими словами переписывал то, что хотел понять, — потому что иначе невозможно отделить понимание от иллюзии понимания. <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B5%D0%B9%D0%BD%D0%BC%D0%B0%D0%BD,_%D0%A0%D0%B8%D1%87%D0%B0%D1%80%D0%B4_%D0%A4%D0%B8%D0%BB%D0%BB%D0%B8%D0%BF%D1%81">О Фейнмане</a>.
+  </div>
+</div>
+
+<!-- ENGINEER 5: Carmack -->
+<div class="practitioner r">
+  <div class="practitioner-name">Джон Кармак</div>
+  <div class="practitioner-role">id Software · 1993–2010 · создатель Doom и Quake</div>
+  <div class="practitioner-text">
+    В двадцать с небольшим написал движок <strong>Doom</strong> (1993), который изменил, что такое компьютерная игра. Через три года — Quake, с настоящей трёхмерной графикой в реальном времени, на железе, для которого это считалось невозможным. Эти игры стали технологическим стандартом, а сам Кармак — фигурой, которую знает любой, кто играл в 90-е и 2000-е.<br><br>
+    Параллельно с этим, начиная с 1996 года, он вёл публичный <a href="https://github.com/ESWAT/john-carmack-plan-archive" target="_blank" rel="noopener"><strong>.plan-файл</strong></a> — простой текстовый дневник, доступный любому через UNIX-команду <code>finger</code>. Запись за записью: что попробовал, какое решение принял, почему. Так почти четырнадцать лет. Не для славы. Чтобы самому видеть правду — что сделано и что нет. <em>«Сильно думать без записи — это иллюзия мысли»</em> в действии. Целое поколение программистов учило ремесло, читая эти записи.
+  </div>
+</div>
+
+<!-- ENGINEER 6: Kay -->
+<div class="practitioner r">
+  <div class="practitioner-name">Алан Кей</div>
+  <div class="practitioner-role">Xerox PARC · 1972 · отец персонального компьютера</div>
+  <div class="practitioner-text">
+    В Xerox PARC в 70-х придумал <strong>Smalltalk</strong> — первый язык, в котором всё было объектом. Из его идеи объектно-ориентированного программирования выросло почти всё, что мы сегодня знаем под названием «программирование». Тогда же он нарисовал концепцию <strong>Dynabook</strong> — персонального компьютера-планшета размером с книгу. Это было в 1972-м. Apple iPad появился в 2010-м.<br><br>
+    Графический интерфейс с окнами, мышью и иконками, которым ты пользуешься сейчас, — родился в его голове и в голове его команды. Steve Jobs увидел эти прототипы в PARC в 1979 году — и из этого визита через пять лет родился Macintosh. Алану Кею принадлежит фраза, без которой не обходится никакая лекция по инновациям: <em>«Лучший способ предсказать будущее — изобрести его»</em>. <a href="https://en.wikipedia.org/wiki/Alan_Kay" target="_blank" rel="noopener">О Кее</a>.
+  </div>
+</div>
+
+<div class="r">
+<div class="pull" style="margin-top: 56px;">
+  От Витрувия — наследие. От Хоппер — упрямство.<br>
+  От Дейкстры — скромность. От Фейнмана — самопроверку.<br>
+  От Кармака — ежедневную правду. От Кея — изобретать.
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== III. WHAT 2026 CHANGES ===== -->
+<div class="section-divider r">
+  <div class="section-label">Часть III</div>
+  <div class="section-epigraph">Что меняется в 2026 году. И что — нет.</div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="lede">
+  Двенадцать человек выше работали с разным железом, в разные эпохи. <em>Их объединяет одна вещь: они работали с тем, что было в дефиците в их время.</em>
+</div>
+
+<div class="body-text">
+  В 2026 году код — больше не дефицит. Машины пишут его быстрее людей. То, что раньше было ценным навыком — знать наизусть синтаксис, помнить API, переводить с одного языка программирования на другой, — теперь делается одним запросом. Это не плохо и не хорошо; это факт.
+</div>
+
+<div class="body-text">
+  Что осталось в дефиците — то, что было в дефиците всегда. <strong>Сформулировать задачу</strong> так, чтобы решение было осмысленно. <strong>Проверить</strong>, что результат делает то, что должен (особенно если результат сделала машина — она может быть блестящей в сложном и катастрофически неправа в элементарном). <strong>Видеть систему</strong>, а не строки. <strong>Замечать собственные ошибки</strong> — потому что собственный обман незаметен изнутри. <strong>Писать так</strong>, чтобы было видно, как думаешь.
+</div>
+
+<div class="pull">
+  Это и есть инженерное мышление.<br>
+  То самое, которое в дефиците в 2026-м.
+</div>
+
+<div class="body-text">
+  Все двенадцать человек выше работали именно с этим. Они не были особенными. Они были любопытными, упрямыми, скромными, честными — и каждый <em>что-то делал</em>, а не только формулировал.
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== IV. WHAT WE DO HERE ===== -->
+<div class="section-divider r">
+  <div class="section-label">Часть IV</div>
+  <div class="section-epigraph">Что мы делаем в RS School.</div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="body-text">
+  Из всего сказанного выше — простые следствия. Вот что школа делает на каждом курсе и почему.
+</div>
+
+<div class="body-text">
+  <strong>Мы строим публичные проекты.</strong> Не учебные. Реальные, с публичным URL, с историей коммитов, которую может прочитать кто угодно. Потому что построить настоящее — это не то же самое, что пройти туториал. Это понял Пейперт, и мы ему верим.
+</div>
+
+<div class="body-text">
+  <strong>Мы пишем дневники.</strong> Не ради оценки. Ради того же, ради чего Кармак вёл .plan: без записи невозможно отделить «что я сделал» от «что мне хочется думать, что я сделал». Дневник — это unit-тест для мыслей.
+</div>
+
+<div class="body-text">
+  <strong>Мы делаем код-ревью и парные защиты.</strong> Чтобы видеть, как думают другие, и проговаривать, как думаем мы. Профессии в индустрии всегда учились так — ремесленник видел, как работает мастер. Мы делаем это видимым на курсе.
+</div>
+
+<div class="body-text">
+  <strong>Мы делимся незнанием.</strong> Открыто говорить «я не понял» — не позор, а условие обучения. Это та же среда, в которой Корчак ставил уважение в основу, а Хан — трудность как материал, а не наказание.
+</div>
+
+<div class="body-text">
+  <strong>Мы учимся работать с инструментами, не растворяясь в них.</strong> Машина уверенна в своих ошибках так же, как люди, — и быстрее их множит. Поэтому инженер 2026 — обязательный верификатор. Не «использует LLM», а проверяет каждый его шаг и понимает, где он подвёл. Это новый навык, и его надо называть вслух.
+</div>
+
+<div class="pull" style="margin-top: 48px;">
+  Мы не обещаем работу. Мы не обещаем диплом, который что-то гарантирует.<br>
+  Мы предлагаем <em>среду</em>, в которой это можно вырастить.
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== CLOSING ===== -->
+<section class="closing">
+  <div class="closing-lede r">
+    Эти двенадцать человек не были особенными.
+  </div>
+
+  <div class="closing-lede r d1" style="margin-top: 32px;">
+    Они были любопытными, упрямыми,<br>
+    скромными, честными.<br>
+    И каждый — <em>что-то делал</em>.
+  </div>
+
+  <div class="closing-punchline r-slow">
+    Если ты сейчас в RS School —<br>
+    ты в той же комнате.
+  </div>
+
+  <div class="closing-coda r-slow">
+    Добро пожаловать.
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div style="font-family: var(--serif); font-size: 15px; font-style: italic;">RS School. Connecting people, growing together, having fun.</div>
+  <div style="margin-top: 8px;">
+    <a href="./">Observer</a>
+    <a href="./diary.html">Зачем дневник</a>
+  </div>
+</div>
+
+<script>
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+}, { passive: true });
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.r, .r-slow').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

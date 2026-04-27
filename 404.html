@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Redirecting…</title>
+<!--
+  GitHub Pages SPA fallback.
+
+  GitHub Pages only serves real files. When a deep-link like
+  /rs-tandem-observer/issue/2 is requested and no `issue/2/index.html`
+  file exists (e.g. a typo in the URL, or a client-side-only route the
+  SSG did not enumerate), GH Pages returns this 404.html.
+
+  We then redirect the browser to the course root with the original
+  pathname preserved in `?/` so `index.html` can read it from
+  `sessionStorage` (or `location.search`) and hand control to the React
+  router's history.replaceState.
+
+  Pattern: https://github.com/rafgraph/spa-github-pages
+
+  With the SSG build every enumerated route IS a real file
+  (`dist/issue/2/index.html` etc.) so this fallback is only exercised by
+  typos and genuinely client-side-only routes (e.g. /questions/<github>
+  which is internal mentor tooling and deliberately not pre-rendered).
+-->
+<script>
+  // Configure for this project. Segment count of the basename:
+  //   /rs-tandem-observer/  → 1
+  //   /                     → 0
+  //   /nested/path/         → 2
+  // If unsure, 1 is correct for both rs-tandem and angular courses.
+  var pathSegmentsToKeep = 1;
+
+  var l = window.location;
+  l.replace(
+    l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") +
+    l.pathname.split("/").slice(0, 1 + pathSegmentsToKeep).join("/") + "/?/" +
+    l.pathname.slice(1).split("/").slice(pathSegmentsToKeep).join("/").replace(/&/g, "~and~") +
+    (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+    l.hash
+  );
+</script>
+</head>
+<body>
+  <p>Redirecting…</p>
+</body>
+</html>

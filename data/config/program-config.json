@@ -1,0 +1,29 @@
+{
+  "streamId": "2026-spring-angular",
+  "name": "RS School Angular 2026",
+  "startDate": "2026-04-27",
+  "endDate": "TBD",
+  "durationWeeks": 0,
+  "cloneBranch": "main",
+  "monitoringAccount": "rollingscopes",
+  "language": "en",
+  "deploy": {
+    "repo": "rolling-scopes/rs-angular-observer",
+    "baseUrl": "/rs-angular-observer/"
+  },
+  "branding": {
+    "title": "RS Angular — Observer",
+    "teamsTitle": "RS Angular — Teams",
+    "issueRepo": "rolling-scopes/rs-angular-observer"
+  },
+  "checkpoints": [
+    {
+      "id": "w1",
+      "label": "Week 1: Setup & Environment",
+      "startDate": "2026-04-27",
+      "rules": [
+        { "id": "diary", "type": "diary", "scope": "member", "points": 20, "params": { "minEntries": 2 } }
+      ]
+    }
+  ]
+}

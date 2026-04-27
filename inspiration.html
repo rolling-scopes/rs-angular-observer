@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Angular Kickoff · RS School 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+
+<style>
+  /* === typography: Apple-ish === */
+  :root {
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "Helvetica Neue", "Inter", system-ui, sans-serif;
+    --accent: #ff5577;
+    --muted: rgba(255,255,255,.55);
+    --faint: rgba(255,255,255,.35);
+  }
+
+  .reveal {
+    font-family: var(--sans);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,.92);
+  }
+
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: var(--sans);
+    text-transform: none;
+    font-weight: 200;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    color: white;
+  }
+
+  .reveal h1 { font-size: 3.6em; margin-bottom: .15em; }
+  .reveal h2 { font-size: 2.4em; margin-bottom: 0.9em; font-weight: 200; }
+  .reveal h3 { font-size: 1.6em; font-weight: 300; }
+
+  .reveal p { font-weight: 300; line-height: 1.5; margin: .55em 0; }
+  .reveal strong { font-weight: 500; color: white; }
+  .reveal em { font-style: italic; font-weight: 300; }
+
+  .reveal .accent { color: var(--accent); }
+  .reveal .muted  { color: var(--muted); font-weight: 300; }
+  .reveal .faint  { color: var(--faint); }
+  .reveal .small  { font-size: 0.65em; }
+  .reveal .tiny   { font-size: 0.5em; letter-spacing: .15em; text-transform: uppercase; }
+
+  /* === slide layouts === */
+
+  .cover { text-align: left; padding: 0 2em; }
+  .cover .meta { font-size: .55em; opacity: .35; margin-top: 4em; letter-spacing: .25em; text-transform: uppercase; font-weight: 400; }
+  .cover .subtitle { font-size: 1.05em; opacity: .55; font-weight: 300; margin-top: .3em; }
+
+  .vcard { text-align: left; padding: 0 2em; }
+  .vcard .name { font-size: 3.4em; font-weight: 200; letter-spacing: -0.04em; margin-bottom: .15em; }
+  .vcard .role { font-size: 1.05em; opacity: .55; font-weight: 300; margin: .1em 0; }
+
+  .hook { text-align: left; padding: 0 2em; }
+  .hook .lead { font-size: 2.4em; font-weight: 200; line-height: 1.2; letter-spacing: -0.03em; }
+
+  .center { text-align: center; }
+  .center-quiet { text-align: center; padding: 0 4em; }
+  .center-quiet h2 { font-weight: 200; margin-bottom: .8em; }
+
+  .one-line { font-size: 2em; font-weight: 200; line-height: 1.3; letter-spacing: -0.025em; max-width: 18em; margin: 0 auto; text-align: center; }
+  .one-line em { color: var(--accent); font-style: italic; }
+
+  blockquote.quiet {
+    border: none; padding: 0;
+    font-style: italic; font-weight: 300;
+    font-size: 1.05em; line-height: 1.55;
+    max-width: 22em; margin: 0 auto;
+  }
+  blockquote.quiet cite {
+    display: block; margin-top: 1.4em;
+    font-size: 0.5em; font-style: normal; font-weight: 400;
+    opacity: .45; letter-spacing: .05em;
+  }
+
+  /* placeholders */
+  .placeholder {
+    border: 1px solid rgba(255,255,255,.18);
+    padding: 1.6em 1em;
+    color: rgba(255,255,255,.4);
+    font-style: italic;
+    font-size: 0.65em;
+    margin: 1em 0;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .placeholder strong { display: block; font-size: 1.4em; font-style: normal; color: rgba(255,255,255,.7); margin-bottom: 0.3em; font-weight: 400; }
+
+  /* photo-bg captions (text over fullbleed image — landscape only) */
+  .caption-overlay {
+    display: inline-block;
+    background: rgba(0,0,0,.55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding: .25em .6em;
+    font-weight: 200;
+    letter-spacing: -0.025em;
+  }
+  .caption-sub {
+    display: inline-block;
+    background: rgba(0,0,0,.55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    padding: .3em .7em;
+    margin-top: 1.2em;
+    font-size: 0.55em;
+    letter-spacing: .08em;
+    color: rgba(255,255,255,.85);
+  }
+
+  /* === split: portrait photo + text overlay (left or right) === */
+  .split-text-right, .split-text-left {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48%;
+    text-align: left;
+  }
+  .split-text-right { right: 4%; padding-left: 1em; }
+  .split-text-left  { left: 4%;  padding-right: 1em; }
+
+  .split-text-right h2, .split-text-left h2 {
+    font-size: 2.6em;
+    font-weight: 200;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: .5em;
+  }
+  .split-text-right .lead, .split-text-left .lead {
+    font-size: 2em;
+    font-weight: 200;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: white;
+  }
+  .split-text-right .lead .accent, .split-text-left .lead .accent { color: var(--accent); }
+  .split-text-right p, .split-text-left p {
+    opacity: .6;
+    font-size: 0.8em;
+    line-height: 1.6;
+    margin-top: .8em;
+  }
+  .split-text-right .tiny, .split-text-left .tiny {
+    font-size: 0.5em;
+    opacity: .35;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    margin-bottom: 1.2em;
+    display: block;
+  }
+  .split-text-left .latin-row { font-size: 1.6em; margin: 1em 0 .4em; }
+
+  .latin-row {
+    margin: 1.2em 0 .6em;
+    font-size: 1.5em; font-weight: 300;
+    letter-spacing: .04em;
+  }
+  .latin-row .accent { font-weight: 300; }
+  .latin-row .sep { opacity: .25; margin: 0 .6em; font-weight: 200; }
+
+  ul.unites {
+    list-style: none; padding: 0;
+    font-size: 1em; font-weight: 300;
+    text-align: left;
+    max-width: 22em; margin: 0 auto;
+  }
+  ul.unites li { margin: .55em 0; opacity: .55; transition: opacity .4s; }
+  ul.unites li.fragment.visible { opacity: .9; }
+  ul.unites li.punch {
+    margin-top: 1.4em; opacity: .95;
+    font-style: italic; line-height: 1.45;
+    color: white; font-weight: 300;
+  }
+  ul.unites li.punch.fragment.visible { opacity: 1; }
+
+  ul.questions {
+    list-style: none; padding: 0;
+    font-size: 1.15em; font-weight: 300;
+    text-align: left;
+    max-width: 24em; margin: 1.5em auto 0;
+    line-height: 1.6;
+  }
+  ul.questions li { margin: .8em 0; }
+  ul.questions li .num { color: var(--faint); font-size: .55em; margin-right: .8em; letter-spacing: .15em; vertical-align: middle; }
+
+  .footnote {
+    font-size: 0.4em; opacity: .35; margin-top: 3em;
+    letter-spacing: .02em; font-weight: 400;
+  }
+  .footnote a { color: rgba(255,255,255,.45); text-decoration: underline; text-underline-offset: 3px; }
+
+  .end-card { text-align: center; }
+  .end-card .label { font-size: .5em; opacity: .35; letter-spacing: .3em; text-transform: uppercase; }
+  .end-card .next { font-size: 1.1em; opacity: .55; font-weight: 300; margin-top: 1.5em; }
+
+  /* override reveal cite default look */
+  .reveal cite { font-style: normal; }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ====== 1 · Welcome ====== -->
+    <section class="cover">
+      <h1>Angular<br>Kickoff.</h1>
+      <div class="subtitle">RS School · 2026</div>
+      <div class="meta">April 27 — July 26 · 12 weeks</div>
+    </section>
+
+    <!-- ====== 2 · About me ====== -->
+    <section class="vcard">
+      <div class="name">Dzmitry Varabei</div>
+      <div class="role">Senior Engineering Manager · EPAM</div>
+      <div class="role" style="margin-top: 1em;">RS School organizer</div>
+    </section>
+
+    <!-- ====== 3 · Hook · personal kayak photo (left) + statement (right) ====== -->
+    <section data-background-image="images/pont-du-gard-kayak.jpg"
+             data-background-size="contain"
+             data-background-position="left center"
+             data-background-color="#000">
+      <div class="split-text-right">
+        <span class="tiny">Pont du Gard · personal photo</span>
+        <div class="lead">
+          I love Roman architecture.<br>
+          <span class="accent">Especially aqueducts.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== 4 · What's an aqueduct (drama version) ====== -->
+    <section class="center-quiet">
+      <p class="one-line">
+        Water moves <em>by itself.</em><br>
+        No pumps. Just gravity —<br>
+        and someone who got the angle right.
+      </p>
+    </section>
+
+    <!-- ====== 4b · How it actually works · diagram (native size, no upscale) ====== -->
+    <section>
+      <img src="images/aqueducts-diagram.png"
+           alt="Roman aqueducts: source, gentle slope, underground channel, arcades, city"
+           style="max-width: 100%; max-height: 90vh; width: auto; height: auto; display: block; margin: 0 auto;">
+    </section>
+
+    <!-- ====== 5 · Aqueduct photo: Pont du Gard ====== -->
+    <section data-background-image="images/pont-du-gard.png"
+             data-background-size="cover"
+             data-background-position="center">
+      <h2 class="caption-overlay">Still standing.</h2>
+      <p class="caption-sub">Pont du Gard · ~50 AD · 2000 years and counting</p>
+    </section>
+
+    <!-- ====== 6 · Aqueduct photo: Tarragona (portrait → bg-left + text-right) ====== -->
+    <section data-background-image="images/tarragona.jpg"
+             data-background-size="contain"
+             data-background-position="left center"
+             data-background-color="#000">
+      <div class="split-text-right">
+        <h2>And<br>another.</h2>
+        <p>Aqueduct of Tarragona, Spain<br>
+        1st century AD<br>
+        Locally known as <em>Pont del Diable</em> — Devil's Bridge.</p>
+      </div>
+    </section>
+
+    <!-- ====== 7a · Built by engineers ====== -->
+    <section class="center-quiet">
+      <h2>Built by engineers.</h2>
+      <p class="muted" style="margin-top: 1.5em;">They didn't invent everything from scratch.</p>
+      <p class="muted">They had a manual — written by an engineer who came before them.</p>
+    </section>
+
+    <!-- ====== 7b · His name was Vitruvius ====== -->
+    <section class="center-quiet">
+      <p class="muted">His name was</p>
+      <h2 class="accent" style="font-size: 3em; margin-top: .3em;">Vitruvius.</h2>
+      <p class="faint small" style="margin-top: 1.5em;">Roman military engineer · 1st century BC</p>
+    </section>
+
+    <!-- ====== 8a · De Architectura — the book + Maison Carrée ====== -->
+    <section data-background-image="images/maison-carree.jpg"
+             data-background-size="contain"
+             data-background-position="right center"
+             data-background-color="#000">
+      <div class="split-text-left">
+        <h2>De Architectura</h2>
+        <p>"Ten Books on Architecture."<br>
+        The only complete engineering treatise<br>that survived from antiquity.</p>
+        <p class="tiny" style="margin-top: 2em;">Maison Carrée · Nîmes · ~16 BC<br>built using Vitruvian principles</p>
+      </div>
+    </section>
+
+    <!-- ====== 8b · firmitas · utilitas · venustas + Arena ====== -->
+    <section data-background-image="images/arena-nimes.jpg"
+             data-background-size="contain"
+             data-background-position="right center"
+             data-background-color="#000">
+      <div class="split-text-left">
+        <p class="tiny">From De Architectura</p>
+        <div class="latin-row">
+          <span class="accent">firmitas</span><span class="sep">·</span>
+          <span class="accent">utilitas</span><span class="sep">·</span>
+          <span class="accent">venustas</span>
+        </div>
+        <p>strength · utility · beauty</p>
+        <p style="margin-top: 1.5em;">A building must <em>stand</em>,<br>
+        be <em>useful</em>, be <em>beautiful</em>.</p>
+        <p class="tiny" style="margin-top: 2em;">Arena de Nîmes · 1st c. AD · venustas in stone</p>
+      </div>
+    </section>
+
+    <!-- ====== 9 · Fast-forward 1500 years ====== -->
+    <section class="center-quiet">
+      <p class="tiny faint" style="margin-bottom: 2em;">Fast-forward 1500 years</p>
+      <h2 style="font-size: 1.8em;">Florence · ~1490</h2>
+    </section>
+
+    <!-- ====== 10 · Vitruvian Man ====== -->
+    <section class="center">
+      <div class="placeholder">
+        <strong>[INSERT: Vitruvian Man — Leonardo da Vinci]</strong>
+      </div>
+      <p style="margin-top: 1em;">This is not <em>inspiration.</em></p>
+      <p>It's a <span class="accent">direct diagram</span> from a passage in Vitruvius —<br>
+      about ideal human proportions.</p>
+      <p class="muted small" style="margin-top: 1em;">Leonardo read him fifteen centuries after the original was written.<br>
+      Even Leonardo built on someone else.</p>
+    </section>
+
+    <!-- ====== 11 · Fast-forward 500 more years ====== -->
+    <section class="center-quiet">
+      <p class="tiny faint" style="margin-bottom: 2em;">Fast-forward 500 more years</p>
+      <h2 style="font-size: 1.8em;">Texas · 1990s</h2>
+    </section>
+
+    <!-- ====== 12 · Doom + Quake ====== -->
+    <section class="center">
+      <h2>John Carmack.</h2>
+      <div class="placeholder">
+        <strong>[INSERT: Doom screenshot]</strong>
+        1993
+      </div>
+      <div class="placeholder">
+        <strong>[INSERT: Quake screenshot]</strong>
+        1996 · first true real-time 3D engine
+      </div>
+    </section>
+
+    <!-- ====== 13 · Carmack's .plan ====== -->
+    <section class="center-quiet">
+      <h2>And his <code>.plan</code> file.</h2>
+      <p class="muted">A daily public text journal —<br>
+      what he tried, what he decided, why.</p>
+      <p style="margin-top: 1.5em;">For <span class="accent">fourteen years.</span></p>
+      <p class="muted small" style="margin-top: 1.5em;">Not for fame.<br>
+      So <em>he himself</em> could see the truth of what was actually done.</p>
+    </section>
+
+    <!-- ====== 14 · What unites them ====== -->
+    <section>
+      <h2>What unites them?</h2>
+      <ul class="unites">
+        <li class="fragment">Vitruvius — Roman military engineer.</li>
+        <li class="fragment">Leonardo — Renaissance designer (yes, also painter).</li>
+        <li class="fragment">Roman aqueduct builders — engineers.</li>
+        <li class="fragment">Carmack — software engineer.</li>
+        <li class="fragment muted">…and many more.</li>
+        <li class="fragment punch">
+          They <span class="accent">thought as engineers.</span><br>
+          They designed before they built.<br>
+          And they <em>wrote it down.</em>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ====== 15 · Pause / quiet bridge to Huang ====== -->
+    <section class="center-quiet">
+      <p class="tiny faint" style="margin-bottom: 2em;">2026</p>
+      <p class="muted">Someone asked the CEO of NVIDIA<br>
+      whether AI would mean fewer engineers.</p>
+      <p class="faint small" style="margin-top: 2em;">Here's what he said.</p>
+    </section>
+
+    <!-- ====== 16 · Jensen Huang quote ====== -->
+    <section class="center-quiet">
+      <blockquote class="quiet">
+        "The purpose of a software engineer<br>
+        and the task of coding<br>
+        are <span class="accent">related, not the same.</span><br><br>
+
+        I wanted my software engineers to <strong>solve problems.</strong><br>
+        I didn't care how many lines of code they wrote.<br><br>
+
+        Solving problems, working as a team,<br>
+        diagnosing problems, evaluating the result,<br>
+        looking for new problems to solve,<br>
+        connecting dots.<br><br>
+
+        <span class="accent">None of that stuff<br>is gonna go away."</span>
+
+        <cite>— Jensen Huang · CEO NVIDIA · March 2026<br>
+        <a href="https://lexfridman.com/jensen-huang-transcript#chapter18_future_of_programming" target="_blank">Lex Fridman Podcast #462</a></cite>
+      </blockquote>
+    </section>
+
+    <!-- ====== 17 · Bridge — pause ====== -->
+    <section class="center-quiet">
+      <p class="one-line muted">So — what does that mean<br>for what we do here?</p>
+    </section>
+
+    <!-- ====== 18 · Goal — one statement ====== -->
+    <section class="center-quiet">
+      <p class="one-line">
+        Our goal isn't<br>to teach you to ship widgets.<br>
+        <em>Our goal is to help you become engineers.</em>
+      </p>
+      <p class="muted small" style="margin-top: 2em;">In the sense Vitruvius, Leonardo, Carmack and Huang all meant the word.</p>
+    </section>
+
+    <!-- ====== 19 · Code is cheap (one quote per slide) ====== -->
+    <section class="center-quiet">
+      <p class="tiny faint">2026</p>
+      <h2 style="font-size: 2.6em; margin-top: .5em;">Code is cheap.</h2>
+      <blockquote class="quiet" style="margin-top: 2em; font-size: 0.9em;">
+        "The hard part of programming was never typing the code.<br>
+        The hard part is knowing <em>exactly</em> what to ask for."
+        <cite>— paraphrased from Simon Willison · 2025</cite>
+      </blockquote>
+    </section>
+
+    <!-- ====== 20 · Writing matters more ====== -->
+    <section class="center-quiet">
+      <p class="one-line">
+        LLMs devalued the act of writing code.<br>
+        They devalued the act of writing text.<br><br>
+        But <em>writing —</em><br>
+        as a tool of <span class="accent">thinking —</span><br>
+        is more valuable than ever.
+      </p>
+    </section>
+
+    <!-- ====== 21 · The four questions ====== -->
+    <section>
+      <h2 class="center" style="margin-bottom: 1.4em;">So we want you to learn<br>to ask the right questions.</h2>
+      <ul class="questions">
+        <li><span class="num">01</span>Why a framework at all?</li>
+        <li><span class="num">02</span>Declarative vs imperative — what's the actual difference?</li>
+        <li><span class="num">03</span>What problems does Angular solve? What parts is it built from?</li>
+        <li><span class="num">04</span>And — <em>how do you know</em> the answers?<br><span style="margin-left: 2.4em; opacity: .55;">How did you actually learn them?</span></li>
+      </ul>
+    </section>
+
+    <!-- ====== 22 · Punch on question 4 ====== -->
+    <section class="center-quiet">
+      <p class="one-line muted">The last question<br>is the most important one.</p>
+    </section>
+
+    <!-- ====== END OF PART 1 ====== -->
+    <section class="end-card">
+      <div class="label">— end of part 1 —</div>
+      <div class="next">part 2 · how we actually learn ·<br>the science of analogies</div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0.06,
+    hash: true,
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>

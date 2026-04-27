@@ -1,0 +1,327 @@
+{
+  "generatedAt": "2026-04-15T23:04:51.277Z",
+  "source": "RS Tandem - Командная защита (Responses) - Form Responses 1 (1).csv",
+  "maxScore": 300,
+  "criteria": {
+    "pmc": {
+      "label": "Project Management & Communication",
+      "max": 100
+    },
+    "gcr": {
+      "label": "Git Culture & Code Review",
+      "max": 100
+    },
+    "pd": {
+      "label": "Product Integrity & Delivery",
+      "max": 100
+    }
+  },
+  "teams": [
+    {
+      "name": "111 Blind Kittens",
+      "status": "excused",
+      "reason": "Не пришли на защиту, попросили продлить дедлайн.",
+      "pmc": null,
+      "gcr": null,
+      "pd": null,
+      "total": null,
+      "juryCount": 0
+    },
+    {
+      "name": "404 Skill Not Found",
+      "status": "scored",
+      "pmc": 58,
+      "gcr": 68,
+      "pd": 67,
+      "total": 193,
+      "juryCount": 3
+    },
+    {
+      "name": "Auto-Team 3",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 3
+    },
+    {
+      "name": "Auto-Team 4",
+      "status": "scored",
+      "pmc": 68,
+      "gcr": 90,
+      "pd": 73,
+      "total": 231,
+      "juryCount": 2
+    },
+    {
+      "name": "Auto-Team 5",
+      "status": "scored",
+      "pmc": 90,
+      "gcr": 89,
+      "pd": 95,
+      "total": 274,
+      "juryCount": 4
+    },
+    {
+      "name": "Auto-Team 7",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 85,
+      "pd": 95,
+      "total": 280,
+      "juryCount": 2
+    },
+    {
+      "name": "Auto-Team 9",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 93,
+      "pd": 93,
+      "total": 286,
+      "juryCount": 3
+    },
+    {
+      "name": "Dev Journey",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 95,
+      "pd": 100,
+      "total": 295,
+      "juryCount": 2
+    },
+    {
+      "name": "DevCraft",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 75,
+      "pd": 100,
+      "total": 275,
+      "juryCount": 2
+    },
+    {
+      "name": "Devtones",
+      "status": "scored",
+      "pmc": 80,
+      "gcr": 90,
+      "pd": 95,
+      "total": 265,
+      "juryCount": 4
+    },
+    {
+      "name": "Gang of Four",
+      "status": "scored",
+      "pmc": 93,
+      "gcr": 95,
+      "pd": 100,
+      "total": 288,
+      "juryCount": 4
+    },
+    {
+      "name": "GrowLab",
+      "status": "scored",
+      "pmc": 90,
+      "gcr": 95,
+      "pd": 90,
+      "total": 275,
+      "juryCount": 4
+    },
+    {
+      "name": "JSGods",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 98,
+      "pd": 100,
+      "total": 298,
+      "juryCount": 4
+    },
+    {
+      "name": "JustBuildIt",
+      "status": "scored",
+      "pmc": 93,
+      "gcr": 93,
+      "pd": 85,
+      "total": 271,
+      "juryCount": 4
+    },
+    {
+      "name": "Legendary frontend developers",
+      "status": "scored",
+      "pmc": 98,
+      "gcr": 85,
+      "pd": 85,
+      "total": 268,
+      "juryCount": 4
+    },
+    {
+      "name": "Nova",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 2
+    },
+    {
+      "name": "Outstanding Alex And Smeshariki",
+      "status": "scored",
+      "pmc": 88,
+      "gcr": 94,
+      "pd": 95,
+      "total": 277,
+      "juryCount": 4
+    },
+    {
+      "name": "RSSAgents",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 3
+    },
+    {
+      "name": "RainbowUnicorn",
+      "status": "scored",
+      "pmc": 90,
+      "gcr": 93,
+      "pd": 95,
+      "total": 278,
+      "juryCount": 4
+    },
+    {
+      "name": "SAA Cat",
+      "status": "scored",
+      "pmc": 90,
+      "gcr": 85,
+      "pd": 85,
+      "total": 260,
+      "juryCount": 2
+    },
+    {
+      "name": "SkillsZen team",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 60,
+      "pd": 100,
+      "total": 260,
+      "juryCount": 2
+    },
+    {
+      "name": "Strict Mode",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 98,
+      "pd": 95,
+      "total": 293,
+      "juryCount": 4
+    },
+    {
+      "name": "Team42",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 3
+    },
+    {
+      "name": "Tuple Trouble",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 88,
+      "pd": 100,
+      "total": 288,
+      "juryCount": 2
+    },
+    {
+      "name": "Typocalypse",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 2
+    },
+    {
+      "name": "Unexpected Case",
+      "status": "scored",
+      "pmc": 92,
+      "gcr": 88,
+      "pd": 95,
+      "total": 275,
+      "juryCount": 3
+    },
+    {
+      "name": "VueJS Tandem",
+      "status": "scored",
+      "pmc": 68,
+      "gcr": 47,
+      "pd": 73,
+      "total": 188,
+      "juryCount": 3
+    },
+    {
+      "name": "asyncmind",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 80,
+      "pd": 95,
+      "total": 275,
+      "juryCount": 2
+    },
+    {
+      "name": "ngKittyDebug",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 100,
+      "pd": 100,
+      "total": 300,
+      "juryCount": 4
+    },
+    {
+      "name": "Алекс и его друзья",
+      "status": "scored",
+      "pmc": 80,
+      "gcr": 90,
+      "pd": 100,
+      "total": 270,
+      "juryCount": 4
+    },
+    {
+      "name": "Джунгли зовут!",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 88,
+      "pd": 90,
+      "total": 278,
+      "juryCount": 3
+    },
+    {
+      "name": "Т-8",
+      "status": "scored",
+      "pmc": 100,
+      "gcr": 93,
+      "pd": 87,
+      "total": 280,
+      "juryCount": 3
+    }
+  ],
+  "missing": [
+    "CodePain",
+    "DevBand",
+    "OrangeCats",
+    "Tandem Trauma Team",
+    "TetraTeam",
+    "Дрим Тим"
+  ],
+  "unmatchedFromCsv": [],
+  "stats": {
+    "csvRows": 98,
+    "parsedRows": 98,
+    "uniquePairs": 95,
+    "scoredTeams": 31,
+    "excusedTeams": 1,
+    "missingCount": 6
+  }
+}

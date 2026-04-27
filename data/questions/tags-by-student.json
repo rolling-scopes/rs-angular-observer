@@ -1,0 +1,41 @@
+[
+  {
+    "github": "coicoin",
+    "teamName": "Strict Mode",
+    "tags": [
+      "ESLint",
+      "Husky",
+      "SCSS",
+      "Supabase",
+      "TypeScript",
+      "Vite",
+      "Vitest"
+    ]
+  },
+  {
+    "github": "dilmun1101",
+    "teamName": "Strict Mode",
+    "tags": [
+      "ESLint",
+      "Husky",
+      "SCSS",
+      "Supabase",
+      "TypeScript",
+      "Vite",
+      "Vitest"
+    ]
+  },
+  {
+    "github": "FierceSloth",
+    "teamName": "Strict Mode",
+    "tags": [
+      "ESLint",
+      "Husky",
+      "SCSS",
+      "Supabase",
+      "TypeScript",
+      "Vite",
+      "Vitest"
+    ]
+  }
+]

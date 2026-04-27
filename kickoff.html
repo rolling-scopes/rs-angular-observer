@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Angular Kickoff · RS School 2026</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+
+<style>
+  :root {
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+            "Helvetica Neue", "Inter", system-ui, sans-serif;
+    --accent: #ff5577;
+    --warn: #ffc832;
+    --muted: rgba(255,255,255,.55);
+    --faint: rgba(255,255,255,.35);
+  }
+  .reveal {
+    font-family: var(--sans);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,.92);
+  }
+  .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+    font-family: var(--sans);
+    text-transform: none;
+    font-weight: 200;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    color: white;
+  }
+  .reveal h1 { font-size: 3.6em; margin-bottom: .15em; }
+  .reveal h2 { font-size: 2.4em; margin-bottom: 0.9em; font-weight: 200; }
+  .reveal h3 { font-size: 1.6em; font-weight: 300; }
+  .reveal p { font-weight: 300; line-height: 1.5; margin: .55em 0; }
+  .reveal strong { font-weight: 500; color: white; }
+  .reveal em { font-style: italic; font-weight: 300; }
+  .reveal .accent { color: var(--accent); }
+  .reveal .muted  { color: var(--muted); font-weight: 300; }
+  .reveal .faint  { color: var(--faint); }
+  .reveal .small  { font-size: 0.65em; }
+  .reveal .tiny   { font-size: 0.5em; letter-spacing: .15em; text-transform: uppercase; }
+
+  .cover { text-align: left; padding: 0 2em; }
+  .cover .meta { font-size: .55em; opacity: .35; margin-top: 4em; letter-spacing: .25em; text-transform: uppercase; font-weight: 400; }
+  .cover .subtitle { font-size: 1.05em; opacity: .55; font-weight: 300; margin-top: .3em; }
+
+  .center { text-align: center; }
+  .center-quiet { text-align: center; padding: 0 4em; }
+  .center-quiet h2 { font-weight: 200; margin-bottom: .8em; }
+
+  .one-line { font-size: 2em; font-weight: 200; line-height: 1.3; letter-spacing: -0.025em; max-width: 18em; margin: 0 auto; text-align: center; }
+  .one-line em { color: var(--accent); font-style: italic; }
+
+  blockquote.quiet {
+    border: none; padding: 0;
+    font-style: italic; font-weight: 300;
+    font-size: 1.05em; line-height: 1.55;
+    max-width: 22em; margin: 0 auto;
+  }
+  blockquote.quiet cite {
+    display: block; margin-top: 1.4em;
+    font-size: 0.5em; font-style: normal; font-weight: 400;
+    opacity: .45; letter-spacing: .05em;
+  }
+
+  /* TODO marker — visible during prep, easy to find */
+  .todo {
+    display: inline-block;
+    background: rgba(255, 200, 50, 0.10);
+    border-left: 3px solid var(--warn);
+    padding: .5em .9em;
+    font-size: 0.55em;
+    color: rgba(255, 200, 50, 0.85);
+    font-style: italic;
+    text-align: left;
+    margin: 1em 0;
+    line-height: 1.5;
+    max-width: 32em;
+  }
+  .todo strong { color: var(--warn); font-weight: 600; font-style: normal; margin-right: .5em; letter-spacing: .05em; }
+  .todo .who { color: rgba(255, 200, 50, 0.6); font-size: 0.85em; }
+
+  /* tables */
+  .reveal table {
+    margin: 1em auto;
+    border-collapse: collapse;
+    font-size: 0.7em;
+    font-weight: 300;
+  }
+  .reveal table th, .reveal table td {
+    border: none;
+    padding: .6em 1em;
+    text-align: left;
+    line-height: 1.5;
+  }
+  .reveal table th {
+    color: var(--accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-size: .85em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+  }
+  .reveal table td:first-child { color: white; font-weight: 400; }
+  .reveal table tr td { border-top: 1px solid rgba(255,255,255,.06); }
+  .reveal table tr:first-child td { border-top: none; }
+
+  /* lists */
+  .reveal ul, .reveal ol {
+    display: inline-block;
+    text-align: left;
+    margin: 1em 0;
+    font-size: 0.85em;
+    line-height: 1.7;
+  }
+  .reveal ul li, .reveal ol li { margin: .3em 0; }
+  .reveal ul.tight li { margin: .15em 0; }
+  .reveal ul.checks { list-style: none; padding: 0; }
+  .reveal ul.checks li::before { content: '☐  '; color: var(--accent); margin-right: .3em; }
+  .reveal ul.do { list-style: none; padding: 0; }
+  .reveal ul.do li::before { content: '✓  '; color: #5dd39e; margin-right: .3em; font-weight: 600; }
+  .reveal ul.dont { list-style: none; padding: 0; }
+  .reveal ul.dont li::before { content: '✗  '; color: var(--accent); margin-right: .3em; font-weight: 600; }
+
+  /* big metric */
+  .metric {
+    font-size: 4em; font-weight: 200; letter-spacing: -0.04em;
+    color: white; line-height: 1;
+  }
+  .metric-label {
+    font-size: .8em; opacity: .55; margin-top: .5em; line-height: 1.5;
+  }
+
+  /* section divider — same dark bg as other slides, distinguished by typography only */
+  .divider { text-align: center; }
+  .divider .label { font-size: 0.55em; opacity: .35; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 1.5em; }
+  .divider h2 { font-size: 2.6em; margin: 0; }
+
+  /* end card */
+  .end-card { text-align: center; }
+  .end-card .label { font-size: .5em; opacity: .35; letter-spacing: .3em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- ====== 0 · Welcome ====== -->
+    <section class="cover">
+      <h1>Angular<br>Kickoff.</h1>
+      <div class="subtitle">RS School · 2026</div>
+      <div class="meta">April 27 — July 26 · 12 weeks</div>
+    </section>
+
+    <section class="center-quiet">
+      <p class="one-line muted">
+        Today — 60–90 minutes of intro:<br>
+        what this course is, how we work, what we expect from you,<br>
+        and what you do <em>tonight</em>.
+      </p>
+      <p class="tiny faint" style="margin-top: 3em;">Part 2 «Inspiration» — separate presentation</p>
+    </section>
+
+    <!-- ====== I. RS School — who we are ====== -->
+    <section class="divider">
+      <div class="label">Part I</div>
+      <h2>RS School — who we are</h2>
+    </section>
+
+    <section class="center-quiet">
+      <ul class="tight" style="font-size: 1em;">
+        <li><strong>Free</strong> community school</li>
+        <li>Running courses <strong>since 2013</strong></li>
+        <li>Open to <strong>anyone</strong> — regardless of age, occupation, or location</li>
+        <li><strong>Open-source</strong> philosophy — materials open, code public</li>
+        <li><strong>"Teach it forward"</strong> principle — today they teach you, tomorrow you teach</li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <blockquote class="quiet">
+        RS School has been running for <span class="accent">over 12 years.</span><br>
+        Tens of thousands of students have passed through.<br><br>
+        What you're sitting in is not a course —<br>
+        it's a community, tested many times over.
+      </blockquote>
+    </section>
+
+    <!-- ====== II. How we teach (or don't) ====== -->
+    <section class="divider">
+      <div class="label">Part II</div>
+      <h2>How we teach<br>(or don't)</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.8em;">There are no "designated" teachers in RS School.</h2>
+      <p class="muted" style="margin-top: 1.5em;">There are three groups of people:</p>
+      <ol style="font-size: 0.95em; max-width: 32em; text-align: left;">
+        <li>Those who <strong>want to become</strong> developers.</li>
+        <li>Those who want to become developers, <strong>learn on their own</strong>, and help other students learn.</li>
+        <li>Those who <strong>already became</strong> developers and help others <em>in their free time</em>.</li>
+      </ol>
+      <p class="muted small" style="margin-top: 1.5em;">All mentors are developers from various companies. <strong>No one is paid for teaching.</strong></p>
+    </section>
+
+    <section class="center-quiet">
+      <blockquote class="quiet">
+        "I never teach my pupils.<br>
+        I only attempt to provide<br>
+        the conditions in which they can learn."
+        <cite>— Albert Einstein</cite>
+      </blockquote>
+      <p class="muted small" style="margin-top: 2em; max-width: 32em;">The school is responsible for the <strong>environment</strong>: assignments, rhythm, checkpoints, feedback, communication.<br>
+      You're responsible for the <strong>learning process</strong> — putting in the time, working through it, finishing.</p>
+    </section>
+
+    <section class="center-quiet">
+      <p class="tiny faint" style="margin-bottom: 1em;">Hamburg · 1960–1962</p>
+      <h2>270 concerts in 18 months.<br>5–8 hours each.</h2>
+      <blockquote class="quiet" style="margin-top: 2em;">
+        "In Liverpool, we'd only ever done one-hour shows<br>
+        and we just used to play our hits.<br>
+        In Hamburg, we had to play for eight hours,<br>
+        so we really had to find a new way of playing."
+        <cite>— The Beatles, via Malcolm Gladwell ("Outliers")</cite>
+      </blockquote>
+      <p class="muted small" style="margin-top: 2em;">RS School is built like Hamburg, not like Liverpool:<br>
+      <strong>many hours, dense rhythm.</strong><br>
+      If you're expecting "half an hour a day" — this isn't that.</p>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">Where engineers' learning actually comes from</h2>
+      <table>
+        <tr><th>Share</th><th>Source</th><th>How it looks here</th></tr>
+        <tr><td><span class="metric" style="font-size: 1.6em;">70%</span></td><td>Experience<br><span class="faint small">(doing with hands)</span></td><td>Project, individual tasks, diary, defences</td></tr>
+        <tr><td><span class="metric" style="font-size: 1.6em;">20%</span></td><td>Other people</td><td>Mentors, Discord, code review, peer defences, Tandi feedback</td></tr>
+        <tr><td><span class="metric" style="font-size: 1.6em;">10%</span></td><td>Structured material</td><td>Lectures, documentation, checkpoints</td></tr>
+      </table>
+      <p class="muted small" style="margin-top: 1em;">Lectures matter — but they're <strong>the smallest part</strong>.</p>
+    </section>
+
+    <!-- ====== III. Tandi ====== -->
+    <section class="divider">
+      <div class="label">Part III</div>
+      <h2>Tandi<br>and where this course fits</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">What is Tandi</h2>
+      <p class="muted">An observer tool.</p>
+      <ul class="tight" style="margin-top: 1em;">
+        <li>Collects diaries</li>
+        <li>Tracks progress through checkpoints</li>
+        <li>Helps the coordinator see where teams are</li>
+        <li>Generates periodic feedback</li>
+      </ul>
+      <blockquote class="quiet" style="margin-top: 2em; font-size: 0.95em;">
+        Tandi is a <span class="accent">chronicler, not a judge.</span><br>
+        Counts to make things visible — not to punish.
+      </blockquote>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">Why this matters for you</h2>
+      <p class="muted" style="margin-top: 1em;">This course is the <strong>first beyond RS Tandem</strong><br>
+      where Tandi launches outside its native context.</p>
+      <p class="muted" style="margin-top: 1em;">Some processes are pilot.<br>
+      They are battle-tested on 37 Tandem teams,<br>
+      but small adjustments in the first weeks are possible.</p>
+      <p class="faint small" style="margin-top: 1.5em;">Any changes will be announced in advance.</p>
+    </section>
+
+    <!-- ====== IV. Course goals ====== -->
+    <section class="divider">
+      <div class="label">Part IV</div>
+      <h2>Course goals</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.6em;">What you'll <em>be able to do</em><br>by the end</h2>
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        3–5 concrete skills. Example shape:<br>
+        — Build a standalone Angular app with routing, forms, HTTP<br>
+        — Use Signals for local state, RxJS at system boundaries<br>
+        — Write unit tests with Vitest and e2e with Playwright<br>
+        — Decompose a task into components and services; defend your decisions<br>
+        — Work in a team: PRs, code review, migrations, conflicts
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.6em;">What you <em>won't</em> be able to do<br><span class="muted">(and that's fine)</span></h2>
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Set explicit boundaries. Example:<br>
+        — Not "knows Angular at senior interview level"<br>
+        — Not "builds micro-frontends and SSR streaming"<br>
+        — Not "closes enterprise cases on the fly"<br>
+        The course gives a foundation and experience. The rest comes later.
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">Why this matters for you</h2>
+      <ul style="font-size: 0.95em; max-width: 34em;">
+        <li>Enter the Angular ecosystem through a <strong>large, long-running stack</strong> (banks, airlines, healthcare, government — Angular developers there are valuable and well-paid)</li>
+        <li>Get <strong>team-project experience</strong> — not "another course with tests at the end"</li>
+        <li>Get a <strong>public portfolio</strong>: repository + defences + diary</li>
+        <li>Become part of the <strong>RS School community</strong>, potentially a future mentor</li>
+      </ul>
+    </section>
+
+    <!-- ====== V. Course structure ====== -->
+    <section class="divider">
+      <div class="label">Part V</div>
+      <h2>Course structure</h2>
+    </section>
+
+    <section class="center-quiet">
+      <table>
+        <tr><th>Parameter</th><th>Value</th></tr>
+        <tr><td>Length</td><td>12 weeks <span class="faint">(+1 buffer)</span></td></tr>
+        <tr><td>Start</td><td>April 27, 2026</td></tr>
+        <tr><td>End</td><td>~July 26, 2026 <span class="faint">[TODO: confirm]</span></td></tr>
+        <tr><td>Weekly format</td><td>lecture → practice → diary → checkpoint</td></tr>
+      </table>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">Checkpoints</h2>
+      <table>
+        <tr><th>Week</th><th>Topic</th><th>What you submit</th></tr>
+        <tr><td>W1</td><td>Setup &amp; Environment</td><td>Diary (≥2 entries)</td></tr>
+        <tr><td>W2–W??</td><td colspan="2"><span class="faint">— by analogy with RS Tandem, or our own structure —</span></td></tr>
+        <tr><td>Final</td><td>Defence</td><td>Project defence</td></tr>
+      </table>
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Confirm checkpoint count and content. By analogy with RS Tandem:<br>
+        w1 (setup), w2 (issues), w3 (deploy), w4 (testing+review), final.<br>
+        Plus — start dates, midterm if any, final defence date.
+      </div>
+    </section>
+
+    <!-- ====== VI. Teams and roles ====== -->
+    <section class="divider">
+      <div class="label">Part VI</div>
+      <h2>Teams and roles</h2>
+    </section>
+
+    <section class="center-quiet">
+      <div class="todo">
+        <strong>TODO · DECISION</strong> <span class="who">· Siarheichyk</span><br>
+        Will the Angular course have teams or individual projects?<br>
+        — If teams: size (3–5?), how formed, who's the lead<br>
+        — If individual: only pair-/peer-review between students?
+      </div>
+      <p class="muted small" style="margin-top: 2em;">If teams — these are the roles:</p>
+      <table>
+        <tr><th>Role</th><th>What they do</th></tr>
+        <tr><td><strong>member</strong></td><td>Regular participant; keeps a diary, writes their part of the code</td></tr>
+        <tr><td><strong>lead</strong></td><td>Coordinates within the team (1 person); not exempt from coding</td></tr>
+        <tr><td><strong>mentor</strong></td><td>External advisor; doesn't write code, reads diaries, gives feedback</td></tr>
+      </table>
+      <p class="faint small" style="margin-top: 1em;">Mentors are not required to keep diaries — that's course policy.</p>
+    </section>
+
+    <!-- ====== VII. Why a diary ====== -->
+    <section class="divider">
+      <div class="label">Part VII</div>
+      <h2>Why a diary</h2>
+    </section>
+
+    <section class="center-quiet">
+      <p class="one-line">
+        The diary is <em>the central practice of this course.</em>
+      </p>
+      <p class="muted" style="margin-top: 2em;">It's not the code that goes to defence.<br>
+      It's the <strong>human</strong> — someone who can reflect on what they're doing.</p>
+      <p class="muted small" style="margin-top: 1.5em;">Before "how" — "why" matters.</p>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">A diary — <em>two</em> tools in one</h2>
+      <table>
+        <tr><th>Tool</th><th>What it does</th></tr>
+        <tr><td><strong>Thinking</strong></td><td>When you write something in words, you don't retell a finished thought — you <em>build</em> it. Many concepts that felt clear in your head fall apart on paper. That's where real understanding starts.</td></tr>
+        <tr><td><strong>History</strong></td><td>In a month you'll re-read your week-3 entry and notice: "I didn't know then what's obvious now." The most powerful proof of growth there is — your own writing.</td></tr>
+      </table>
+      <p class="muted small" style="margin-top: 1.5em;">Deeper on "the illusion of understanding" — in the Inspiration deck.</p>
+    </section>
+
+    <!-- ====== VIII. How to keep a diary ====== -->
+    <section class="divider">
+      <div class="label">Part VIII</div>
+      <h2>How to keep a diary</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">What it is, technically</h2>
+      <ul class="tight" style="font-size: 0.95em;">
+        <li>A Markdown file in the <code>diary/</code> folder of your repository</li>
+        <li>One entry = one day of work (or a focused session)</li>
+        <li>Minimum: <strong>≥2 entries in W1</strong>, then per checkpoint</li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Filename — <span class="accent">important</span></h2>
+      <p class="muted">Format: <code style="font-size: 1.3em; color: white;">YYYY-MM-DD.md</code></p>
+      <p class="muted small">e.g. <code>2026-04-28.md</code></p>
+      <p class="muted small" style="margin-top: 1em;">Also allowed: <code>DD-MM-YYYY</code>, <code>YY-MM-DD</code> with <code>-</code> or <code>.</code></p>
+      <blockquote class="quiet" style="margin-top: 2em; font-size: 0.95em;">
+        A file without a date in its name <span class="accent">does not count.</span><br>
+        <span class="muted">(<code>reflection.md</code>, <code>notes.md</code> — no.)</span>
+      </blockquote>
+      <p class="faint small" style="margin-top: 1.5em;">Tandi counts entries by the date in the filename. Typo it — lose the credit.</p>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">What to write</h2>
+      <ul class="do" style="font-size: 0.9em;">
+        <li>What you tried to do today</li>
+        <li>Where you got stuck and how you searched for a way out</li>
+        <li>What you newly understood (about Angular, about yourself, about the team)</li>
+        <li>What didn't work and why</li>
+      </ul>
+      <p class="muted small" style="margin-top: 1.5em;">DON'T write:</p>
+      <ul class="dont" style="font-size: 0.9em;">
+        <li>A list of commits</li>
+        <li>A retelling of the docs</li>
+        <li>"Today I learned Angular"</li>
+      </ul>
+      <p class="faint small" style="margin-top: 1.5em;">More on diary entry levels (0–4) — see the standalone <code>diary.html</code> page</p>
+    </section>
+
+    <!-- ====== IX. Scoring ====== -->
+    <section class="divider">
+      <div class="label">Part IX</div>
+      <h2>Scoring</h2>
+    </section>
+
+    <section class="center-quiet">
+      <div class="todo">
+        <strong>TODO · DECISION</strong> <span class="who">· Siarheichyk</span><br>
+        Course scoring model — three options:<br>
+        <strong>A.</strong> Copy the RS Tandem model (920 pts: 20 W1 + 100 Code + 300 Teamwork + 500 Personal)<br>
+        <strong>B.</strong> Adapt for Angular (e.g. more weight on individual code if there are no teams)<br>
+        <strong>C.</strong> Design from scratch
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <p class="one-line muted">Points are <em>a tool to see progress.</em><br>Not the goal.</p>
+      <p class="muted" style="margin-top: 2em;">In 2026 anyone can build a working widget with a single prompt.<br>
+      That <strong>doesn't</strong> mean the person learned —<br>
+      it means AI can.</p>
+      <p class="muted" style="margin-top: 1em;"><span class="accent">We need to tell the difference.</span></p>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">What we care about</h2>
+      <ul style="font-size: 0.9em; max-width: 34em;">
+        <li><strong>Real knowledge</strong> — what stays in your head, not in your chat with an agent</li>
+        <li><strong>Hands-on skills</strong> — what you can write, explain out loud, defend</li>
+        <li><strong>Learning path</strong> — how you approached the task, where you got stuck, what you got out of it</li>
+        <li><strong>Thinking</strong> — how you decompose, how you weigh tradeoffs, how you catch your own mistakes</li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Mechanics look at the <em>path</em>, not the finished thing</h2>
+      <table>
+        <tr><th>Mechanic</th><th>NOT this</th><th>BUT this</th></tr>
+        <tr><td><strong>Defences</strong></td><td>"does the final code work"</td><td>"do you understand what and why you wrote"</td></tr>
+        <tr><td><strong>Diary</strong></td><td>list of commits, doc retelling</td><td>trace of your thinking — where you got stuck, what you got</td></tr>
+        <tr><td><strong>Code review</strong></td><td>formality for the checkbox</td><td>can you discuss someone else's code as your own</td></tr>
+      </table>
+      <blockquote class="quiet" style="margin-top: 2em; font-size: 0.95em;">
+        AI is a normal tool. Use it — yes.<br>
+        <span class="accent">Faking understanding through AI — no.</span><br>
+        <span class="muted small">That's self-deception, and it's caught easily at any defence.</span>
+      </blockquote>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Operational rules</h2>
+      <ul style="font-size: 0.9em; max-width: 34em;">
+        <li><strong>The diary is a gate</strong>, not points by itself. No diary → nothing else counts.</li>
+        <li><strong>Per-user scores are private.</strong> Aggregates are visible. Specific scores are visible to the student in their own dashboard.</li>
+      </ul>
+    </section>
+
+    <!-- ====== X. Defences ====== -->
+    <section class="divider">
+      <div class="label">Part X</div>
+      <h2>Defences</h2>
+    </section>
+
+    <section class="center-quiet">
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Confirm which of the three defence types apply on the Angular course.<br>
+        On Tandem all three were used.
+      </div>
+      <table style="margin-top: 1em;">
+        <tr><th>Type</th><th>In front of</th><th>Goal</th></tr>
+        <tr><td><strong>Peer</strong></td><td>another student / a pair</td><td>learn to explain your code to someone outside your team</td></tr>
+        <tr><td><strong>Team</strong></td><td>your own team</td><td>each member understands the <em>whole</em> project, not just their part</td></tr>
+        <tr><td><strong>Mentor</strong></td><td>mentor / coordinator</td><td>check engineering depth; questions on any part of the stack and codebase</td></tr>
+      </table>
+      <div class="todo" style="margin-top: 1.5em;">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Defence dates / windows, format (Zoom / in Discord / live), length per type.
+      </div>
+    </section>
+
+    <!-- ====== XI. What matters, what doesn't ====== -->
+    <section class="divider">
+      <div class="label">Part XI</div>
+      <h2>What matters,<br>what doesn't</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;" class="accent">What matters</h2>
+      <ul class="do" style="font-size: 0.9em; max-width: 36em;">
+        <li><strong>You do it with your hands.</strong> Not reading about Angular — writing Angular code every day.</li>
+        <li><strong>Functional requirements are met.</strong> The button clicks, the form submits.</li>
+        <li><strong>You keep a diary</strong> — regularly, with a date in the filename, with reflection, not commit-listing.</li>
+        <li><strong>You can defend your code.</strong> Not just "it works" — but "I understand how and why".</li>
+        <li><strong>You help your team</strong> — code review, explanations, resolving conflicts in the code.</li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;" class="muted">What does NOT matter <span class="faint">(especially at the start)</span></h2>
+      <blockquote class="quiet" style="margin-bottom: 1.5em;">
+        "School assignments are aimed at meeting functional requirements.<br>
+        Code quality at the early stage of learning isn't particularly important."
+        <cite>— traditional RS School wording</cite>
+      </blockquote>
+      <ul class="dont" style="font-size: 0.9em; max-width: 36em;">
+        <li><strong>Perfect architecture</strong> in week one. First "it works" — then "it's nice".</li>
+        <li><strong>Strict code style</strong> at the start. The linter will help; learning beauty through practice beats fearing the commit button.</li>
+        <li><strong>100% test coverage</strong> in W1–W2. Tests will come — as a separate practice.</li>
+        <li><strong>Comparing yourself with others.</strong> Competition is not the goal.</li>
+      </ul>
+      <div class="todo" style="margin-top: 1.5em;">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Confirm this framing. On RS Tandem, W4 brings in testing+review scoring (10+10),<br>
+        so "code quality doesn't matter" is about the <em>first</em> weeks, not the whole course.
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <p class="one-line">
+        The main rule:<br>
+        <strong>Do the work.</strong><br>
+        First <em>working</em>, then <em>tidy</em>, then <em>beautiful.</em>
+      </p>
+      <p class="muted small" style="margin-top: 2em;">Skipping "working" straight to "beautiful" is the most common way to get stuck on this course.</p>
+    </section>
+
+    <!-- ====== XII. Communication ====== -->
+    <section class="divider">
+      <div class="label">Part XII</div>
+      <h2>Communication</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.5em;">Main channel — Discord</h2>
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Server invite link.
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Discord nickname — <span class="accent">required format</span></h2>
+      <p class="metric" style="font-size: 2.4em; margin: 1em 0;"><code style="color: white;">Name Surname (@github-username)</code></p>
+      <p class="muted small">e.g. <strong>Ivan Ivanov (@ivanko)</strong></p>
+      <p class="muted small" style="margin-top: 2em;"><strong>Why:</strong></p>
+      <ul style="font-size: 0.85em; max-width: 32em;">
+        <li>The coordinator immediately knows who you are, no questions asked</li>
+        <li>Tandi connects your Discord activity to your GitHub account</li>
+        <li>Mentors can find your repository in one click</li>
+      </ul>
+      <p class="muted small" style="margin-top: 1.5em;"><strong>Do this on the very first evening.</strong> Discord → server settings → your profile → nickname.</p>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Where to ask what</h2>
+      <table>
+        <tr><th>Question</th><th>Where</th></tr>
+        <tr><td>Technical, about Angular</td><td><span class="faint">[TODO: channel]</span></td></tr>
+        <tr><td>Operational (dates, scores)</td><td><span class="faint">[TODO: channel]</span></td></tr>
+        <tr><td>To the coordinator personally</td><td><span class="faint">[TODO: Discord handle]</span></td></tr>
+        <tr><td>Bug in Tandi / observer</td><td>GitHub Issue in <code>rollingscopes/rs-angular-observer</code><br><span class="faint">[TODO: confirm URL]</span></td></tr>
+      </table>
+      <div class="todo" style="margin-top: 1em;">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Discord channels by question type · coordinator handle · confirm deploy URL.
+      </div>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Expected response time</h2>
+      <div class="todo">
+        <strong>TODO</strong> <span class="who">· Siarheichyk</span><br>
+        Tandem reference: "24–48h on weekdays, don't expect replies on weekends".
+      </div>
+      <blockquote class="quiet" style="margin-top: 2em; font-size: 0.95em;">
+        Remember the model: mentors help <em>in their free time.</em><br>
+        Don't expect an urgent reply at 1 AM. <span class="muted">A good question with context gets a good answer — usually within 24 hours.</span>
+      </blockquote>
+    </section>
+
+    <!-- ====== XIII. What to do today ====== -->
+    <section class="divider">
+      <div class="label">Part XIII</div>
+      <h2>What to do<br>today and this week</h2>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">Tonight</h2>
+      <ul class="checks" style="font-size: 0.95em;">
+        <li>Join the course Discord server <span class="faint">[TODO: link]</span></li>
+        <li>Update your Discord nickname to <code>Name Surname (@github)</code></li>
+        <li><span class="faint">[TODO: join the GitHub organization? accept a PR invite?]</span></li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">This week (W1)</h2>
+      <ul class="checks" style="font-size: 0.95em;">
+        <li>Make your first diary entry <span class="faint">[TODO: confirm — personal repo or team sandbox]</span></li>
+        <li><span class="faint">[TODO: first technical assignment, if any]</span></li>
+        <li>(Optional) Read <code>angular-intro.md</code> — ~20 min,<br>
+        Angular philosophy to set up a mental model before the first technical lecture</li>
+      </ul>
+    </section>
+
+    <section class="center-quiet">
+      <h2 style="font-size: 1.4em;">By the end of W1</h2>
+      <ul class="checks" style="font-size: 0.95em;">
+        <li><strong>≥2 diary entries</strong> with dates in the filenames</li>
+        <li><span class="faint">[TODO: setup checklist — Node version, Angular CLI, IDE plugin — as a separate document]</span></li>
+      </ul>
+    </section>
+
+    <!-- ====== XIV. Q&A ====== -->
+    <section class="divider">
+      <div class="label">Part XIV</div>
+      <h2>Q&amp;A</h2>
+    </section>
+
+    <section class="center-quiet">
+      <p class="one-line muted">Any question — <em>now.</em></p>
+      <p class="muted small" style="margin-top: 2em;">If we don't have time for something — we'll continue in Discord.<br>
+      Better to ask than to leave with a gap.</p>
+    </section>
+
+    <!-- ====== END ====== -->
+    <section class="end-card">
+      <div class="label">— end of operational kickoff —</div>
+      <p class="muted" style="margin-top: 2em;">Part 2: <span class="accent">Inspiration</span> — separate presentation</p>
+      <p class="faint small" style="margin-top: 1em;"><code>inspiration.html</code> · Vitruvius → Carmack → Huang → why a diary</p>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0.06,
+    hash: true,
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зачем вести дневник · Tandi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f7f1e8;
+  --bg-warm: #efe8dc;
+  --bg-dark: #1a1410;
+  --text: #1a1410;
+  --text-light: #5c4f43;
+  --text-faint: #8a7d70;
+  --accent: #7a1830;
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+body { overflow-x: hidden; }
+
+/* === language switcher === */
+html[lang="ru"] [lang="en"] { display: none; }
+html[lang="en"] [lang="ru"] { display: none; }
+
+.lang-toggle {
+  position: fixed; top: 20px; right: 20px;
+  z-index: 200;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .15em;
+  background: rgba(0,0,0,.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px;
+  padding: 3px;
+  display: flex;
+  gap: 0;
+}
+.lang-toggle button {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.5);
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  border-radius: 20px;
+  transition: all .2s;
+}
+.lang-toggle button:hover { color: rgba(255,255,255,.85); }
+.lang-toggle button.active {
+  background: rgba(255,255,255,.95);
+  color: #1a1410;
+}
+
+.progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); width: 0%; z-index: 100; transition: width .15s ease-out; }
+
+.r { opacity: 0; transform: translateY(20px); transition: opacity .9s ease-out, transform .9s ease-out; }
+.r.v { opacity: 1; transform: translateY(0); }
+.r.d1 { transition-delay: .15s; }
+.r.d2 { transition-delay: .3s; }
+.r.d3 { transition-delay: .45s; }
+.r-slow { opacity: 0; transition: opacity 2.5s ease-out; }
+.r-slow.v { opacity: 1; }
+
+.page { max-width: 640px; margin: 0 auto; padding: 0 28px; }
+
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  padding: 80px 28px; position: relative;
+  background: var(--bg-dark); overflow: hidden;
+}
+
+.scroll-hint {
+  margin-top: 64px; font-size: 11px; color: rgba(255,255,255,.25);
+  letter-spacing: .2em; text-transform: uppercase;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity:.3 } 50% { opacity:.8 } }
+
+.anchor-quote {
+  font-family: var(--serif); font-size: clamp(24px, 4vw, 32px);
+  font-style: italic; font-weight: 300; color: rgba(255,255,255,.85);
+  line-height: 1.45; max-width: 520px;
+}
+.anchor-cite {
+  font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,.4);
+  margin-top: 28px; letter-spacing: .05em;
+}
+.anchor-cite a { color: rgba(255,255,255,.5); text-decoration: underline; text-underline-offset: 3px; }
+
+.section-divider {
+  background: var(--bg-dark);
+  margin: 64px calc(-50vw + 50%) 48px;
+  width: 100vw;
+  padding: 64px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.section-epigraph {
+  font-family: var(--sans); font-size: 15px; font-style: italic;
+  color: rgba(255,255,255,.5); letter-spacing: .03em;
+  max-width: 420px; margin: 0 auto; line-height: 1.8;
+}
+
+.lede {
+  font-family: var(--serif); font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 400; color: var(--text); line-height: 1.5;
+  margin: 40px 0 24px;
+}
+.lede em { color: var(--accent); font-style: italic; }
+
+.body-text {
+  font-size: 16px; color: var(--text-light); line-height: 1.9;
+  margin-bottom: 24px;
+}
+.body-text strong { color: var(--text); font-weight: 600; }
+.body-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.pull {
+  font-family: var(--serif); font-size: clamp(22px, 3vw, 28px);
+  font-style: italic; color: var(--text); line-height: 1.5;
+  padding: 24px 0 24px 28px;
+  border-left: 3px solid var(--accent);
+  margin: 40px 0;
+}
+
+.practitioner {
+  margin: 40px 0; padding: 28px 0;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+.practitioner:last-of-type { border-bottom: 1px solid rgba(0,0,0,.08); }
+.practitioner-name {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  color: var(--text); margin-bottom: 6px;
+}
+.practitioner-role {
+  font-size: 12px; color: var(--accent); letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 16px;
+}
+.practitioner-text {
+  font-size: 16px; color: var(--text-light); line-height: 1.9;
+}
+.practitioner-text a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+.science-card {
+  background: var(--bg-warm);
+  padding: 40px 32px;
+  margin: 48px calc(-50vw + 50%) 48px;
+  width: 100vw;
+  text-align: center;
+}
+.science-card-inner {
+  max-width: 520px; margin: 0 auto;
+}
+.science-label {
+  font-size: 11px; color: var(--accent);
+  letter-spacing: .2em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.science-headline {
+  font-family: var(--serif); font-size: clamp(22px, 3vw, 26px);
+  color: var(--text); line-height: 1.5; margin-bottom: 16px;
+}
+.science-body {
+  font-size: 15px; color: var(--text-light); line-height: 1.85;
+}
+.science-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.science-punch {
+  font-family: var(--serif); font-size: 22px; font-style: italic;
+  color: var(--accent); margin-top: 24px; line-height: 1.5;
+}
+
+.voice { margin-bottom: 48px; }
+.voice-text {
+  font-family: var(--serif); font-size: 20px; font-style: italic;
+  color: var(--text); line-height: 1.65;
+  padding-left: 20px; border-left: 2px solid rgba(122,24,48,.15);
+}
+.voice-cite {
+  font-family: var(--sans); font-size: 13px; color: var(--text-faint);
+  margin-top: 10px; padding-left: 20px;
+}
+.dot {
+  text-align: center; color: var(--text-faint);
+  font-size: 14px; margin: 32px 0; opacity: .4;
+}
+
+.level-intro {
+  font-family: var(--serif); font-size: clamp(22px, 3vw, 26px);
+  color: var(--text); line-height: 1.55;
+  margin: 40px 0 56px;
+}
+.level-intro em { color: var(--accent); font-style: italic; }
+
+.level {
+  margin: 56px 0;
+  padding-top: 40px;
+  border-top: 1px solid rgba(122,24,48,.14);
+}
+.level:first-of-type { border-top: none; padding-top: 0; }
+.level-number {
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+.level-title {
+  font-family: var(--serif); font-size: 28px; font-weight: 400;
+  color: var(--text); margin-bottom: 24px; line-height: 1.2;
+}
+.level-example {
+  font-family: var(--serif); font-size: 18px; font-style: italic;
+  color: var(--text); line-height: 1.7;
+  padding: 22px 26px; background: var(--bg-warm);
+  border-left: 3px solid rgba(122,24,48,.25);
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+.level-commentary {
+  font-size: 15px; color: var(--text-light); line-height: 1.9;
+}
+.level-commentary strong { color: var(--text); font-weight: 600; }
+.level-commentary em { color: var(--accent); font-style: italic; }
+
+.inline-code {
+  font-family: var(--sans); font-size: .88em;
+  background: rgba(0,0,0,.055); padding: 1px 7px;
+  border-radius: 3px; color: var(--text);
+}
+
+.closing {
+  min-height: 90vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 80px 28px;
+  background: var(--bg-dark); position: relative; overflow: hidden;
+}
+.closing-lede {
+  font-family: var(--serif); font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 300; color: rgba(255,255,255,.7);
+  line-height: 1.6; max-width: 460px;
+}
+.closing-punchline {
+  font-family: var(--serif); font-size: clamp(28px, 5vw, 40px);
+  font-weight: 600; color: rgba(255,255,255,.95);
+  margin-top: 48px; max-width: 480px; line-height: 1.4;
+  font-style: italic;
+}
+.closing-coda {
+  font-family: var(--sans); font-size: 15px;
+  color: rgba(255,255,255,.45); margin-top: 40px; line-height: 1.8;
+  max-width: 380px;
+}
+
+.footer {
+  text-align: center; padding: 40px 28px 80px;
+  font-size: 13px; color: rgba(255,255,255,.25);
+  background: var(--bg-dark);
+}
+.footer a { color: rgba(255,255,255,.25); text-decoration: none; margin: 0 8px; }
+.footer a:hover { color: rgba(255,255,255,.5); }
+
+@media (max-width: 600px) {
+  .voice-text { font-size: 18px; padding-left: 16px; }
+  .hero::before, .hero::after { width: 40px; }
+  .pull { font-size: 20px; padding-left: 20px; }
+  .lang-toggle { top: 12px; right: 12px; font-size: 11px; }
+  .lang-toggle button { padding: 5px 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" id="langToggle">
+  <button data-lang="ru" class="active">RU</button>
+  <button data-lang="en">EN</button>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<!-- ===== COVER ===== -->
+<section class="hero" style="min-height: 100vh;">
+  <div class="r" style="font-family: var(--serif); font-size: 14px; font-weight: 400; color: rgba(255,255,255,.45); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 36px;">
+    <span lang="ru">Дневник разработчика</span>
+    <span lang="en">Developer's diary</span>
+  </div>
+  <div class="r d1" style="font-family: var(--serif); font-size: clamp(48px, 10vw, 88px); font-weight: 300; color: rgba(255,255,255,.9); line-height: 1.1; letter-spacing: -1.5px;">
+    <span lang="ru">Та же<br>профессия.</span>
+    <span lang="en">Same<br>profession.</span>
+  </div>
+  <div class="r d2" style="font-family: var(--serif); font-size: 20px; font-style: italic; color: rgba(255,255,255,.4); margin-top: 32px; max-width: 440px; line-height: 1.7;">
+    <span lang="ru">Курс начинается.<br>
+    Перед тем как вы напишете первую строчку — <br>пара слов о том, во что вы вступаете.</span>
+    <span lang="en">The course is starting.<br>
+    Before you write your first line —<br>a few words about what you're stepping into.</span>
+  </div>
+  <div class="scroll-hint r d3">↓ scroll</div>
+</section>
+
+<!-- ===== CONTEXT ===== -->
+<section class="hero" style="min-height: 100vh;">
+  <div class="r" style="font-family: var(--serif); font-size: 13px; color: rgba(255,255,255,.45); letter-spacing: .2em; text-transform: uppercase; margin-bottom: 32px;">
+    <span lang="ru">Что впереди</span>
+    <span lang="en">What's ahead</span>
+  </div>
+  <div class="r d1" style="font-family: var(--serif); font-size: clamp(22px, 3vw, 28px); color: rgba(255,255,255,.75); line-height: 1.7; max-width: 520px;">
+    <span lang="ru">Проект, который вы делаете.<br>
+    Команда, в которой у каждого своя часть.<br>
+    И дневник — по одному на каждого из вас.</span>
+    <span lang="en">A project you're building.<br>
+    A team where everyone has their part.<br>
+    And a diary — one per person.</span>
+  </div>
+  <div class="r d2" style="font-family: var(--sans); font-size: 15px; color: rgba(255,255,255,.45); line-height: 1.9; margin-top: 40px; max-width: 440px;">
+    <span lang="ru">Мы смотрим на то, как вы думаете,<br>
+    а не только на то, что вы в итоге сделаете.</span>
+    <span lang="en">We watch how you think —<br>
+    not just what you eventually ship.</span>
+  </div>
+  <div class="r d3" style="font-family: var(--serif); font-size: 20px; font-style: italic; color: rgba(255,255,255,.8); margin-top: 36px; max-width: 440px;">
+    <span lang="ru">Поэтому писать — будете.</span>
+    <span lang="en">So — you'll be writing.</span>
+  </div>
+  <div class="scroll-hint r d3">↓</div>
+</section>
+
+<!-- ===== I. THE LINE ===== -->
+<div class="page" style="padding-top: 100px;">
+
+<div class="r">
+<div class="lede">
+  <span lang="ru">Да Винчи называл себя инженером. <em>Брунеллески — тот, кто поставил купол Флорентийского собора, — тоже.</em></span>
+  <span lang="en">Da Vinci called himself an engineer. <em>So did Brunelleschi — the one who put up the dome of the Florence Cathedral.</em></span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Слово «инженер» старше слова «программист» лет на пятьсот. И всё это время оно означало одно и то же: <strong>человек, который что-то делает руками и головой</strong>. Меняются инструменты — не меняется суть.</span>
+  <span lang="en">The word "engineer" is some five hundred years older than "programmer". And all that time it has meant the same thing: <strong>a person who makes things with their hands and head</strong>. Tools change — the essence doesn't.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Вы — в этой же профессии. Не в её великом крыле. В её рабочей комнате. Но в той самой — где одни и те же вопросы задавались уже пятьсот лет.</span>
+  <span lang="en">You're in that same profession. Not in its grand wing. In its workshop. But it's the same one — where the same questions have been asked for five hundred years.</span>
+</div>
+
+<div class="pull">
+  <span lang="ru">И у этой профессии всегда был один общий инструмент: блокнот.</span>
+  <span lang="en">And this profession has always had one shared tool: a notebook.</span>
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== II. PRACTITIONERS ===== -->
+<div class="section-divider r">
+  <div class="section-epigraph">
+    <span lang="ru">Три человека. Три эпохи. Одна и та же практика.</span>
+    <span lang="en">Three people. Three eras. The same practice.</span>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="practitioner r">
+  <div class="practitioner-name">
+    <span lang="ru">Леонардо да Винчи</span>
+    <span lang="en">Leonardo da Vinci</span>
+  </div>
+  <div class="practitioner-role">
+    <span lang="ru">Италия · 1500</span>
+    <span lang="en">Italy · 1500</span>
+  </div>
+  <div class="practitioner-text">
+    <span lang="ru">Носил с собой блокнот всю жизнь. Записывал наблюдения, идеи, ошибки, вопросы без ответов. До нас дошло семь тысяч страниц. Не дневник чувств — рабочий инструмент мышления. Рядом с эскизами вертолёта — расчёты шестерён и список, сколько стоит яблоко на рынке.</span>
+    <span lang="en">Carried a notebook with him his whole life. Recorded observations, ideas, mistakes, unanswered questions. Seven thousand pages survive. Not a feelings journal — a working tool of thought. Beside helicopter sketches: gear calculations, and a list of what an apple costs at the market.</span>
+  </div>
+</div>
+
+<div class="practitioner r">
+  <div class="practitioner-name">
+    <span lang="ru">Ричард Фейнман</span>
+    <span lang="en">Richard Feynman</span>
+  </div>
+  <div class="practitioner-role">
+    <span lang="ru">Принстон · 1940-е · нобелевский лауреат по физике</span>
+    <span lang="en">Princeton · 1940s · Nobel laureate in physics</span>
+  </div>
+  <div class="practitioner-text">
+    <span lang="ru">Готовясь к квалификационному экзамену, <strong>не стал перечитывать учебники</strong>. Открыл чистую тетрадь и написал на первой странице: <em>«Вещи, которых я не знаю»</em>. Потом неделю за неделей разбирал каждую тему и записывал объяснения своими словами. Не для преподавателя — для себя. Чтобы увидеть, где понимание рассыпается. Этот <a href="https://calnewport.com/the-feynman-notebook-method/" target="_blank" rel="noopener">метод</a> носит его имя до сих пор.</span>
+    <span lang="en">Preparing for his qualifying exam, he <strong>didn't re-read the textbooks</strong>. He opened a blank notebook and wrote on the first page: <em>"Things I don't know"</em>. Then, week after week, he worked through each topic and wrote out explanations in his own words. Not for a professor — for himself. To see where his understanding fell apart. The <a href="https://calnewport.com/the-feynman-notebook-method/" target="_blank" rel="noopener">method</a> bears his name to this day.</span>
+  </div>
+</div>
+
+<div class="practitioner r">
+  <div class="practitioner-name">
+    <span lang="ru">Джон Кармак</span>
+    <span lang="en">John Carmack</span>
+  </div>
+  <div class="practitioner-role">
+    <span lang="ru">id Software · 1996–2010 · создатель Doom и Quake</span>
+    <span lang="en">id Software · 1996–2010 · creator of Doom and Quake</span>
+  </div>
+  <div class="practitioner-text">
+    <span lang="ru">С 1996 года вёл публичный <a href="https://github.com/ESWAT/john-carmack-plan-archive" target="_blank" rel="noopener">.plan-файл</a>. Запись за записью — что попробовал, какое решение принял и почему. Так почти четырнадцать лет: не каждый день, но стабильно — пока в 2010-м не ушёл из id Software и перешёл на закрытые блоги. Это стало легендой в индустрии. Не потому что Кармак любил писать. А потому что понимал: <strong>записать — значит понять</strong>.</span>
+    <span lang="en">From 1996 he kept a public <a href="https://github.com/ESWAT/john-carmack-plan-archive" target="_blank" rel="noopener">.plan file</a>. Entry by entry — what he tried, what he decided, why. For nearly fourteen years: not every day, but consistently — until 2010, when he left id Software and moved to private blogs. It became industry legend. Not because Carmack loved writing. Because he understood: <strong>writing it down means understanding</strong>.</span>
+  </div>
+</div>
+
+<div class="r">
+<div class="pull" style="margin-top: 48px;">
+  <span lang="ru">Не потому что они были гениями. Потому что это часть работы — для любого, кто что-то делает всерьёз.</span>
+  <span lang="en">Not because they were geniuses. Because it's part of the work — for anyone doing something seriously.</span>
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== NONE OF THEM STARTED WITH MASTERPIECES ===== -->
+<div class="section-divider r">
+  <div class="section-epigraph">
+    <span lang="ru">Никто из них не начинал с шедевров.</span>
+    <span lang="en">None of them started with masterpieces.</span>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="body-text">
+  <span lang="ru">В блокнотах Да Винчи, рядом с чертежами летающей машины — списки покупок, подсчёт личных расходов, записи типа <em>«купить очки, восемь сольди»</em>. Не все семь тысяч страниц гениальны. Важно другое — он не переставал писать. Каждый день. Шестьдесят семь лет подряд.</span>
+  <span lang="en">In Da Vinci's notebooks, beside sketches of a flying machine — shopping lists, personal expenses, entries like <em>"buy spectacles, eight soldi"</em>. Not all seven thousand pages are brilliant. What matters is something else — he never stopped writing. Every day. For sixty-seven years.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Ранние тетради Фейнмана — не стройные тексты, а фрагменты: непонятое, недоведённое, прочерки на месте формул. <em>«Вещи, которых я не знаю»</em> — это не декларация о методе. Это честное признание состояния. Именно оттуда и пришло понимание, куда смотреть дальше.</span>
+  <span lang="en">Feynman's early notebooks aren't polished texts but fragments: half-understood things, unfinished, dashes where formulas should be. <em>"Things I don't know"</em> isn't a manifesto about a method. It's an honest admission of state. That's where the next direction came from.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Первые <span class="inline-code">.plan</span>-файлы Кармака в 1996 году — короткие технические заметки: <em>«работал над рендерингом», «исправил баг в сетевом коде»</em>. Через десять лет они превратились в подробные инженерные эссе, на которых училось целое поколение разработчиков. Между первой и последней записью — четырнадцать лет стабильной привычки. Не всегда каждый день: были паузы на выходных, кранчи, отпуска. Но год за годом практика возвращалась.</span>
+  <span lang="en">Carmack's first <span class="inline-code">.plan</span> files in 1996 were short technical notes: <em>"worked on rendering", "fixed a bug in the network code"</em>. Ten years later they had become detailed engineering essays a whole generation of developers learned from. Between the first and last entry — fourteen years of steady habit. Not always daily: pauses on weekends, crunches, vacations. But year after year, the practice came back.</span>
+</div>
+
+<div class="body-text" style="margin-top: 32px;">
+  <span lang="ru">Умение писать дневник — это <strong>навык</strong>. Как любой навык, он растёт через повторение, а не через талант. Никто не пишет сразу хорошо. Никто.</span>
+  <span lang="en">Writing a diary is a <strong>skill</strong>. Like any skill, it grows through repetition, not through talent. Nobody writes well at first. Nobody.</span>
+</div>
+
+<div class="pull">
+  <span lang="ru">Вашу первую запись вам не захочется никому показывать.<br>
+  Вторую — тоже.<br>
+  Это нормально. Кармак в 1996-м тоже не хотел бы.</span>
+  <span lang="en">You won't want to show your first entry to anyone.<br>
+  Your second one either.<br>
+  That's normal. Carmack in 1996 wouldn't have wanted to either.</span>
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== SCIENCE ===== -->
+<div class="science-card">
+  <div class="science-card-inner r">
+    <div class="science-label">Washington University · 2006</div>
+    <div class="science-headline">
+      <span lang="ru">Одна группа студентов прочитала материал четыре раза. Другая прочитала один раз — и три раза попыталась вспомнить по памяти.</span>
+      <span lang="en">One group of students read the material four times. Another read it once — and tried to recall it from memory three times.</span>
+    </div>
+    <div class="science-body">
+      <span lang="ru">Через неделю первая группа помнила 39% материала. Вторая — 61%. Разница в полтора раза — только потому, что вторая группа не перечитывала, а пыталась вспомнить. <a href="https://journals.sagepub.com/doi/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">Roediger &amp; Karpicke, 2006</a>. С тех пор повторено в десятках исследований.</span>
+      <span lang="en">A week later the first group remembered 39% of the material. The second — 61%. A 1.5× difference — only because the second group didn't re-read, but tried to recall. <a href="https://journals.sagepub.com/doi/10.1111/j.1467-9280.2006.01693.x" target="_blank" rel="noopener">Roediger &amp; Karpicke, 2006</a>. Replicated in dozens of studies since.</span>
+    </div>
+    <div class="science-punch">
+      <span lang="ru">Разница не в усилии.<br>Разница в <u>типе</u> усилия.</span>
+      <span lang="en">The difference isn't in effort.<br>It's in the <u>kind</u> of effort.</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="body-text" style="margin-top: 32px;">
+  <span lang="ru">Тест — это когда мозг <em>узнаёт</em>. Ему показывают четыре варианта, и он говорит: «А, вот этот знакомый». Чувство понимания возникает, <strong>а понимания часто нет</strong>. Через две недели 80% забудется.</span>
+  <span lang="en">A test is when the brain <em>recognizes</em>. It sees four options and says, "Ah, that one looks familiar." The feeling of understanding shows up — <strong>but understanding often doesn't</strong>. Two weeks later, 80% is forgotten.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Написать текст — это когда мозг <em>конструирует</em>. Перед ним чистый лист, и ему приходится достать знание изнутри, собрать его заново, выстроить в структуру. Именно это делал да Винчи в своих блокнотах. Именно это делал Кармак в своих .plan-файлах.</span>
+  <span lang="en">Writing is when the brain <em>constructs</em>. A blank page in front of it, and it has to pull knowledge from inside, assemble it again, build it into structure. That's what Da Vinci did in his notebooks. That's what Carmack did in his .plan files.</span>
+</div>
+
+<div class="pull">
+  <span lang="ru">Дневник разработки — это unit-тест для ваших мыслей.</span>
+  <span lang="en">A development diary is a unit test for your thinking.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Если вы не можете объяснить словами, как что-то устроено — у вас баг в понимании. И лучше найти его сейчас, чем на собеседовании. Дневник — самый дешёвый способ прогнать этот тест по каждой своей задаче.</span>
+  <span lang="en">If you can't put into words how something works — there's a bug in your understanding. And it's better to find it now than at an interview. A diary is the cheapest way to run that test on every task you do.</span>
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== THE LADDER ===== -->
+<div class="section-divider r">
+  <div class="section-epigraph">
+    <span lang="ru">От «для галочки» — до записи, которой хочется гордиться.</span>
+    <span lang="en">From "for the checkbox" — to an entry you'd be proud of.</span>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="r">
+<div class="level-intro">
+  <span lang="ru">Между «я отметил, что было» и «я написал так, что самому захотелось перечитать» — не пропасть, а <em>лестница</em>. Грубо — пять ступеней. Чтобы было проще представить, покажем их на одной и той же задаче: <span class="inline-code">компонент ProductCard</span> в e-commerce приложении.</span>
+  <span lang="en">Between "I noted that something happened" and "I wrote it so I'd want to re-read it later" — there isn't a chasm but a <em>ladder</em>. Roughly five rungs. To make it concrete, we'll show them on the same task: a <span class="inline-code">ProductCard component</span> in an e-commerce app.</span>
+</div>
+</div>
+
+<!-- Level 0 -->
+<div class="level r">
+  <div class="level-number">
+    <span lang="ru">Уровень 0</span>
+    <span lang="en">Level 0</span>
+  </div>
+  <div class="level-title">
+    <span lang="ru">Отметка</span>
+    <span lang="en">Mark</span>
+  </div>
+  <div class="level-example">
+    <span lang="ru">Работал над проектом. Написал код. Всё работает.</span>
+    <span lang="en">Worked on the project. Wrote code. Everything works.</span>
+  </div>
+  <div class="level-commentary">
+    <span lang="ru">Это честная запись о факте. Но через неделю даже автор не вспомнит, о каком коде речь. Формально обязательство выполнено. В памяти — <strong>ничего</strong>.</span>
+    <span lang="en">An honest record of a fact. But a week from now, even the author won't remember which code this was about. The obligation is met formally. In memory — <strong>nothing</strong>.</span>
+  </div>
+</div>
+
+<!-- Level 1 -->
+<div class="level r">
+  <div class="level-number">
+    <span lang="ru">Уровень 1</span>
+    <span lang="en">Level 1</span>
+  </div>
+  <div class="level-title">
+    <span lang="ru">Описание</span>
+    <span lang="en">Description</span>
+  </div>
+  <div class="level-example">
+    <span lang="ru">Сделал компонент ProductCard с @Input-ами title, price, image. Добавил hover-эффект и адаптив.</span>
+    <span lang="en">Built a ProductCard component with title, price, image @Inputs. Added a hover effect and responsive layout.</span>
+  </div>
+  <div class="level-commentary">
+    <span lang="ru">Факты сохранились. Путь — нет. Через год автор вспомнит, что был компонент <span class="inline-code">ProductCard</span>. Но не вспомнит, <em>какие решения принимал, где споткнулся, что понял в процессе</em>.</span>
+    <span lang="en">The facts are saved. The path isn't. A year on, the author will remember there was a <span class="inline-code">ProductCard</span> component. But not <em>which decisions they made, where they tripped up, what they understood in the process</em>.</span>
+  </div>
+</div>
+
+<!-- Level 2 -->
+<div class="level r">
+  <div class="level-number">
+    <span lang="ru">Уровень 2</span>
+    <span lang="en">Level 2</span>
+  </div>
+  <div class="level-title">
+    <span lang="ru">Рефлексия</span>
+    <span lang="en">Reflection</span>
+  </div>
+  <div class="level-example">
+    <span lang="ru">Начал ProductCard со своими стилями. Через полтора часа увидел, что у нас в макете таких карточек ещё пять. Остановился, вынес стили в дизайн-систему. Потратил лишних два часа. Зато теперь любая новая карточка — три строчки.</span>
+    <span lang="en">Started ProductCard with my own styles. After an hour and a half I noticed there were five more such cards in the layout. Stopped, moved the styles into the design system. Spent an extra two hours. But now any new card is three lines.</span>
+  </div>
+  <div class="level-commentary">
+    <span lang="ru">Появляется <strong>путь</strong>: где начал, что заметил, что изменил. Автор <em>учится через рассказ самому себе</em>. Такую запись уже стоит перечитывать — через неделю, через месяц, через год.</span>
+    <span lang="en">A <strong>path</strong> appears: where it started, what was noticed, what changed. The author is <em>learning by telling themselves the story</em>. This kind of entry is worth re-reading — in a week, in a month, in a year.</span>
+  </div>
+</div>
+
+<!-- Level 3 -->
+<div class="level r">
+  <div class="level-number">
+    <span lang="ru">Уровень 3</span>
+    <span lang="en">Level 3</span>
+  </div>
+  <div class="level-title">
+    <span lang="ru">Разбор вариантов</span>
+    <span lang="en">Weighing options</span>
+  </div>
+  <div class="level-example">
+    <span lang="ru">Стоял выбор: хранить cart state в самом компоненте или в сервисе. За компонент — проще отладка, меньше зависимостей. За сервис — CartIcon и CheckoutButton тоже должны знать о выборе. Выбрал сервис. Пометил в дневнике: если через месяц останется один потребитель — вернуться и откатить.</span>
+    <span lang="en">Had to choose: store cart state in the component itself or in a service. For the component: simpler debugging, fewer dependencies. For the service: CartIcon and CheckoutButton also need to know the choice. Picked the service. Noted in the diary: if a month from now there's only one consumer — come back and undo it.</span>
+  </div>
+  <div class="level-commentary">
+    <span lang="ru">Инженерное мышление на бумаге. В индустрии этот формат называют <strong>ADR</strong> — Architecture Decision Record. Навык, за который на собеседовании <em>дают плюс</em>. Не потому что красиво оформлено, а потому что видно: человек не угадал, а <strong>выбирал осознанно</strong> — и честно отметил, где готов передумать.</span>
+    <span lang="en">Engineering thinking on paper. The industry calls this format an <strong>ADR</strong> — Architecture Decision Record. A skill that gets you <em>a plus mark</em> at an interview. Not because it's neatly formatted, but because you can see: the person didn't guess — they <strong>chose with awareness</strong> — and honestly noted where they're prepared to change their mind.</span>
+  </div>
+</div>
+
+<!-- Level 4 -->
+<div class="level r">
+  <div class="level-number">
+    <span lang="ru">Уровень 4</span>
+    <span lang="en">Level 4</span>
+  </div>
+  <div class="level-title">
+    <span lang="ru">Запись, которой хочется гордиться</span>
+    <span lang="en">An entry you'd be proud of</span>
+  </div>
+  <div class="level-example">
+    <span lang="ru">Три дня ловил баг: при открытии корзины HTTP-запрос /api/cart уходил дважды. Открыл DevTools — действительно два запроса каждый раз. Оказалось, подписывался на cart$ в ngOnInit — и параллельно в шаблоне через AsyncPipe. Каждая подписка на cold Observable — отдельный HTTP-вызов. Удалил ручной subscribe, оставил только AsyncPipe в шаблоне. Урок: AsyncPipe — не просто сахар, он ещё и шарит подписку. Ручной subscribe рядом с ним — лишний сетевой запрос. Завёл себе чеклист таких ловушек.</span>
+    <span lang="en">Spent three days hunting a bug: opening the cart fired the HTTP request to /api/cart twice. Opened DevTools — yes, two requests every time. Turned out: I was subscribing to cart$ in ngOnInit, and in parallel via AsyncPipe in the template. Each subscription to a cold Observable is a separate HTTP call. Removed the manual subscribe, kept only AsyncPipe in the template. Lesson: AsyncPipe isn't just sugar — it also shares the subscription. A manual subscribe next to it is an extra network call. Started a checklist of traps like this for myself.</span>
+  </div>
+  <div class="level-commentary">
+    <span lang="ru">Выглядит как разбор в команде: что ломалось, что пробовал, что понял, что изменил <em>в своих привычках</em>. Не потому что так было нужно для отчёта. А потому что автору самому было важно разобраться — и закрепить урок, чтобы не повторять.<br><br>
+    Такую запись хочется перечитать. И — неожиданно — <strong>показать</strong>. Не начальству. Не ментору. А самому себе через год — как доказательство, что <em>ты умеешь думать</em>.</span>
+    <span lang="en">Reads like a team postmortem: what broke, what was tried, what was understood, what changed <em>in your own habits</em>. Not because it was needed for a report. Because the author themselves wanted to figure it out — and lock in the lesson, so they wouldn't repeat it.<br><br>
+    An entry like this you want to re-read. And — surprisingly — to <strong>show</strong>. Not to your boss. Not to your mentor. To yourself a year from now — as proof that <em>you can think</em>.</span>
+  </div>
+</div>
+
+<div class="r">
+<div class="pull" style="margin-top: 72px;">
+  <span lang="ru">Никто не пишет сразу на четвёртой ступени.<br>
+  И не нужно. Достаточно, чтобы каждая следующая запись была <em>немного толще</em> предыдущей.</span>
+  <span lang="en">Nobody writes at level four right away.<br>
+  And you don't need to. It's enough that each next entry is <em>a little thicker</em> than the previous one.</span>
+</div>
+</div>
+
+<div class="r">
+<div class="body-text" style="margin-top: 24px;">
+  <span lang="ru">В первую неделю у вас будет всё на нуле и единице. Через месяц у кого-то появится одна запись на тройке — и вы удивитесь, перечитав. К середине курса три записи из десяти будут на тройке, одна — на четвёрке. К концу проекта — дневник, который <strong>не стыдно открыть через год</strong>.</span>
+  <span lang="en">In the first week, everything will be at zero or one. A month in, someone will produce a level-three entry — and they'll be surprised when they re-read it. By mid-course, three entries out of ten will be at level three, one at level four. By the end of the project — a diary <strong>you won't be embarrassed to open a year later</strong>.</span>
+</div>
+
+<div class="body-text">
+  <span lang="ru">Это и есть рост. Не в линиях кода. В качестве мышления, которое вы начали замечать за собой.</span>
+  <span lang="en">That's growth. Not in lines of code. In the quality of thinking you've started noticing in yourself.</span>
+</div>
+
+<div class="pull" style="margin-top: 40px; font-style: italic;">
+  <span lang="ru">Два месяца такой практики дают совсем другой дневник.<br>
+  Полгода — <em>совсем другого инженера</em>.</span>
+  <span lang="en">Two months of this practice give you a very different diary.<br>
+  Six months — <em>a very different engineer</em>.</span>
+</div>
+</div>
+
+</div><!-- /.page -->
+
+<!-- ===== INVITATION ===== -->
+<section class="closing">
+  <div class="closing-lede r">
+    <span lang="ru">Ваш дневник — прежде всего <em>для вас через полгода</em>.<br>
+    Когда будете готовить ответы на собеседовании.<br>
+    Или просто захотите вспомнить, как вы сюда дошли.</span>
+    <span lang="en">Your diary is, first of all, <em>for you in six months</em>.<br>
+    When you're preparing answers for an interview.<br>
+    Or just want to remember how you got here.</span>
+  </div>
+
+  <div class="closing-lede r d1" style="margin-top: 40px;">
+    <span lang="ru">Писать каждый день не нужно.<br>
+    Писать красиво — тем более.<br>
+    Нужно только одно: писать <strong>честно</strong>.</span>
+    <span lang="en">You don't have to write every day.<br>
+    You don't have to write beautifully.<br>
+    Only one thing: write <strong>honestly</strong>.</span>
+  </div>
+
+  <div class="closing-lede r d2" style="margin-top: 40px; font-size: clamp(17px, 2.4vw, 21px); color: rgba(255,255,255,.55); font-style: italic;">
+    <span lang="ru">Первые будут корявые.<br>
+    Десятые — чуть лучше.<br>
+    Сотые — такие, что самому захочется показать.</span>
+    <span lang="en">The first ones will be rough.<br>
+    The tenth ones — a bit better.<br>
+    The hundredth — ones you'll want to show.</span>
+  </div>
+
+  <div class="closing-punchline r-slow">
+    <span lang="ru">На первой странице напишите:<br>
+    «Вещи, которых я не знаю.»</span>
+    <span lang="en">On the first page, write:<br>
+    "Things I don't know."</span>
+  </div>
+
+  <div class="closing-coda r-slow">
+    <span lang="ru">И начинайте.</span>
+    <span lang="en">And begin.</span>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div style="font-family: var(--serif); font-size: 15px; font-style: italic;">RS School. Connecting people, growing together, having fun.</div>
+  <div style="margin-top: 8px;">
+    <a href="./">Observer</a>
+    <a href="./#/teams">Teams</a>
+  </div>
+</div>
+
+<script>
+// === language toggle ===
+const STORAGE_KEY = 'diary-lang';
+const root = document.documentElement;
+const toggle = document.getElementById('langToggle');
+
+function setLang(lang) {
+  root.lang = lang;
+  toggle.querySelectorAll('button').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  try { localStorage.setItem(STORAGE_KEY, lang); } catch(e) {}
+}
+
+// restore from storage
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved === 'ru' || saved === 'en') setLang(saved);
+} catch(e) {}
+
+toggle.addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (btn && btn.dataset.lang) setLang(btn.dataset.lang);
+});
+
+// === progress bar + reveals (unchanged) ===
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+}, { passive: true });
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+document.querySelectorAll('.r, .r-slow').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
