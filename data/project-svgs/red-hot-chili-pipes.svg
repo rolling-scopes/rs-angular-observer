@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<title>Red Hot Chili Pipes</title>
+<desc>A glossy red chili pepper bent into a plumbing pipe with an elbow joint and flange, dripping one hot pixel.</desc>
+<defs>
+<radialGradient id="bg" cx="0.5" cy="0.45" r="0.7">
+<stop offset="0" stop-color="#2a1410"/>
+<stop offset="1" stop-color="#0d0606"/>
+</radialGradient>
+<linearGradient id="chili" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#ff3b1f"/>
+<stop offset="0.6" stop-color="#d11414"/>
+<stop offset="1" stop-color="#7a0a0a"/>
+</linearGradient>
+<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+<stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="stem" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#3a6b1f"/>
+<stop offset="1" stop-color="#1f3d10"/>
+</linearGradient>
+</defs>
+
+<rect width="1000" height="1000" fill="url(#bg)"/>
+
+<g fill="none" stroke="#4a1010" stroke-opacity="0.35" stroke-width="2">
+<circle cx="500" cy="500" r="380"/>
+<circle cx="500" cy="500" r="320"/>
+</g>
+
+<g stroke="#1a0606" stroke-width="6" stroke-linejoin="round">
+<rect x="180" y="430" width="90" height="140" rx="6" fill="#c8c8cc"/>
+<rect x="180" y="430" width="90" height="20" fill="#8a8a8e"/>
+<rect x="180" y="550" width="90" height="20" fill="#8a8a8e"/>
+</g>
+
+<path d="M 270 460 
+         C 380 460, 520 460, 620 480
+         C 760 510, 820 600, 780 700
+         C 740 800, 600 830, 500 800
+         C 440 780, 410 740, 430 700
+         C 450 670, 490 670, 510 690
+         C 525 705, 520 720, 505 720"
+      fill="url(#chili)" stroke="#1a0606" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+
+<path d="M 290 475 
+         C 380 472, 500 478, 580 495
+         C 620 503, 640 513, 650 525"
+      fill="none" stroke="url(#shine)" stroke-width="14" stroke-linecap="round"/>
+
+<g stroke="#1a0606" stroke-width="6" stroke-linejoin="round">
+<rect x="245" y="410" width="60" height="30" rx="4" fill="#8a8a8e"/>
+<path d="M 275 410 L 275 380 Q 275 350 295 345 L 320 340" fill="none" stroke="url(#stem)" stroke-width="14" stroke-linecap="round"/>
+</g>
+
+<g fill="#ffd84a" stroke="#1a0606" stroke-width="3">
+<polygon points="500,820 480,860 510,855 495,900 540,845 515,850 530,820"/>
+</g>
+
+<circle cx="640" cy="560" r="8" fill="#ffe7a8" opacity="0.9"/>
+<circle cx="700" cy="640" r="5" fill="#ffe7a8" opacity="0.7"/>
+<circle cx="600" cy="700" r="6" fill="#ffe7a8" opacity="0.8"/>
+</svg>

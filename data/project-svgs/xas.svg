@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<title>XAS</title>
+<desc>A shopping bag whose handle is a film reel ribbon spilling pop-culture artifacts inside.</desc>
+<defs>
+<linearGradient id="bag" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#FF6B4A"/>
+<stop offset="1" stop-color="#E03A5C"/>
+</linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#1A1530"/>
+<stop offset="1" stop-color="#2B1F4A"/>
+</linearGradient>
+</defs>
+
+<rect width="1000" height="1000" fill="url(#sky)"/>
+
+<circle cx="780" cy="220" r="6" fill="#FFE066"/>
+<circle cx="180" cy="180" r="4" fill="#FFE066"/>
+<circle cx="850" cy="400" r="3" fill="#FFE066"/>
+<circle cx="120" cy="380" r="5" fill="#FFE066"/>
+<circle cx="820" cy="620" r="4" fill="#FFE066"/>
+
+<path d="M 340 340 Q 340 200 500 200 Q 660 200 660 340" fill="none" stroke="#FFE066" stroke-width="22" stroke-linecap="round"/>
+
+<path d="M 260 340 L 740 340 L 700 880 L 300 880 Z" fill="url(#bag)"/>
+
+<path d="M 260 340 L 740 340 L 730 400 L 270 400 Z" fill="#000" opacity="0.18"/>
+
+<circle cx="420" cy="520" r="70" fill="#FFE066"/>
+<polygon points="420,470 432,505 470,505 440,527 451,562 420,541 389,562 400,527 370,505 408,505" fill="#E03A5C"/>
+
+<circle cx="580" cy="640" r="55" fill="#2EC4B6"/>
+<rect x="555" y="615" width="50" height="50" fill="#1A1530"/>
+<rect x="565" y="625" width="8" height="8" fill="#2EC4B6"/>
+<rect x="587" y="625" width="8" height="8" fill="#2EC4B6"/>
+<rect x="565" y="647" width="30" height="6" fill="#2EC4B6"/>
+
+<path d="M 380 740 L 410 720 L 440 740 L 440 790 L 380 790 Z" fill="#1A1530" stroke="#FFE066" stroke-width="4"/>
+<circle cx="410" cy="760" r="6" fill="#FFE066"/>
+
+<text x="500" y="950" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#FFE066" text-anchor="middle" letter-spacing="12">XAS</text>
+</svg>

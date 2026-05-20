@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<title>DevFusion — ShopFront</title>
+<desc>A shopping bag fused from two overlapping geometric halves, split by a bright seam where they meet.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#1a1530"/>
+<stop offset="1" stop-color="#0a0818"/>
+</linearGradient>
+<linearGradient id="seam" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffd84d"/>
+<stop offset="1" stop-color="#ff6a3d"/>
+</linearGradient>
+</defs>
+<rect width="1000" height="1000" fill="url(#bg)"/>
+<g transform="translate(500 540)">
+<path d="M -210 -120 L -210 280 L 10 280 L 10 -120 L -50 -120 L -50 -180 a 80 80 0 0 1 60 -60" fill="none" stroke="#3aa0ff" stroke-width="22" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M 210 -120 L 210 280 L -10 280 L -10 -120 L 50 -120 L 50 -180 a 80 80 0 0 0 -60 -60" fill="none" stroke="#ff3d8a" stroke-width="22" stroke-linejoin="round" stroke-linecap="round"/>
+<rect x="-8" y="-260" width="16" height="560" fill="url(#seam)"/>
+<circle cx="0" cy="-240" r="14" fill="#ffd84d"/>
+<circle cx="0" cy="80" r="42" fill="none" stroke="#ffd84d" stroke-width="10"/>
+<path d="M -18 80 L -4 96 L 22 64" fill="none" stroke="#ffd84d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g fill="#f4f0ff" font-family="Georgia, serif">
+<text x="500" y="900" font-size="46" text-anchor="middle" font-style="italic">DevFusion</text>
+</g>
+</svg>

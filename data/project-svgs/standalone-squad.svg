@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <title>Standalone Squad — NovaKrama</title>
+  <desc>One bold shopping bag with a supernova bursting from its mouth — a new shop announcing itself.</desc>
+  <rect width="1000" height="1000" fill="#F2EAD3"/>
+  <g stroke="#E63946" stroke-width="20" stroke-linecap="round">
+    <line x1="500" y1="420" x2="500" y2="70"/>
+    <line x1="500" y1="420" x2="210" y2="150"/>
+    <line x1="500" y1="420" x2="790" y2="150"/>
+    <line x1="500" y1="420" x2="70" y2="360"/>
+    <line x1="500" y1="420" x2="930" y2="360"/>
+    <line x1="500" y1="420" x2="150" y2="610"/>
+    <line x1="500" y1="420" x2="850" y2="610"/>
+  </g>
+  <path d="M 260 470 L 740 470 L 715 905 L 285 905 Z" fill="#1D3557"/>
+  <line x1="285" y1="530" x2="715" y2="530" stroke="#0F1B2A" stroke-width="5"/>
+  <path d="M 360 470 Q 360 285 500 285 Q 640 285 640 470" fill="none" stroke="#1D3557" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="500" cy="420" r="78" fill="#F4A261"/>
+  <circle cx="500" cy="420" r="32" fill="#F2EAD3"/>
+  <g stroke="#F4A261" stroke-width="6" stroke-linecap="round">
+    <line x1="630" y1="650" x2="690" y2="710"/>
+  </g>
+  <circle cx="700" cy="720" r="26" fill="#F4A261"/>
+  <text x="700" y="731" font-family="Georgia, serif" font-size="32" font-weight="700" fill="#1D3557" text-anchor="middle">1</text>
+</svg>

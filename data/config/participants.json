@@ -1,5 +1,724 @@
 {
   "streamId": "2026-spring-angular",
   "courseName": "RS School Angular 2026",
-  "teams": []
+  "teams": [
+    {
+      "name": "music-hub",
+      "members": [
+        {
+          "github": "evgeniia-korolova",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "vitiok2021",
+          "role": "student"
+        },
+        {
+          "github": "mero93",
+          "role": "student"
+        },
+        {
+          "github": "julila",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/evgeniia-korolova/ng-music-flow"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular SPA with NestJS backend for music discovery and streaming via the Jamendo API",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "The project leverages the Jamendo API to provide users with a seamless music streaming and discovery experience, featuring advanced filtering, playlist management"
+    },
+    {
+      "name": "пу-пу-пу",
+      "members": [
+        {
+          "github": "shoblinsky",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "tryproxy",
+          "role": "student"
+        },
+        {
+          "github": "savryna",
+          "role": "student"
+        },
+        {
+          "github": "khasekai",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/pupupu-core/spotify-clone"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Music streaming SPA using Jamendo API — browse albums, artists, and songs with free playback under Creative Commons lice",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "The Pupufy application is an implementation of Jamendo API. It allows free access to stream and download more than 350,000 songs from the Jamendo catalog"
+    },
+    {
+      "name": "Stonks",
+      "members": [
+        {
+          "github": "aliakseiDrob",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "AnatoliRub",
+          "role": "student"
+        },
+        {
+          "github": "Zhdko",
+          "role": "student"
+        },
+        {
+          "github": "khasekai",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Cryptangular/crypto-trade-ui"
+      ],
+      "language": "ru",
+      "projectKind": "crypto",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular SPA trading platform using Binance Spot Testnet for virtual crypto trading, market data, and portfolio managemen",
+      "projectConfidence": 0.99,
+      "projectEvidenceQuote": "Crypto Trade is a trading platform clone where the user can browse market data, analyze charts, maintain a watchlist of favorite pairs, and execute test trades with virtual funds."
+    },
+    {
+      "name": "Red Hot Chili Pipes",
+      "members": [
+        {
+          "github": "evalore",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "SergeyBednyuk",
+          "role": "student"
+        },
+        {
+          "github": "LenaStask",
+          "role": "student"
+        },
+        {
+          "github": "ievgeniiaabdulina",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/EVALORE/chili-flow"
+      ],
+      "language": "ru",
+      "projectKind": "other",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular app for organizing and tracking cooking flows with a responsive interface.",
+      "projectConfidence": 0.85,
+      "projectEvidenceQuote": "ChiliFlow is an Angular application for organizing and tracking cooking flows in a clear, responsive interface."
+    },
+    {
+      "name": "XAS",
+      "members": [
+        {
+          "github": "SlavikusVOG",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "annevci",
+          "role": "student"
+        },
+        {
+          "github": "xevoider",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/SlavikusVOG/XASon-online-store"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Online store selling items from cartoons, movies, and games.",
+      "projectConfidence": 0.72,
+      "projectEvidenceQuote": "XASon is an online store for items from different cartoons, movies and games."
+    },
+    {
+      "name": "Muze",
+      "members": [
+        {
+          "github": "vladaworkflow-ops",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "ileshchanka",
+          "role": "student"
+        },
+        {
+          "github": "vladboisa",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/muze-space/Muze"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Music streaming service where users can search tracks and artists, listen to music, build playlists, and manage favorite",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "A music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library."
+    },
+    {
+      "name": "Smooth Coding Society",
+      "members": [
+        {
+          "github": "mon-repos",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "solosoft2000",
+          "role": "student"
+        },
+        {
+          "github": "dzinakor",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Smooth-Coding-Society/RSS-Angular-2026Q2"
+      ],
+      "language": "en",
+      "projectKind": "other",
+      "access": "none"
+    },
+    {
+      "name": "RX-Men",
+      "members": [
+        {
+          "github": "elrouss",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "prokhorovd",
+          "role": "student"
+        },
+        {
+          "github": "den987655",
+          "role": "student"
+        },
+        {
+          "github": "mummick",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/RX-Men/shop-front"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Comic book e-commerce store built with Angular and commercetools backend.",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "we are building a premier comic book shop where every interaction feels as heroic as the characters on the page. Leveraging Angular's architecture and commercetools' flexibility"
+    },
+    {
+      "name": "Work ass off",
+      "members": [
+        {
+          "github": "dzichonka",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "DzmitryAliakseyeu",
+          "role": "student"
+        },
+        {
+          "github": "Snitkon",
+          "role": "student"
+        },
+        {
+          "github": "sergey496",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/work-ass-off/RX-Beat"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Spotify-inspired music streaming SPA with browsing, search, playlists, and favorites.",
+      "projectConfidence": 0.92,
+      "projectEvidenceQuote": "A Spotify-inspired music streaming interface where users can: Browse music content, Search for tracks, albums, and artists, Create and manage playlists"
+    },
+    {
+      "name": "DevFusion",
+      "members": [
+        {
+          "github": "eka8888",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "zorro-amarillo",
+          "role": "student"
+        },
+        {
+          "github": "s-arashu",
+          "role": "student"
+        },
+        {
+          "github": "antonkapustin",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/eka8888/shopfront-angular"
+      ],
+      "language": "mixed",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "ShopFront e-commerce Angular SPA with auth, product catalog, and cart functionality.",
+      "projectConfidence": 0.98,
+      "projectEvidenceQuote": "We selected **ShopFront** as our Angular Sprint project."
+    },
+    {
+      "name": "Vejas",
+      "members": [
+        {
+          "github": "ZedMalatesta",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "olucens",
+          "role": "student"
+        },
+        {
+          "github": "amelur",
+          "role": "student"
+        },
+        {
+          "github": "eu-peregudova",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/ZedMalatesta/Vejas-frontend"
+      ],
+      "language": "en",
+      "projectKind": "other",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Platform for users to synchronize shared viewing of online content together.",
+      "projectConfidence": 0.6,
+      "projectEvidenceQuote": "An application that allows users to connect on a platform to synchronize their shared viewing of online content."
+    },
+    {
+      "name": "Champions",
+      "members": [
+        {
+          "github": "mikhalenkadaniil",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "Lorenzo-StJohn",
+          "role": "student"
+        },
+        {
+          "github": "AlenaVP",
+          "role": "student"
+        },
+        {
+          "github": "teleuzi",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/RS-Champions/InjecTune"
+      ],
+      "language": "mixed",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Music streaming SPA with Angular and NestJS, powered by Jamendo API — search, playback, playlists, favorites.",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "A music streaming service built with Angular 21+, powered by the Jamendo API. Search for tracks and artists, listen to music, build playlists, and maintain your personal favorites library"
+    },
+    {
+      "name": "Standalone Squad",
+      "members": [
+        {
+          "github": "Atikin132",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "agtugchik",
+          "role": "student"
+        },
+        {
+          "github": "yauhenpachankou",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Atikin132/rss-angular-2026"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "NovaKrama is an e-commerce Angular SPA using commercetools API with product catalog, cart, promo codes, and user account",
+      "projectConfidence": 0.99,
+      "projectEvidenceQuote": "NovaKrama is a modern full-featured e-commerce web application built with Angular and powered by the commercetools HTTP API."
+    },
+    {
+      "name": "3 man and 1 framework",
+      "members": [
+        {
+          "github": "yuriyli",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "nakurienota",
+          "role": "student"
+        },
+        {
+          "github": "vladimirsolo",
+          "role": "student"
+        },
+        {
+          "github": "sakenk",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Yuriyli/rss-angular-team-task"
+      ],
+      "language": "ru",
+      "projectKind": "crypto",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular trading SPA using Binance Spot Testnet for virtual market data, charts, watchlists, and test trades.",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "A trading app...where the user can browse market data, analyze charts, maintain a watchlist of favorite pairs, and execute test trades with virtual funds."
+    },
+    {
+      "name": "ngKittyDebugLeftPaw",
+      "members": [
+        {
+          "github": "AlexGorSer",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "pavelkuvsh1noff",
+          "role": "student"
+        },
+        {
+          "github": "Oksana",
+          "role": "student"
+        },
+        {
+          "github": "oreskag",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/ngKittyDebug/angular-ngKittyDebugLeft"
+      ],
+      "language": "ru",
+      "projectKind": "other",
+      "projectKindSource": "readme",
+      "projectOneLiner": "A PokeDex Angular SPA built with NgRx, Taiga UI, and TypeScript.",
+      "projectConfidence": 0.95,
+      "projectEvidenceQuote": "# 🐾 PokeDex (ngKittyDebugLeftPaw)"
+    },
+    {
+      "name": "404",
+      "members": [
+        {
+          "github": "Tserpilouski",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "DominikObuch",
+          "role": "student"
+        },
+        {
+          "github": "waldemarIT",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Tserpilouski/e-commerce-angular"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "E-commerce Angular SPA with standalone components and Signals-based state management.",
+      "projectConfidence": 0.85,
+      "projectEvidenceQuote": "A modern e-commerce web application built with Angular 21."
+    },
+    {
+      "name": "The Team Implementing the Task",
+      "members": [
+        {
+          "github": "pasha-learns",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "vitalina-oleksiienko",
+          "role": "student"
+        },
+        {
+          "github": "sashadrozdov94-spec",
+          "role": "student"
+        },
+        {
+          "github": "bearury",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/pasha-learns/Novachain"
+      ],
+      "language": "ru",
+      "projectKind": "crypto",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Novachain — an Angular SPA likely focused on blockchain/crypto trading based on the project name.",
+      "projectConfidence": 0.55,
+      "projectEvidenceQuote": "# Novachain"
+    },
+    {
+      "name": "LazyCoders",
+      "members": [
+        {
+          "github": "mukhammadyor17",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "Aseke09",
+          "role": "student"
+        },
+        {
+          "github": "xsetiqq",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/mukhammadyor17/angular-shop"
+      ],
+      "language": "en",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular e-commerce shop application built with Angular CLI.",
+      "projectConfidence": 0.6,
+      "projectEvidenceQuote": "# AngularShop"
+    },
+    {
+      "name": "<ngKitty-delulu-church />",
+      "members": [
+        {
+          "github": "dashque",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "Alena1409",
+          "role": "student"
+        },
+        {
+          "github": "kozochkina82",
+          "role": "student"
+        },
+        {
+          "github": "oreskag",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/ngKittyDebug/angular-ngKittyDebugRight"
+      ],
+      "language": "ru",
+      "projectKind": "other",
+      "projectKindSource": "readme",
+      "projectOneLiner": "A satirical 'Church of the Holy Deploy' app for developers with confession, deploy fortune-telling, horoscopes, NASA new",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "The Church of the Holy Deploy — это цифровой храм для программистов, где каждый может исповедоваться в своих багах"
+    },
+    {
+      "name": "MusicFlowTeam",
+      "members": [
+        {
+          "github": "dusixx",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "inalitvinka",
+          "role": "student"
+        },
+        {
+          "github": "ngInit",
+          "role": "student"
+        },
+        {
+          "github": "aliaksei-sl",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/dusixx/music-flow"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Music streaming SPA built on Jamendo API with playlists, favorites, and artist/track search.",
+      "projectConfidence": 0.98,
+      "projectEvidenceQuote": "MusicFlow is a music streaming service clone that allows users to search for tracks and artists, listen to music, create playlists, and manage a favorites library."
+    },
+    {
+      "name": "Runtime terror",
+      "members": [
+        {
+          "github": "gerlinda137",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "radm1la",
+          "role": "student"
+        },
+        {
+          "github": "maryanzh",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/gerlinda137/runtime-terror"
+      ],
+      "language": "ru",
+      "projectKind": "crypto",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Cryptocurrency analysis and trading app with real-time market data, portfolio tracking, and trading simulation via Binan",
+      "projectConfidence": 0.99,
+      "projectEvidenceQuote": "CryptoTrade\n\nCryptocurrency analysis and trading application built with Angular 20+. The app provides real-time market data, portfolio tracking, and trading simulation using the Binance Testnet API."
+    },
+    {
+      "name": "ngTunes",
+      "members": [
+        {
+          "github": "cherkasovaa",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "shvetsby",
+          "role": "student"
+        },
+        {
+          "github": "solidados",
+          "role": "student"
+        },
+        {
+          "github": "karina2409",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/angular2026q2/musicflow"
+      ],
+      "language": "ru",
+      "projectKind": "music",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Music streaming service with track search, global player, playlists, and uploads powered by Jamendo API and NestJS backe",
+      "projectConfidence": 0.99,
+      "projectEvidenceQuote": "MusicFlow is a music streaming service clone where users can: search for tracks and artists; listen to music through a global player; build their own playlists"
+    },
+    {
+      "name": "six seven",
+      "members": [
+        {
+          "github": "reamplify1",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "klinx01",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/klinx01/67-shop"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Angular product catalog SPA with real-time search and Angular Signals state management.",
+      "projectConfidence": 0.85,
+      "projectEvidenceQuote": "Современное веб-приложение на Angular - магазин различных товаров"
+    },
+    {
+      "name": "NgStorm",
+      "members": [
+        {
+          "github": "anast-ananko",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "iskonplus",
+          "role": "student"
+        },
+        {
+          "github": "shchepadzmitry",
+          "role": "student"
+        },
+        {
+          "github": "ramanmilashevich",
+          "role": "mentor"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/anast-ananko/shop-front"
+      ],
+      "language": "ru",
+      "projectKind": "shop",
+      "projectKindSource": "readme",
+      "projectOneLiner": "Online bookstore SPA with browsing, search, filtering, and shopping cart.",
+      "projectConfidence": 0.97,
+      "projectEvidenceQuote": "ShopFront is a modern online bookstore where users can browse, search, and purchase books across different categories."
+    },
+    {
+      "name": "untitled",
+      "members": [
+        {
+          "github": "angelinavakkasova",
+          "role": "student",
+          "isLead": true
+        }
+      ],
+      "repoUrls": [],
+      "language": "ru",
+      "projectKind": "other"
+    }
+  ]
 }

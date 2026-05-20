@@ -14,7 +14,43 @@
   "branding": {
     "title": "RS Angular — Observer",
     "teamsTitle": "RS Angular — Teams",
-    "issueRepo": "rolling-scopes/rs-angular-observer"
+    "issueRepo": "rolling-scopes/rs-angular-observer",
+    "accentColor": "#dd0031"
+  },
+  "features": {
+    "teamDefence": false,
+    "mentorDefence": false,
+    "peerReview": false,
+    "diaryGrade": false,
+    "selfAssessment": false,
+    "awards": false,
+    "showTeamConditions": false
+  },
+  "landingIntro": {
+    "paragraphs": [
+      "Я знаю, что вы ожидали тут заметки от Tandi. Но в этот раз я попросил Tandi быть в образе Пикассо. Можете сами оценить его успехи :)",
+      "Почему? Во-первых, в прошлом командном задании студентам не нравилось, что их оценивает AI. Это и не было моей изначальной целью. Моя цель — чтобы школа как среда помогала вам развиваться и вдохновляла что-то регулярно делать. Поэтому оценивать вас будут менторы, а здесь — только сводка и бинарные 20 баллов за участие в первом спринте. Зато вы можете сами посмотреть, что делают другие команды, как они комитят код, и сравнить с тем, что делаете вы.",
+      "Теперь про Пикассо. Веками мастерство художника измеряли тем, насколько точно он передаёт реальность. Потом появился фотоаппарат, и соперничать с ним в реализме стало бессмысленно. Пикассо показал: живопись — это что-то большее, чем может фотоаппарат. Реальность многогранна, а фотография ловит только одну её сторону. Многим не нравится то, что он делал, но так или иначе он один из самых дорогих художников в истории.",
+      "Так и здесь. Задача-минимум — разобраться в Angular и подготовиться к интервью. Задача-максимум — сделать проект, какой нравится вам, и рассказать о нём: ментору, студентам потока, тем, кто придёт учиться после. Это и есть суть наших проектов. Конечно кому-то ваш проект или выступление не понравится, но и работы Пикассо нравятся не всем :)",
+      "И последнее. Я очень рад, что ребята из ngKittyDebug выступают и рассказывают о своём проекте. Хочу, чтобы таких команд было больше. Так строится уверенность — и это то, ради чего стоит здесь быть.",
+      "P.S. Настоящий бенчмарк — это вы сами в прошлом. Неделю назад. Месяц назад. Курс назад.",
+      "P.P.S. Для тех, кому захочется что-нибудь почитать. Дневник: [AlexGorSer · sprint-1](https://github.com/ngKittyDebug/angular-ngKittyDebugLeft/blob/main/development-notes/AlexGorSer/AlexGorSer-sprint-1-2026-05-17.md) — формат, который мне нравится. Командная работа: [RX-Men · pull requests](https://github.com/RX-Men/shop-front/pulls) — рабочий процесс, который стоит посмотреть."
+    ],
+    "signature": "— Дима Воробей",
+    "translations": {
+      "en": {
+        "paragraphs": [
+          "I know you expected a note from Tandi here. But this time I asked Tandi to channel Picasso. Judge his success for yourself :)",
+          "Why? First, on the previous team task students didn't like being graded by AI. That was never my goal either. What I want is for school as an environment to help you grow and motivate you to keep showing up. So mentors will be the ones grading you — here you'll only find a summary and a binary 20 points for taking part in the first sprint. In exchange, you can see what other teams are doing, how they commit code, and compare with what you're doing.",
+          "Now about Picasso. For centuries, mastery in painting was measured by how accurately an artist could capture reality. Then the camera arrived, and competing with it in realism became pointless. Picasso showed that painting is something more than a camera can do. Reality is many-sided; photography catches only one of those sides. Plenty of people dislike what he made, and yet he is one of the most expensive painters in history.",
+          "It's the same here. The minimum target — get a real grasp of Angular and be ready for an interview. The maximum target — build a project you actually like, and tell its story: to your mentor, to your cohort, to whoever comes to learn after you. That is the whole point of these projects. Sure, some people won't like your project or your talk — but plenty of people don't like Picasso either :)",
+          "One last thing. I'm glad the folks from ngKittyDebug are out there presenting and talking about their project. I'd like more teams like that. Confidence is built this way — and that is what makes it worth being here.",
+          "P.S. The real benchmark is the past version of you. A week ago. A month ago. A course ago.",
+          "P.P.S. For anyone who wants to read something concrete. A diary: [AlexGorSer · sprint-1](https://github.com/ngKittyDebug/angular-ngKittyDebugLeft/blob/main/development-notes/AlexGorSer/AlexGorSer-sprint-1-2026-05-17.md) — a format I like. Teamwork in action: [RX-Men · pull requests](https://github.com/RX-Men/shop-front/pulls) — a working process worth a look."
+        ],
+        "signature": "— Dima Varabei"
+      }
+    }
   },
   "checkpoints": [
     {
@@ -22,7 +58,8 @@
       "label": "Week 1: Setup & Environment",
       "startDate": "2026-04-27",
       "rules": [
-        { "id": "diary", "type": "diary", "scope": "member", "points": 20, "params": { "minEntries": 2 } }
+        { "id": "commit", "type": "commits", "scope": "member", "points": 10, "params": { "minCommits": 1 } },
+        { "id": "diary",  "type": "diary",   "scope": "member", "points": 10, "params": { "minEntries": 1 } }
       ]
     }
   ]

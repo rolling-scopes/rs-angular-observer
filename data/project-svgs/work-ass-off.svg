@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<title>Work ass off</title>
+<desc>A donkey silhouette wearing headphones, sweat flying, with concentric sound waves pulsing from one ear — working its ass off to the music.</desc>
+<defs>
+<radialGradient id="bg" cx="0.5" cy="0.5" r="0.7">
+<stop offset="0" stop-color="#1DB954"/>
+<stop offset="1" stop-color="#0a3d20"/>
+</radialGradient>
+<linearGradient id="donkey" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#2a2a2a"/>
+<stop offset="1" stop-color="#0d0d0d"/>
+</linearGradient>
+</defs>
+<rect width="1000" height="1000" fill="url(#bg)"/>
+
+<g fill="none" stroke="#FFE066" stroke-width="10" stroke-linecap="round" opacity="0.85">
+<path d="M 760 380 Q 820 420 800 490"/>
+<path d="M 800 330 Q 890 390 870 500"/>
+<path d="M 840 280 Q 960 360 940 510"/>
+</g>
+
+<g fill="url(#donkey)">
+<ellipse cx="430" cy="620" rx="280" ry="150"/>
+<rect x="220" y="640" width="50" height="200" rx="18"/>
+<rect x="340" y="660" width="50" height="180" rx="18"/>
+<rect x="490" y="660" width="50" height="180" rx="18"/>
+<rect x="610" y="640" width="50" height="200" rx="18"/>
+<ellipse cx="680" cy="440" rx="130" ry="120"/>
+<path d="M 600 360 Q 580 250 620 230 Q 650 270 640 370 Z"/>
+<path d="M 720 350 Q 740 240 700 220 Q 670 260 680 360 Z"/>
+<path d="M 180 700 Q 120 720 140 780 Q 170 770 200 740 Z"/>
+</g>
+
+<g fill="#0a0a0a" stroke="#1DB954" stroke-width="8">
+<path d="M 600 380 Q 600 300 680 290 Q 760 300 760 380" fill="none" stroke-width="14"/>
+<ellipse cx="600" cy="420" rx="32" ry="42"/>
+<ellipse cx="760" cy="420" rx="32" ry="42"/>
+</g>
+
+<circle cx="640" cy="460" r="8" fill="#FFE066"/>
+<path d="M 720 490 Q 740 510 720 525" stroke="#FFE066" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+<g fill="#9EE5FF">
+<path d="M 540 470 Q 530 490 545 510 Q 555 490 540 470 Z"/>
+<path d="M 510 540 Q 498 562 514 582 Q 525 560 510 540 Z"/>
+<path d="M 470 500 Q 455 525 475 548 Q 488 522 470 500 Z"/>
+</g>
+
+<g fill="none" stroke="#FFE066" stroke-width="14" stroke-linecap="round">
+<path d="M 180 320 L 210 290 L 220 340 L 250 310"/>
+<circle cx="255" cy="305" r="14" fill="#FFE066"/>
+</g>
+
+<text x="500" y="930" font-family="Georgia, serif" font-size="58" font-style="italic" font-weight="700" fill="#FFE066" text-anchor="middle" letter-spacing="2">working its ass off</text>
+</svg>
