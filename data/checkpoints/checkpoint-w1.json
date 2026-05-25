@@ -1,5 +1,5 @@
 {
-  "checkDate": "2026-05-25T18:15:43.760Z",
+  "checkDate": "2026-05-25T18:17:26.715Z",
   "week": "w1",
   "repos": [
     {
@@ -1811,7 +1811,7 @@
       "url": "https://github.com/dusixx/music-flow",
       "isPublic": true,
       "defaultBranch": "main",
-      "description": "",
+      "description": "Music streaming service clone",
       "hasRollingScopesAccess": false,
       "readme": {
         "exists": true,
@@ -1861,49 +1861,23 @@
           "normalizedGithub": "inalitvinka",
           "inReadme": true,
           "diaryDir": "inalitvinka",
-          "entriesCount": 1,
+          "entriesCount": 2,
           "entries": [
             {
               "path": "development-notes/inalitvinka/inalitvinka-sprint-1-2026-05-17.md",
               "date": "2026-05-17",
               "content": "# Sprint 1: Project Setup & Component Basics — 2026-05-17\n\n## What was done:\nThe first sprint I worked on the about page implementation and project setup tasks.\n\n### Project management tasks\nI created project board with Backlog, To Do, In Progress, Done columns and initialized a few tasks for the team.\n\n### Documentation\nI filled in the README file, where I added a project description, team members github links, listed a tech stack of the project, setup instructions, and available project scripts.\n\n### Angular tasks\n- Created `About` page component.\n- Added `TeamMemberCard` component to display information about each team member.\n- Created mock data for team members and favorite tracks.\n- Split data into separate files: `about.models.ts` and `about.data.ts`.\n- Implemented rendering of cards using `@for` and `@if`.\n- Used `input.required()` for passing data to `TeamMemberCard` component.\n- Added RS School logo block to the bottom of the About page.\n- Added and then removed assets configuration in `angular.json` after discussing with the team, since Angular 17+ recommends using the `public/build` directory for assets.\n\n## Components\n### `About` Component\n\n**Angular concepts I used here:**\n- standalone components architecture\n- `@Component` decorator\n- `OnPush` change detection\n- template structure\n- imports array in `@Component` decorator\n\n**Problems:**\n  At first I tried to use routing, but routing is planned for Sprint 2. I needed a temporary way to render the About page without router configuration. Later project structure changed because `MainLayout` was added.\n\n**Solution:**\n  I temporarily rendered `<player-about />` directly inside layout instead of `router-outlet`.\n\n**What I learned:**\n  - Gained an understanding of the difference between direct component rendering and routing.\n\n  - During a code review of a teammate’s PR, I came across the `ngAfterViewChecked` lifecycle hook. I investigated it and found out that it runs after every change detection cycle in Angular. This may lead to unnecessary DOM reads and updates if not handled carefully. I also found out that using `innerText` can trigger layout recalculation, which may affect performance.\n\n### `TeamMemberCard` Component\n\n**Angular concepts I used here:**\n- child components\n- `input.required()` and data flow between parent and child components\n- property binding\n- interpolation\n- control flow (`@for`, `@if`)\n\n**Problems:**\n  I didn't understand the syntax of `input.required<string>()` - what does it mean `required` here.\n  I was a bit confused about `{{ }}` and `[href]` - why some attributes use brackets and others don't use them.\n  I initially stored favorite tracks as string arrays, then realized this is not scalable.\n\n**Solution:**\nRefactored tracks into objects. This made rendering more reliable.\nThis helped me understand following concepts:\n- that `input.required()` means the input is mandatory and must be provided by parent component.\n- that `{{ }}` is interpolation for text rend",
               "charCount": 4736
+            },
+            {
+              "path": "development-notes/inalitvinka/inalitvinka-sprint-2-2026-05-21.md",
+              "date": "2026-05-21",
+              "content": "# Sprint 2: Routing & Signals\n\n## CI Setup (GitHub Actions) \n\n**Date: 2026-05-21**\n\n### What was done:\nI configured a CI pipeline using GitHub Actions to ensure code quality before merging changes into the repository.\n\n### Problems:\nAt the beginning, I had difficulty understanding why the CI pipeline failed, as the logs were not clear and required time to navigate through GitHub Actions output. I also wanted to intentionally test both successful and failing CI runs to better understand its behavior.\n\n### Solution:\nI reviewed the GitHub Actions documentation and inspected workflow logs step by step to understand where the pipeline failed. I also introduced intentional errors (linting and formatting issues) to observe how CI reacts to different types of failures.\n\nTo test different CI behaviors, I temporarily modified the workflow trigger from:\n`branches: [main, dev]`\nto:\n`branches: ['**']`\n\nThis allowed me to run CI on all branches during testing.\n\nI also temporarily turned off Husky pre-commit hooks using `git commit --no-verify` and pushed the changes to a branch. Then I confirmed that GitHub Actions correctly failed the pipeline, and after fixing the issues, verified that CI passed successfully.\n\n**CI result:**\n\n**Failed run**\n![CI failed](https://github.com/user-attachments/assets/cd5c5833-ca9e-4d7a-b58d-bbb766b9b0bd)\n\n**Successful run**\n![CI passed](https://github.com/user-attachments/assets/4f0e59fb-2a31-4ea5-b369-8ca90f6695b2)\n\n---\n\n### What I learned:\n- How GitHub Actions workflows are structured (jobs, steps, and reusable actions from the GitHub Marketplace)\n- How CI is triggered on different GitHub events\n- How to use CI as a quality gate before merging\n- Difference between linting, formatting, style checking, and build verification\n\n---\n\n## Plans for current sprint\n- Project deployment on Netlify\n- Implement CD pipeline using Netlify deployment\n- Routing\n- AuthService implementation\n\n---\n\n## Time spent:\nApproximately 2–3 hours\n",
+              "charCount": 1971
             }
           ],
           "hasMinEntries": true,
-          "commitsCount": 37,
-          "hasMinCommits": true,
-          "personalConditionsMet": true,
-          "score": 20
-        },
-        {
-          "github": "nginit",
-          "normalizedGithub": "nginit",
-          "inReadme": true,
-          "diaryDir": "ngInit",
-          "entriesCount": 3,
-          "entries": [
-            {
-              "path": "development-notes/ngInit/ngInit-sprint-0-2026-05-12-template.md",
-              "date": "2026-05-12",
-              "content": "#Sprint #: The diary name - YYYY-MM-DD\n\n- **Что было сделано:** ...\n- **Проблемы:** ...\n- **Решения (или попытки):** ...\n- **Мысли / Планы:** Что буду делать дальше?\n- **Затраченное время:** Вечность\n",
-              "charCount": 200
-            },
-            {
-              "path": "development-notes/ngInit/ngInit-sprint-1-2026-05-12.md",
-              "date": "2026-05-12",
-              "content": "#Sprint 1: Initialization - 2026-05-12\n\n- **Что было сделано:**\n  Благодаря инициативе Ины я получил приглашение поработать в команде.\n  Ина, Андрей и я объединились и будем выполнять задание MusicFlow в течение следующих нескольких недель.\n  Мы хорошо общаемся и постоянно обсуждаем всякое в телеграм. Интересно получилось, что Ина (создательница\n  нашего общего чата в телеге), наш ментор Алексей и я вообще живём в часовом поясе (UTC+2) Венгрия и Польша,\n  а Андрей в Украине (UTC+3). Однако это нам вообще никак не мешает обсуждать насущные вопросы.\n  Вчера вечером (2026-05-11 в 20:00) состоялся наш первый созвон. Знакомство =)))\n- **Проблемы:**\n  На данном этапе проблемы ещё не возникли. Сейчас идёт только создание репозитория, настройка проекта и\n  обсуждение договорённостей по тому, как мы будем соблюдать чистоту коммитов и Pull Request'ов.\n- **Решения (или попытки):**\n  Репозиторий создан и создан первый PR с инициализацией пустого проекта. Как раз сейчас мы и занимаемся\n  \"обкаткой\" тех правил, которые мы обсудили, а именно: обязательно 2 review от сокомандников для всех\n  PR которые создаются в ветки main, dev и sprint. И ещё одно review проводит ментор, чтобы наверняка.\n- **Мысли / Планы:**\n  Уже сегодня, 12 мая вечером я должен поделиться макетом Figma с командой. Пора кодить.\n- **Затраченное время:**\n  Решение о присоединении к команде я принял быстро, так как наши планы и цели выглядят одинаково =)))\n  Вчерашний митинг у нас продлился 2 часа.\n",
-              "charCount": 1475
-            },
-            {
-              "path": "development-notes/ngInit/ngInit-sprint-1-2026-05-14.md",
-              "date": "2026-05-14",
-              "content": "#Sprint 1: Let's start - 2026-05-14\n\n- **Что было сделано:**\n  Проект получил старт и теперь настало время вдохнуть в него жизнь.\n  Первое, за что я взялся, так это за создание layout, header и footer.\n  Серва я создал пустой layout и переместил в него router-outlet, а сам layout я поместил в app.\n  После этого я переключился на разработку footer. В нем я разместил четыре ссылки: \n  ссылка на RS School и 3 ссылки на GitHub профили членов команды.\n  Header я оставил на сладкое. Мне нравится развлекаться с вёрсткой и её поведением на различные\n  состояния приложения. Таким образом я создал header, который меняет своё состояние в зависимости от того,\n  кто сейчас находится на странице (Guest/User). На данном этапе разработки я использую статическую \n  переменную для состояния hrader, так как у нас пока что не разработаны сервисы для авторизации.\n  После создания PR обнаружились некоторые ошибки в коде, которые я поспешно испавил. Более того,\n  по совету Ины я изменил footer, убрал из него ссылки и вставил обычный copyright. Это избавит\n  нас от дублирования информации в будущем, когда будет разработана страница About.\n  Провели длинный митинг (4 часа разговаривали). Обсуждали насущные вопросы, связанные с\n  дневниками, Figma и Angular Material. \n- **Проблемы:**\n  Глобальная трудность была только одна — придумать место для использования input(), output() или model().\n- **Решения (или попытки):**\n  Я оценил весь layout со всеми его компонентами и понял, что между собой могут общаться layout и header.\n  Таким образом я смог передать состояние isAutorized из layout и input header.\n- **Мысли / Планы:**\n  Далее необходимо будет подумать над тем, как будет выглядеть Landing Page. Это будет интересно,\n  потому что на ней будут размещаться как популярные треки, так и альбомы.\n- **Затраченное время:**\n  На чтение документации и разработку layout, header и footer я потратил около семи часов.\n",
-              "charCount": 1911
-            }
-          ],
-          "hasMinEntries": true,
-          "commitsCount": 23,
+          "commitsCount": 47,
           "hasMinCommits": true,
           "personalConditionsMet": true,
           "score": 20
