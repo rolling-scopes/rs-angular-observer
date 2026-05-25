@@ -38,8 +38,7 @@
       "members": [
         {
           "github": "shoblinsky",
-          "role": "student",
-          "isLead": true
+          "role": "student"
         },
         {
           "github": "tryproxy",
@@ -47,7 +46,8 @@
         },
         {
           "github": "savryna",
-          "role": "student"
+          "role": "student",
+          "isLead": true
         },
         {
           "github": "khasekai",
