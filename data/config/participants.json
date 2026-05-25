@@ -577,10 +577,6 @@
           "role": "student"
         },
         {
-          "github": "ngInit",
-          "role": "student"
-        },
-        {
           "github": "aliaksei-sl",
           "role": "mentor"
         }
@@ -708,17 +704,40 @@
       "projectEvidenceQuote": "ShopFront is a modern online bookstore where users can browse, search, and purchase books across different categories."
     },
     {
-      "name": "untitled",
+      "name": "Y2K",
       "members": [
         {
-          "github": "angelinavakkasova",
+          "github": "ngInit",
           "role": "student",
           "isLead": true
         }
       ],
-      "repoUrls": [],
-      "language": "ru",
-      "projectKind": "other"
+      "repoUrls": [
+        "https://github.com/ngInit/Hive"
+      ],
+      "language": "ru"
+    },
+    {
+      "name": "Team 42",
+      "members": [
+        {
+          "github": "Ansa2110",
+          "role": "student",
+          "isLead": true
+        },
+        {
+          "github": "viktorykings",
+          "role": "student"
+        },
+        {
+          "github": "angelinavakkasova",
+          "role": "student"
+        }
+      ],
+      "repoUrls": [
+        "https://github.com/Ansa2110/team-42-store"
+      ],
+      "language": "ru"
     }
   ]
 }

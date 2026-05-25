@@ -1,5 +1,5 @@
 {
-  "checkDate": "2026-05-19T19:13:36.034Z",
+  "checkDate": "2026-05-25T18:15:43.760Z",
   "week": "w1",
   "repos": [
     {
@@ -2314,6 +2314,159 @@
         "Angular",
         "ESLint",
         "RxJS",
+        "TypeScript",
+        "Vitest"
+      ],
+      "techTagsFromCode": true
+    },
+    {
+      "fullName": "ngInit/Hive",
+      "url": "https://github.com/ngInit/Hive",
+      "isPublic": true,
+      "defaultBranch": "main",
+      "description": "",
+      "hasRollingScopesAccess": false,
+      "readme": {
+        "exists": true,
+        "hasDescription": false,
+        "hasTeamList": true,
+        "teamMembers": [
+          "nginit",
+          "ngInit"
+        ],
+        "content": "# 🎧 Hive 🎧\n\n&#160;&#160;&#160;&#160; Hive is a music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library.\nThe application uses the Jamendo API v3.0, which provides access to over 500,000+ freely licensed tracks, along with metadata for artists, albums, and audio streaming links.\n\n## 📚 Technology Stack\n<p>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Angular_R.svg\" alt=\"Angular\" width=\"40\" height=\"40\"/>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/TS_R.svg\" alt=\"TypeScript\" width=\"40\" height=\"40\"/>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/HTML_R.svg\" alt=\"HTML\" width=\"40\" height=\"40\"/>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/CSS_R.svg\" alt=\"CSS\" width=\"40\" height=\"40\"/>\n    &#160;&#160;&#160;&#160;\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg\" alt=\"NPM\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NodeJS_R.svg\" alt=\"Node.js\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/ESLint_R.svg\" alt=\"ESLint\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Prettier_R.svg\" alt=\"Prettier\" width=\"40\" height=\"40\" />\n</p>\n\n  - ### Additional features:\n    - Angular Material\n    - Angular Signals\n    - Angular Router\n    - Reactive Forms\n    - HttpClient\n    - RxJS\n    - Firebase (Authentication, Firestore)\n    - Angular Testing Utilities (Jasmine / Karma)\n\n## 📚 Tools\n<p>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/MacOS_R.svg\" alt=\"MacOS\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Windows_R.svg\" alt=\"Windows\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/Figma_R.svg\" alt=\"Figma\" width=\"40\" height=\"40\"/>\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/WebStorm_R.svg\" alt=\"WebStorm\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/VSCode_R.svg\" alt=\"VSCode\" width=\"40\" height=\"40\" />\n    <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/GitHub_R.svg\" alt=\"GitHub\" width=\"40\" height=\"40\"/>\n</p>\n\n## 🥷 Team Members\n- Aleksei — [ngInit](https://github.com/nginit)\n\n## 🎚️ Local Setup\n  - <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NPM_R.svg\" alt=\"NPM\" width=\"32\" height=\"32\"/>10.9.7\n  - <img src=\"https://raw.githubusercontent.com/ngInit/ngInit/ec0fcb7041549fd2edb085c89cf567afd14d5258/ICONS/NodeJS_R.svg\" alt=\"Node.JS\" width=\"32\" height=\"32\"/>LTS v22.22.2\n\n  - ### 💾 Installation\n     ```bash\n     git clone https://github.com/ngInit/Hive.git\n     cd Hive\n     npm install\n     ```\n\n  - ### 🏹 Local starts\n     ```bash\n     npm start\n     ```\n\n  - 🔗 Open by link: [Open in browser](http://localhost:4200)\n\n  - ### Additional Scripts\n    - `npm run test` — Run unit tests\n    - `npm run lint` — Run ESLint\n    - `npm run format` — Run Prettier (check mode)\n    - `npm run build` — Build the project\n\n\n## 🌎 Deployment [link]()\n"
+      },
+      "teamConditions": {
+        "allMet": true,
+        "repoPublic": true,
+        "accessShared": true,
+        "readmeExists": true,
+        "readmeHasDescription": false,
+        "readmeHasTeam": true
+      },
+      "members": [
+        {
+          "github": "ngInit",
+          "normalizedGithub": "nginit",
+          "inReadme": true,
+          "diaryDir": "ngInit",
+          "entriesCount": 2,
+          "entries": [
+            {
+              "path": "development-notes/ngInit/ngInit-sprint-0-2026-05-22-template.md",
+              "date": "2026-05-22",
+              "content": "#Sprint #: The diary name - YYYY-MM-DD\n\n- **Что было сделано:** ...\n- **Проблемы:** ...\n- **Решения (или попытки):** ...\n- **Мысли / Планы:** Что буду делать дальше?\n- **Затраченное время:** Вечность\n",
+              "charCount": 200
+            },
+            {
+              "path": "development-notes/ngInit/ngInit-sprint-1-2026-05-22.md",
+              "date": "2026-05-22",
+              "content": "#Sprint 1: Initialization - 2026-05-22\n\n- **Что было сделано:**\n  Ну и дела.\n  Пару дней назад я покинул предыдущую команду, а курс покидать не хочу.\n  Первым делом были опрошены существующие команды, вдруг им нужен ещё один человек.\n  Время шло, а ответы были одинаковы: У нас уже три человека.\n  Недолго думая, я решил создать проект с нуля и тем самым создать команду.\n  Название проекта — Hive. Любой музыкальный сервис это своего рода улей )))\n  Название команды Y2K. Мне нравится простота названия и отсылка на тот самый эффект 2000-го года.\n  Что ж, пора кодить.\n  Создал GitHub репозиторий, создал проект с помощью Angular CLI и связал их.\n  Следуюшие несколько часов ушли на настройку проекта, а именно на Prettier, ESLint, Husky, Angular Material и так далее.\n  Не без мучений заполнил самый важный документ — README.md\n  Вот и отправились в свой путь первые пул реквесты.\n  Figma.\n  Далее я начал наполнять приложение базовыми вещами. Я создал fooer — это был самый простой компонент.\n  Спустя время я взялся за header. Тут пришлось посидеть куда дольше. Нужно было продумать состояние header как для\n  гостей, так и для зарегистрированных прользователей.\n  И вот ближе к вечеру я приступил к созданию main layout. Тут всё было даже проще чем с footer =)))\n  Готово! Приложение уже обзавелось первым наполнением.\n- **Проблемы:**\n  Из глобальных проблем я столкнулся только с тем, что сложно было модифицировать Input component из\n  библиотеки Angular Material. Из более мелких проблем я столкнулся с некоторыми ошибками при работе Prettier.\n- **Решения (или попытки):**\n  С Input component из библиотеки Angular Material оказалось всё довольно просто. Мне не нужно было использовать\n  всё то, что лежит в собранном компоненте, мне нужно было взять только необходимый мне набор. Я сделал свой набор,\n  и всё заработало как нужно.\n  С Prettier тоже оказалось всё просто. Проблема была не в Prettier, проблема была в WebStorm, который автоматически\n  отслеживал SCSS и тем самым препятствовал работе форматера. После отключения SCSS Watcher всё заработало.\n- **Мысли / Планы:**\n  Далее необходимо сделать то, о чём сказал Дмитрий Воробей, а именно, нужно дать общий клич о том, что\n  я набираю людей в команду. Однако, если команда будет состоять только из меня одного, то для него это тоже OK.\n  Сейчас нужно засабмитить заявку о регистрации команды, а то я точно не дойду курс до конца.\n  Далее по проекту необходимо посмотреть за требования по Sprint 2 и планировать фичи.\n  Необходимо добавить компоненты в Figma.\n- **Затраченное время:**\n  Если считать только то время, которое я затратил на проект, то это примерно 10 часов.\n",
+              "charCount": 2639
+            }
+          ],
+          "hasMinEntries": true,
+          "commitsCount": 8,
+          "hasMinCommits": true,
+          "personalConditionsMet": true,
+          "score": 20
+        }
+      ],
+      "techTags": [
+        "Angular",
+        "ESLint",
+        "Husky",
+        "RxJS",
+        "TypeScript",
+        "Vitest"
+      ],
+      "techTagsFromCode": true
+    },
+    {
+      "fullName": "Ansa2110/team-42-store",
+      "url": "https://github.com/Ansa2110/team-42-store",
+      "isPublic": true,
+      "defaultBranch": "main",
+      "description": "",
+      "hasRollingScopesAccess": false,
+      "readme": {
+        "exists": true,
+        "hasDescription": false,
+        "hasTeamList": true,
+        "teamMembers": [
+          "Ansa2110",
+          "viktorykings",
+          "angelinavakkasova"
+        ],
+        "content": "# Team42Store\n\nOnline store - team 42\n\n# Team members\n\nTeam members: Ansar (https://github.com/Ansa2110), Viktoryia (https://github.com/viktorykings), Angelina (https://github.com/angelinavakkasova)"
+      },
+      "teamConditions": {
+        "allMet": true,
+        "repoPublic": true,
+        "accessShared": true,
+        "readmeExists": true,
+        "readmeHasDescription": false,
+        "readmeHasTeam": true
+      },
+      "members": [
+        {
+          "github": "angelinavakkasova",
+          "normalizedGithub": "angelinavakkasova",
+          "inReadme": true,
+          "diaryDir": "angelinavakkasova",
+          "entriesCount": 1,
+          "entries": [
+            {
+              "path": "development-notes/angelinavakkasova/angelinavakkasova-sprint-1-2026-05-25.md",
+              "date": "2026-05-25",
+              "content": "# Sprint 1 — the first Angular components\n\nСегодня впервые нормально работала с Angular и пыталась разобраться, как вообще устроены компоненты и структура проекта.\n\nВ рамках спринта занималась частью авторизации и создала несколько компонентов:\n\n- LoginForm\n- RegisterForm\n- AuthPage\n\nТакже разбиралась, как Angular CLI генерирует компоненты и зачем нужны отдельные файлы `.ts`, `.html`, `.css` и `.spec.ts`.\n\n---\n\n## What was done:\n\nСначала развернула проект локально, установила зависимости и запустила приложение через `ng serve`.\n\nПосле этого создала компоненты через Angular CLI:\n\n```bash\nnpx ng generate component auth/login-form\nnpx ng generate component auth/register-form\nnpx ng generate component auth/auth-page\n```\n\nСначала вообще не понимала, зачем создавать компоненты через терминал, потому что в React я обычно сама создаю файлы руками. Потом стало понятнее, что Angular CLI сразу создает правильную структуру компонента и тесты.\n\n---\n\n## LoginForm\n\nВ LoginForm сделала форму входа с полями email и password.\n\nИспользовала:\n- interpolation `{{ }}`\n- event binding `(click)`\n- property binding `[disabled]`\n- `input()`\n- `output()`\n\nДобавила базовую валидацию:\n- пустой email;\n- неправильный формат email;\n- пустой пароль.\n\nСамым непонятным сначала было то, как работает `output()` и зачем он нужен. Потом разобралась, что через него дочерний компонент может отправлять событие родителю, примерно как callback в React.\n\n---\n\n## RegisterForm\n\nВ RegisterForm сделала форму регистрации.\n\nДобавила:\n- имя;\n- email;\n- пароль;\n- сообщения об ошибках.\n\nТакже сделала переключение между login/register через родительский компонент.\n\nПока без настоящего API — только UI и логика компонентов.\n\n---\n\n## AuthPage\n\nAuthPage стал контейнером для login и register форм.\n\nТут впервые использовала `signal()` для переключения режима между входом и регистрацией.\n\nБыло интересно понять, что signals в Angular — это отдельная реактивная система и она работает иначе, чем state в React.\n\n---\n\n## Problems:\n\nСложнее всего было понять:\n- как компоненты связываются друг с другом;\n- зачем нужны standalone components;\n- как работают signals.\n\n---\n\n## Solutions:\n\nСейчас проект:\n- запускается;\n- билдится;\n- тесты проходят;\n- компоненты отображаются;\n- формы переключаются между login/register.\n\nТакже создала свою ветку `feat-auth`, сделала commit, push и pull request в `dev`.\n\n---\n\n## What I learned:\n\nЗа этот спринт более-менее разобралась:\n- как создавать standalone components;\n- как работает Angular CLI;\n- как использовать `input()` и `output()`;\n- как использовать `signal()`;\n- как работают lifecycle hooks (`ngOnInit`, `ngOnDestroy`);\n- как запускать build и tests.\n\n---\n\n## Plans: Sprint 2\n\nВо втором спринте хочу продолжить делать авторизацию и регистрацию уже ближе к реальному приложению.\n\nПлан:\n- настроить routing;\n- сделать отдельные страницы login/register;\n- разобраться с lazy loading;\n- добавить route guards;\n- подключить сервисы через `inject()`;\n- сделать auth service;\n- подключить co",
+              "charCount": 3398
+            }
+          ],
+          "hasMinEntries": true,
+          "commitsCount": 2,
+          "hasMinCommits": true,
+          "personalConditionsMet": true,
+          "score": 20
+        },
+        {
+          "github": "Ansa2110",
+          "normalizedGithub": "ansa2110",
+          "inReadme": true,
+          "diaryDir": null,
+          "entriesCount": 0,
+          "entries": [],
+          "hasMinEntries": true,
+          "commitsCount": 1,
+          "hasMinCommits": true,
+          "personalConditionsMet": true,
+          "score": 20
+        },
+        {
+          "github": "viktorykings",
+          "normalizedGithub": "viktorykings",
+          "inReadme": true,
+          "diaryDir": "viktorykings",
+          "entriesCount": 1,
+          "entries": [
+            {
+              "path": "development-notes/viktorykings/viktorykings-sprint-1-2026-05-24.md",
+              "date": "2026-05-24",
+              "content": "# Sprint 1: Project setup, Angular CLI, first components.\n\n- **What was done:** Настройка tailwind темы, вынесение стилей в константы; Создан компонент главной страницы (ng generate c), созданы два компонента отображающие массивы данных, созданы компоненты, принимающие эти данные через input.\n- **Problems:** Не получалось использовать цвета кастомной темы, Потрачено 30 минут на чтение доки и определение, где нужно хранить @theme и обявлять сразу после импорта @import 'tailwindcss';\n- **Solutions:** Чтение документации и реддита.\n- **What I learned:** не стоит разделять объявление темы и импорт тайлвинда.\n- **Plans:** Во втором спринте доработать тему, подключить главную страницу к роутингу, сделать 404 страницу, добавить сервис и lazy-loading товаров.\n- **Time spent:** 3 hours\n\nhttps://github.com/Ansa2110/team-42-store/pull/1\n",
+              "charCount": 838
+            }
+          ],
+          "hasMinEntries": true,
+          "commitsCount": 2,
+          "hasMinCommits": true,
+          "personalConditionsMet": true,
+          "score": 20
+        }
+      ],
+      "techTags": [
+        "Angular",
+        "RxJS",
+        "Tailwind",
         "TypeScript",
         "Vitest"
       ],
