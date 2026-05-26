@@ -58,8 +58,10 @@
       "label": "Week 1: Setup & Environment",
       "startDate": "2026-04-27",
       "rules": [
-        { "id": "commit", "type": "commits", "scope": "member", "points": 10, "params": { "minCommits": 1 } },
-        { "id": "diary",  "type": "diary",   "scope": "member", "points": 10, "params": { "minEntries": 1 } }
+        { "id": "diary",      "type": "diary",  "scope": "member", "points": 20, "params": { "minEntries": 1 } },
+        { "id": "repoPublic", "type": "custom", "scope": "team",   "points": 0 },
+        { "id": "readme",     "type": "custom", "scope": "team",   "points": 0 },
+        { "id": "teamList",   "type": "custom", "scope": "team",   "points": 0 }
       ]
     }
   ]

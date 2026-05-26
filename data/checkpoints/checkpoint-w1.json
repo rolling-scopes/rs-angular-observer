@@ -613,21 +613,6 @@
       "techTagsFromCode": true
     },
     {
-      "fullName": "Smooth-Coding-Society/RSS-Angular-2026Q2",
-      "url": "https://github.com/Smooth-Coding-Society/RSS-Angular-2026Q2",
-      "error": "Could not fetch repo info",
-      "isPublic": false,
-      "teamConditions": {
-        "allMet": false,
-        "repoPublic": false,
-        "accessShared": false,
-        "readmeExists": false,
-        "readmeHasDescription": false,
-        "readmeHasTeam": false
-      },
-      "members": []
-    },
-    {
       "fullName": "RX-Men/shop-front",
       "url": "https://github.com/RX-Men/shop-front",
       "isPublic": true,
@@ -1376,8 +1361,8 @@
           "score": 20
         },
         {
-          "github": "oksana",
-          "normalizedGithub": "oksana",
+          "github": "Oksi2510",
+          "normalizedGithub": "oksi2510",
           "inReadme": false,
           "diaryDir": null,
           "entriesCount": 0,
@@ -1645,6 +1630,19 @@
         {
           "github": "aseke09",
           "normalizedGithub": "aseke09",
+          "inReadme": false,
+          "diaryDir": null,
+          "entriesCount": 0,
+          "entries": [],
+          "hasMinEntries": true,
+          "commitsCount": 0,
+          "hasMinCommits": true,
+          "personalConditionsMet": true,
+          "score": 20
+        },
+        {
+          "github": "dzinakor",
+          "normalizedGithub": "dzinakor",
           "inReadme": false,
           "diaryDir": null,
           "entriesCount": 0,

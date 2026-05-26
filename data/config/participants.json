@@ -181,30 +181,6 @@
       "projectEvidenceQuote": "A music streaming service clone where the user can search for tracks and artists, listen to music, build playlists, and maintain a favorites library."
     },
     {
-      "name": "Smooth Coding Society",
-      "members": [
-        {
-          "github": "mon-repos",
-          "role": "student",
-          "isLead": true
-        },
-        {
-          "github": "solosoft2000",
-          "role": "student"
-        },
-        {
-          "github": "dzinakor",
-          "role": "student"
-        }
-      ],
-      "repoUrls": [
-        "https://github.com/Smooth-Coding-Society/RSS-Angular-2026Q2"
-      ],
-      "language": "en",
-      "projectKind": "other",
-      "access": "none"
-    },
-    {
       "name": "RX-Men",
       "members": [
         {
@@ -430,7 +406,7 @@
           "role": "student"
         },
         {
-          "github": "Oksana",
+          "github": "Oksi2510",
           "role": "student"
         },
         {
@@ -516,6 +492,10 @@
         },
         {
           "github": "Aseke09",
+          "role": "student"
+        },
+        {
+          "github": "dzinakor",
           "role": "student"
         },
         {
