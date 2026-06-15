@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Team 42 · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Team 42</strong><strong class="lang-ru">Mentor briefing — Team 42</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Team 42</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>Ansa2110/team-42-store</code> (commits, PRs, diary entries). Snapshot: 2026-06-15. Goal: give the mentor a 2-minute context before the interview — who did what, who understands what, where to dig.</blockquote>
+<p><strong>One-line summary (candid):</strong> A small, balanced team of genuine Angular beginners — all three shipped real features and wrote honest diaries — but total output is thin (32 commits, 14 PRs across the team), the lead's commit count trails the two members, the deployed app still has a broken styles issue the lead flagged in their last diary entry, and no commercetools/real-API integration is in evidence yet.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>Name:</strong> Team 42 Store — an e-commerce SPA (Angular). <strong>Stated scope:</strong> product catalog, cart, filtering, user profiles, order management. <strong>Actual state (2026-06-15):</strong> deployed to GitHub Pages (<code><a href="https://ansa2110.github.io/team-42-store">https://ansa2110.github.io/team-42-store</a></code>); auth pages (login/register) functional; catalog page with routing; 404 page; route guard; header/footer. No real backend connected yet — <code>AuthService</code> is described as mock logic in the diary.</p>
+<p><strong>Stack:</strong> Angular 21 · Angular Material (CDK + Material ^21.2.12) · Tailwind CSS v4 · Angular Reactive Forms · Angular Router with lazy loading · ESLint + Husky + lint-staged. TypeScript. Deploy via <code>angular-cli-ghpages</code>.</p>
+<p><strong>Repo:</strong> <a href="https://github.com/Ansa2110/team-42-store">https://github.com/Ansa2110/team-42-store</a> <strong>Created:</strong> 2026-05-22 · <strong>Last push:</strong> 2026-06-08 · <strong>Open issues:</strong> 11 <strong>Default branch:</strong> <code>main</code> (GitFlow: <code>dev</code>, <code>feat-*</code>, and <code>development-notes/&lt;login&gt;</code> branches present)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster — students vs external</h2>
+<p><strong>Students (roster):</strong></p>
+<ul>
+<li><code>Ansa2110</code> — team lead</li>
+<li><code>viktorykings</code> — member</li>
+<li><code>AngelinaVakkasova</code> / <code>angelinavakkasova</code> — member (GitHub login casing varies; same person)</li>
+</ul>
+<p><strong>External contributors:</strong> None detected in the contributor list. All three committers are on the course roster. No mentor account appears in commit data; no review-bot or infra account detected.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs (merged)</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>Ansa2110</strong> (lead)</td><td>10</td><td>4</td><td>4</td><td>3</td><td>2026-06-08</td><td>engaged lead; thin commit count for a lead</td></tr>
+<tr><td><strong>viktorykings</strong></td><td>14</td><td>5</td><td>5</td><td>2</td><td>2026-06-08</td><td>highest commit count; practical, problem-solving</td></tr>
+<tr><td><strong>AngelinaVakkasova</strong></td><td>8</td><td>5</td><td>5</td><td>2</td><td>2026-06-08</td><td>detailed diaries, honest learning curve, steady</td></tr>
+</tbody></table>
+<p>All three were active on 2026-06-08. All PRs were merged (no open/closed-unmerged). Output is low-volume overall — 14 PRs and 32 commits for a team of three over ~3 weeks — though the codebase is young (repo created 2026-05-22). No passenger, but also no standout high-output contributor.</p>
+<p>Note: <code>Ansa2110</code> has only 10 commits despite being lead. The lead role appears mostly in project setup, routing architecture, and deployment — tasks that are underrepresented in commit counts (config, merge commits) — but still worth probing for actual depth.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Mentor: <strong>IamBigBobby</strong> · Sprint 1 Interview — Components (late May)</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>Ansa2110</strong></td><td>75 / 100</td><td>not recorded</td></tr>
+<tr><td><strong>viktorykings</strong></td><td>50 → 100 / 100</td><td>not recorded</td></tr>
+<tr><td><strong>AngelinaVakkasova</strong></td><td>not recorded</td><td>not recorded</td></tr>
+</tbody></table>
+<p><strong>Notes per student:</strong></p>
+<ul>
+<li><strong>Ansa2110 (75):</strong> Passed the Sprint 1 interview with a solid-but-not-outstanding score; no written comment from the mentor. Consistent with the activity picture: architectural instinct shown, but depth yet to be stress-tested.</li>
+<li><strong>viktorykings (50 → 100):</strong> Two entries exist for Sprint 1 — the first scored 50 with the comment "need to improve angular control flow knowledge"; the second scored 100 with no comment. This pattern likely reflects a re-interview or score correction. The earlier 50 is a real signal: Angular control flow (<code>@if</code>, <code>@for</code>, <code>@switch</code> syntax) is an explicit knowledge gap the mentor flagged. Even if the final recorded score is 100, the control-flow weakness is worth probing at Sprint 2.</li>
+<li><strong>AngelinaVakkasova:</strong> No Sprint 1 score on record. Either she was absent from the defence or her result was not entered. This is itself a risk signal — she is the most reflective writer of the three, so an unexplained absence from the defence is worth clarifying immediately.</li>
+</ul>
+<p><strong>Score vs. activity reconciliation:</strong></p>
+<ul>
+<li><strong>Ansa2110:</strong> Score (75) and repo activity are broadly aligned — both suggest a engaged beginner with genuine understanding but limited total output. No contradiction.</li>
+<li><strong>viktorykings:</strong> The initial score of 50 and the "angular control flow knowledge" flag sit in tension with her being the highest-commit contributor and the most practically self-sufficient. The divergence is real: high practical output does not automatically mean correct Angular idioms. If her final score is 100 (re-interview), the control-flow gap may have been addressed — but verify this at Sprint 2.</li>
+<li><strong>AngelinaVakkasova:</strong> The repo picture (strongest written reflection, non-trivial Reactive Forms migration, most articulate about concepts) would predict a strong defence score. The absence of any defence record is therefore a notable mismatch. Clarify before or at the start of the Sprint 2 interview.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>Ansa2110 — team lead, 10 commits / 4 PRs / 3 diaries</h3>
+<p><strong>Built (grounded in PRs + diary):</strong></p>
+<ul>
+<li>Header and footer layout (diary 2026-05-24)</li>
+<li>App routing structure with lazy loading; separated auth page from main layout via child routes (PR #5/#6 "Feat layout and routes"; diary 2026-05-25)</li>
+<li><code>PromoCountdownBanner</code> component — <code>@Input()</code>, <code>@Output()</code>, <code>ngOnInit</code>/<code>ngOnDestroy</code> for countdown timer, property and event binding (diary 2026-05-25 — described in detail)</li>
+<li><code>AuthService</code> with <code>isLoggedIn()</code> check based on stored token (diary 2026-06-09)</li>
+<li>Route guard to protect authenticated routes (PR #33 "Added route guard"; diary 2026-06-09)</li>
+<li>GitHub Pages deployment (diary 2026-06-09; known styling issue post-deploy)</li>
+</ul>
+<p><strong>Level:</strong> Beginner with genuine Angular engagement. Diary entries are detailed and structurally correct — demonstrates understanding of <code>@Input()</code>/<code>@Output()</code>, lifecycle hooks, lazy loading, and route guards with a plausible explanation of each. The PromoCountdownBanner is the most concrete self-authored component mentioned. Learning curve on Git branching was explicitly noted (learned from teammate Viktoria mid-sprint 1) — that's low for a lead.</p>
+<p><strong>Risks:</strong> Lead has fewer commits than both teammates. Deployment is live but broken (styles issue on GitHub Pages — mentioned in the last diary but not yet fixed). Route guard PR merged before styling was resolved. Pattern suggests shipping before hardening. <code>AuthService</code> is mock-only and the diary explicitly defers backend integration to the future — no timeline given.</p>
+<p><strong>Probe (can-you-create-it test):</strong> Ask them to rebuild the route guard from scratch: what does <code>CanActivateFn</code> look like, where does it inject <code>AuthService</code>, what does <code>inject(Router)</code> do, and what happens when the token check fails. Then ask why styles might break on GitHub Pages after deployment (<code>base-href</code>, asset paths, Tailwind JIT purge behavior on static hosting) — this tests whether they diagnosed the bug or just noted it.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>viktorykings — 14 commits / 5 PRs / 2 diaries</h3>
+<p><strong>Built (grounded in PRs + diary):</strong></p>
+<ul>
+<li>Main page with advantages section and products section — two child components receiving data via <code>@Input()</code> (PR #1 "feat: add main page, advantages section, products section"; diary 2026-05-24)</li>
+<li>Tailwind v4 custom theme setup — spent 30 min debugging <code>@theme</code> placement relative to <code>@import 'tailwindcss'</code> (diary 2026-05-24)</li>
+<li>Catalog page with routing (PR #8 "Feat catalog page"; diary sprint-2)</li>
+<li><code>localStorage</code> service for data persistence (diary sprint-2)</li>
+<li>ESLint + Husky configuration and integration (PR #32 "feat: add eslint, husky, link to catalog; fix: eslint errors")</li>
+<li>Sprint 2 wrap-up PR #34 "Sprint 2"</li>
+</ul>
+<p><strong>Level:</strong> Practical, self-sufficient beginner. Diary entries are concise and honest about actual debugging time. The Tailwind <code>@theme</code> issue shows she reads documentation and figures things out independently. The signal bug she encountered ("FORGOT TO BIND TO COMPONENT", her caps) is a real Angular gotcha — and she solved it. 10 hours logged in sprint-2 diary is a high honest estimate, not a round number.</p>
+<p><strong>Level caveat:</strong> Two diary entries is the minimum. Sprint-2 diary has no explicit Angular concept breakdown (unlike Angelina's), which makes it harder to verify depth vs. practical intuition. The signal usage description ("NOT GETTING DATA FROM SIGNAL") suggests first contact with signals rather than solid understanding.</p>
+<p><strong>Probe:</strong> Ask her to explain Angular signals vs. RxJS Observables — when would she use each? Then drill into the <code>localStorage</code> service: does it use <code>inject()</code>, is it <code>providedIn: 'root'</code>, and why does that matter for singleton behavior? Finally: the Tailwind custom theme — ask her to re-explain the <code>@theme</code> / <code>@import</code> ordering issue and what would break if it's wrong.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AngelinaVakkasova — 8 commits / 5 PRs / 2 diaries</h3>
+<p><strong>Built (grounded in PRs + diary):</strong></p>
+<ul>
+<li>Auth components: <code>LoginForm</code>, <code>RegisterForm</code>, <code>AuthPage</code> (PR #3 "feat: add auth components"; diary 2026-05-25)</li>
+<li><code>signal()</code> for mode-switching between login/register in <code>AuthPage</code> — first use of Angular signals (diary 2026-05-25)</li>
+<li>Auth components refactored to Angular Reactive Forms with <code>FormBuilder</code>, <code>Validators</code>, <code>[formGroup]</code>, <code>formControlName</code>, <code>(ngSubmit)</code>, <code>markAllAsTouched()</code> (PR #12 "refactor: improve auth components and styles"; diary 2026-06-08)</li>
+<li>Full client-side validation: email format, empty fields, password match, show/hide password, <code>redirect on /main</code> after login</li>
+<li>Google and GitHub OAuth buttons (UI only; diary notes they are not yet connected to real OAuth)</li>
+<li>Styling via Tailwind; noted as using Angular Material modules</li>
+<li>404 page (PR #14 "feat: implement 404 Not Found page")</li>
+<li>Diary file added via dedicated PR #4 and #13</li>
+</ul>
+<p><strong>Level:</strong> The most reflective and structured writer of the three. Sprint-1 diary is a genuine self-teaching log — she tracks every Angular concept she used and why it confused her initially (<code>output()</code> vs React callbacks; standalone components vs modules; signals vs useState). Sprint-2 diary shows real progression: she migrated from template-driven forms to Reactive Forms, which is a non-trivial change, and she can name the exact APIs involved. Compare-to-React framing is a crutch but also a sign she's actively building a mental model rather than copy-pasting.</p>
+<p><strong>Risks:</strong> <code>AuthService</code> is mock logic (her own words: "can connect real API requests later"). Google/GitHub OAuth buttons are UI placeholders. 8 commits is the lowest count; all her work lives in 5 PRs which is fine, but scope is mostly concentrated in one area (auth). Open issues in the repo include "Connect real OAuth authentication for Google and GitHub" — not assigned but implicitly her domain.</p>
+<p><strong>Probe (can-you-create-it test):</strong> Ask her to rebuild a Reactive Form from scratch — no <code>FormBuilder</code>, raw <code>FormGroup</code> and <code>FormControl</code>. Then: what is <code>markAllAsTouched()</code> for, and why is it needed before <code>ngSubmit</code>? Follow up with: she used <code>signal()</code> for mode-switching — could she use a <code>computed()</code> or <code>effect()</code> instead, and what's the difference? This hits the exact zone she herself flagged as "only used superficially."</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall readiness:</strong> Early-stage beginner team. All three are genuinely engaged — no passenger, no ghost. Diaries are honest, sometimes candid about confusion. PRs are small and scoped, which is good process hygiene. The app is deployed (with a known styling bug) and the core Angular concepts — components, routing, reactive forms, guards, signals, services — have been touched by each student in their respective area.</p>
+<p><strong>Balance:</strong> Work split is reasonable by domain (lead = routing/auth-service/deployment; Viktoria = main page/catalog/infra; Angelina = auth UI/forms), but the lead's lower commit count relative to the two members is worth noting. The lead's Git-branching knowledge catching up mid-sprint-1 is a data point: they may be growing into the lead role rather than arriving with it.</p>
+<p><strong>Who is strong:</strong> Angelina is the most articulate explainer and most likely to be able to reconstruct what she built from first principles. Viktoria is the highest-output and most practically self-sufficient. Ansa (lead) shows architectural instinct (lazy loading, route guard, PromoCountdownBanner as a reusable component) but thin total output.</p>
+<p><strong>Who to watch:</strong> All three are at roughly the same beginner level, which is appropriate for week 3–4 of an Angular course. No one is clearly ahead on Angular fundamentals yet. Ansa's styling issue on GitHub Pages is unresolved as of the last diary (2026-06-09) — ask if it was fixed.</p>
+<p><strong>Recommended interview angle:</strong> For each student, take one feature they claim to have written and ask them to re-explain it at the whiteboard — the "create it" test from the probe sections above. This team has done enough that there is real material to examine. Avoid general "what is Angular" questions; they will answer well from memorization. Go specific: route guard code, FormGroup without FormBuilder, signal binding gotcha.</p>
+<p><strong>No AI/library heavy-reliance flags detected</strong> — no mention of copy-pasted LLM code in any diary. Tailwind is a library choice, not a crutch. Angular Material used for UI components, which is standard and appropriate for the course.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<p><strong>Health tier: AMBER (Watch)</strong></p>
+<p>Reason: All three students are active and engaged (repo last push 2026-06-08, Sprint 2 deadline 2026-06-23 — mid-sprint is expected), and two of three have Sprint 1 scores on record (Ansa 75, Viktoria 50→100). However, AngelinaVakkasova has no defence record at all — an unexplained absence from the Sprint 1 interview for the team's strongest conceptual writer — and viktorykings' initial score of 50 with a named control-flow gap is a concrete knowledge flag that needs follow-up at Sprint 2. Not at risk of dropout, but not cleanly green until Angelina's defence status is clarified.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Team 42</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>Ansa2110/team-42-store</code> (коммиты, PR, записи дневников). Снимок: 2026-06-15. Цель: дать ментору двухминутный контекст перед интервью — кто что делал, кто что понимает, где копать.</blockquote>
+<p><strong>Краткое резюме (честно):</strong> Небольшая, сбалансированная команда настоящих Angular-новичков — все трое реализовали реальные фичи и писали честные дневники — но общий объём работы невелик (32 коммита, 14 PR на команду), количество коммитов лида уступает обоим участникам, задеплоенное приложение всё ещё имеет сломанные стили (лид отметил это в последней записи дневника), и никакой интеграции с commercetools / реальным API не прослеживается.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>Название:</strong> Team 42 Store — SPA для электронной коммерции (Angular). <strong>Заявленный охват:</strong> каталог товаров, корзина, фильтрация, профили пользователей, управление заказами. <strong>Фактическое состояние (2026-06-15):</strong> задеплоено на GitHub Pages (<code><a href="https://ansa2110.github.io/team-42-store">https://ansa2110.github.io/team-42-store</a></code>); страницы авторизации (вход/регистрация) работают; страница каталога с роутингом; страница 404; гард маршрута; хедер/футер. Реальный бэкенд пока не подключён — в дневнике <code>AuthService</code> описывается как мок-логика.</p>
+<p><strong>Стек:</strong> Angular 21 · Angular Material (CDK + Material ^21.2.12) · Tailwind CSS v4 · Angular Reactive Forms · Angular Router с lazy loading · ESLint + Husky + lint-staged. TypeScript. Деплой через <code>angular-cli-ghpages</code>.</p>
+<p><strong>Репозиторий:</strong> <a href="https://github.com/Ansa2110/team-42-store">https://github.com/Ansa2110/team-42-store</a> <strong>Создан:</strong> 2026-05-22 · <strong>Последний push:</strong> 2026-06-08 · <strong>Открытые задачи:</strong> 11 <strong>Основная ветка:</strong> <code>main</code> (GitFlow: присутствуют ветки <code>dev</code>, <code>feat-*</code> и <code>development-notes/&lt;login&gt;</code>)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав — студенты и внешние участники</h2>
+<p><strong>Студенты (по ростеру):</strong></p>
+<ul>
+<li><code>Ansa2110</code> — тимлид</li>
+<li><code>viktorykings</code> — участник</li>
+<li><code>AngelinaVakkasova</code> / <code>angelinavakkasova</code> — участник (регистр логина на GitHub различается; один и тот же человек)</li>
+</ul>
+<p><strong>Внешние участники:</strong> В списке контрибьюторов не обнаружены. Все три автора коммитов числятся в ростере курса. Аккаунт ментора в данных о коммитах не присутствует; ревью-боты или инфраструктурные аккаунты не обнаружены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>PR (влито)</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>Ansa2110</strong> (лид)</td><td>10</td><td>4</td><td>4</td><td>3</td><td>2026-06-08</td><td>вовлечённый лид; мало коммитов для лида</td></tr>
+<tr><td><strong>viktorykings</strong></td><td>14</td><td>5</td><td>5</td><td>2</td><td>2026-06-08</td><td>больше всего коммитов; практичный, решает проблемы</td></tr>
+<tr><td><strong>AngelinaVakkasova</strong></td><td>8</td><td>5</td><td>5</td><td>2</td><td>2026-06-08</td><td>подробные дневники, честная кривая обучения, стабильна</td></tr>
+</tbody></table>
+<p>Все трое были активны 2026-06-08. Все PR влиты (нет открытых или закрытых без слияния). Общий объём невелик — 14 PR и 32 коммита на команду из трёх человек примерно за 3 недели — хотя кодовая база молодая (репозиторий создан 2026-05-22). Пассажиров нет, но и выдающегося высокопродуктивного участника тоже нет.</p>
+<p>Примечание: у <code>Ansa2110</code> всего 10 коммитов, несмотря на роль лида. Роль лида, по всей видимости, проявляется в настройке проекта, архитектуре роутинга и деплое — задачах, которые слабо отражаются в счётчике коммитов (конфиги, мёрж-коммиты) — но это всё равно стоит прощупать на предмет реальной глубины.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (защита — баллы)</h2>
+<p>Ментор: <strong>IamBigBobby</strong> · Интервью Спринт 1 — Components (конец мая)</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>Ansa2110</strong></td><td>75 / 100</td><td>не зафиксировано</td></tr>
+<tr><td><strong>viktorykings</strong></td><td>50 → 100 / 100</td><td>не зафиксировано</td></tr>
+<tr><td><strong>AngelinaVakkasova</strong></td><td>не зафиксировано</td><td>не зафиксировано</td></tr>
+</tbody></table>
+<p><strong>Комментарии по студентам:</strong></p>
+<ul>
+<li><strong>Ansa2110 (75):</strong> Прошёл интервью Спринта 1 с хорошим, но не выдающимся результатом; письменного комментария от ментора нет. Соответствует картине по репозиторию: есть архитектурное чутьё, но глубина ещё не проверена под давлением.</li>
+<li><strong>viktorykings (50 → 100):</strong> В файле две записи за Спринт 1 — первая: 50 с комментарием «need to improve angular control flow knowledge» («нужно улучшить знание Angular control flow»); вторая: 100 без комментария. Скорее всего, это повторное интервью или корректировка оценки. Оценка 50 — реальный сигнал: синтаксис Angular control flow (<code>@if</code>, <code>@for</code>, <code>@switch</code>) был явно отмечен ментором как пробел. Даже если финальная оценка 100, пробел в control flow стоит проверить на Спринте 2.</li>
+<li><strong>AngelinaVakkasova:</strong> Оценки за Спринт 1 нет. Либо она отсутствовала на защите, либо результат не был внесён. Это сам по себе сигнал риска — она самый рефлексивный автор из троих, поэтому необъяснённое отсутствие на защите требует немедленного уточнения.</li>
+</ul>
+<p><strong>Сравнение оценок и активности в репозитории:</strong></p>
+<ul>
+<li><strong>Ansa2110:</strong> Оценка (75) и активность в репозитории в целом согласованы — оба указывают на вовлечённого новичка с реальным пониманием, но ограниченным общим объёмом работы. Противоречий нет.</li>
+<li><strong>viktorykings:</strong> Первоначальная оценка 50 и флаг «angular control flow knowledge» расходятся с тем, что она — автор с наибольшим числом коммитов и наибольшей практической самостоятельностью. Расхождение реальное: высокий практический объём не означает автоматически правильных Angular-идиом. Если финальная оценка 100 (повторное интервью), пробел в control flow, возможно, был устранён — но проверьте это на Спринте 2.</li>
+<li><strong>AngelinaVakkasova:</strong> Картина по репозиторию (самая сильная письменная рефлексия, нетривиальная миграция на Reactive Forms, наибольшая артикулированность по концепциям) предполагала бы высокий балл на защите. Отсутствие какой-либо записи о защите — поэтому заметное несоответствие. Уточните до начала или в начале интервью Спринта 2.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили по студентам</h2>
+<h3>Ansa2110 — тимлид, 10 коммитов / 4 PR / 3 дневника</h3>
+<p><strong>Что сделал (подтверждено PR и дневниками):</strong></p>
+<ul>
+<li>Вёрстка хедера и футера (дневник 2026-05-24)</li>
+<li>Структура роутинга приложения с lazy loading; разделение страницы авторизации и основного лейаута через дочерние маршруты (PR #5/#6 «Feat layout and routes»; дневник 2026-05-25)</li>
+<li>Компонент <code>PromoCountdownBanner</code> — <code>@Input()</code>, <code>@Output()</code>, <code>ngOnInit</code>/<code>ngOnDestroy</code> для таймера обратного отсчёта, привязка свойств и событий (дневник 2026-05-25 — описан подробно)</li>
+<li><code>AuthService</code> с проверкой <code>isLoggedIn()</code> на основе сохранённого токена (дневник 2026-06-09)</li>
+<li>Гард маршрута для защиты аутентифицированных роутов (PR #33 «Added route guard»; дневник 2026-06-09)</li>
+<li>Деплой на GitHub Pages (дневник 2026-06-09; известна проблема со стилями после деплоя)</li>
+</ul>
+<p><strong>Уровень:</strong> Новичок с реальным погружением в Angular. Записи дневника подробные и структурно грамотные — демонстрирует понимание <code>@Input()</code>/<code>@Output()</code>, хуков жизненного цикла, lazy loading и гардов маршрутов с правдоподобным объяснением каждого. PromoCountdownBanner — наиболее конкретный самостоятельно написанный компонент из упомянутых. В дневнике прямо отмечена кривая обучения по Git-ветвлению (освоил у тиммейта Виктории в середине спринта 1) — для лида это низкий уровень.</p>
+<p><strong>Риски:</strong> У лида меньше коммитов, чем у обоих тиммейтов. Деплой поднят, но сломан (проблема со стилями на GitHub Pages — упомянута в последнем дневнике, но ещё не исправлена). PR с гардом влит до устранения проблемы со стилями. Паттерн указывает на отгрузку без полировки. <code>AuthService</code> — только мок, и в дневнике интеграция с бэкендом явно откладывается на будущее без указания сроков.</p>
+<p><strong>Что проверять (тест «создай сам»):</strong> Попросить восстановить гард маршрута с нуля: как выглядит <code>CanActivateFn</code>, где он инжектит <code>AuthService</code>, что делает <code>inject(Router)</code> и что происходит при провале проверки токена. Затем спросить, почему стили могут сломаться на GitHub Pages после деплоя (<code>base-href</code>, пути к ресурсам, поведение Tailwind JIT purge на статическом хостинге) — это проверяет, диагностировал ли он баг или просто зафиксировал его.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>viktorykings — 14 коммитов / 5 PR / 2 дневника</h3>
+<p><strong>Что сделала (подтверждено PR и дневниками):</strong></p>
+<ul>
+<li>Главная страница с секцией преимуществ и секцией товаров — два дочерних компонента, получающих данные через <code>@Input()</code> (PR #1 «feat: add main page, advantages section, products section»; дневник 2026-05-24)</li>
+<li>Настройка кастомной темы Tailwind v4 — потратила 30 минут на отладку расположения <code>@theme</code> относительно <code>@import 'tailwindcss'</code> (дневник 2026-05-24)</li>
+<li>Страница каталога с роутингом (PR #8 «Feat catalog page»; дневник спринт-2)</li>
+<li>Сервис <code>localStorage</code> для сохранения данных (дневник спринт-2)</li>
+<li>Конфигурация и интеграция ESLint + Husky (PR #32 «feat: add eslint, husky, link to catalog; fix: eslint errors»)</li>
+<li>Итоговый PR спринта 2 #34 «Sprint 2»</li>
+</ul>
+<p><strong>Уровень:</strong> Практичный, самостоятельный новичок. Записи дневника краткие и честные в части реального времени на отладку. Проблема с <code>@theme</code> в Tailwind говорит о том, что она читает документацию и разбирается самостоятельно. Баг с сигналом, с которым она столкнулась («ЗАБЫЛА ЗАБИНДИТЬ К КОМПОНЕНТУ», заглавными) — настоящий подводный камень Angular, и она его решила. 10 часов в дневнике спринта 2 — честная высокая оценка, а не круглое число.</p>
+<p><strong>Оговорка об уровне:</strong> Два дневника — это минимум. Дневник спринта 2 не содержит явного разбора концепций Angular (в отличие от Ангелины), что затрудняет оценку глубины vs. практической интуиции. Описание работы с сигналами («НЕ ПОЛУЧАЮ ДАННЫЕ ИЗ СИГНАЛА») скорее указывает на первый контакт с сигналами, а не на уверенное понимание.</p>
+<p><strong>Что проверять:</strong> Попросить объяснить Angular signals vs. RxJS Observables — когда она использовала бы каждый из них? Затем разобрать сервис <code>localStorage</code>: использует ли он <code>inject()</code>, задан ли <code>providedIn: 'root'</code> и почему это важно для поведения синглтона? Наконец: кастомная тема Tailwind — попросить ещё раз объяснить проблему с порядком <code>@theme</code> / <code>@import</code> и что сломается, если порядок нарушить.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AngelinaVakkasova — 8 коммитов / 5 PR / 2 дневника</h3>
+<p><strong>Что сделала (подтверждено PR и дневниками):</strong></p>
+<ul>
+<li>Компоненты авторизации: <code>LoginForm</code>, <code>RegisterForm</code>, <code>AuthPage</code> (PR #3 «feat: add auth components»; дневник 2026-05-25)</li>
+<li><code>signal()</code> для переключения режима между входом и регистрацией в <code>AuthPage</code> — первое использование Angular signals (дневник 2026-05-25)</li>
+<li>Компоненты авторизации отрефакторены на Angular Reactive Forms с <code>FormBuilder</code>, <code>Validators</code>, <code>[formGroup]</code>, <code>formControlName</code>, <code>(ngSubmit)</code>, <code>markAllAsTouched()</code> (PR #12 «refactor: improve auth components and styles»; дневник 2026-06-08)</li>
+<li>Полная клиентская валидация: формат email, пустые поля, совпадение паролей, показ/скрытие пароля, <code>redirect on /main</code> после входа</li>
+<li>Кнопки OAuth Google и GitHub (только UI; в дневнике отмечено, что реальный OAuth ещё не подключён)</li>
+<li>Стилизация через Tailwind; отмечено использование модулей Angular Material</li>
+<li>Страница 404 (PR #14 «feat: implement 404 Not Found page»)</li>
+<li>Файл дневника добавлен отдельными PR #4 и #13</li>
+</ul>
+<p><strong>Уровень:</strong> Самый рефлексивный и структурированный автор из троих. Дневник спринта 1 — настоящий журнал самообучения: она фиксирует каждую концепцию Angular, которую использовала, и почему она её поначалу путала (<code>output()</code> vs. коллбэки React; standalone-компоненты vs. модули; сигналы vs. useState). Дневник спринта 2 демонстрирует реальный прогресс: она мигрировала с template-driven форм на Reactive Forms — нетривиальное изменение, — и может назвать конкретные API. Сравнение с React — это костыль, но также признак того, что она активно выстраивает ментальную модель, а не копирует код.</p>
+<p><strong>Риски:</strong> <code>AuthService</code> — мок-логика (её собственные слова: «can connect real API requests later»). Кнопки OAuth Google/GitHub — UI-заглушки. 8 коммитов — наименьшее количество; весь её код сосредоточен в 5 PR, это нормально, но охват в основном ограничен одной областью (авторизация). Среди открытых задач репозитория есть «Connect real OAuth authentication for Google and GitHub» — не назначена, но неявно входит в её зону ответственности.</p>
+<p><strong>Что проверять (тест «создай сам»):</strong> Попросить восстановить Reactive Form с нуля — без <code>FormBuilder</code>, сырые <code>FormGroup</code> и <code>FormControl</code>. Затем: для чего <code>markAllAsTouched()</code> и почему он нужен перед <code>ngSubmit</code>? Далее: она использовала <code>signal()</code> для переключения режима — можно ли было использовать <code>computed()</code> или <code>effect()</code> вместо этого, и в чём разница? Это бьёт именно в ту зону, которую она сама обозначила как «использовала лишь поверхностно».</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая готовность:</strong> Команда на ранней стадии, все — новички. Все трое реально вовлечены — нет пассажиров, нет призраков. Дневники честные, иногда откровенно описывают замешательство. PR небольшие и точечные — это хорошая культура процесса. Приложение задеплоено (с известным багом стилей), и каждый студент в своей области прикоснулся к базовым концепциям Angular: компоненты, роутинг, реактивные формы, гарды, сигналы, сервисы.</p>
+<p><strong>Баланс:</strong> Разделение работы по доменам разумное (лид = роутинг/auth-сервис/деплой; Виктория = главная страница/каталог/инфра; Ангелина = UI авторизации/формы), но более низкое количество коммитов у лида по сравнению с двумя участниками заслуживает внимания. То, что лид осваивал Git-ветвление в середине спринта 1, — это данные: возможно, он вырастает в роль лида в процессе, а не пришёл с ней.</p>
+<p><strong>Кто силён:</strong> Ангелина — самый артикулированный объяснятель и, скорее всего, способна воссоздать то, что написала, с первых принципов. Виктория — наибольший объём работы и наибольшая практическая самостоятельность. Анса (лид) демонстрирует архитектурный инстинкт (lazy loading, гард маршрута, PromoCountdownBanner как переиспользуемый компонент), но общий объём невелик.</p>
+<p><strong>За кем следить:</strong> Все трое примерно на одном уровне новичков, что соответствует 3–4 неделе курса Angular. Никто пока не вырывается вперёд по фундаментальным знаниям Angular. Проблема со стилями у Анса на GitHub Pages не решена по состоянию на последний дневник (2026-06-09) — спросите, исправлено ли это.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> Для каждого студента возьмите одну фичу, которую они заявляют как написанную ими, и попросите объяснить её у доски — тест «создай» из разделов выше. У этой команды достаточно материала для реального разбора. Избегайте общих вопросов «что такое Angular» — на них они ответят хорошо по памяти. Идите в конкретику: код гарда маршрута, FormGroup без FormBuilder, подводный камень с привязкой сигналов.</p>
+<p><strong>Флаги злоупотребления ИИ/библиотеками не обнаружены</strong> — в дневниках нет упоминаний скопированного LLM-кода. Tailwind — осознанный выбор стека, а не костыль. Angular Material используется для UI-компонентов, что стандартно и соответствует курсу.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<p><strong>Уровень здоровья команды: AMBER (Наблюдение)</strong></p>
+<p>Причина: Все три студента активны и вовлечены (последний push в репозиторий 2026-06-08, дедлайн Спринта 2 — 2026-06-23, середина спринта — это нормально), двое из трёх имеют оценки за Спринт 1 (Анса 75, Виктория 50→100). Однако у AngelinaVakkasova нет ни одной записи о защите — необъяснённое отсутствие на интервью Спринта 1 у самого сильного концептуального автора команды — а первоначальная оценка 50 у viktorykings с конкретным пробелом в control flow требует проверки на Спринте 2. Команда не находится под угрозой отсева, но до выяснения статуса защиты Ангелины зелёного цвета не заслуживает.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

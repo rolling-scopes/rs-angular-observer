@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — 3 man and 1 framework · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — 3 man and 1 framework</strong><strong class="lang-ru">Mentor briefing — 3 man and 1 framework</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — 3 man and 1 framework</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>Yuriyli/rss-angular-team-task</code> (commits, PRs, issues) + sprint diaries. Snapshot: 2026-06-15. Goal — give the mentor 2-minute context before the defence: who did what, who understands, what to dig into.</blockquote>
+<p><strong>One-line summary (internal):</strong> One strong, self-organizing lead carrying 80% of the project; one member who shipped something real but left no diary trace and has an unmerged PR open since June 3; third member shipped a single solid component in sprint 1 and has been quiet since.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Repo</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Crypto trading SPA — Binance Spot Testnet. Market overview, charts, watchlists, test trades.</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular (latest), TypeScript, Vercel deploy, ESLint, GitHub Actions (lint + test + build). No UI library used so far — plain HTML/SCSS.</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/Yuriyli/rss-angular-team-task">https://github.com/Yuriyli/rss-angular-team-task</a></td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://rss-angular-crypto.vercel.app/">https://rss-angular-crypto.vercel.app/</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Last pushed</strong></td><td>2026-06-09 (6 days idle as of snapshot date)</td></tr>
+<tr><td><strong>Open issues</strong></td><td>33</td></tr>
+<tr><td><strong>Default branch</strong></td><td>main</td></tr>
+<tr><td><strong>Branch structure</strong></td><td>GitFlow-lite: <code>main</code>, <code>dev</code>, <code>auth</code></td></tr>
+</tbody></table>
+<p><strong>Note on open issues count:</strong> 33 open issues sounds alarming for a 4-week-old project. This likely represents the team's task backlog (GitHub Projects + Issues used as a Kanban, per yuriyli's sprint-1 diary: "освоил дашборд и в целом процессы из доки"). Worth glancing at whether these are backlog tickets or bug reports before the interview.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<table><thead>
+<tr><th>Login</th><th>Role</th><th>Notes</th></tr>
+</thead><tbody>
+<tr><td><strong>yuriyli</strong></td><td>Student, lead</td><td>Repo owner</td></tr>
+<tr><td><strong>nakurienota</strong></td><td>Student</td><td>Git name: <code>stenyukovs</code> / Sergei Steniukov</td></tr>
+<tr><td><strong>vladimirsolo</strong></td><td>Student</td><td></td></tr>
+<tr><td><strong>sakenk</strong></td><td><strong>Mentor</strong></td><td>1 merge-commit (PR #25, diary merge). Code reviewer. External — excluded from student assessment.</td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs total</th><th>PRs merged</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>yuriyli</strong> (lead)</td><td>16</td><td>14</td><td>14</td><td>2</td><td>2026-06-09</td><td>Strong, self-reliant, improving</td></tr>
+<tr><td><strong>nakurienota</strong></td><td>~2*</td><td>1</td><td>0 (OPEN)</td><td>0</td><td>2026-06-05</td><td>Amber — real work done, but opaque and stalled</td></tr>
+<tr><td><strong>vladimirsolo</strong></td><td>2</td><td>2</td><td>2</td><td>1</td><td>2026-05-23</td><td>Low — silent since sprint 1 end</td></tr>
+</tbody></table>
+<p>*nakurienota's commits appear under git username <code>stenyukovs</code> and are on the <code>auth</code> branch (not merged to main). The GitHub contributors API counts 0 commits for <code>nakurienota</code> login because commits use a different local git identity.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>No scores file found for this team. <strong>3 man and 1 framework did not present at the Sprint 1 interview, or no mentor evaluation is on record.</strong></p>
+<p>This is itself a risk signal: the Sprint 1 defence ("Components") has already passed. A team that skipped or was not recorded at Sprint 1 carries an additional unresolved question going into Sprint 2. Combined with the already uneven activity picture (one active lead, one unmerged PR, one silent member since May 23), the absence of any evaluation baseline makes it harder to confirm individual understanding.</p>
+<p>There is no Sprint 2 data to show yet (deadline 2026-06-23; snapshot is mid-sprint — incomplete work is expected and not a risk signal on its own).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>yuriyli — lead, 16 commits / 14 merged PRs / 2 diaries</h3>
+<p><strong>What he built (from PRs + diary):</strong></p>
+<ul>
+<li><strong>Repo setup and project scaffold:</strong> Angular template, linter, initial routing layout (PRs #19, #20 — router with lazy-loading pages, app.routes.ts, module boundaries).</li>
+<li><strong>Header component:</strong> nav-element with routing, <code>.active</code> class highlight, animated menu (PRs #22, #55). Iteration visible: PR #22 = first version; PR #55 = refactor with rename + active-link logic fixed.</li>
+<li><strong>Sprint 1 components (PR #23):</strong> Login page + login-form component with reactive forms, stubs for main page, <code>AuthService</code> stub, shared SCSS variables.</li>
+<li><strong>Project restructure (PR #31):</strong> Moved <code>pages/</code> and <code>header/</code> into <code>core/</code> — architectural decision to clean up feature vs layout boundary.</li>
+<li><strong>Merge and conflict management (PRs #42, #43, #44):</strong> Cleaned up duplicate files after parallel dev work (signature of a lead doing integration work).</li>
+<li><strong>Deploy:</strong> Vercel via GitHub integration (automatic per-branch preview deploys). Consciously chose it over manual Vercel Actions to stay lean — documented in diary.</li>
+<li><strong>GitHub Actions (PR #59):</strong> Multi-job workflow: cache → linter + tests + build (parallel jobs after cache). Solved real problem: Angular CLI must be globally installed, which breaks naive parallelism. Implemented dependency caching to avoid reinstall.</li>
+<li><strong>Documentation:</strong> README with participants + deploy + meeting-notes link; meeting notes (2026-05-20); two sprint diaries.</li>
+</ul>
+<p><strong>Level:</strong> Solid and self-teaching. His sprint-2 diary reads like someone who encountered real infrastructure complexity (Angular CLI global flag, Vercel API overhead) and made deliberate trade-off decisions rather than randomly trying things. The GitHub Actions workflow is genuinely thoughtful — <code>lookup-only: true</code> cache probe, conditional install, parallel lint/test/build. He admits knowledge gaps openly ("очень много пробелов в теории") but acts on them rather than waiting. Lead behaviour visible: team setup, conflict resolution, meeting notes, Vercel, CI — he picked up everything the team didn't claim.</p>
+<p><strong>Risk:</strong> Doing too much alone. If the other two don't ramp up in sprint 3, he becomes a single-person team by delivery.</p>
+<p><strong>Probe questions for the interview:</strong></p>
+<ul>
+<li>Walk me through how your GitHub Actions workflow decides whether to install dependencies or use cache. Why <code>lookup-only: true</code> before <code>cache/save</code>?</li>
+<li>Your PR #22 created a header, PR #55 fixed it — what was broken and why?</li>
+<li>In your sprint-2 diary you mention abandoning manual Vercel Actions configuration. What specifically made it "too much"? What would you do differently if you needed full control of the deploy pipeline?</li>
+<li>You moved pages into <code>core/</code> in PR #31. What's the rule you're using to decide what goes in <code>core/</code> vs <code>features/</code> vs <code>pages/</code>?</li>
+<li><strong>Can-you-create-it test:</strong> Ask him to sketch from scratch the GitHub Actions job structure he built — jobs, needs, when the cache install step runs vs when it doesn't.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>nakurienota (Sergei Steniukov) — ~2 commits / 1 open PR / 0 diaries</h3>
+<p><strong>What he built (from PR #56 + auth branch commits):</strong></p>
+<ul>
+<li><strong>AuthService (63 lines):</strong> Injectable service with <code>signal&lt;boolean&gt;</code> for login state, <code>signal&lt;UserDetails | null&gt;</code> for current user, <code>.asReadonly()</code> exposures, HTTP calls to <code>login()</code> and <code>register()</code> endpoints with <code>tap()</code> for token saving, <code>logout()</code> clearing localStorage + router navigation. Reads existing token from localStorage on init.</li>
+<li><strong>DummyBackendInterceptor:</strong> Functional HTTP interceptor intercepting <code>/auth/login</code>, <code>/auth/register</code>, <code>/auth/me</code>, <code>/keys</code> endpoints and returning mock <code>HttpResponse</code> with <code>delay()</code>. Clean implementation using <code>of()</code> + <code>delay()</code>.</li>
+<li><strong>LoginForm component refactor:</strong> Migrated to reactive forms using <code>FormBuilder</code>, <code>Validators.required</code> + <code>Validators.email</code> + <code>Validators.minLength</code>, signal inputs (<code>input&lt;string&gt;()</code>), <code>output()</code> emitter. Separated form logic from page.</li>
+<li><strong>Initial login page stub</strong> (commit <code>init: login</code>, 2026-05-18): The first functional piece in the repo — he bootstrapped the login UI before yuriyli's sprint-1 components PR.</li>
+</ul>
+<p><strong>What is missing / concerning:</strong></p>
+<ul>
+<li>PR #56 has been OPEN since 2026-06-03 — 12 days unmerged at snapshot date. No review comments visible. Not merged to main or dev. The fix commit on 2026-06-05 (<code>fix: login form</code>) suggests he did react to something, but then stopped.</li>
+<li><strong>Zero diary entries</strong> — the <code>development-notes/nakurienota/</code> folder on main contains only a <code>.gitkeep</code>. No diary was ever merged. He loses diary points entirely.</li>
+<li>Git commits use local username <code>stenyukovs</code> rather than the GitHub login <code>nakurienota</code>, which creates a disconnect in contribution tracking.</li>
+</ul>
+<p><strong>Level:</strong> The AuthService and interceptor code is reasonably clean — signals used correctly (writable vs readonly signal separation is the right pattern), HTTP interceptor is idiomatic Angular. The reactive form usage in LoginForm is correct. However, the evidence base is thin: this is ~200 lines across 3 files. Cannot tell if he understands the full picture or followed a tutorial pattern.</p>
+<p><strong>Probe questions for the interview:</strong></p>
+<ul>
+<li>Your <code>AuthService</code> exposes <code>isLoggedIn</code> as <code>Signal&lt;boolean&gt;</code> but the internal <code>loggedIn</code> is a <code>WritableSignal</code>. Why the split? What would break if you just exposed the writable signal directly?</li>
+<li>Your <code>DummyBackendInterceptor</code> uses <code>of(new HttpResponse(...)).pipe(delay(500))</code>. What is the role of <code>delay()</code> here — why not just return <code>of(...)</code> directly?</li>
+<li>Walk me through how the <code>LoginForm</code> component knows when to emit vs suppress the submit event.</li>
+<li><strong>Can-you-create-it test:</strong> Ask him to re-implement <code>AuthService.login()</code> from scratch — the RxJS chain, the tap side-effect, the signal update. This is the piece most likely to be his own work; see if he can explain each step.</li>
+<li>Ask why his PR has been open 12 days with no review. Is there a blocker? This matters for the merge strategy going into sprint 3.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vladimirsolo (Vladimir Solodkov) — 2 commits / 2 merged PRs / 1 diary</h3>
+<p><strong>What he built (from PRs #24, #25 + diary):</strong></p>
+<ul>
+<li><strong>MarketCard component (PR #24):</strong> Standalone component with signal inputs (<code>input.required&lt;string&gt;()</code> for <code>symbol</code>, <code>price</code>, <code>change24h</code>; <code>input&lt;number&gt;(0)</code> for <code>volume</code>), <code>computed()</code> for <code>isPositiveChange</code>, <code>output()</code> emitting <code>cardClick</code>. Uses <code>DecimalPipe</code> in template. Wired into <code>MainPage</code> with mock data + <code>@for</code> loop. Initially built in <code>features/dashboard/</code>, later moved to <code>core/pages/dashboard/</code> by yuriyli in PR #31.</li>
+<li><strong>Sprint 1 diary (PR #25):</strong> Single diary entry, 2026-05-20. Detailed and honest — explains what he learned (signal inputs, <code>computed</code>, <code>output</code>, <code>DecimalPipe</code>), shows he read the Angular docs, describes fixing a <code>tsconfig.app.json</code> rootDir error himself.</li>
+</ul>
+<p><strong>What is missing / concerning:</strong></p>
+<ul>
+<li><strong>Only active in sprint 1.</strong> Both commits are from 2026-05-20–23. Nothing since. Sprint 2 has zero contributions from vladimirsolo.</li>
+<li>His diary plans ("изучить роутинг с лейзи лоадингом", "подключить реальные данные с Binance API") — none of this appears in any PR.</li>
+<li>No sprint-2 diary. Diary folder on main has a <code>.gitkeep</code> for sprint 2 (it does not; his folder only has the one sprint-1 file).</li>
+</ul>
+<p><strong>Level:</strong> The MarketCard is clean and shows he actually read Angular signals docs (not just copied a snippet — the diary describes learning <code>input.required</code> vs <code>@Input()</code> conceptually). But the evidence is a single small component. Cannot assess routing, services, HTTP, or anything beyond basic component authoring.</p>
+<p><strong>Risk:</strong> Passenger risk is real. One merged component in sprint 1, then 3+ weeks of silence. May be struggling in private, may be overwhelmed, may be relying on yuriyli to cover.</p>
+<p><strong>Probe questions for the interview:</strong></p>
+<ul>
+<li>Your <code>MarketCard</code> uses <code>input.required&lt;string&gt;()</code>. What happens at compile time if a parent doesn't pass <code>symbol</code>? How is that different from <code>@Input()</code>?</li>
+<li>You have <code>readonly isPositiveChange = computed(() =&gt; this.change24h() &gt;= 0)</code>. When does Angular re-evaluate this? What would happen if you used a regular getter instead?</li>
+<li>The <code>cardClick</code> output — you call <code>this.cardClick.emit(this.symbol())</code>. Why <code>this.symbol()</code> with parentheses rather than <code>this.symbol</code>?</li>
+<li><strong>Can-you-create-it test:</strong> Ask him to build a simple <code>PriceLabel</code> component from scratch using signal inputs and a computed property. This will reveal whether sprint 1 knowledge is retained or was a one-time tutorial pass-through.</li>
+<li>Ask what he's been working on in sprint 2. Listen for specifics — if he can't name anything concrete, that's the signal.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall readiness:</strong> Low-to-medium as a team, strong as an individual (yuriyli). The project has a functional shell — routing, header, login-form with reactive forms, a market card component, Vercel deploy, CI. That is a real foundation. But it was built primarily by one person.</p>
+<p><strong>Tier (recalibrated):</strong> <strong>Amber — Watch.</strong> The no-show at the Sprint 1 defence adds a concrete gap on top of the already skewed activity picture. yuriyli's output is strong and the project is real, but the absence of any mentor evaluation for nakurienota and vladimirsolo means individual understanding of Sprint 1 material is unconfirmed. This team warrants close attention at the Sprint 2 interview to surface what each member actually knows.</p>
+<p><strong>Balance:</strong> Severely skewed. yuriyli accounts for ~85% of commits and 14/15 merged PRs. nakurienota shipped meaningful auth work but it sits unmerged for 12+ days, and he has zero diary entries. vladimirsolo showed promise in sprint 1 (clean component, reflective diary) and then went quiet for 3+ weeks.</p>
+<p><strong>Strong:</strong> yuriyli is the one to watch in a good way. He self-organizes, makes deliberate architectural decisions (core/features split, CI design), writes retrospective diaries, and picks up everything the team doesn't claim. The GitHub Actions workflow in particular shows infrastructure thinking above the average sprint-1 level.</p>
+<p><strong>Watch:</strong> vladimirsolo — benign neglect or passive dropout? The sprint-1 diary is genuinely good (conceptual understanding, honest reflection). If he shows up to the interview able to discuss sprint-2 work, the silence may have been private study. If he can't, the component was likely a one-time guided exercise and he hasn't kept up. nakurienota — the open PR is a concrete problem. Twelve days unmerged suggests either no review process in the team, a technical blocker nobody surfaced, or disengagement. Both need direct questions.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ol>
+<li>Start with yuriyli on the CI/Actions workflow — it's the most complex thing the team built and it's his. Solid ground.</li>
+<li>Shift to nakurienota: auth service signals pattern + why the PR is open. If the explanation is clear, he understands the code. If vague, he may have written it with heavy AI assist.</li>
+<li>vladimirsolo: the <code>MarketCard</code> first (can he explain computed/signal inputs from memory?), then ask what he's been doing in sprint 2. The answer will tell you everything.</li>
+</ol>
+<p><strong>Missing for a complete assessment:</strong> No Binance API integration visible yet. The project README promises market data, charts, watchlist, test trades — none of that exists in the code as of the snapshot. Sprint 2 deliverable is essentially: yuriyli finished the header and set up CI. The feature work is weeks behind what the spec implies.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Бриф для ментора — 3 man and 1 framework</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>Yuriyli/rss-angular-team-task</code> (коммиты, PR, issues) + дневники спринтов. Снимок: 2026-06-15. Цель — дать ментору 2-минутный контекст перед защитой: кто что сделал, кто понимает, куда копать.</blockquote>
+<p><strong>Краткая оценка (внутренняя):</strong> Один сильный самоорганизующийся лид тянет 80% проекта; один участник сделал что-то реальное, но не оставил ни одной записи в дневнике и держит незамерженный PR открытым с 3 июня; третий участник выкатил один нормальный компонент в спринте 1 и с тех пор молчит.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + Репозиторий</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Crypto trading SPA — Binance Spot Testnet. Обзор рынка, графики, watchlists, тестовые сделки.</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular (latest), TypeScript, Vercel deploy, ESLint, GitHub Actions (lint + test + build). UI-библиотека не используется — чистый HTML/SCSS.</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/Yuriyli/rss-angular-team-task">https://github.com/Yuriyli/rss-angular-team-task</a></td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://rss-angular-crypto.vercel.app/">https://rss-angular-crypto.vercel.app/</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-09 (6 дней без активности на момент снимка)</td></tr>
+<tr><td><strong>Открытые issues</strong></td><td>33</td></tr>
+<tr><td><strong>Ветка по умолчанию</strong></td><td>main</td></tr>
+<tr><td><strong>Структура веток</strong></td><td>GitFlow-lite: <code>main</code>, <code>dev</code>, <code>auth</code></td></tr>
+</tbody></table>
+<p><strong>Примечание по количеству открытых issues:</strong> 33 открытых issue звучат тревожно для проекта, которому 4 недели. Скорее всего, это бэклог задач команды (GitHub Projects + Issues используются как Kanban — судя по дневнику yuriyli за спринт 1: «освоил дашборд и в целом процессы из доки»). Перед интервью стоит бегло проверить: это тикеты бэклога или баг-репорты.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<table><thead>
+<tr><th>Логин</th><th>Роль</th><th>Примечания</th></tr>
+</thead><tbody>
+<tr><td><strong>yuriyli</strong></td><td>Студент, лид</td><td>Владелец репозитория</td></tr>
+<tr><td><strong>nakurienota</strong></td><td>Студент</td><td>Git-имя: <code>stenyukovs</code> / Сергей Стенюков</td></tr>
+<tr><td><strong>vladimirsolo</strong></td><td>Студент</td><td></td></tr>
+<tr><td><strong>sakenk</strong></td><td><strong>Ментор</strong></td><td>1 merge-коммит (PR #25, мерж дневника). Ревьюер кода. Внешний — исключён из оценки студентов.</td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR всего</th><th>PR замерженных</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>yuriyli</strong> (лид)</td><td>16</td><td>14</td><td>14</td><td>2</td><td>2026-06-09</td><td>Сильный, самостоятельный, растёт</td></tr>
+<tr><td><strong>nakurienota</strong></td><td>~2*</td><td>1</td><td>0 (OPEN)</td><td>0</td><td>2026-06-05</td><td>Amber — работа есть, но непрозрачно и заглохло</td></tr>
+<tr><td><strong>vladimirsolo</strong></td><td>2</td><td>2</td><td>2</td><td>1</td><td>2026-05-23</td><td>Низкий — тишина с конца спринта 1</td></tr>
+</tbody></table>
+<p>*Коммиты nakurienota попадают под git-имя <code>stenyukovs</code> и находятся на ветке <code>auth</code> (не замерженной в main). GitHub contributors API показывает 0 коммитов для логина <code>nakurienota</code>, потому что коммиты используют другой локальный git identity.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Файл с баллами для этой команды не найден. <strong>3 man and 1 framework не участвовали в защите спринта 1, либо оценка ментора не была зафиксирована.</strong></p>
+<p>Это само по себе сигнал риска: защита спринта 1 («Компоненты») уже прошла. Команда, которая пропустила интервью или не была в нём зафиксирована, несёт в себе неразрешённый вопрос перед спринтом 2. В сочетании с уже неравномерной картиной активности (один активный лид, один незамердженный PR, один молчащий участник с 23 мая) отсутствие оценочной базы не даёт возможности подтвердить индивидуальное понимание материала.</p>
+<p>Данных по спринту 2 пока нет (дедлайн 2026-06-23; снимок сделан в середине спринта — незавершённая работа ожидаема и не является сигналом риска сама по себе).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>yuriyli — лид, 16 коммитов / 14 замерженных PR / 2 дневника</h3>
+<p><strong>Что сделал (из PR + дневника):</strong></p>
+<ul>
+<li><strong>Настройка репозитория и скаффолдинг:</strong> Angular-шаблон, линтер, начальная структура роутинга (PR #19, #20 — роутер с lazy-loading страниц, app.routes.ts, модульные границы).</li>
+<li><strong>Компонент Header:</strong> nav-элемент с роутингом, подсветка <code>.active</code>-класса, анимированное меню (PR #22, #55). Итерация видна: PR #22 = первая версия; PR #55 = рефактор с переименованием + исправление логики active-link.</li>
+<li><strong>Компоненты спринта 1 (PR #23):</strong> Страница логина + компонент login-form с реактивными формами, заглушки для главной страницы, заглушка <code>AuthService</code>, общие SCSS-переменные.</li>
+<li><strong>Реструктуризация проекта (PR #31):</strong> Перенёс <code>pages/</code> и <code>header/</code> в <code>core/</code> — архитектурное решение для разграничения feature vs layout.</li>
+<li><strong>Мерж и разрешение конфликтов (PR #42, #43, #44):</strong> Убрал дублирующиеся файлы после параллельной разработки — признак лида, занимающегося интеграцией.</li>
+<li><strong>Deploy:</strong> Vercel через GitHub integration (автоматические preview deploy для каждой ветки). Сознательно выбрал вместо ручной настройки Vercel Actions — ради лаконичности; зафиксировал в дневнике.</li>
+<li><strong>GitHub Actions (PR #59):</strong> Multi-job workflow: cache → linter + тесты + build (параллельные джобы после кэша). Решил реальную проблему: Angular CLI должен быть установлен глобально, что ломает наивный параллелизм. Реализовал кэширование зависимостей.</li>
+<li><strong>Документация:</strong> README с участниками + deploy + ссылка на meeting notes; meeting notes (2026-05-20); два дневника спринтов.</li>
+</ul>
+<p><strong>Уровень:</strong> Крепкий и самообучающийся. Дневник спринта 2 звучит как человек, который столкнулся с реальной инфраструктурной сложностью (глобальный флаг Angular CLI, накладные расходы Vercel API) и принял осознанные компромисные решения, а не тыкался наугад. Workflow в GitHub Actions по-настоящему продуман — probe кэша с <code>lookup-only: true</code>, условная установка, параллельные lint/test/build. Открыто признаёт пробелы в знаниях («очень много пробелов в теории»), но действует, а не ждёт. Лидерское поведение налицо: настройка команды, разрешение конфликтов, meeting notes, Vercel, CI — взял на себя всё, что другие не заявили.</p>
+<p><strong>Риск:</strong> Делает слишком много в одиночку. Если двое других не наберут темп в спринте 3, к сдаче он станет командой из одного человека.</p>
+<p><strong>Вопросы для интервью:</strong></p>
+<ul>
+<li>Объясни, как ваш GitHub Actions workflow решает: устанавливать зависимости или брать из кэша. Зачем <code>lookup-only: true</code> перед <code>cache/save</code>?</li>
+<li>Твой PR #22 создал header, PR #55 его починил — что было сломано и почему?</li>
+<li>В дневнике спринта 2 ты упоминаешь, что отказался от ручной настройки Vercel Actions. Что именно оказалось «слишком много»? Что бы ты сделал иначе, если бы нужен был полный контроль deploy-пайплайна?</li>
+<li>Ты перенёс страницы в <code>core/</code> в PR #31. Какое правило ты используешь, чтобы решить: что идёт в <code>core/</code>, что в <code>features/</code>, что в <code>pages/</code>?</li>
+<li><strong>Can-you-create-it тест:</strong> Попроси его набросать с нуля структуру GitHub Actions джобов, которую он построил — джобы, needs, когда запускается шаг установки кэша, а когда нет.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>nakurienota (Сергей Стенюков) — ~2 коммита / 1 открытый PR / 0 дневников</h3>
+<p><strong>Что сделал (из PR #56 + коммиты ветки auth):</strong></p>
+<ul>
+<li><strong>AuthService (63 строки):</strong> Injectable-сервис с <code>signal&lt;boolean&gt;</code> для состояния логина, <code>signal&lt;UserDetails | null&gt;</code> для текущего пользователя, <code>.asReadonly()</code> для внешних экспозиций, HTTP-вызовы <code>login()</code> и <code>register()</code> с <code>tap()</code> для сохранения токена, <code>logout()</code> очищает localStorage + навигация через роутер. При инициализации читает существующий токен из localStorage.</li>
+<li><strong>DummyBackendInterceptor:</strong> Функциональный HTTP-интерсептор, перехватывающий <code>/auth/login</code>, <code>/auth/register</code>, <code>/auth/me</code>, <code>/keys</code> и возвращающий mock <code>HttpResponse</code> с <code>delay()</code>. Чистая реализация через <code>of()</code> + <code>delay()</code>.</li>
+<li><strong>Рефактор компонента LoginForm:</strong> Мигрировал на реактивные формы с <code>FormBuilder</code>, <code>Validators.required</code> + <code>Validators.email</code> + <code>Validators.minLength</code>, сигнальные инпуты (<code>input&lt;string&gt;()</code>), эмиттер <code>output()</code>. Разделил логику формы и страницы.</li>
+<li><strong>Начальная заглушка страницы логина</strong> (коммит <code>init: login</code>, 2026-05-18): Первый рабочий элемент в репозитории — он сделал UI логина раньше, чем yuriyli отправил PR с компонентами спринта 1.</li>
+</ul>
+<p><strong>Что отсутствует / вызывает опасения:</strong></p>
+<ul>
+<li>PR #56 остаётся ОТКРЫТЫМ с 2026-06-03 — 12 дней без мержа на момент снимка. Видимых комментариев к ревью нет. Не замерджен ни в main, ни в dev. Коммит с исправлением от 2026-06-05 (<code>fix: login form</code>) говорит о том, что он реагировал на что-то, но потом остановился.</li>
+<li><strong>Ноль записей в дневнике</strong> — папка <code>development-notes/nakurienota/</code> на main содержит только <code>.gitkeep</code>. Ни одного дневника так и не замерджено. Дневниковые баллы он теряет полностью.</li>
+<li>Коммиты используют локальное имя <code>stenyukovs</code> вместо GitHub-логина <code>nakurienota</code>, что создаёт разрыв в трекинге вклада.</li>
+</ul>
+<p><strong>Уровень:</strong> Код AuthService и интерсептора достаточно чистый — сигналы используются правильно (разделение writable vs readonly сигнала — верный паттерн), HTTP-интерсептор идиоматичен для Angular. Использование реактивных форм в LoginForm корректно. Однако доказательная база тонкая: это ~200 строк в 3 файлах. Непонятно, понимает ли он всю картину или воспроизвёл паттерн из туториала.</p>
+<p><strong>Вопросы для интервью:</strong></p>
+<ul>
+<li>Твой <code>AuthService</code> отдаёт <code>isLoggedIn</code> как <code>Signal&lt;boolean&gt;</code>, но внутри <code>loggedIn</code> — это <code>WritableSignal</code>. Зачем разделение? Что сломается, если просто выставить writable-сигнал напрямую?</li>
+<li>Твой <code>DummyBackendInterceptor</code> использует <code>of(new HttpResponse(...)).pipe(delay(500))</code>. Зачем нужен <code>delay()</code> — почему не вернуть <code>of(...)</code> напрямую?</li>
+<li>Объясни, как компонент <code>LoginForm</code> понимает, когда эмитить submit-событие, а когда нет.</li>
+<li><strong>Can-you-create-it тест:</strong> Попроси его с нуля реализовать <code>AuthService.login()</code> — RxJS-цепочку, side-эффект через tap, обновление сигнала. Это тот кусок, который скорее всего написан им самим; посмотри, сможет ли он объяснить каждый шаг.</li>
+<li>Спроси, почему его PR открыт 12 дней без ревью. Есть ли блокер? Это важно для стратегии мержа в спринте 3.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vladimirsolo (Vladimir Solodkov) — 2 коммита / 2 замерженных PR / 1 дневник</h3>
+<p><strong>Что сделал (из PR #24, #25 + дневник):</strong></p>
+<ul>
+<li><strong>Компонент MarketCard (PR #24):</strong> Standalone-компонент с сигнальными инпутами (<code>input.required&lt;string&gt;()</code> для <code>symbol</code>, <code>price</code>, <code>change24h</code>; <code>input&lt;number&gt;(0)</code> для <code>volume</code>), <code>computed()</code> для <code>isPositiveChange</code>, <code>output()</code> эмитящий <code>cardClick</code>. Использует <code>DecimalPipe</code> в шаблоне. Подключён в <code>MainPage</code> с mock-данными + цикл <code>@for</code>. Изначально создан в <code>features/dashboard/</code>, позже перенесён yuriyli в PR #31 в <code>core/pages/dashboard/</code>.</li>
+<li><strong>Дневник спринта 1 (PR #25):</strong> Одна запись, 2026-05-20. Детальная и честная — объясняет, что изучил (сигнальные инпуты, <code>computed</code>, <code>output</code>, <code>DecimalPipe</code>), показывает, что читал Angular docs, описывает самостоятельно решённую ошибку <code>tsconfig.app.json</code> rootDir.</li>
+</ul>
+<p><strong>Что отсутствует / вызывает опасения:</strong></p>
+<ul>
+<li><strong>Активен только в спринте 1.</strong> Оба коммита датированы 2026-05-20–23. После — ничего. В спринте 2 от vladimirsolo ноль вклада.</li>
+<li>В дневнике были планы («изучить роутинг с лейзи лоадингом», «подключить реальные данные с Binance API») — ни одного из них нет ни в одном PR.</li>
+<li>Нет дневника за спринт 2. В папке дневника на main есть только <code>.gitkeep</code> за спринт 2 (вернее, его нет — в его папке лишь один файл за спринт 1).</li>
+</ul>
+<p><strong>Уровень:</strong> MarketCard чистый и показывает, что он реально читал доку Angular signals (не просто скопировал сниппет — дневник описывает понимание <code>input.required</code> vs <code>@Input()</code> концептуально). Но доказательная база — один небольшой компонент. Роутинг, сервисы, HTTP и всё за пределами базового создания компонентов оценить невозможно.</p>
+<p><strong>Риск:</strong> Риск пассажира реален. Один замердженный компонент в спринте 1, затем 3+ недели тишины. Возможно, молча буксует, перегружен или рассчитывает, что yuriyli закроет дыры.</p>
+<p><strong>Вопросы для интервью:</strong></p>
+<ul>
+<li>Твой <code>MarketCard</code> использует <code>input.required&lt;string&gt;()</code>. Что происходит во время компиляции, если родитель не передаёт <code>symbol</code>? Чем это отличается от <code>@Input()</code>?</li>
+<li>У тебя есть <code>readonly isPositiveChange = computed(() =&gt; this.change24h() &gt;= 0)</code>. Когда Angular пересчитывает это? Что было бы, если бы ты использовал обычный геттер?</li>
+<li>Вывод <code>cardClick</code> — ты вызываешь <code>this.cardClick.emit(this.symbol())</code>. Почему <code>this.symbol()</code> со скобками, а не <code>this.symbol</code>?</li>
+<li><strong>Can-you-create-it тест:</strong> Попроси его с нуля собрать простой компонент <code>PriceLabel</code> с сигнальными инпутами и computed-свойством. Это покажет, сохранились ли знания спринта 1 или это был разовый проход по туториалу.</li>
+<li>Спроси, чем он занимался в спринте 2. Слушай конкретику — если не может назвать ничего конкретного, это и есть сигнал.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>Общая готовность:</strong> Низкая-к-средней как у команды, высокая как у отдельного человека (yuriyli). У проекта есть рабочий каркас — роутинг, header, login-form с реактивными формами, компонент market card, Vercel deploy, CI. Это реальный фундамент. Но построен он преимущественно одним человеком.</p>
+<p><strong>Уровень (пересмотренный):</strong> <strong>Amber — под наблюдением.</strong> Отсутствие на защите спринта 1 добавляет конкретный пробел поверх и без того неравномерной картины активности. Вклад yuriyli силён и проект реален, но отсутствие любой оценки ментора для nakurienota и vladimirsolo означает, что индивидуальное понимание материала спринта 1 не подтверждено. Команда требует пристального внимания на интервью по спринту 2 — чтобы выяснить, что реально знает каждый участник.</p>
+<p><strong>Баланс:</strong> Сильный перекос. yuriyli даёт ~85% коммитов и 14/15 замерженных PR. nakurienota сделал значимую auth-работу, но она висит незамерженной уже 12+ дней, и у него ноль записей в дневнике. vladimirsolo проявил себя в спринте 1 (чистый компонент, рефлексивный дневник) и с тех пор молчит 3+ недели.</p>
+<p><strong>Сильная сторона:</strong> yuriyli — тот, за кем стоит наблюдать в хорошем смысле. Самоорганизуется, принимает осознанные архитектурные решения (разделение core/features, дизайн CI), пишет ретроспективные дневники и подбирает всё, что команда не заявляет. GitHub Actions workflow в особенности демонстрирует инфраструктурное мышление выше среднего уровня спринта 1.</p>
+<p><strong>Следить:</strong> vladimirsolo — доброжелательное пренебрежение или пассивный выход? Дневник спринта 1 по-настоящему хороший (концептуальное понимание, честная рефлексия). Если придёт на интервью и сможет говорить о работе в спринте 2, молчание могло быть частным изучением материала. Если нет — компонент был разовым упражнением с поддержкой, и он не успевает. nakurienota — открытый PR является конкретной проблемой. Двенадцать дней без мержа говорят либо об отсутствии процесса ревью в команде, либо о техническом блокере, который никто не вынес на поверхность, либо о дезангажированности. Оба требуют прямых вопросов.</p>
+<p><strong>Рекомендуемый угол интервью:</strong></p>
+<ol>
+<li>Начни с yuriyli — CI/Actions workflow: это самое сложное, что построила команда, и это его. Твёрдая почва.</li>
+<li>Перейди к nakurienota: паттерн сигналов в auth-сервисе + почему PR открыт. Если объяснение чёткое — понимает код. Если расплывчатое — возможно, писал с тяжёлой помощью AI.</li>
+<li>vladimirsolo: сначала <code>MarketCard</code> (может ли объяснить computed/signal inputs по памяти?), затем спроси, чем занимался в спринте 2. Ответ скажет всё.</li>
+</ol>
+<p><strong>Недостаёт для полной оценки:</strong> Интеграция с Binance API пока не видна. README проекта обещает рыночные данные, графики, watchlist, тестовые сделки — ничего из этого в коде на момент снимка нет. Результат спринта 2 по факту такой: yuriyli доделал header и настроил CI. Фичи отстают от того, что подразумевает спека — на недели.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

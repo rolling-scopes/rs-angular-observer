@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — DevFusion · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — DevFusion</strong><strong class="lang-ru">Mentor briefing — DevFusion</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — DevFusion</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>eka8888/shopfront-angular</code> (commits, PRs, diary entries). Snapshot: 2026-06-15. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands their code, where to dig.</blockquote>
+<p><strong>One-line summary:</strong> Genuinely active team of three — lead owns architecture and form logic, middle contributor owns the product/cart/routing layer, junior contributor is honest about AI reliance and grows steadily under mentor guidance.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>ShopFront</strong> — Angular e-commerce SPA (product catalog, cart, auth, routing, reactive forms). Stack: Angular (standalone), Tailwind CSS, Angular Signals (<code>signal()</code>, <code>computed()</code>, <code>effect()</code>), Angular Router with lazy loading, Reactive Forms, FormBuilder, custom <code>ValidatorFn</code>, <code>ControlValueAccessor</code>, <code>OnPush</code> change detection, mock services (no real backend yet — commercetools planned for Sprint 4).</p>
+<ul>
+<li>Repo: <a href="https://github.com/eka8888/shopfront-angular">https://github.com/eka8888/shopfront-angular</a></li>
+<li>Created: 2026-05-11</li>
+<li>Last push: 2026-06-12</li>
+<li>Open issues: 12</li>
+<li>Live demo: <a href="https://shopfront-angular-2tbm-git-dev-eka8888s-projects.vercel.app/home">https://shopfront-angular-2tbm-git-dev-eka8888s-projects.vercel.app/home</a> (Vercel, points to <code>dev</code> branch)</li>
+<li>GitFlow: yes (dev + feature branches, main is merge target)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students:</strong> eka8888 (lead), zorro-amarillo, s-arashu <strong>Mentor:</strong> antonkapustin (no code commits — normal)</p>
+<p><strong>External contributors:</strong></p>
+<ul>
+<li><code>eka311</code> — second Git identity of eka8888 (email <code>ekandelaki1@gmail.com</code> vs GitHub noreply). Confirmed same person via repo ownership + PR authorship. Commit totals below combine both identities.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>eka8888</strong> (lead)</td><td>36 (17 via GH + 19 via local git)</td><td>12 / 12 merged</td><td>3 (Sprint 1–3)</td><td>2026-06-08</td><td>High — architecturally aware, prolific</td></tr>
+<tr><td><strong>zorro-amarillo</strong></td><td>41 (10 via GH + 31 via local git)</td><td>10 / 10 merged</td><td>2 (Sprint 1–2)</td><td>2026-06-08</td><td>High — solid delivery, clean PRs</td></tr>
+<tr><td><strong>s-arashu</strong></td><td>28</td><td>8 / 8 merged</td><td>7 dated entries (Sprint 1–3)</td><td>2026-06-06</td><td>Medium — smallest scope, most AI-assisted, honest about it</td></tr>
+</tbody></table>
+<p>All 30 PRs are merged. No open PRs, no abandoned branches. The team operates cleanly on GitFlow.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>All three students presented at both Sprint 1 (Components) and Sprint 2 (Routing & Signals) interviews. No no-shows.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>eka8888</strong></td><td>75</td><td>100</td></tr>
+<tr><td><strong>zorro-amarillo</strong></td><td>75</td><td>75</td></tr>
+<tr><td><strong>s-arashu</strong></td><td>60</td><td>75</td></tr>
+</tbody></table>
+<p>No mentor comments were recorded for any student (comment fields empty in the score data).</p>
+<p><strong>Reconciliation — score vs activity:</strong></p>
+<ul>
+<li><strong>eka8888 (75 → 100):</strong> Strong progression from Sprint 1 to Sprint 2, fully consistent with the repo activity picture (most complex architectural pieces, deliberate diary reflections). No divergence — both signals point the same way.</li>
+<li><strong>zorro-amarillo (75 → 75):</strong> Stable across both interviews, consistent with activity data (clean delivery, no overreach, no gaps). Both signals agree.</li>
+<li><strong>s-arashu (60 → 75):</strong> The most notable divergence. Activity data marks her as the weakest scope in the team and flags AI reliance; yet her Sprint 2 score of 75 matches zorro-amarillo and is a meaningful step up from her Sprint 1 60. The briefing's "medium signal" assessment is more cautious than the defence record justifies — the mentor who ran Sprint 2 appears to have seen enough understanding to award 75. This does not erase the AI-reliance observation, but it adds an important counterweight: she can defend the work she produced.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>eka8888 — lead, 36 commits / 12 PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Sprint 1: project bootstrap, Tailwind setup, feature-based folder structure (<code>core</code> / <code>shared</code> / <code>features</code> / <code>layout</code>), <code>HeaderComponent</code>, <code>SearchBarComponent</code>, <code>ProductCardComponent</code>, parent-child communication via <code>input()</code>/<code>output()</code></li>
+<li>Sprint 2: Login/Register/Profile pages, <code>AuthGuard</code> (functional, <code>canActivate</code>), shared <code>AuthService</code>, signal-based auth state, <code>localStorage</code> persistence, lazy loading structure (<code>provideRouter</code>, <code>loadChildren</code>, <code>loadComponent</code>), ESLint config, GitHub Actions CI, deployment</li>
+<li>Sprint 3: Rebuilt Login and Register with Reactive Forms + FormBuilder; custom <code>ValidatorFn</code> for password (letters+numbers); <code>InjectionToken</code> with <code>useValue</code> provider for <code>APP_CONFIG</code>; Profile page converted to Reactive Form; <code>ControlValueAccessor</code>-based shared inputs; <code>OnPush</code> + Signals throughout</li>
+</ul>
+<p><strong>Level:</strong> Strong junior / low-mid. Owns the architectural skeleton of the project. Diaries are substantive — Sprint 3 entry explains <em>why</em> <code>InjectionToken</code> is needed instead of a plain service, and cites the concrete learning path. This is not copy-paste architecture; the choices (feature-based folders, GitFlow, CI from day 1) were made deliberately and are described in terms of tradeoffs (reducing merge conflicts, improving scalability). No observable over-reliance on AI tools in diary content.</p>
+<p><strong>Probe at interview:</strong> Ask to rebuild <code>ControlValueAccessor</code> integration from scratch — why is it needed for custom inputs, what four interface methods does it require, and when does Angular call each. This is the deepest thing she implemented in Sprint 3 and the most likely thing to distinguish "copied from docs" from "understood." Also worth asking: what is the difference between <code>useValue</code> and <code>useClass</code> in an Angular provider, and when would you choose one over the other (she introduced <code>InjectionToken</code> with <code>useValue</code> — verify depth).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>zorro-amarillo — 41 commits / 10 PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Sprint 1: Home page layout (Hero, Categories, Promo, New Arrivals), <code>CategoryService</code> and <code>ProductService</code> with mock JSON data, signal-based state, <code>routerLink</code>, dynamic slug generation</li>
+<li>Sprint 2: Shop page (<code>/shop</code>) with lazy loading via <code>loadChildren</code>; Product Details page (<code>/shop/:id</code>) with <code>ActivatedRoute</code>, <code>computed()</code> for product data and old price display, conditional cart button, <code>@let</code> for single signal subscription; Cart page with <code>effect()</code> for localStorage save, quantity CRUD; <code>QuantitySelector</code> reusable component with <code>input.required()</code> + <code>output()</code>; <code>CartService</code> with full signal-based state; refactor of styles and services cleanup; routes moved to feature-root level</li>
+<li>Sprint 3 diary not yet merged to main (PR #44 titled "Dev" merged 2026-06-08, diary #42 merged earlier). Sprint 3 plans stated: custom directives, pipes, product image gallery, color variants</li>
+</ul>
+<p><strong>Level:</strong> Strong junior. The most consistent feature delivery in the team — clean PR naming (<code>feat/</code>, <code>refactor/</code>, <code>fix/</code>, <code>docs:</code>), well-structured components, and a diary that articulates problems and solutions precisely (e.g. "forgot to call signals with <code>()</code> in computed and templates — fixed by writing <code>cartItems().length</code>"). <code>QuantitySelector</code> design (reusable with required inputs, parent handles business logic) shows clean separation of concerns, not incidental. No obvious AI paste-and-pray.</p>
+<p><strong>Probe at interview:</strong> Ask to explain <code>effect()</code> in <code>CartService</code> — what triggers it, when does it fire relative to the signal update, and what would happen if he called <code>effect()</code> inside a component that uses <code>OnPush</code>. This is something he implemented himself (localStorage auto-save) and is a genuine Angular trap. Also ask: why <code>input.required()</code> instead of <code>input()</code> in <code>QuantitySelector</code>, and how Angular handles a missing required input at runtime.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>s-arashu — 28 commits / 8 PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Sprint 1: <code>ButtonComponent</code> (reusable, Tailwind), <code>InputComponent</code> (reusable, later extended to <code>ControlValueAccessor</code> after mentor feedback)</li>
+<li>Sprint 2: Footer, Not Found page, About page (with Firebase Firestore subscription attempt — abandoned after team alignment). Fixed linter errors (PR #26). Added <code>ControlValueAccessor</code> to input components after mentor flagged they wouldn't work with forms (PR #15)</li>
+<li>Sprint 3: reportedly working on the contact page (diary entry 2026-06-05 is the most recent)</li>
+</ul>
+<p><strong>Level:</strong> Weakest scope in the team, but not a passenger. 7 dated diary entries (most in the team) and a consistent pattern of mentor-feedback-driven iteration: mentor flags something → she reads about it → she fixes it → she writes about why it mattered. The Firebase episode (June 4–5 entries) is telling: she integrated Firebase Firestore unilaterally (acknowledging in the June 4 diary "asked AI for advice, it suggested options, I picked what I know"), the team reverted it because it wasn't coordinated, and she accepted this honestly in the June 5 entry ("my mistake — should have aligned with the team first"). No defensiveness.</p>
+<p><strong>AI reliance flag:</strong> Explicit and repeated in her diaries. June 4: "Попросила чат подсказать структуре папок... сбросила ИИ-шке на проверку — похвалил." June 24: "беру обычные стили из макета, закидываю в чат ИИ — и он мне переводит." She is using AI as a CSS translator and a folder structure advisor, not as a code generator for logic. The distinction matters. That said, she has not yet demonstrated autonomous complex logic — her most complex implementation (<code>ControlValueAccessor</code> on <code>InputComponent</code>) was prompted by mentor feedback, not self-initiated.</p>
+<p><strong>Probe at interview:</strong> Ask her to explain <code>ControlValueAccessor</code> — specifically: what problem does it solve, which methods must be implemented, and what does <code>writeValue</code> do. This is the one genuinely complex Angular concept she worked on, and it happened because the mentor required it. The interview will reveal whether she now owns it or just executed the fix. Keep the tone calibrated: she is honest about gaps, so a good mentor will reward honesty, not punish scope size.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>Functional, reasonably balanced team. No passengers by commit or PR count. The lead (eka8888) owns the hard architectural pieces and articulates her decisions; the middle contributor (zorro-amarillo) is the most consistent feature builder with clean habits; the junior (s-arashu) has the smallest delivery footprint but the richest diary trail and a healthy mentor-feedback loop.</p>
+<p><strong>Main risk:</strong> s-arashu's AI reliance is above average and self-reported. She uses AI for folder structure advice, CSS translation, and validation — not just boilerplate. She has not yet self-initiated anything architecturally complex. Watch for whether she can reconstruct her own <code>ControlValueAccessor</code> work without prompting.</p>
+<p><strong>Secondary note:</strong> The team is still working against mock data. The commercetools API integration (HttpClient, interceptors, RxJS) is Sprint 4 scope. At the time of this interview, no real HTTP layer exists. Any claims about "RxJS" should be verified against what is actually in the repo, not what's in the Sprint 4 plans.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ul>
+<li>eka8888: <code>ControlValueAccessor</code> internals + <code>InjectionToken</code> / <code>useValue</code> depth check</li>
+<li>zorro-amarillo: <code>effect()</code> behavior relative to signal lifecycle, <code>input.required()</code> semantics</li>
+<li>s-arashu: <code>ControlValueAccessor</code> reconstruction (the one complex thing she touched) — calibrate expectations, reward honesty, probe depth</li>
+</ul>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — DevFusion</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>eka8888/shopfront-angular</code> (коммиты, PR, записи дневника). Снимок: 2026-06-15. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает свой код, где копать.</blockquote>
+<p><strong>Резюме:</strong> Реально активная команда из трёх человек — лид владеет архитектурой и логикой форм, средний участник отвечает за слой продуктов/корзины/роутинга, джуниор честен насчёт опоры на ИИ и стабильно растёт под руководством ментора.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>ShopFront</strong> — Angular e-commerce SPA (каталог товаров, корзина, авторизация, роутинг, реактивные формы). Стек: Angular (standalone), Tailwind CSS, Angular Signals (<code>signal()</code>, <code>computed()</code>, <code>effect()</code>), Angular Router с ленивой загрузкой, Reactive Forms, FormBuilder, кастомный <code>ValidatorFn</code>, <code>ControlValueAccessor</code>, <code>OnPush</code> change detection, mock-сервисы (реального бэкенда пока нет — commercetools запланирован на Sprint 4).</p>
+<ul>
+<li>Репозиторий: <a href="https://github.com/eka8888/shopfront-angular">https://github.com/eka8888/shopfront-angular</a></li>
+<li>Создан: 2026-05-11</li>
+<li>Последний push: 2026-06-12</li>
+<li>Открытые issues: 12</li>
+<li>Live demo: <a href="https://shopfront-angular-2tbm-git-dev-eka8888s-projects.vercel.app/home">https://shopfront-angular-2tbm-git-dev-eka8888s-projects.vercel.app/home</a> (Vercel, указывает на ветку <code>dev</code>)</li>
+<li>GitFlow: да (dev + feature-ветки, main — цель мержа)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты:</strong> eka8888 (лид), zorro-amarillo, s-arashu <strong>Ментор:</strong> antonkapustin (коммитов нет — это нормально)</p>
+<p><strong>Внешние контрибьюторы:</strong></p>
+<ul>
+<li><code>eka311</code> — второй Git-идентификатор eka8888 (email <code>ekandelaki1@gmail.com</code> vs GitHub noreply). Подтверждено: один человек — по владению репозиторием и авторству PR. Итоги коммитов ниже объединяют оба идентификатора.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>eka8888</strong> (лид)</td><td>36 (17 через GH + 19 локально)</td><td>12 / 12 влиты</td><td>3 (Sprint 1–3)</td><td>2026-06-08</td><td>Высокий — архитектурно осознанная, продуктивная</td></tr>
+<tr><td><strong>zorro-amarillo</strong></td><td>41 (10 через GH + 31 локально)</td><td>10 / 10 влиты</td><td>2 (Sprint 1–2)</td><td>2026-06-08</td><td>Высокий — уверенная поставка, чистые PR</td></tr>
+<tr><td><strong>s-arashu</strong></td><td>28</td><td>8 / 8 влиты</td><td>7 датированных записей (Sprint 1–3)</td><td>2026-06-06</td><td>Средний — наименьший охват, наибольшая опора на ИИ, честна в этом</td></tr>
+</tbody></table>
+<p>Все 30 PR влиты. Открытых PR нет, брошенных веток нет. Команда работает по GitFlow чисто.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (баллы за защиту)</h2>
+<p>Все три студента защитились на обоих собеседованиях: Sprint 1 (Компоненты) и Sprint 2 (Роутинг и Сигналы). Неявок не было.</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>eka8888</strong></td><td>75</td><td>100</td></tr>
+<tr><td><strong>zorro-amarillo</strong></td><td>75</td><td>75</td></tr>
+<tr><td><strong>s-arashu</strong></td><td>60</td><td>75</td></tr>
+</tbody></table>
+<p>Комментарии ментора ни для одного студента не записаны (поля comment пусты в данных).</p>
+<p><strong>Сверка: баллы за защиту vs активность в репозитории:</strong></p>
+<ul>
+<li><strong>eka8888 (75 → 100):</strong> Выраженный рост от Sprint 1 к Sprint 2, полностью согласующийся с картиной активности в репозитории (наиболее сложные архитектурные части, осмысленные записи в дневнике). Расхождений нет — оба сигнала указывают в одну сторону.</li>
+<li><strong>zorro-amarillo (75 → 75):</strong> Стабильный результат на обоих собеседованиях, соответствует активности (чистая поставка, без перегибов и пробелов). Оба сигнала совпадают.</li>
+<li><strong>s-arashu (60 → 75):</strong> Наиболее значимое расхождение. Данные по активности указывают на наименьший охват в команде и повышенную опору на ИИ; однако балл Sprint 2 составляет 75 — наравне с zorro-amarillo и заметно выше 60 за Sprint 1. Оценка «средний сигнал» в брифинге оказывается осторожнее, чем говорит протокол защит: ментор, проводивший Sprint 2, счёл понимание достаточным для 75. Это не снимает наблюдение об опоре на ИИ, но добавляет существенный противовес: свою работу она способна защитить.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили по студентам</h2>
+<h3>eka8888 — лид, 36 коммитов / 12 PR</h3>
+<p><strong>Реализовала (из PR + дневника):</strong></p>
+<ul>
+<li>Sprint 1: бутстрап проекта, настройка Tailwind, папочная структура по фичам (<code>core</code> / <code>shared</code> / <code>features</code> / <code>layout</code>), <code>HeaderComponent</code>, <code>SearchBarComponent</code>, <code>ProductCardComponent</code>, коммуникация родитель–дочерний через <code>input()</code>/<code>output()</code></li>
+<li>Sprint 2: страницы Login/Register/Profile, <code>AuthGuard</code> (функциональный, <code>canActivate</code>), общий <code>AuthService</code>, auth-состояние на сигналах, персистентность в <code>localStorage</code>, структура ленивой загрузки (<code>provideRouter</code>, <code>loadChildren</code>, <code>loadComponent</code>), конфиг ESLint, CI на GitHub Actions, деплой</li>
+<li>Sprint 3: Переписала Login и Register на Reactive Forms + FormBuilder; кастомный <code>ValidatorFn</code> для пароля (буквы+цифры); <code>InjectionToken</code> с провайдером <code>useValue</code> для <code>APP_CONFIG</code>; страница Profile переведена на Reactive Form; общие инпуты на базе <code>ControlValueAccessor</code>; <code>OnPush</code> + Signals повсюду</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный джуниор / низкий мид. Владеет архитектурным скелетом проекта. Дневники содержательные — запись Sprint 3 объясняет <em>почему</em> нужен <code>InjectionToken</code> вместо обычного сервиса и описывает конкретный путь обучения. Это не копипаст архитектуры; решения (структура по фичам, GitFlow, CI с первого дня) принимались осознанно и описаны через призму компромиссов (снижение конфликтов при мерже, улучшение масштабируемости). Явной чрезмерной опоры на ИИ в содержании дневника не наблюдается.</p>
+<p><strong>Что проверять на собеседовании:</strong> Попросите воссоздать интеграцию <code>ControlValueAccessor</code> с нуля — зачем он нужен для кастомных инпутов, какие четыре метода интерфейса требуются и когда Angular вызывает каждый из них. Это самое глубокое, что она реализовала в Sprint 3, и именно это с наибольшей вероятностью покажет разницу между «скопировала из документации» и «поняла». Также стоит спросить: в чём разница между <code>useValue</code> и <code>useClass</code> в Angular-провайдере и когда вы выберете одно вместо другого (она ввела <code>InjectionToken</code> с <code>useValue</code> — проверьте глубину).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>zorro-amarillo — 41 коммит / 10 PR</h3>
+<p><strong>Реализовал (из PR + дневника):</strong></p>
+<ul>
+<li>Sprint 1: вёрстка главной страницы (Hero, Categories, Promo, New Arrivals), <code>CategoryService</code> и <code>ProductService</code> с mock JSON-данными, состояние на сигналах, <code>routerLink</code>, динамическая генерация slug</li>
+<li>Sprint 2: страница Shop (<code>/shop</code>) с ленивой загрузкой через <code>loadChildren</code>; страница Product Details (<code>/shop/:id</code>) с <code>ActivatedRoute</code>, <code>computed()</code> для данных товара и отображения старой цены, условная кнопка корзины, <code>@let</code> для одной signal-подписки; страница Cart с <code>effect()</code> для сохранения в localStorage, CRUD количества; переиспользуемый компонент <code>QuantitySelector</code> с <code>input.required()</code> + <code>output()</code>; <code>CartService</code> с полным состоянием на сигналах; рефакторинг стилей и очистка сервисов; роуты вынесены на уровень корня фичи</li>
+<li>Дневник Sprint 3 ещё не влит в main (PR #44 с названием «Dev» влит 2026-06-08, дневник #42 влит раньше). Планы Sprint 3: кастомные директивы, пайпы, галерея изображений товара, цветовые варианты</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный джуниор. Наиболее стабильная поставка фич в команде — чистые названия PR (<code>feat/</code>, <code>refactor/</code>, <code>fix/</code>, <code>docs:</code>), хорошо структурированные компоненты, дневник, точно формулирующий проблемы и решения (например: «забыл вызывать сигналы с <code>()</code> в computed и шаблонах — исправил, написав <code>cartItems().length</code>»). Дизайн <code>QuantitySelector</code> (переиспользуемый с обязательными инпутами, бизнес-логика на стороне родителя) демонстрирует чистое разделение ответственностей, а не случайное. Очевидного «вставил от ИИ и молись» не наблюдается.</p>
+<p><strong>Что проверять на собеседовании:</strong> Попросите объяснить <code>effect()</code> в <code>CartService</code> — что его триггерит, когда он срабатывает относительно обновления сигнала и что произойдёт, если вызвать <code>effect()</code> внутри компонента с <code>OnPush</code>. Это то, что он реализовал сам (автосохранение в localStorage), и настоящая ловушка в Angular. Также спросите: почему <code>input.required()</code>, а не <code>input()</code> в <code>QuantitySelector</code>, и как Angular обрабатывает отсутствие обязательного инпута в рантайме.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>s-arashu — 28 коммитов / 8 PR</h3>
+<p><strong>Реализовала (из PR + дневника):</strong></p>
+<ul>
+<li>Sprint 1: <code>ButtonComponent</code> (переиспользуемый, Tailwind), <code>InputComponent</code> (переиспользуемый, позже расширен до <code>ControlValueAccessor</code> после обратной связи от ментора)</li>
+<li>Sprint 2: Footer, страница Not Found, страница About (с попыткой Firebase Firestore-подписки — заброшена после согласования с командой). Исправила ошибки линтера (PR #26). Добавила <code>ControlValueAccessor</code> в компоненты инпутов после того, как ментор указал, что они не будут работать с формами (PR #15)</li>
+<li>Sprint 3: предположительно работает над страницей контактов (запись дневника от 2026-06-05 — самая последняя)</li>
+</ul>
+<p><strong>Уровень:</strong> Наименьший охват в команде, но не пассажир. 7 датированных записей в дневнике (больше всех в команде) и стабильный паттерн итерации на основе обратной связи от ментора: ментор указывает на что-то → она читает об этом → исправляет → пишет, почему это важно. Эпизод с Firebase (записи 4–5 июня) показателен: она интегрировала Firebase Firestore в одностороннем порядке (признав в записи от 4 июня: «попросила ИИ подсказать варианты, я выбрала то, что знаю»), команда откатила это, потому что не было согласования, и она честно приняла это в записи от 5 июня («моя ошибка — надо было сначала согласовать с командой»). Никакой оборонительной реакции.</p>
+<p><strong>Флаг опоры на ИИ:</strong> Явный и повторяющийся в её дневниках. 4 июня: «Попросила чат подсказать структуре папок... сбросила ИИ-шке на проверку — похвалил.» 24 июня: «беру обычные стили из макета, закидываю в чат ИИ — и он мне переводит.» Она использует ИИ как переводчик CSS и советчик по структуре папок, а не как генератор логики кода. Это различие важно. Тем не менее она ещё не продемонстрировала самостоятельного решения сложных задач — её наиболее сложная реализация (<code>ControlValueAccessor</code> на <code>InputComponent</code>) была инициирована обратной связью от ментора, а не ею самой.</p>
+<p><strong>Что проверять на собеседовании:</strong> Попросите объяснить <code>ControlValueAccessor</code> — конкретно: какую проблему он решает, какие методы должны быть реализованы и что делает <code>writeValue</code>. Это единственная по-настоящему сложная концепция Angular, с которой она работала, и это произошло потому, что ментор потребовал. Собеседование покажет, освоила ли она это теперь или просто выполнила правку. Держите тон откалиброванным: она честна насчёт пробелов, поэтому хороший ментор вознаградит честность, а не накажет за масштаб охвата.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p>Функциональная, достаточно сбалансированная команда. По количеству коммитов и PR пассажиров нет. Лид (eka8888) владеет сложными архитектурными частями и умеет объяснить свои решения; средний участник (zorro-amarillo) — наиболее стабильный поставщик фич с чистыми привычками; джуниор (s-arashu) имеет наименьший след по поставке, но богатейший дневниковый след и здоровый цикл обратной связи с ментором.</p>
+<p><strong>Главный риск:</strong> Опора s-arashu на ИИ выше среднего и заявлена ею самой. Она использует ИИ для советов по структуре папок, перевода CSS и валидации — не только для шаблонного кода. Самостоятельно ничего архитектурно сложного она ещё не инициировала. Смотрите, сможет ли она воссоздать свою собственную работу с <code>ControlValueAccessor</code> без подсказок.</p>
+<p><strong>Дополнительная заметка:</strong> Команда до сих пор работает на mock-данных. Интеграция с API commercetools (HttpClient, интерсепторы, RxJS) — это объём Sprint 4. На момент этого собеседования реального HTTP-слоя не существует. Любые заявления о «RxJS» следует сверять с тем, что реально есть в репозитории, а не с планами Sprint 4.</p>
+<p><strong>Рекомендуемый угол собеседования:</strong></p>
+<ul>
+<li>eka8888: внутренности <code>ControlValueAccessor</code> + проверка глубины понимания <code>InjectionToken</code> / <code>useValue</code></li>
+<li>zorro-amarillo: поведение <code>effect()</code> относительно жизненного цикла сигнала, семантика <code>input.required()</code></li>
+<li>s-arashu: воссоздание <code>ControlValueAccessor</code> (единственная сложная вещь, которую она трогала) — откалибруйте ожидания, вознаградите честность, проверьте глубину</li>
+</ul>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

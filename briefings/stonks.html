@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Stonks · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Stonks</strong><strong class="lang-ru">Mentor briefing — Stonks</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Stonks</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: <code>Cryptangular/crypto-trade-ui</code> (commits, PRs, diaries). Snapshot: 2026-06-15. Goal: give the mentor 2-minute context before the defence: who built what, who understands it, what to probe.</blockquote>
+<p><strong>One-line summary:</strong> Functional team with two solid contributors (Drob leads, Zhdko owns UI foundation), one late-bloomer (AnatoliRub caught up in sprint 2 only), and a readme ghost (PoMaKoM — listed in README, zero commits). The project is ambitious (Angular + NestJS fullstack + Binance Testnet), but backend is still "minimal" and the core domain feature (live trading data) has not been touched yet.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<ul>
+<li><strong>Name:</strong> Crypto Trade UI</li>
+<li><strong>Description:</strong> Trading platform SPA — virtual crypto trading via Binance Spot Testnet; users browse market data, charts, watchlist, execute test trades.</li>
+<li><strong>Stack:</strong> Angular (Material 3 + custom component library), NestJS backend, PostgreSQL + Prisma ORM, Docker, Vitest for unit tests. Homepage listed as <code><a href="https://stonks.com.ru">https://stonks.com.ru</a></code>.</li>
+<li><strong>Repo:</strong> <a href="https://github.com/Cryptangular/crypto-trade-ui">https://github.com/Cryptangular/crypto-trade-ui</a></li>
+<li><strong>Created:</strong> 2026-05-06 | <strong>Last pushed:</strong> 2026-06-09 | <strong>Open issues:</strong> 6</li>
+<li><strong>Default branch:</strong> <code>main</code> (GitFlow-style with feature branches; diaries on <code>development-notes</code> branch, now merged to main)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (3):</strong></p>
+<ul>
+<li><code>aliakseiDrob</code> — team lead (isLead: true)</li>
+<li><code>AnatoliRub</code> — student</li>
+<li><code>Zhdko</code> — student</li>
+</ul>
+<p><strong>External (non-students):</strong></p>
+<ul>
+<li><code>khasekai</code> (role: mentor in participants.json) — 3 commits on 2026-05-18, likely initial project scaffold/infra setup. Not assessed. This is normal.</li>
+<li><code>PoMaKoM</code> — listed in README.md as "Our secret weapon" but has <strong>zero commits</strong> and is <strong>not in participants.json</strong>. Unknown status; not assessed.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong> (lead)</td><td>44</td><td>8</td><td>7</td><td>3</td><td>2026-06-09</td><td>Strong, reflects well</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>27</td><td>12</td><td>11</td><td>3</td><td>2026-06-02</td><td>Solid, technically careful</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>14</td><td>7</td><td>6</td><td>3</td><td>2026-06-08</td><td>Late start, caught up; backend ownership unclear</td></tr>
+</tbody></table>
+<p>PR counts derived from the full PR list (24 total PRs across all authors, including 1 currently open from Zhdko). Commit counts from GitHub contributors API.</p>
+<p><strong>Balance note:</strong> aliakseiDrob has 3x the commits of AnatoliRub. AnatoliRub's first meaningful feature commit was 2026-05-18 (Input component); the majority of his feature PRs landed on 2026-06-08 in a batch (dropdown, three-dot-menu, main layout). This burst pattern is worth noting — either a real sprint, or catch-up before checkpoint.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Mentor: <strong>khasekai</strong> (Sprint 1) · <strong>karina2409</strong> (Sprint 2)</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1 — Components</th><th>Sprint 2 — Routing & Signals</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+</tbody></table>
+<p><strong>aliakseiDrob (Sprint 2):</strong> Demonstrates solid theoretical understanding and can back it up with live code; knows nuances beyond the surface-level answer. No Sprint 1 comment on record.</p>
+<p><strong>AnatoliRub (Sprint 2):</strong> Can explain theory in his own words with code examples; occasionally gets confused on exact definitions but works through to the right conclusion using reasoning by analogy. Mentor noted genuine curiosity about how Angular internals work. No Sprint 1 comment on record.</p>
+<p><strong>Zhdko (Sprint 2):</strong> Answered main sprint questions confidently and explained them through code; also handled most additional questions, indicating real depth of understanding. No Sprint 1 comment on record.</p>
+<p><strong>Reconciliation — scores vs. activity:</strong></p>
+<ul>
+<li><strong>aliakseiDrob</strong> — 100 at both defences, consistent commit activity through 2026-06-09. Scores and repo signal are fully aligned; no divergence.</li>
+<li><strong>Zhdko</strong> — 100 at both defences, but last repo commit is 2026-06-02 (~2 weeks before snapshot). This is the one notable divergence: the defence scores say "depth is real," but the activity gap raises a question about Sprint 2 momentum. Worth watching whether the open header PR (#30) lands before the Jun 23 deadline.</li>
+<li><strong>AnatoliRub</strong> — 100 at both defences, despite the burst-commit pattern (6 PRs in one day on 2026-06-08) and sparse diary. The Sprint 2 mentor comment actively favours him — he reasoned his way to correct answers even under pressure. The divergence here is informative: repo signal suggested depth uncertainty; mentor interaction suggests genuine understanding even if delivery is uneven. Treat both signals as valid: he knows the material, but the time management and burst pattern remain a real delivery risk.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Student profiles</h2>
+<h3>aliakseiDrob — lead, 44 commits / 7 merged PRs</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Registration page with Reactive Forms (<code>Feat: Registration page</code>, PR #22, merged 2026-06-08)</li>
+<li>Login page (<code>Feature: Login page</code>, PR #29, merged 2026-06-09, with refactor to auth service the same day)</li>
+<li>Auth guard (<code>Feat: add guard</code>, PR #26, merged 2026-06-08)</li>
+<li>Custom checkbox component with <code>ControlValueAccessor</code> + <code>NgControl inject({ self: true })</code> pattern to avoid circular DI (PR #11, Sprint 1)</li>
+<li>NestJS backend: JWT auth converted to HttpOnly cookies after team discussion (per diary 2026-06-08)</li>
+<li>Docker-wrapped NestJS + PostgreSQL + Prisma ORM stack</li>
+</ul>
+<p><strong>Level:</strong> The strongest technical author on the team. His diary entries show genuine reasoning, not just status updates. Chose Reactive Forms for registration deliberately (evaluated Template-Driven and Signals Forms, explained trade-offs); planned login with Signals Forms intentionally ("architecturally inconsistent, but good to try both approaches in a learning project"). The ControlValueAccessor + forwardRef issue and his <code>inject({ self: true })</code> solution in Sprint 1 is concrete evidence of Angular DI depth. Backend pivot from JWT to HttpOnly cookies was team-driven, and he explains the XSS rationale clearly.</p>
+<p><strong>Risk:</strong> Self-admitted gap — "I don't see the full project picture yet." The Binance Spot Testnet integration is explicitly planned but not started as of last diary (2026-06-08). The team's backend is still in a minimal working state.</p>
+<p><strong>Probe:</strong> Ask him to explain the <code>ControlValueAccessor</code> + <code>NgControl inject({ self: true })</code> pattern from scratch: why <code>forwardRef</code> was the problem, what <code>{ self: true }</code> does in Angular DI. Then: why HttpOnly cookie auth is more XSS-resistant than localStorage JWT — and what CORS/SameSite trade-offs he expects on different-port localhost. These are things he built and described himself; any gap here is a real gap.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Zhdko — 27 commits / 11 merged PRs</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Angular Material 3 setup and dark custom palette (<code>feat(theme): configure dark palette</code>, PR #4, first mover — set the foundation for the whole team)</li>
+<li>Global CSS reset (<code>feat(styles): add global css reset</code>, PR #5)</li>
+<li>Base <code>StxButton</code> component with <code>matButton</code>/<code>matIconButton</code>, including navigation variants and internal/external link support (PRs #6, #10 — iterated styling)</li>
+<li><code>StxToaster</code> + <code>ToastService</code> — reactive toast notifications with CSS transition-based animation removal via <code>TransitionEvent</code> (PR #8, significant iteration: 4 commits across 2026-05-16 to 2026-05-31; replaced <code>setTimeout</code> hack with <code>transitionend</code> event listener after code review)</li>
+<li>Header layout (PR #30 — currently open, not yet merged as of 2026-06-09)</li>
+</ul>
+<p><strong>Level:</strong> Technically careful and iterative. The toaster story is the best evidence: he shipped a version, received code review feedback that <code>setTimeout</code> was brittle, researched <code>TransitionEvent</code>, rewrote the animation lifecycle, and updated unit tests (Vitest) to trigger <code>transitionend</code> events rather than using <code>whenStable()</code>. He cites MDN correctly and links the PR directly in his diary. The test fix is particularly good — he understood <em>why</em> the tests hung (macro-task waiting), not just <em>that</em> they hung. One AI mention: "With AI assistance, I adjusted the test scenarios" for the Vitest rewrite. Worth probing whether he understands the resulting tests or just accepted the output.</p>
+<p><strong>Risk:</strong> Last commit is 2026-06-02 (diary entry + PR #20 docs). Header PR (#30) is open but shows the most recent commit activity; last commit to that branch not visible from main. No diary since 2026-05-31. Gap of ~2 weeks before the interview.</p>
+<p><strong>Probe:</strong> Ask him to explain the <code>TransitionEvent</code> solution to the toaster: what <code>event.propertyName !== 'opacity'</code> filters out and why (CSS fires <code>transitionend</code> per property — this is specific and non-obvious). Then ask him to walk through one of his toaster Vitest tests: how does it trigger the <code>transitionend</code> event in a jsdom environment? The AI mention for test rewriting is the flag — probe there.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AnatoliRub — 14 commits / 6 merged PRs</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Initial project setup + CI/CD (PRs #1, #2 — first commits 2026-05-05 to 2026-05-12, including nginx config, GitHub Actions pipeline, Docker, project deployment to timeweb)</li>
+<li>Input component with ControlValueAccessor, custom pipe for error messages, a settings page + validation (PR #9; his diary mentions "page with settings, validation: both fields required, minimum length, clear messages")</li>
+<li>Three-dot-menu component (PR #24, merged 2026-06-08)</li>
+<li>Dropdown component (PR #23, merged 2026-06-08)</li>
+<li>Main layout (PR #27, merged 2026-06-08)</li>
+<li>NestJS settings controller with 3 endpoints, PostgreSQL migration setup, logging middleware (per diary 2026-05-25)</li>
+</ul>
+<p><strong>Level:</strong> Has breadth — DevOps setup, backend NestJS, Angular UI components. But the pattern is concerning: Sprint 1 diary shows good reflection (Angular Material ControlValueAccessor problems, <code>provideSignalFormsConfig</code> discovery, DevOps CORS debugging), then Sprint 2 diary (2026-06-08) is noticeably less structured: "dropout compacted dropdown, three-dot-menu. Settings form not done, will finish during the week. Backend pipeline fixed, tested migrations. A lot of theory, little time." Six feature PRs merged in a single day (2026-06-08) after sparse commit activity in the weeks prior suggests a deadline catch-up sprint rather than steady progress.</p>
+<p><strong>Risk:</strong> The diary explicitly names time management as the recurring problem: "the problem is free time and some lack of focus." He also says interviews each sprint shift his focus to theory over building. The settings form he planned in Sprint 1 was not done as of Sprint 2. No evidence of any Angular-specific depth beyond wrapping Angular Material. No diary entries between 2026-05-25 and 2026-06-08 (two-week gap with no commit activity).</p>
+<p><strong>Probe:</strong> Ask him to rebuild the dropdown component logic from scratch, without the Angular Material overlay — what problem does the CDK/Material overlay solve, and what would you handle manually? The dropdown and three-dot-menu were his main Sprint 2 deliverables; if he can explain the implementation, it's real. Also probe his NestJS work: what the 3 settings endpoints do, how the Prisma migration was structured, and what "fixed backend pipeline" means concretely. The DevOps setup (nginx + Docker + GitHub Actions) from Sprint 1 is good evidence of cross-domain capability — worth asking about the CI/CD flow if Angular Angular depth is shallow.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>This is an <strong>uneven but functional team</strong>. The project concept is strong (Binance Testnet SPA + NestJS backend), and the team made real architectural choices and owns a custom component library. However, the core differentiating feature — live market data via Binance API + WebSockets — has not been started as of the last diary entries (2026-06-08). The team knows this; aliakseiDrob's diary explicitly lists Binance integration as next.</p>
+<p><strong>aliakseiDrob</strong> is the clear anchor: deepest Angular DI knowledge, fullstack ownership, consistent commits, articulate diary entries. Interview should challenge him on depth (DI patterns, cookie auth trade-offs) not breadth.</p>
+<p><strong>Zhdko</strong> built the UI foundation the whole team built on top of. His toaster iteration is the most complete "built → reviewed → improved → tested" cycle in the repo. The AI mention in test rewriting is the one flag; probe whether the understanding is genuine.</p>
+<p><strong>AnatoliRub</strong> is the weakest repo signal, but the mentor scores revise the picture upward. Both defences returned 100/100, and the Sprint 2 mentor comment explicitly credits him with reasoning by analogy to correct conclusions even when exact definitions slipped. He knows the material. The remaining concern is delivery cadence — burst commits, recurring time management admissions in his diary — not understanding. Probe on something concrete he built to confirm depth holds under the specific implementation; don't assume he can't explain it.</p>
+<p><strong>PoMaKoM</strong> appears in README as "Our secret weapon" but has zero commits. Do not assess; do not rely on them for any deliverable.</p>
+<p><strong>Recommended interview angle:</strong> One "rebuild it" question per student. For Drob — <code>ControlValueAccessor + inject({ self: true })</code>. For Zhdko — <code>TransitionEvent</code> filter logic and the Vitest approach to trigger it. For AnatoliRub — the dropdown from scratch, or the NestJS endpoint structure. Avoid general Angular theory questions; all three diaries show they studied well but the gap between "read the docs" and "can create from scratch" is exactly what this interview should measure.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Stonks</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: <code>Cryptangular/crypto-trade-ui</code> (коммиты, PR, дневники). Снимок: 2026-06-15. Цель: дать ментору двухминутный контекст перед защитой: кто что построил, кто понимает, что проверять.</blockquote>
+<p><strong>Резюме:</strong> Функциональная команда с двумя сильными участниками (Drob лидирует, Zhdko владеет фундаментом UI), одним поздним стартером (AnatoliRub подтянулся только во втором спринте) и призраком из README (PoMaKoM — упомянут в README, ноль коммитов). Проект амбициозный (Angular + NestJS fullstack + Binance Testnet), но бэкенд всё ещё «минимальный», и ключевая доменная фича (торговые данные в реальном времени) ещё не тронута.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<ul>
+<li><strong>Название:</strong> Crypto Trade UI</li>
+<li><strong>Описание:</strong> SPA торговой платформы — виртуальная торговля криптовалютой через Binance Spot Testnet; пользователи просматривают рыночные данные, графики, список наблюдения, совершают тестовые сделки.</li>
+<li><strong>Стек:</strong> Angular (Material 3 + кастомная библиотека компонентов), NestJS бэкенд, PostgreSQL + Prisma ORM, Docker, Vitest для юнит-тестов. Главная страница указана как <code><a href="https://stonks.com.ru">https://stonks.com.ru</a></code>.</li>
+<li><strong>Репозиторий:</strong> <a href="https://github.com/Cryptangular/crypto-trade-ui">https://github.com/Cryptangular/crypto-trade-ui</a></li>
+<li><strong>Создан:</strong> 2026-05-06 | <strong>Последний пуш:</strong> 2026-06-09 | <strong>Открытые issues:</strong> 6</li>
+<li><strong>Ветка по умолчанию:</strong> <code>main</code> (GitFlow-стиль с feature-ветками; дневники на ветке <code>development-notes</code>, теперь смёрджены в main)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав</h2>
+<p><strong>Студенты (3):</strong></p>
+<ul>
+<li><code>aliakseiDrob</code> — тимлид (isLead: true)</li>
+<li><code>AnatoliRub</code> — студент</li>
+<li><code>Zhdko</code> — студент</li>
+</ul>
+<p><strong>Внешние (не студенты):</strong></p>
+<ul>
+<li><code>khasekai</code> (role: mentor в participants.json) — 3 коммита 2026-05-18, вероятно начальный скаффолд/инфра проекта. Не оценивается. Это нормально.</li>
+<li><code>PoMaKoM</code> — упомянут в README.md как «Our secret weapon», но имеет <strong>ноль коммитов</strong> и <strong>отсутствует в participants.json</strong>. Статус неизвестен; не оценивается.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Смёрдженные PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong> (лид)</td><td>44</td><td>8</td><td>7</td><td>3</td><td>2026-06-09</td><td>Сильный, рефлексирует хорошо</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>27</td><td>12</td><td>11</td><td>3</td><td>2026-06-02</td><td>Стабильный, технически аккуратный</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>14</td><td>7</td><td>6</td><td>3</td><td>2026-06-08</td><td>Поздний старт, подтянулся; владение бэкендом под вопросом</td></tr>
+</tbody></table>
+<p>Количество PR рассчитано по полному списку PR (24 PR всего по всем авторам, включая 1 открытый от Zhdko). Количество коммитов из GitHub contributors API.</p>
+<p><strong>Примечание о балансе:</strong> у aliakseiDrob в 3 раза больше коммитов, чем у AnatoliRub. Первый значимый коммит с фичей у AnatoliRub — 2026-05-18 (компонент Input); большинство его feature-PR слились 2026-06-08 пачкой (dropdown, three-dot-menu, главный лейаут). Этот паттерн всплеска стоит отметить — либо реальный спринт, либо наверстывание к контрольной точке.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Ментор: <strong>khasekai</strong> (Спринт 1) · <strong>karina2409</strong> (Спринт 2)</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1 — Компоненты</th><th>Спринт 2 — Роутинг & Сигналы</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+</tbody></table>
+<p><strong>aliakseiDrob (Спринт 2):</strong> Демонстрирует уверенное теоретическое понимание и подкрепляет его живым кодом; знает нюансы сверх поверхностного ответа. Комментарий по Спринту 1 не записан.</p>
+<p><strong>AnatoliRub (Спринт 2):</strong> Может объяснить теорию своими словами с примерами в коде; временами путается в точных определениях, но через рассуждения приходит к правильному выводу. Ментор отметил искренний интерес к тому, как устроены внутренности Angular. Комментарий по Спринту 1 не записан.</p>
+<p><strong>Zhdko (Спринт 2):</strong> Уверенно ответил на основные вопросы спринта и объяснил их через код; справился и с большинством дополнительных вопросов, что говорит о реальной глубине понимания. Комментарий по Спринту 1 не записан.</p>
+<p><strong>Сверка: оценки ментора vs. активность в репозитории:</strong></p>
+<ul>
+<li><strong>aliakseiDrob</strong> — 100 на обеих защитах, стабильная активность коммитов до 2026-06-09. Оценки и сигналы репозитория полностью согласуются; расхождений нет.</li>
+<li><strong>Zhdko</strong> — 100 на обеих защитах, но последний коммит в репо — 2026-06-02 (~2 недели до снимка). Это единственное заметное расхождение: оценки защиты говорят «глубина реальная», а разрыв в активности ставит вопрос о темпе в Спринте 2. Стоит отследить, смёрджится ли открытый PR #30 с хедером до дедлайна 23 июня.</li>
+<li><strong>AnatoliRub</strong> — 100 на обеих защитах, несмотря на паттерн всплеска коммитов (6 PR за один день, 2026-06-08) и скудный дневник. Комментарий ментора в Спринте 2 говорит в его пользу: он рассуждает вслух, приходит к правильным ответам даже при давлении. Расхождение здесь информативное: сигналы репозитория указывали на неопределённость глубины; живое интервью показало реальное понимание при неравномерной доставке. Оба сигнала действительны: материал знает, но тайм-менеджмент и паттерн всплеска остаются реальным риском по доставке.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>aliakseiDrob — лид, 44 коммита / 7 смёрдженных PR</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Страницу регистрации с Reactive Forms (<code>Feat: Registration page</code>, PR #22, смёрджен 2026-06-08)</li>
+<li>Страницу логина (<code>Feature: Login page</code>, PR #29, смёрджен 2026-06-09, с рефактором в auth service в тот же день)</li>
+<li>Auth-гард (<code>Feat: add guard</code>, PR #26, смёрджен 2026-06-08)</li>
+<li>Кастомный компонент checkbox с <code>ControlValueAccessor</code> + паттерном <code>NgControl inject({ self: true })</code> для обхода циклического DI (PR #11, Спринт 1)</li>
+<li>NestJS бэкенд: JWT-авторизация переведена на HttpOnly cookies после командного обсуждения (по дневнику 2026-06-08)</li>
+<li>Стек NestJS + PostgreSQL + Prisma ORM, обёрнутый в Docker</li>
+</ul>
+<p><strong>Уровень:</strong> Самый сильный технический автор в команде. Записи в его дневнике демонстрируют реальное осмысление, а не просто статус-апдейты. Выбрал Reactive Forms для регистрации осознанно (оценил Template-Driven и Signals Forms, объяснил компромиссы); спланировал логин с намеренным использованием сигнальных форм («архитектурно непоследовательно, но полезно попробовать оба подхода в учебном проекте»). Проблема ControlValueAccessor + forwardRef и его решение <code>inject({ self: true })</code> в Спринте 1 — конкретное свидетельство глубины знания Angular DI. Переход бэкенда с JWT на HttpOnly cookies был командным решением, и он ясно объясняет логику защиты от XSS.</p>
+<p><strong>Риск:</strong> Самопризнанный пробел — «я пока не вижу полной картины проекта». Интеграция с Binance Spot Testnet явно запланирована, но не начата по состоянию на последний дневник (2026-06-08). Бэкенд команды всё ещё в минимально рабочем состоянии.</p>
+<p><strong>Что проверять:</strong> Попросите объяснить паттерн <code>ControlValueAccessor</code> + <code>NgControl inject({ self: true })</code> с нуля: почему <code>forwardRef</code> был проблемой, что делает <code>{ self: true }</code> в Angular DI. Затем: почему авторизация через HttpOnly cookies более устойчива к XSS, чем JWT в localStorage, — и каких компромиссов по CORS/SameSite он ожидает на localhost с разными портами. Это всё то, что он сам построил и описал; любой пробел здесь — реальный пробел.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Zhdko — 27 коммитов / 11 смёрдженных PR</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Настройку Angular Material 3 и тёмную кастомную палитру (<code>feat(theme): configure dark palette</code>, PR #4, первый шаг — заложил фундамент для всей команды)</li>
+<li>Глобальный CSS-сброс (<code>feat(styles): add global css reset</code>, PR #5)</li>
+<li>Базовый компонент <code>StxButton</code> с <code>matButton</code>/<code>matIconButton</code>, включая навигационные варианты и поддержку внутренних/внешних ссылок (PR #6, #10 — итеративная стилизация)</li>
+<li><code>StxToaster</code> + <code>ToastService</code> — реактивные уведомления-тосты с удалением анимации через CSS transition и <code>TransitionEvent</code> (PR #8, значительные итерации: 4 коммита с 2026-05-16 по 2026-05-31; заменил хак с <code>setTimeout</code> на обработчик события <code>transitionend</code> после код-ревью)</li>
+<li>Лейаут хедера (PR #30 — открытый, ещё не смёрджен по состоянию на 2026-06-09)</li>
+</ul>
+<p><strong>Уровень:</strong> Технически аккуратный и итеративный. История с тостером — лучшее свидетельство: он выпустил версию, получил на код-ревью замечание, что <code>setTimeout</code> ненадёжен, изучил <code>TransitionEvent</code>, переписал жизненный цикл анимации и обновил юнит-тесты (Vitest), чтобы тригерить события <code>transitionend</code> вместо использования <code>whenStable()</code>. Он правильно ссылается на MDN и прямо указывает PR в дневнике. Исправление тестов особенно хорошее — он понял <em>почему</em> тесты зависали (ожидание макротаска), а не просто <em>что</em> зависали. Одно упоминание AI: «С помощью AI я скорректировал тест-сценарии» для переписывания на Vitest. Стоит проверить, понимает ли он получившиеся тесты или просто принял вывод.</p>
+<p><strong>Риск:</strong> Последний коммит — 2026-06-02 (запись в дневнике + PR #20 docs). PR #30 с хедером открыт, но показывает наиболее свежую активность коммитов; последний коммит в эту ветку с main не виден. Дневников нет с 2026-05-31. Разрыв около 2 недель до интервью.</p>
+<p><strong>Что проверять:</strong> Попросите объяснить решение с <code>TransitionEvent</code> для тостера: что фильтрует <code>event.propertyName !== 'opacity'</code> и почему (CSS генерирует <code>transitionend</code> для каждого свойства — это конкретно и неочевидно). Затем попросите пройтись по одному из тостерных тестов на Vitest: как он тригерит событие <code>transitionend</code> в среде jsdom? Упоминание AI при переписывании тестов — это флаг; прощупайте там.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AnatoliRub — 14 коммитов / 6 смёрдженных PR</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Начальный скаффолд проекта + CI/CD (PR #1, #2 — первые коммиты с 2026-05-05 по 2026-05-12, включая конфиг nginx, пайплайн GitHub Actions, Docker, деплой проекта на timeweb)</li>
+<li>Компонент Input с ControlValueAccessor, кастомный pipe для сообщений об ошибках, страницу настроек + валидацию (PR #9; его дневник упоминает «страница с настройками, валидация: оба поля обязательны, минимальная длина, понятные сообщения»)</li>
+<li>Компонент three-dot-menu (PR #24, смёрджен 2026-06-08)</li>
+<li>Компонент dropdown (PR #23, смёрджен 2026-06-08)</li>
+<li>Главный лейаут (PR #27, смёрджен 2026-06-08)</li>
+<li>NestJS-контроллер настроек с 3 эндпоинтами, настройка PostgreSQL-миграций, middleware для логирования (по дневнику 2026-05-25)</li>
+</ul>
+<p><strong>Уровень:</strong> Широкий охват — DevOps, бэкенд NestJS, UI-компоненты Angular. Но паттерн вызывает опасения: дневник Спринта 1 показывает хорошую рефлексию (проблемы ControlValueAccessor с Angular Material, открытие <code>provideSignalFormsConfig</code>, отладка CORS в DevOps), затем дневник Спринта 2 (2026-06-08) заметно менее структурирован: «компактно запилил dropdown, three-dot-menu. Settings form не готова, доделаю на неделе. Бэкенд-пайплайн починен, протестированы миграции. Много теории, мало времени.» Шесть feature-PR, смёрдженных в один день (2026-06-08) после редкой активности в предыдущие недели, скорее говорит о наверстывании к дедлайну, чем о равномерном прогрессе.</p>
+<p><strong>Риск:</strong> Дневник прямо называет тайм-менеджмент постоянной проблемой: «проблема в свободном времени и некоторой потере фокуса». Он также говорит, что интервью каждый спринт смещают его фокус с создания на теорию. Settings form, запланированная в Спринте 1, не была готова по состоянию на Спринт 2. Никаких свидетельств Angular-специфической глубины за пределами оборачивания Angular Material. Никаких записей в дневнике между 2026-05-25 и 2026-06-08 (двухнедельный разрыв без коммитов).</p>
+<p><strong>Что проверять:</strong> Попросите воссоздать логику компонента dropdown с нуля, без Angular Material overlay — какую проблему решает CDK/Material overlay и что пришлось бы обрабатывать вручную? Dropdown и three-dot-menu были его главными deliverable в Спринте 2; если он может объяснить реализацию — это реально. Также прощупайте его NestJS-работу: что делают 3 эндпоинта настроек, как была структурирована Prisma-миграция, и что конкретно означает «починен бэкенд-пайплайн». DevOps-сетап (nginx + Docker + GitHub Actions) из Спринта 1 — хорошее свидетельство кросс-доменных навыков; стоит спросить про CI/CD-флоу, если глубина в Angular окажется поверхностной.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p>Это <strong>неравномерная, но функциональная команда</strong>. Концепция проекта сильная (SPA на Binance Testnet + NestJS бэкенд), команда приняла реальные архитектурные решения и владеет кастомной библиотекой компонентов. Однако ключевая отличительная фича — рыночные данные в реальном времени через Binance API + WebSockets — не начата по состоянию на последние записи в дневнике (2026-06-08). Команда это знает; дневник aliakseiDrob прямо называет интеграцию с Binance следующим шагом.</p>
+<p><strong>aliakseiDrob</strong> — явный якорь: самые глубокие знания Angular DI, fullstack-владение, стабильные коммиты, внятные записи в дневнике. Интервью должно бросать ему вызов на глубину (паттерны DI, компромиссы cookie-авторизации), а не на широту.</p>
+<p><strong>Zhdko</strong> построил UI-фундамент, на котором строила вся команда. Его итерация с тостером — наиболее полный цикл «построил → код-ревью → улучшил → протестировал» в репозитории. Упоминание AI при переписывании тестов — единственный флаг; проверьте, насколько понимание подлинное.</p>
+<p><strong>AnatoliRub</strong> — самый слабый сигнал репозитория, но оценки ментора пересматривают картину в лучшую сторону. Обе защиты — 100/100, и ментор в Спринте 2 прямо отмечает способность рассуждать по аналогии и приходить к верным выводам, даже когда точные определения ускользают. Материал он знает. Остающееся беспокойство — это ритм доставки (всплески коммитов, признания в проблемах с тайм-менеджментом в дневниках), а не понимание. Прощупайте что-то конкретное из построенного им, чтобы убедиться, что глубина сохраняется под конкретной реализацией; не предполагайте заранее, что объяснить не сможет.</p>
+<p><strong>PoMaKoM</strong> фигурирует в README как «Our secret weapon», но имеет ноль коммитов. Не оценивать; не рассчитывать на него ни в каком deliverable.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> По одному вопросу «воссоздай это» на студента. Для Drob — <code>ControlValueAccessor + inject({ self: true })</code>. Для Zhdko — логика фильтра <code>TransitionEvent</code> и подход Vitest для его тригера. Для AnatoliRub — dropdown с нуля или структура NestJS-эндпоинта. Избегайте общих вопросов по теории Angular; все три дневника показывают, что они хорошо изучили материал, но разрыв между «прочитал документацию» и «могу создать с нуля» — это именно то, что должно измерять это интервью.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

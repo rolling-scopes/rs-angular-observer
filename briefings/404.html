@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — 404 · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — 404</strong><strong class="lang-ru">Mentor briefing — 404</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — 404</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>Tserpilouski/e-commerce-angular</code> (commits, PRs, branches) + sprint diaries 1–2. Snapshot: 2026-06-15. Goal — give the mentor context in 2 minutes before the interview: who built what, who actually understands it, and where to probe.</blockquote>
+<p><strong>One-liner (internal):</strong> Three active contributors, zero passengers, genuinely solid engineering baseline (Angular Signals, zoneless, ControlValueAccessor, lazy loading, functional guards, CI/CD) — but Kiryl (lead) carries disproportionate structural weight, and Vlad's output is noticeably thinner than the other two.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project & stack</h2>
+<ul>
+<li><strong>Project:</strong> E-commerce Angular SPA (online shop)</li>
+<li><strong>Stack:</strong> Angular 21, TypeScript, standalone components, Angular Signals (zoneless architecture), Angular Material (MDC), Commercetools API, Vitest, GitHub Actions CI/CD, GitHub Pages deploy</li>
+<li><strong>Repo:</strong> <a href="https://github.com/Tserpilouski/e-commerce-angular">https://github.com/Tserpilouski/e-commerce-angular</a></li>
+<li><strong>Created:</strong> 2026-05-12 | <strong>Last pushed:</strong> 2026-06-13</li>
+<li><strong>Default branch:</strong> <code>main</code>, with GitFlow: <code>dev</code> branch + per-student feature branches (<code>feat/kiryl/&lt;em&gt;</code>, <code>feat/dominik/&lt;/em&gt;</code>, <code>feat/vlad/*</code>)</li>
+<li><strong>Open issues:</strong> 7 (mix of feature tracking and the 1 open PR from Dominik)</li>
+<li><strong>No description</strong> set on the repo</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (all from participants.json):</strong></p>
+<ul>
+<li><code>Tserpilouski</code> (Kiryl Tserpilouski) — <strong>team lead</strong></li>
+<li><code>DominikObuch</code> (Dominik Obuch)</li>
+<li><code>waldemarIT</code> (Vladyslav Sklema) — note: diary folder is <code>vladsklemapl/</code>, GitHub login is <code>waldemarIT</code></li>
+</ul>
+<p><strong>External contributors:</strong> None found in the contributors list. All three contributors are enrolled students.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>Tserpilouski</strong> (lead)</td><td>30</td><td>8</td><td>8</td><td>3</td><td>2026-06-09</td><td>High — structural + reflective</td></tr>
+<tr><td><strong>DominikObuch</strong></td><td>10</td><td>7</td><td>6</td><td>3</td><td>2026-06-08</td><td>High — deepest Angular knowledge</td></tr>
+<tr><td><strong>waldemarIT</strong></td><td>16</td><td>3</td><td>3</td><td>2</td><td>2026-06-08</td><td>Thinner — output is real but shallow</td></tr>
+</tbody></table>
+<blockquote>Commit counts are from the GitHub contributors API (counts all branches). PR and diary counts verified directly. No external contributors.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Mentor: <code>milana1726</code>. Sprint 2 interview not yet held (deadline 2026-06-23 — scores below are Sprint 1 only).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>Tserpilouski</strong></td><td>100</td><td>—</td></tr>
+<tr><td><strong>DominikObuch</strong></td><td>100</td><td>—</td></tr>
+<tr><td><strong>waldemarIT</strong></td><td>100</td><td>—</td></tr>
+</tbody></table>
+<p>All three students received a perfect score at the Sprint 1 defence ("Components") with no qualifying comments recorded. This is a uniform top mark across the entire team — no individual distinctions or concerns from the mentor at this stage.</p>
+<p><strong>Reconciliation — scores vs activity:</strong></p>
+<ul>
+<li><strong>Tserpilouski (100, high activity):</strong> Score and activity are fully aligned. He has the most structural output and the deepest documented understanding, and the mentor confirmed this at the defence.</li>
+<li><strong>DominikObuch (100, high activity):</strong> Aligned. Deepest Angular knowledge on the team, confirmed by a perfect score.</li>
+<li><strong>waldemarIT (100, thin activity):</strong> This is the one divergence worth noting. Vlad scored 100 at the Sprint 1 defence despite being the thinnest contributor by diary depth, PR count, and test authorship. Two readings are both legitimate: (a) his Sprint 1 deliverables (Card, ProductGallery, Button components) were solid enough to pass scrutiny live; (b) the defence probed Component-level knowledge specifically, where his work was concentrated. For the Sprint 2 interview, probe his understanding of the routing and Signals work he took on in Sprint 2 — the perfect Sprint 1 score should not be used to dismiss the thinner-depth signals in his diaries.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>Tserpilouski — lead, 30 commits / 8 PRs / 3 diaries</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Full repo and project setup: ESLint (<code>angular-eslint</code>), Prettier, Husky, lint-staged, Commitlint — configured to block bad commits at the team level (diary: "Setting this up in Sprint 1 saves the whole team time in every subsequent sprint")</li>
+<li>Reusable <code>ec-input</code> component with <strong><code>ControlValueAccessor</code></strong> — implemented all four interface methods (<code>writeValue</code>, <code>registerOnChange</code>, <code>registerOnTouched</code>, <code>setDisabledState</code>), registered via <code>forwardRef</code>, with <code>[attr.data-status]</code> host binding for visual state and Angular Material <code>mat.form-field-overrides()</code> for scoped theming</li>
+<li>CI/CD pipeline from scratch (GitHub Actions): PR-triggered lint+build+test, auto-deploy to GitHub Pages on push to <code>main</code>; diagnosed and fixed Node version mismatch (<code>.nvmrc</code>), watch-mode hanging in CI (<code>--watch=false</code>), and base-href for GH Pages subpath</li>
+<li><code>ec-header</code> and <code>ec-footer</code> presentational components with unit tests</li>
+<li>Application routing structure (Sprint 2 PR #19)</li>
+</ul>
+<p><strong>Level:</strong> Strong. The diary entries are long, technically precise, and explain <em>why</em> — not just what was done. The <code>ControlValueAccessor</code> entry is textbook-level: he diagnosed the silent failure (Angular ignores <code>formControlName</code> without <code>NG_VALUE_ACCESSOR</code>), implemented the fix, and explained each of the four contract methods. This is not copied — you do not write that level of explanation without understanding it. The CI/CD diary entry is similarly structured: stumbled on three distinct problems, documented each cause and fix.</p>
+<p><strong>Probe:</strong> Ask him to rebuild <code>ControlValueAccessor</code> from memory on a blank component — specifically: why does Angular silently ignore <code>formControlName</code> without it, what are the four methods, and who calls each one? Second probe: in the CI pipeline, why does <code>npm test</code> hang in CI but not locally (watch mode), and how does <code>node-version-file: .nvmrc</code> solve the version problem? These are things he built and documented in detail — he should be able to answer cold.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DominikObuch — 10 commits / 7 PRs / 3 diaries</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Figma design + UX for the entire project (Sprint 1 diary)</li>
+<li>Commercetools API integration: OAuth token handling, <code>CommercetoolsService</code>, TypeScript domain models organized by <code>auth / common / products</code>; <code>@ngx-env/builder</code> for <code>.env</code> injection (PR #1 — first PR in the repo, merged day 5)</li>
+<li>Reusable <code>ec-pagination-wrapper</code> component with <code>Numeric</code> and <code>LoadMore</code> modes, ellipsis truncation for large page counts, <code>generatePageRange()</code> as a <code>computed()</code> signal</li>
+<li>Refactored <code>App</code> component state to <strong>Angular Signals</strong> in a zoneless app — diagnosed why plain class property mutation does not trigger change detection in zoneless, migrated to <code>signal()</code> and <code>computed()</code></li>
+<li>Route lazy loading for auth paths (<code>/login</code>, <code>/register</code>) and <code>/product/:key</code> — understands that <code>loadComponent</code> creates physical JS chunk boundaries</li>
+<li><code>AuthComponent</code> split-screen wrapper, <code>ec-tabs</code> dynamic tab-bar, functional route guard (<code>guestGuard</code>) with <code>inject()</code>, inline form error display</li>
+<li>Login + registration forms (PR #10)</li>
+<li>Product list moved to separate route (PR #12)</li>
+<li>Unit tests for <code>PaginationWrapperComponent</code>, <code>ec-tabs</code>, <code>guestGuard</code> (diagnosed <code>TestBed.runInInjectionContext</code> vs the renamed API)</li>
+</ul>
+<p><strong>Level:</strong> The deepest Angular knowledge on the team. Dominik is working with the hard parts: zoneless change detection, Signals, lazy loading, functional guards, <code>ControlValueAccessor</code> use (via Kiryl's component), <code>TestBed.runInInjectionContext</code> for testing functional guards. His diary on zoneless explains the core problem — "Standard property bindings do not notify the rendering engine in a zoneless environment; Signals are mandatory" — and shows he derived this from observing the broken UI before fixing it. Has 1 open PR (#24: path fixes + contribution guide). Commit count (10) is the lowest but his PRs cover significant surface area — this is a result of feature branch workflow, not passivity.</p>
+<p><strong>Probe (highest potential):</strong> Ask him to explain from scratch why zoneless Angular does not re-render on plain class property mutation, and what exactly <code>computed()</code> does differently from a plain getter. Then: what is a physical chunk boundary in Angular lazy loading — when does <code>loadComponent</code> create a separate JS file vs not? These concepts appear in his diary with apparent understanding, not just vocabulary. If time permits: ask why <code>TestBed.runInInjectionContext</code> is needed for functional guards specifically (this is subtle — functional guards call <code>inject()</code> which only works inside an injection context).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>waldemarIT (Vlad) — 16 commits / 3 PRs / 2 diaries</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Sprint 1: <code>Card</code> component, <code>ProductGallery</code> component, <code>Button</code> component with primary/outline variants (PR #3, Sprint 1 scope)</li>
+<li>Sprint 2: Home page with 4 sections (Hero, Shop by Category, Trending Now, Enterprise Solutions), Angular routing with <code>RouterOutlet</code> + <code>provideRouter()</code>, connected <code>ProductService</code> to fetch from Commercetools, updated <code>CardComponent</code> to use the API product model, reorganized project structure into <code>pages/</code> and <code>shared/components/</code> (PR #11)</li>
+</ul>
+<p><strong>Level:</strong> Learning in real-time; progressing, but the thinnest output on the team. Sprint 1 diary is notably brief — three bullet points, generic ("Read Angular documentation on signals"). Sprint 2 diary is better: shows he encountered a merge conflict and a model mismatch, resolved both, and learned something specific about routing and <code>inject()</code>. However, ~10 hours reported for essentially routing setup + one page is a signal of slower velocity. No tests authored (Dominik and Kiryl have both written tests). The Home page implementation (PR #11) is his largest deliverable — worth verifying in the interview.</p>
+<p><strong>Probe (calibrate carefully):</strong> Ask him to explain <code>inject()</code> vs constructor injection — why does it work in a standalone component without a constructor? What does <code>provideRouter()</code> do that the old <code>RouterModule.forRoot()</code> did? These appear in his latest diary entry as things he "learned". Do not make this an interrogation — the goal is to distinguish genuine understanding from terminal-paste output. If he blanks on the <code>inject()</code> question, that is a signal; if he can explain it with his own words, he is on track.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>Team 404 is a functional, disciplined team with no passengers and real output across all three sprints. GitFlow is in place, PRs are linked to EPAM board tickets, Husky enforces commit conventions. The engineering baseline is genuinely high for a course context: zoneless Signals, ControlValueAccessor, lazy loading, functional guards, CI/CD — these are things that many working developers have not touched.</p>
+<p><strong>Balance concern:</strong> Kiryl (lead) set up the entire structural foundation of the project (tooling, CI/CD, reusable input with CVA, routing). Dominik owns the deepest feature territory (Commercetools integration, zoneless refactor, lazy loading, auth guards). Vlad contributes but at a thinner level — two diaries vs three, three PRs vs seven-to-eight, no tests authored. This is not alarming, but it is worth probing whether Vlad's understanding of what the team built (especially routing and the Signals-based architecture) is internalized or surface-level.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ul>
+<li><strong>Kiryl:</strong> ControlValueAccessor from scratch; CI/CD workflow problem-solving. He is the most likely to shine under live-coding.</li>
+<li><strong>Dominik:</strong> Zoneless change detection + Signals vs plain state; lazy loading chunk boundaries; functional guards in testing. The deepest conceptual territory on the team — interview him like a mid-level candidate.</li>
+<li><strong>Vlad:</strong> <code>inject()</code> vs constructor, routing fundamentals, how <code>signal()</code> works in templates. Calibrate to his self-reported pace. One concrete thing to try: ask him to describe what happens when a user navigates to <code>/home</code> — which files and functions are invoked in Angular's router.</li>
+</ul>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — 404</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>Tserpilouski/e-commerce-angular</code> (коммиты, PR, ветки) + дневники спринтов 1–2. Снимок: 2026-06-15. Цель — дать ментору контекст за 2 минуты до интервью: кто что построил, кто реально понимает материал и где проверять.</blockquote>
+<p><strong>Одной строкой (внутреннее):</strong> Три активных участника, ноль балласта, реально крепкая инженерная база (Angular Signals, zoneless, ControlValueAccessor, ленивая загрузка, функциональные гарды, CI/CD) — но Кирилл (лид) несёт несоразмерно большую структурную нагрузку, а вклад Влада заметно тоньше, чем у остальных двух.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<ul>
+<li><strong>Проект:</strong> E-commerce Angular SPA (интернет-магазин)</li>
+<li><strong>Стек:</strong> Angular 21, TypeScript, standalone-компоненты, Angular Signals (zoneless-архитектура), Angular Material (MDC), Commercetools API, Vitest, GitHub Actions CI/CD, деплой на GitHub Pages</li>
+<li><strong>Репозиторий:</strong> <a href="https://github.com/Tserpilouski/e-commerce-angular">https://github.com/Tserpilouski/e-commerce-angular</a></li>
+<li><strong>Создан:</strong> 2026-05-12 | <strong>Последний пуш:</strong> 2026-06-13</li>
+<li><strong>Основная ветка:</strong> <code>main</code>, GitFlow: ветка <code>dev</code> + фиче-ветки на каждого студента (<code>feat/kiryl/&lt;em&gt;</code>, <code>feat/dominik/&lt;/em&gt;</code>, <code>feat/vlad/*</code>)</li>
+<li><strong>Открытые issues:</strong> 7 (смесь трекинга фич и 1 открытого PR от Dominik)</li>
+<li><strong>Описание</strong> репозитория не задано</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (все из participants.json):</strong></p>
+<ul>
+<li><code>Tserpilouski</code> (Кирилл Черпиловский) — <strong>тимлид</strong></li>
+<li><code>DominikObuch</code> (Доминик Обух)</li>
+<li><code>waldemarIT</code> (Владислав Склема) — примечание: папка дневника — <code>vladsklemapl/</code>, логин на GitHub — <code>waldemarIT</code></li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong> Не обнаружены. Все три контрибьютора — зачисленные студенты.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Смёрженных PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>Tserpilouski</strong> (лид)</td><td>30</td><td>8</td><td>8</td><td>3</td><td>2026-06-09</td><td>Высокий — структурный + рефлексивный</td></tr>
+<tr><td><strong>DominikObuch</strong></td><td>10</td><td>7</td><td>6</td><td>3</td><td>2026-06-08</td><td>Высокий — глубочайшее знание Angular</td></tr>
+<tr><td><strong>waldemarIT</strong></td><td>16</td><td>3</td><td>3</td><td>2</td><td>2026-06-08</td><td>Тоньше — вклад реальный, но поверхностный</td></tr>
+</tbody></table>
+<blockquote>Количество коммитов — из GitHub contributors API (считаются все ветки). Количество PR и дневников проверено напрямую. Внешних контрибьюторов нет.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (баллы за защиту)</h2>
+<p>Ментор: <code>milana1726</code>. Интервью Спринта 2 ещё не проводилось (дедлайн 2026-06-23 — ниже только оценки за Спринт 1).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>Tserpilouski</strong></td><td>100</td><td>—</td></tr>
+<tr><td><strong>DominikObuch</strong></td><td>100</td><td>—</td></tr>
+<tr><td><strong>waldemarIT</strong></td><td>100</td><td>—</td></tr>
+</tbody></table>
+<p>Все три студента получили максимальный балл на защите Спринта 1 («Компоненты»), без квалифицирующих комментариев от ментора. Это единогласный высший балл для всей команды — никаких индивидуальных замечаний или опасений на данном этапе.</p>
+<p><strong>Сверка оценок и активности в репозитории:</strong></p>
+<ul>
+<li><strong>Tserpilouski (100, высокая активность):</strong> Оценка и активность полностью совпадают. Наибольший структурный вклад и наиболее глубоко задокументированное понимание в команде — ментор это подтвердил на защите.</li>
+<li><strong>DominikObuch (100, высокая активность):</strong> Совпадают. Самое глубокое знание Angular в команде, подтверждённое максимальным баллом.</li>
+<li><strong>waldemarIT (100, тонкая активность):</strong> Здесь расхождение, на которое стоит обратить внимание. Влад получил 100 на защите Спринта 1, несмотря на то что он самый тонкий контрибьютор по глубине дневников, количеству PR и написанным тестам. Возможны два прочтения, оба обоснованы: (а) его результаты в Спринте 1 (компоненты Card, ProductGallery, Button) оказались достаточно качественными для живой проверки; (б) защита проверяла именно знание Компонентов, где его работа была сосредоточена. На интервью Спринта 2 стоит проверить, как он разбирается в роутинге и Signals-работе, которую он взял на себя в Спринте 2, — максимальный балл за Спринт 1 не должен перевешивать более слабые сигналы из его дневников.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>Tserpilouski — лид, 30 коммитов / 8 PR / 3 дневника</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Полную настройку репозитория и проекта: ESLint (<code>angular-eslint</code>), Prettier, Husky, lint-staged, Commitlint — сконфигурировано блокировать плохие коммиты на уровне команды (дневник: «Настроить это в Спринте 1 — сэкономить время всей команде в каждом следующем спринте»)</li>
+<li>Переиспользуемый компонент <code>ec-input</code> с <strong><code>ControlValueAccessor</code></strong> — реализованы все четыре метода интерфейса (<code>writeValue</code>, <code>registerOnChange</code>, <code>registerOnTouched</code>, <code>setDisabledState</code>), зарегистрирован через <code>forwardRef</code>, с host binding <code>[attr.data-status]</code> для визуального состояния и <code>mat.form-field-overrides()</code> из Angular Material для изолированной стилизации</li>
+<li>CI/CD пайплайн с нуля (GitHub Actions): lint+build+test по триггеру PR, авто-деплой на GitHub Pages при пуше в <code>main</code>; диагностировал и исправил несоответствие версии Node (<code>.nvmrc</code>), зависание watch-режима в CI (<code>--watch=false</code>) и base-href для субпути GH Pages</li>
+<li>Презентационные компоненты <code>ec-header</code> и <code>ec-footer</code> с unit-тестами</li>
+<li>Структуру роутинга приложения (PR #19 в Спринте 2)</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный. Записи в дневнике длинные, технически точные и объясняют <em>почему</em> — не только что было сделано. Запись про <code>ControlValueAccessor</code> — учебникового уровня: он диагностировал скрытый сбой (Angular игнорирует <code>formControlName</code> без <code>NG_VALUE_ACCESSOR</code>), реализовал исправление и объяснил каждый из четырёх методов контракта. Это не скопировано — такой уровень объяснения не написать без понимания. Запись про CI/CD построена аналогично: столкнулся с тремя отдельными проблемами, задокументировал причину и решение каждой.</p>
+<p><strong>Что проверять:</strong> Попросить воспроизвести <code>ControlValueAccessor</code> по памяти на пустом компоненте — конкретно: почему Angular молча игнорирует <code>formControlName</code> без него, что это за четыре метода и кто каждый из них вызывает? Второй вопрос: в CI-пайплайне — почему <code>npm test</code> зависает в CI, но не локально (watch-режим), и как <code>node-version-file: .nvmrc</code> решает проблему версии? Это то, что он построил и задокументировал в деталях — должен отвечать без подготовки.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DominikObuch — 10 коммитов / 7 PR / 3 дневника</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Дизайн в Figma + UX для всего проекта (дневник Спринта 1)</li>
+<li>Интеграцию с Commercetools API: обработку OAuth-токенов, <code>CommercetoolsService</code>, доменные TypeScript-модели, организованные по <code>auth / common / products</code>; <code>@ngx-env/builder</code> для инъекции <code>.env</code> (PR #1 — первый PR в репозитории, смёрджен на 5-й день)</li>
+<li>Переиспользуемый компонент <code>ec-pagination-wrapper</code> с режимами <code>Numeric</code> и <code>LoadMore</code>, усечение с многоточием для большого числа страниц, <code>generatePageRange()</code> как сигнал <code>computed()</code></li>
+<li>Рефакторинг состояния компонента <code>App</code> на <strong>Angular Signals</strong> в zoneless-приложении — диагностировал, почему мутация обычного свойства класса не триггерит обнаружение изменений в zoneless, мигрировал на <code>signal()</code> и <code>computed()</code></li>
+<li>Ленивую загрузку маршрутов для auth-путей (<code>/login</code>, <code>/register</code>) и <code>/product/:key</code> — понимает, что <code>loadComponent</code> создаёт физические границы JS-чанков</li>
+<li>Обёртку с разделённым экраном <code>AuthComponent</code>, динамическую таб-панель <code>ec-tabs</code>, функциональный гард маршрута (<code>guestGuard</code>) с <code>inject()</code>, инлайн-отображение ошибок формы</li>
+<li>Формы входа и регистрации (PR #10)</li>
+<li>Перенос списка продуктов на отдельный маршрут (PR #12)</li>
+<li>Unit-тесты для <code>PaginationWrapperComponent</code>, <code>ec-tabs</code>, <code>guestGuard</code> (диагностировал <code>TestBed.runInInjectionContext</code> vs переименованный API)</li>
+</ul>
+<p><strong>Уровень:</strong> Глубочайшее знание Angular в команде. Доминик работает со сложными частями: zoneless обнаружение изменений, Signals, ленивая загрузка, функциональные гарды, использование <code>ControlValueAccessor</code> (через компонент Кирилла), <code>TestBed.runInInjectionContext</code> для тестирования функциональных гардов. В его дневнике про zoneless объясняется суть проблемы — «Стандартные привязки свойств не уведомляют движок рендеринга в zoneless-окружении; Signals обязательны» — и видно, что он вывел это, наблюдая сломанный UI перед исправлением. Есть 1 открытый PR (#24: исправления путей + гайд по контрибьюции). Количество коммитов (10) наименьшее, но его PR покрывают значительную площадь — это следствие workflow с фиче-ветками, а не пассивности.</p>
+<p><strong>Что проверять (наибольший потенциал):</strong> Попросить объяснить с нуля, почему zoneless Angular не перерисовывается при мутации обычного свойства класса, и что конкретно делает <code>computed()</code> в отличие от обычного геттера. Затем: что такое физическая граница чанка в Angular ленивой загрузке — когда <code>loadComponent</code> создаёт отдельный JS-файл, а когда нет? Эти концепции присутствуют в его дневнике с явным пониманием, а не просто как словарный запас. Если позволит время: спросить, почему <code>TestBed.runInInjectionContext</code> нужен именно для функциональных гардов (это тонко — функциональные гарды вызывают <code>inject()</code>, который работает только внутри контекста инъекции).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>waldemarIT (Влад) — 16 коммитов / 3 PR / 2 дневника</h3>
+<p><strong>Построил:</strong></p>
+<ul>
+<li>Спринт 1: компонент <code>Card</code>, компонент <code>ProductGallery</code>, компонент <code>Button</code> с вариантами primary/outline (PR #3, скоуп Спринта 1)</li>
+<li>Спринт 2: Главная страница с 4 секциями (Hero, Shop by Category, Trending Now, Enterprise Solutions), Angular-роутинг с <code>RouterOutlet</code> + <code>provideRouter()</code>, подключил <code>ProductService</code> для получения данных из Commercetools, обновил <code>CardComponent</code> под API-модель продукта, реорганизовал структуру проекта на <code>pages/</code> и <code>shared/components/</code> (PR #11)</li>
+</ul>
+<p><strong>Уровень:</strong> Учится в процессе; прогрессирует, но вклад в команде самый тонкий. Дневник Спринта 1 заметно краткий — три буллета, обобщённо («Читал документацию Angular по сигналам»). Дневник Спринта 2 лучше: видно, что столкнулся с конфликтом при мёрдже и несоответствием моделей, оба решил и вынес конкретный урок про роутинг и <code>inject()</code>. Однако ~10 часов на фактически настройку роутинга + одну страницу — сигнал более низкой скорости. Тесты не написаны (у Доминика и Кирилла тесты есть). Реализация главной страницы (PR #11) — его крупнейший результат, стоит верифицировать на интервью.</p>
+<p><strong>Что проверять (калибровать осторожно):</strong> Спросить, чем отличается <code>inject()</code> от инъекции через конструктор — почему это работает в standalone-компоненте без конструктора? Что делает <code>provideRouter()</code>, чего не делал старый <code>RouterModule.forRoot()</code>? Эти темы упомянуты в его последнем дневнике как то, что он «узнал». Не превращать в допрос — цель отличить реальное понимание от вывода из терминала. Если затруднится с <code>inject()</code>, это сигнал; если объяснит своими словами — на правильном пути.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p>Команда 404 — рабочая, дисциплинированная команда без балласта с реальными результатами во всех трёх спринтах. GitFlow выстроен, PR привязаны к тикетам EPAM-доски, Husky обеспечивает соблюдение конвенций коммитов. Инженерная база реально высокая для учебного контекста: zoneless Signals, ControlValueAccessor, ленивая загрузка, функциональные гарды, CI/CD — многие работающие разработчики с этим не сталкивались.</p>
+<p><strong>Проблема баланса:</strong> Кирилл (лид) выстроил весь структурный фундамент проекта (инструментарий, CI/CD, переиспользуемый input с CVA, роутинг). Доминик владеет самой глубокой функциональной территорией (интеграция с Commercetools, zoneless-рефакторинг, ленивая загрузка, auth-гарды). Влад вносит вклад, но на более тонком уровне — два дневника против трёх, три PR против семи-восьми, тесты не написаны. Это не критично, но стоит проверить, усвоил ли Влад то, что построила команда (особенно роутинг и Signals-архитектуру), или знание остаётся поверхностным.</p>
+<p><strong>Рекомендуемый угол интервью:</strong></p>
+<ul>
+<li><strong>Кирилл:</strong> ControlValueAccessor с нуля; решение проблем в CI/CD workflow. Наиболее вероятный кандидат блеснуть при живом кодировании.</li>
+<li><strong>Доминик:</strong> Zoneless обнаружение изменений + Signals vs обычное состояние; границы чанков при ленивой загрузке; функциональные гарды в тестировании. Самая глубокая концептуальная территория в команде — интервьюировать как кандидата уровня middle.</li>
+<li><strong>Влад:</strong> <code>inject()</code> vs конструктор, основы роутинга, как <code>signal()</code> работает в шаблонах. Калибровать под его самостоятельно заявленный темп. Одна конкретная вещь для проверки: попросить описать, что происходит, когда пользователь переходит на <code>/home</code> — какие файлы и функции вызываются в Angular-роутере.</li>
+</ul>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Work Ass Off · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Work Ass Off</strong><strong class="lang-ru">Mentor briefing — Work Ass Off</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Work Ass Off</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>work-ass-off/RX-Beat</code> (commits, PRs, diary branch) + development notes sprints 1–2. Snapshot: 2026-06-15. Goal: give the mentor context in 2 minutes before the interview — who did what, who understands, what to dig into.</blockquote>
+<p><strong>One-line summary:</strong> Tight three-person team with surprisingly even output (64/64/62 commits from GitHub API), strong on auth and component architecture, NgRx freshly introduced, Copilot bot merged one infra PR — flag it at the interview to separate tool-assisted from self-built work.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>Name:</strong> RX-Beat (internally also called "Spotify Clone") <strong>Description:</strong> Spotify-inspired music streaming SPA — browse tracks, search artists/albums, playlists, favorites, audio player. <strong>Stack:</strong> Angular 21, NestJS backend (student-built), Jamendo public API (free music, not Spotify — Spotify auth proved too complex), NgRx (introduced in sprint 2), Angular i18n / internationalization, CI/CD on GitHub Actions, deploy on Vercel. <strong>Repo:</strong> <a href="https://github.com/work-ass-off/RX-Beat">https://github.com/work-ass-off/RX-Beat</a> <strong>Live deploy:</strong> <a href="https://rxbeat-spotify-web-player.vercel.app/">https://rxbeat-spotify-web-player.vercel.app/</a> (also <a href="https://rx-beat.vercel.app/)">https://rx-beat.vercel.app/)</a> <strong>Created:</strong> 2026-05-11 <strong>Last pushed:</strong> 2026-06-12 <strong>Open issues:</strong> 27 <strong>Default branch:</strong> <code>sprint-3</code> (GitFlow: <code>develop</code> → feature branches; <code>diary</code> branch holds all development notes)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<table><thead>
+<tr><th>Login</th><th>Role</th><th>Note</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong></td><td>student, lead</td><td>Anna Vasilevich</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>student</td><td>Dzmitry Aliakseyeu</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>student</td><td>Mikita</td></tr>
+<tr><td><strong>sergey496</strong></td><td>mentor</td><td>No commits in repo — normal, not penalized</td></tr>
+<tr><td><strong>Copilot</strong> (app/copilot-swe-agent)</td><td>bot / external</td><td>Merged 1 PR (#90): Vercel deploy config fix — infra, not feature work</td></tr>
+</tbody></table>
+<p>All three students appear in GitHub contributors. <code>Copilot</code> bot is external; its 2 commits and 1 PR are excluded from student assessment.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits*</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong> (lead)</td><td>64</td><td>17</td><td>17</td><td>9</td><td>2026-06-12</td><td>strong, reflective</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>64</td><td>8</td><td>7</td><td>6</td><td>2026-06-12</td><td>solid, analytical</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>62</td><td>12</td><td>12</td><td>8</td><td>2026-06-12</td><td>solid, architecture-minded</td></tr>
+</tbody></table>
+<p>*Commit counts are from the GitHub contributors API (all-branch aggregate). On develop + sprint-3 branches the split looks similar: Snitkon leads slightly (43+19), dzichonka close (30+31), DzmitryAliakseyeu slightly behind on visible history but his PRs (#86 Custom player, #69 Auth guards, #56 Basic routes) account for substantial work.</p>
+<p>Diary counts: dzichonka: 9 entries (4 sprint-1, 5 sprint-2), Snitkon: 8 entries (3 sprint-1, 5 sprint-2), DzmitryAliakseyeu: 6 entries (3 sprint-1, 3 sprint-2). All three have entries dated as recently as June 2026. No passenger.</p>
+<p><strong>Balance:</strong> unusually even. No one is coasting. All three were active on 2026-06-12 — three days ago.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>All three students presented at both Sprint 1 and Sprint 2 interviews. Scores by mentor <code>sergey496</code> (Sprint 1) and <code>RamanMilashevich</code> (Sprint 2).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>100 / 100</td><td>98 / 100</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>100 / 100</td><td>95 / 100</td></tr>
+</tbody></table>
+<p><strong>dzichonka</strong> — Sprint 2 scored 100/100. The mentor described the interview as "a high-level, peer-to-peer technical discussion rather than a standard Q&A." Specific strengths called out: Change Detection nuances (OnPush, <code>markForCheck()</code> vs <code>detectChanges()</code>), Signals, and Dependency Injection at the "under-the-hood" level. No gaps identified.</p>
+<p><strong>DzmitryAliakseyeu</strong> — Sprint 2 scored 98/100. Mentor called it "an exceptional and highly proactive performance" and "a collaborative technical discussion with a peer." The 2-point deduction is attributed to a "microscopic hesitation on a highly advanced edge case (e.g., deep DI resolution modifiers or specific linkedSignal quirks)" — explicitly noted as "completely expected at this stage."</p>
+<p><strong>Snitkon</strong> — Sprint 2 scored 95/100. Mentor rated it "excellent, highly proactive." He "confidently explained project code and clearly articulated reasoning behind architectural choices" and "compared different technical approaches and explained trade-offs." Minor hesitations were on "the most complex edge cases (specific nuances of linkedSignal usage or highly advanced preloading strategies)" — described as "negligible."</p>
+<p><strong>Score vs activity reconciliation:</strong></p>
+<ul>
+<li><strong>dzichonka:</strong> Activity and defence scores align perfectly. Both signals are top-tier. No divergence.</li>
+<li><strong>DzmitryAliakseyeu:</strong> The repo-activity picture flagged him as "who to watch" (lower PR count, high hour estimate). The 98/100 Sprint 2 score directly contradicts that concern — he demonstrated near-perfect conceptual depth at the defence. The PR-count disparity is more likely a style difference (fewer, larger PRs) than a signal of disengagement. The "who to watch" framing should be read as a probe target, not a risk.</li>
+<li><strong>Snitkon:</strong> The briefing flagged NgRx as "untested depth." The 95/100 Sprint 2 score suggests he handled Angular architecture questions well in a cross-interview setting, though the two minor edge-case hesitations (linkedSignal, preloading) are consistent with that same flag — NgRx and Signals are the frontier for him. The repo signal and the defence score are in agreement here.</li>
+</ul>
+<p><strong>Health tier update:</strong> GREEN. The defence scores eliminate any residual uncertainty from the activity-only picture. All three students showed genuine understanding at the interview, not just code volume. The team is on track for Sprint 2 (deadline 2026-06-23) with no dropout or dark-repo risk.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>dzichonka (Anna Vasilevich) — lead, 64 commits / 17 PRs / 9 diaries</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Project infrastructure: Husky, PR template, metadata, shared styles (#shared-styles, #husky)</li>
+<li>Stylelint + ESLint setup (#58)</li>
+<li>Jamendo API integration + service (#jamendo-api, #jamendo-service, #player PRs)</li>
+<li>Player component with global track state via <code>PlayerStoreService</code>, using signals <code>input.required&lt;&gt;()</code> and host binding <code>'(mousedown)': 'onClick()'</code></li>
+<li>Authentication: JWT handling, auth route guards, preload strategy (#68, #73, #75, #78)</li>
+<li>Barrel exports for models (#89 — sprint-3 refactor)</li>
+<li>Sprint 2 consolidation merge (#85)</li>
+<li>Backend (NestJS): auth routes <code>/signin</code>, <code>/login</code>, <code>/me</code> on her own initiative</li>
+</ul>
+<p><strong>Level:</strong> The strongest and most articulate in the team. Diaries show genuine reflection: in sprint-1 she noticed that Angular deprecated <code>ChangeDetectionStrategy.Default</code> in favour of <code>Eager</code> and started asking "why does Zone.js still exist in a signals world?" — not a copy-paste insight. In sprint-2 (2025-06-01) she writes that implementing auth on the <em>backend</em> helped her understand why the frontend auth flow works — cross-layer thinking. Her sprint-2 diary (2025-06-03) correctly reconstructs the Cold/Hot Observable mental model from Ben Lesh's articles with original framing ("Observable is a subscription function, not a stream"). She then planned to migrate from signals <code>resource</code> to NgRx Effects for HTTP — and the team followed through.</p>
+<p><strong>Risk:</strong> Lead does a lot. 17 PRs vs 7 for DzmitryAliakseyeu. Worth asking at the interview whether the team division of work was deliberate and whether the others could have picked up more.</p>
+<p><strong>Probe (can-you-create-it test):</strong> Ask her to sketch from scratch a <code>CanDeactivate</code> guard that holds navigation until the user confirms in a dialog — using a Subject as an async bridge. She built exactly this (diary 2025-06-01, with code), so she either knows it deeply or can be tripped by implementation details. Specifically: why <code>pendingNavigation$</code> must be <code>undefined</code> after <code>complete()</code>, and what happens if the user opens two tabs.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DzmitryAliakseyeu (Dzmitry Aliakseyeu) — 64 commits / 8 PRs / 6 diaries</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Spotify API authorization (PKCE flow) research and initial integration attempt (#sprint-1, 7h)</li>
+<li>Basic Angular routes configuration (#56)</li>
+<li>Home page and footer component (#home-page, #footer PRs)</li>
+<li>Content component</li>
+<li>Auth guards (<code>canActivate</code>, <code>canDeactivate</code>) (#69)</li>
+<li>Custom audio player with playback controllers (#86 — Custom player, 2026-06-09/10)</li>
+<li>i18n / confirm dialog service with <code>CanDeactivate</code> using RxJS Subject bridge (diary 2025-06-01, 64h sprint total)</li>
+<li>Reading and internalizing Ben Lesh's Observable articles (diary 2026-06-09, 15h)</li>
+</ul>
+<p><strong>Level:</strong> Analytical and self-aware. His sprint-2 diary (2025-06-01) includes the full <code>ConfirmDialogService</code> implementation with a Subject bridge — not a snippet, a complete service with <code>hasUnsavedChanges()</code>, <code>canDeactivate()</code>, <code>resolveNavigationDecision()</code>. He articulates <em>why</em> Subject was chosen over Promise: "more native and compatible with Angular's routing mechanism." His latest diary (2026-06-09) correctly explains Cold vs Hot Observables with the "producer inside vs outside" framing — he arrived at the same mental model as dzichonka through the same source articles, independently.</p>
+<p><strong>Risk / flag:</strong> His diary says 64 hours for sprint-2 — that's a very high number. Either it includes study time (likely, given the Observable deep-dive), or the estimate is imprecise. Not a red flag, but worth one question to calibrate. Also: only 8 PRs vs 17 for dzichonka — but Custom player (#86) is a meaty PR; the disparity may reflect fewer but larger chunks of work.</p>
+<p><strong>Probe:</strong> Ask him to explain the Subject bridge in <code>CanDeactivate</code> from memory — specifically: what does <code>pendingNavigation$.asObservable()</code> return vs the Subject itself, and why does Angular Router accept it. Then ask: what breaks if you don't call <code>pendingNavigation$.complete()</code>. He wrote this code, so inability to explain would be a red flag.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Snitkon (Mikita) — 62 commits / 12 PRs / 8 diaries</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Abstract storage class with factory <code>useFactory</code> — typed, reusable (#abstraction-storage-class, sprint-1 diary 2025-05-13, 5h)</li>
+<li>CI/CD pipeline setup and multiple fixes (#55, #62, #63)</li>
+<li>Reusable sidebar shell with Angular <code>ng-content</code> projection for left (#64, #65) and right (#76, #77) sidebars</li>
+<li>Localization / Zone setup</li>
+<li>Dropdown reusable component (diary sprint-2 2025-06-03)</li>
+<li>NgRx store configuration + initial API wiring (PR #87, diary sprint-2)</li>
+</ul>
+<p><strong>Level:</strong> The most architecture-conscious member. Sprint-1 diary describes designing the abstract storage class with <code>useFactory</code> — not a tutorial clone, he was thinking about scalability ("avoid code duplication while remaining easy to scale for future storage requirements like sessionStorage"). Sprint-2 diaries show clear separation-of-concerns thinking: he explains content projection as "separating behavior from content," which is the right framing. He set up CI/CD (three PRs fixing it) — infrastructure ownership.</p>
+<p><strong>Risk / probe zone:</strong> NgRx is brand new for him. PR #87 ("NgRx") was merged 2026-06-09/10 and the diary says "begin working with NgRx by setting up configuration, establishing base store architecture, and implementing first core features." This is very early-stage. He understands the concept (Actions, Reducers, Selectors, Effects named correctly), but whether he can explain <em>why</em> NgRx over signals-only, or what an Effect does under the hood, is untested.</p>
+<p><strong>Probe:</strong> Ask him to rebuild the abstract storage class from scratch (his own work, sprint-1 — he can do this). Then pivot: explain how NgRx Effects differ from a service doing the same HTTP call. The abstract class probe establishes the baseline; the NgRx probe checks whether the sprint-2 addition has depth or is copy-configured. His CI/CD ownership is also fair game — why does the Angular build need <code>--configuration production</code> on Vercel? (Copilot bot fixed exactly this in #90, which he reviewed/merged as lead-adjacent.)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>External contributors</h2>
+<table><thead>
+<tr><th>Login</th><th>Note</th></tr>
+</thead><tbody>
+<tr><td><strong>sergey496</strong></td><td>Mentor; no commits in repo — expected and normal</td></tr>
+<tr><td><strong>Copilot</strong> (app/copilot-swe-agent)</td><td>GitHub Copilot bot; merged PR #90 "Fix deploy-production: align Vercel build environment with deployment target" — Vercel infra fix. 2 commits, all infra. Not student work.</td></tr>
+</tbody></table>
+<p><strong>Copilot flag:</strong> The bot was explicitly invoked (not auto-suggestion), merged a PR, and fixed a deploy misconfiguration. This is minor and infra-only, but the mentor should be aware: the team used an AI agent for at least one non-trivial problem-solving step. It's worth asking who diagnosed the issue first and what the root cause was — if no one can explain it, that's a gap; if they can (it was a missing <code>--configuration production</code> flag causing wrong environment in build), it's fine.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall readiness:</strong> Above average for sprint-2. All three students are active, writing diaries, merging PRs, and showing genuine conceptual growth. The team pivoted from Spotify API (blocked by auth complexity) to Jamendo — a pragmatic decision they made themselves, not a hint from the mentor. They also added a NestJS backend on their own initiative.</p>
+<p><strong>Balance:</strong> Suspiciously even on commit counts (64/64/62), but PR counts diverge (17 / 7 / 12). dzichonka's lead ownership is real — she's carrying more PR volume. This is worth one question in the interview ("whose idea was the division of work, and what would have been different if Dzmitry or Mikita owned the auth module?").</p>
+<p><strong>Who is strong:</strong> dzichonka — articulate, cross-layer thinker, digs into Angular internals. Snitkon — architecture-minded, CI/CD owner, content projection understanding is solid.</p>
+<p><strong>Who to watch:</strong> DzmitryAliakseyeu — the repo-activity caution (lower PR count, 64h estimate) was a probe target, not a risk signal: his 98/100 Sprint 2 defence score confirms deep conceptual understanding. The Custom player (#86) is still a good interview anchor. No genuine "watch" concern remains in this team.</p>
+<p><strong>AI/library reliance signal:</strong> One GitHub Copilot bot PR (infra only). No evidence of heavy copy-paste patterns in diaries — all three show original reasoning with articles cited. Risk level: low, but verify on the NgRx side (it's brand-new to the team and could be copy-configured rather than understood).</p>
+<p><strong>Recommended interview angle:</strong> For each student, take one thing they claim as their own and ask them to rebuild/explain from first principles.</p>
+<ul>
+<li><strong>dzichonka:</strong> CanDeactivate Subject bridge — sketch the service from memory, explain lifecycle.</li>
+<li><strong>DzmitryAliakseyeu:</strong> Same CanDeactivate bridge (he wrote the same pattern independently) + Custom player — what Angular APIs does it use, why?</li>
+<li><strong>Snitkon:</strong> Abstract storage class (sprint-1, safe ground) → then NgRx Effect vs service HTTP call (probe the frontier). Also: what specifically did the Copilot bot fix in #90 — can he explain <code>--configuration production</code> and why it matters?</li>
+</ul>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Work Ass Off</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>work-ass-off/RX-Beat</code> (коммиты, PR, ветка дневника) + заметки по разработке спринты 1–2. Снимок: 2026-06-15. Цель: дать ментору контекст за 2 минуты до интервью — кто что делал, кто понимает, что стоит копнуть глубже.</blockquote>
+<p><strong>Резюме:</strong> Компактная команда из трёх человек с удивительно равномерным вкладом (64/64/62 коммита по GitHub API), сильная в авторизации и архитектуре компонентов, NgRx внедрён по ходу дела — и ещё один PR был смёрджен Copilot-ботом; на интервью стоит разграничить, что сделано самостоятельно, а что с помощью инструмента.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>Название:</strong> RX-Beat (внутри команды также называют "Spotify Clone") <strong>Описание:</strong> SPA в стиле Spotify для стриминга музыки — треки, поиск исполнителей/альбомов, плейлисты, избранное, аудиоплеер. <strong>Стек:</strong> Angular 21, NestJS-бэкенд (написан студентами), Jamendo public API (бесплатная музыка, не Spotify — авторизация Spotify оказалась слишком сложной), NgRx (добавлен в спринте 2), Angular i18n, CI/CD на GitHub Actions, деплой на Vercel. <strong>Репо:</strong> <a href="https://github.com/work-ass-off/RX-Beat">https://github.com/work-ass-off/RX-Beat</a> <strong>Живой деплой:</strong> <a href="https://rxbeat-spotify-web-player.vercel.app/">https://rxbeat-spotify-web-player.vercel.app/</a> (также <a href="https://rx-beat.vercel.app/)">https://rx-beat.vercel.app/)</a> <strong>Создан:</strong> 2026-05-11 <strong>Последний пуш:</strong> 2026-06-12 <strong>Открытые задачи:</strong> 27 <strong>Ветка по умолчанию:</strong> <code>sprint-3</code> (GitFlow: <code>develop</code> → feature-ветки; дневники в ветке <code>diary</code>)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<table><thead>
+<tr><th>Логин</th><th>Роль</th><th>Примечание</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong></td><td>студент, лид</td><td>Анна Василевич</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>студент</td><td>Дмитрий Алексеев</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>студент</td><td>Никита</td></tr>
+<tr><td><strong>sergey496</strong></td><td>ментор</td><td>Коммитов в репо нет — норма, не штрафуется</td></tr>
+<tr><td><strong>Copilot</strong> (app/copilot-swe-agent)</td><td>бот / внешний</td><td>Смёрджен 1 PR (#90): исправление конфига деплоя на Vercel — инфраструктура, не фича</td></tr>
+</tbody></table>
+<p>Все три студента присутствуют в contributors. Бот <code>Copilot</code> — внешний; его 2 коммита и 1 PR исключены из оценки студентов.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты*</th><th>PR</th><th>Смёрджено PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong> (лид)</td><td>64</td><td>17</td><td>17</td><td>9</td><td>2026-06-12</td><td>сильный, рефлексирующий</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>64</td><td>8</td><td>7</td><td>6</td><td>2026-06-12</td><td>стабильный, аналитический</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>62</td><td>12</td><td>12</td><td>8</td><td>2026-06-12</td><td>стабильный, архитектурное мышление</td></tr>
+</tbody></table>
+<p>*Количество коммитов — из GitHub contributors API (агрегат по всем веткам). На ветках develop + sprint-3 распределение выглядит похоже: Snitkon чуть впереди (43+19), dzichonka рядом (30+31), DzmitryAliakseyeu немного отстаёт по видимой истории, но его PR (#86 Кастомный плеер, #69 Auth guards, #56 Базовые роуты) покрывают значительный объём работы.</p>
+<p>Записи в дневнике: dzichonka: 9 записей (4 спринт-1, 5 спринт-2), Snitkon: 8 записей (3 спринт-1, 5 спринт-2), DzmitryAliakseyeu: 6 записей (3 спринт-1, 3 спринт-2). У всех троих есть записи, датированные июнем 2026. Пассажиров нет.</p>
+<p><strong>Баланс:</strong> исключительно ровный. Никто не плывёт по течению. Все трое были активны 2026-06-12 — три дня назад.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Все три студента прошли защиту по Спринту 1 и Спринту 2. Оценки выставлены менторами <code>sergey496</code> (Спринт 1) и <code>RamanMilashevich</code> (Спринт 2).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>dzichonka</strong></td><td>100 / 100</td><td>100 / 100</td></tr>
+<tr><td><strong>DzmitryAliakseyeu</strong></td><td>100 / 100</td><td>98 / 100</td></tr>
+<tr><td><strong>Snitkon</strong></td><td>100 / 100</td><td>95 / 100</td></tr>
+</tbody></table>
+<p><strong>dzichonka</strong> — Спринт 2: 100/100. Ментор охарактеризовал интервью как «высокоуровневую дискуссию между коллегами, а не стандартное Q&A». Отмечены конкретные сильные стороны: нюансы Change Detection (OnPush, <code>markForCheck()</code> против <code>detectChanges()</code>), Signals, Dependency Injection на уровне «под капотом». Слабых мест не выявлено.</p>
+<p><strong>DzmitryAliakseyeu</strong> — Спринт 2: 98/100. Ментор назвал выступление «исключительным и крайне проактивным» и «совместным техническим обсуждением с коллегой». Два снятых балла — за «микроскопическое колебание на крайне сложном edge-кейсе (например, модификаторы разрешения DI или тонкости linkedSignal)» — что, по словам ментора, «совершенно ожидаемо на данном этапе».</p>
+<p><strong>Snitkon</strong> — Спринт 2: 95/100. Ментор оценил выступление как «отличное, высокопроактивное». Студент «уверенно объяснял код проекта и чётко формулировал причины архитектурных решений», «сравнивал разные технические подходы и легко объяснял компромиссы». Незначительные колебания были только на «самых сложных edge-кейсах (нюансы linkedSignal или продвинутые стратегии предзагрузки)» — обозначены как «незначительные».</p>
+<p><strong>Сверка баллов с активностью:</strong></p>
+<ul>
+<li><strong>dzichonka:</strong> Картина активности и баллы защиты совпадают полностью. Оба сигнала — высший уровень. Расхождений нет.</li>
+<li><strong>DzmitryAliakseyeu:</strong> Картина активности в репо давала повод для осторожности (меньше PR, высокая оценка часов). Балл 98/100 на защите Спринта 2 напрямую опровергает этот повод для беспокойства — он продемонстрировал почти идеальную концептуальную глубину на защите. Расхождение по количеству PR, вероятнее всего, объясняется стилем (меньше, но более крупные PR), а не отстранённостью. Пометку «за кем наблюдать» следует читать как цель для проверки, а не как сигнал риска.</li>
+<li><strong>Snitkon:</strong> Брифинг отмечал NgRx как «непроверенную глубину». Балл 95/100 на защите Спринта 2 говорит о том, что он хорошо справился с архитектурными вопросами по Angular на кросс-интервью, хотя два небольших колебания на edge-кейсах (linkedSignal, стратегии предзагрузки) согласуются с этой же пометкой — NgRx и Signals остаются его рубежом. Сигнал из репо и балл защиты здесь совпадают.</li>
+</ul>
+<p><strong>Пересмотр уровня здоровья команды:</strong> GREEN (Здорова). Баллы защиты устраняют остаточную неопределённость, которую давала только картина активности. Все три студента продемонстрировали реальное понимание на интервью — не просто объём кода. Команда движется к Спринту 2 (дедлайн 2026-06-23) без рисков отсева или «тёмного» репозитория.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили по студентам</h2>
+<h3>dzichonka (Анна Василевич) — лид, 64 коммита / 17 PR / 9 дневников</h3>
+<p><strong>Что сделала (по PR + дневнику):</strong></p>
+<ul>
+<li>Инфраструктура проекта: Husky, шаблон PR, метаданные, общие стили (#shared-styles, #husky)</li>
+<li>Настройка Stylelint + ESLint (#58)</li>
+<li>Интеграция с Jamendo API + сервис (#jamendo-api, #jamendo-service, PR плеера)</li>
+<li>Компонент плеера с глобальным состоянием трека через <code>PlayerStoreService</code>, с использованием сигналов <code>input.required&lt;&gt;()</code> и привязки хоста <code>'(mousedown)': 'onClick()'</code></li>
+<li>Авторизация: обработка JWT, гарды роутов, стратегия предзагрузки (#68, #73, #75, #78)</li>
+<li>Barrel-экспорты моделей (#89 — рефакторинг в спринте-3)</li>
+<li>Консолидирующий мёрдж спринта 2 (#85)</li>
+<li>Бэкенд (NestJS): роуты авторизации <code>/signin</code>, <code>/login</code>, <code>/me</code> — по собственной инициативе</li>
+</ul>
+<p><strong>Уровень:</strong> Самая сильная и чётко формулирующая мысли в команде. Дневники демонстрируют настоящую рефлексию: в спринте-1 она заметила, что Angular объявил <code>ChangeDetectionStrategy.Default</code> устаревшим в пользу <code>Eager</code>, и начала задавать себе вопрос «зачем Zone.js всё ещё существует в мире сигналов?» — это не скопированный инсайт. В спринте-2 (2025-06-01) она пишет, что реализация авторизации на <em>бэкенде</em> помогла ей понять, почему работает фронтендовый auth-флоу — кросс-слойное мышление. В дневнике спринта-2 (2025-06-03) она корректно восстанавливает ментальную модель Cold/Hot Observable по статьям Ben Lesh с собственными формулировками ("Observable — это функция подписки, а не поток"). Затем она запланировала миграцию с signals <code>resource</code> на NgRx Effects для HTTP — и команда это реализовала.</p>
+<p><strong>Риск:</strong> Лид делает очень много. 17 PR против 7 у DzmitryAliakseyeu. Стоит спросить на интервью, было ли разделение работы осознанным и могли ли остальные взять на себя больше.</p>
+<p><strong>Что проверять (тест «можешь ли воспроизвести»):</strong> Попросить с нуля набросать гард <code>CanDeactivate</code>, который удерживает навигацию до подтверждения в диалоге — используя Subject в качестве асинхронного моста. Она именно это и реализовала (дневник 2025-06-01, с кодом), так что либо понимает глубоко, либо споткнётся на деталях реализации. Конкретно: почему <code>pendingNavigation$</code> должен быть <code>undefined</code> после <code>complete()</code>, и что произойдёт, если пользователь откроет две вкладки.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DzmitryAliakseyeu (Дмитрий Алексеев) — 64 коммита / 8 PR / 6 дневников</h3>
+<p><strong>Что сделал (по PR + дневнику):</strong></p>
+<ul>
+<li>Исследование авторизации Spotify API (PKCE flow) и первая попытка интеграции (#sprint-1, 7ч)</li>
+<li>Настройка базовых Angular-роутов (#56)</li>
+<li>Компонент домашней страницы и футер (#home-page, #footer PRs)</li>
+<li>Content-компонент</li>
+<li>Гарды авторизации (<code>canActivate</code>, <code>canDeactivate</code>) (#69)</li>
+<li>Кастомный аудиоплеер с контроллерами воспроизведения (#86 — Custom player, 2026-06-09/10)</li>
+<li>i18n / сервис confirm-диалога с <code>CanDeactivate</code> через RxJS Subject-мост (дневник 2025-06-01, 64ч спринт итого)</li>
+<li>Изучение и осмысление статей Ben Lesh об Observable (дневник 2026-06-09, 15ч)</li>
+</ul>
+<p><strong>Уровень:</strong> Аналитический и критичный к себе. Дневник спринта-2 (2025-06-01) содержит полную реализацию <code>ConfirmDialogService</code> с Subject-мостом — не фрагмент, а законченный сервис с <code>hasUnsavedChanges()</code>, <code>canDeactivate()</code>, <code>resolveNavigationDecision()</code>. Он объясняет <em>почему</em> выбрал Subject, а не Promise: «более нативный и совместимый с механизмом роутинга Angular». В последнем дневнике (2026-06-09) корректно объясняет Cold vs Hot Observables с формулировкой «продюсер внутри vs снаружи» — пришёл к той же ментальной модели, что и dzichonka, через те же статьи, независимо.</p>
+<p><strong>Риск / флаг:</strong> В дневнике указано 64 часа на спринт-2 — очень высокая цифра. Либо включает время на изучение (вероятно, с учётом глубокого погружения в Observable), либо оценка неточная. Не красный флаг, но стоит один вопрос для калибровки. Также: только 8 PR против 17 у dzichonka — но Custom player (#86) — весомый PR; расхождение может объясняться меньшим количеством, но более крупными кусками работы.</p>
+<p><strong>Что проверять:</strong> Попросить объяснить Subject-мост в <code>CanDeactivate</code> по памяти — конкретно: что возвращает <code>pendingNavigation$.asObservable()</code> в сравнении с самим Subject, и почему Angular Router его принимает. Затем спросить: что сломается, если не вызвать <code>pendingNavigation$.complete()</code>. Он писал этот код, поэтому неспособность объяснить — красный флаг.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Snitkon (Никита) — 62 коммита / 12 PR / 8 дневников</h3>
+<p><strong>Что сделал (по PR + дневнику):</strong></p>
+<ul>
+<li>Абстрактный класс хранилища с фабрикой <code>useFactory</code> — типизированный, переиспользуемый (#abstraction-storage-class, дневник спринт-1 2025-05-13, 5ч)</li>
+<li>Настройка CI/CD и несколько фиксов (#55, #62, #63)</li>
+<li>Переиспользуемая оболочка сайдбара с проекцией <code>ng-content</code> для левого (#64, #65) и правого (#76, #77) сайдбаров</li>
+<li>Локализация / настройка Zone</li>
+<li>Переиспользуемый компонент dropdown (дневник спринт-2 2025-06-03)</li>
+<li>Конфигурация NgRx-стора + начальная интеграция с API (PR #87, дневник спринт-2)</li>
+</ul>
+<p><strong>Уровень:</strong> Самый архитектурно мыслящий участник команды. Дневник спринта-1 описывает проектирование абстрактного класса хранилища с <code>useFactory</code> — не клон туториала, а размышление о масштабируемости («избежать дублирования кода, оставаясь простым для расширения под будущие хранилища типа sessionStorage»). Дневники спринта-2 демонстрируют чёткое разделение ответственностей: он объясняет контентную проекцию как «разделение поведения от контента» — правильная формулировка. Взял на себя владение CI/CD (три PR с фиксами) — ответственность за инфраструктуру.</p>
+<p><strong>Риск / зона для проверки:</strong> NgRx для него совершенно новый. PR #87 ("NgRx") был смёрджен 2026-06-09/10, и в дневнике написано «начинаю работу с NgRx: настраиваю конфигурацию, выстраиваю базовую архитектуру стора, реализую первые ключевые фичи». Это самое начало. Он понимает концепцию (Actions, Reducers, Selectors, Effects — всё названо верно), но может ли он объяснить <em>почему</em> NgRx, а не только сигналы, или что Effect делает под капотом — не проверено.</p>
+<p><strong>Что проверять:</strong> Попросить воспроизвести абстрактный класс хранилища с нуля (его собственная работа, спринт-1 — он справится). Затем переключиться: объяснить, чем NgRx Effects отличаются от сервиса, делающего тот же HTTP-вызов. Проверка абстрактного класса устанавливает базовый уровень; проверка NgRx показывает, есть ли глубина в добавлении из спринта-2 или это просто скопированная конфигурация. Его владение CI/CD — тоже законный материал для вопросов: почему Angular-сборке нужен <code>--configuration production</code> на Vercel? (Именно это Copilot-бот и исправил в #90, а он смёрджил PR в роли, близкой к лиду.)</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Внешние участники</h2>
+<table><thead>
+<tr><th>Логин</th><th>Примечание</th></tr>
+</thead><tbody>
+<tr><td><strong>sergey496</strong></td><td>Ментор; коммитов в репо нет — ожидаемо и нормально</td></tr>
+<tr><td><strong>Copilot</strong> (app/copilot-swe-agent)</td><td>GitHub Copilot-бот; смёрджил PR #90 "Fix deploy-production: align Vercel build environment with deployment target" — исправление инфраструктуры Vercel. 2 коммита, всё инфраструктурное. Не является работой студентов.</td></tr>
+</tbody></table>
+<p><strong>Флаг по Copilot:</strong> Бот был вызван явно (не авто-подсказка), смёрджил PR и исправил неверную конфигурацию деплоя. Это незначительно и касается только инфраструктуры, но ментор должен быть в курсе: команда использовала AI-агент как минимум для одного нетривиального решения проблемы. Стоит спросить, кто первым диагностировал проблему и в чём была её причина — если никто не может объяснить, это пробел; если могут (это был отсутствующий флаг <code>--configuration production</code>, из-за которого в сборке использовалось неправильное окружение) — всё в порядке.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>Общая готовность:</strong> Выше среднего для спринта-2. Все три студента активны, ведут дневники, мёрджат PR и демонстрируют настоящий концептуальный рост. Команда переориентировалась со Spotify API (заблокированы сложностью авторизации) на Jamendo — прагматичное решение, принятое самостоятельно, без подсказки ментора. NestJS-бэкенд они тоже добавили по собственной инициативе.</p>
+<p><strong>Баланс:</strong> Подозрительно ровный по коммитам (64/64/62), но по PR картина расходится (17 / 7 / 12). Лидерство dzichonka реальное — она тянет больший объём PR. Это заслуживает одного вопроса на интервью («чья была идея такого разделения работы, и что изменилось бы, если бы Дмитрий или Никита взяли на себя модуль авторизации?»).</p>
+<p><strong>Кто силён:</strong> dzichonka — чётко формулирует, кросс-слойное мышление, копает в Angular internals. Snitkon — архитектурное мышление, владение CI/CD, понимание контентной проекции — на уровне.</p>
+<p><strong>За кем наблюдать:</strong> DzmitryAliakseyeu — осторожность по активности в репо (меньше PR, оценка 64ч) была целью для проверки, а не сигналом риска: балл 98/100 на защите Спринта 2 подтверждает глубокое концептуальное понимание. Кастомный плеер (#86) по-прежнему хороший якорь для интервью. Реальных поводов для наблюдения в этой команде не осталось.</p>
+<p><strong>Сигнал зависимости от AI/библиотек:</strong> Один PR Copilot-бота (только инфраструктура). Признаков тяжёлого копипаста в дневниках нет — все трое демонстрируют оригинальные рассуждения с указанием источников. Уровень риска: низкий, но проверить со стороны NgRx (для команды он совсем новый и может оказаться скопированной конфигурацией без понимания).</p>
+<p><strong>Рекомендуемый угол на интервью:</strong> По каждому студенту — взять одну вещь, которую он называет своей, и попросить воспроизвести/объяснить с первых принципов.</p>
+<ul>
+<li><strong>dzichonka:</strong> Subject-мост в CanDeactivate — нарисовать сервис по памяти, объяснить жизненный цикл.</li>
+<li><strong>DzmitryAliakseyeu:</strong> Тот же Subject-мост в CanDeactivate (он написал тот же паттерн независимо) + Кастомный плеер — какие Angular API использует, почему?</li>
+<li><strong>Snitkon:</strong> Абстрактный класс хранилища (спринт-1, безопасная территория) → затем NgRx Effect vs HTTP-вызов в сервисе (проверка границы знаний). Также: что конкретно исправил Copilot-бот в #90 — может ли он объяснить <code>--configuration production</code> и почему это важно?</li>
+</ul>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

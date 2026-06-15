@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — LazyCoders · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — LazyCoders</strong><strong class="lang-ru">Mentor briefing — LazyCoders</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — LazyCoders</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Data snapshot: 2026-06-15. Source: GitHub repo commits, PRs, development-notes/ diaries.</blockquote>
+<p><strong>One-line summary:</strong> Three active students building an Angular e-commerce shop; team lead is committing under two GitHub accounts (one heavily AI-assisted), Aseke09 has backend competence but thin Angular depth, DzinaKor is the most reflective diary-writer and has shown real growth but relies on AI for styling and typo-checking — no passenger, but no deep Angular expert yet either.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Repo</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>AngularShop — Angular e-commerce SPA (catalog, cart, wishlist, about-us, profile, auth)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 21 (CLI-generated), Angular Material, Signals, Angular Router, standalone components, FSD folder architecture (adopted sprint 2), NestJS custom backend (mentor-built), PostgreSQL + Prisma + Docker + MinIO</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/mukhammadyor17/angular-shop">https://github.com/mukhammadyor17/angular-shop</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-09</td></tr>
+<tr><td><strong>Last pushed</strong></td><td>2026-06-11</td></tr>
+<tr><td><strong>Default branch</strong></td><td>main (GitFlow: work on <code>develop</code> + feature branches)</td></tr>
+<tr><td><strong>Open issues</strong></td><td>4</td></tr>
+<tr><td><strong>Open PRs</strong></td><td>2 (PR #25 folder-refactor by mukhammadyor17, PR #26 routing-signals by Aseke09 — both unmerged as of 2026-06-11)</td></tr>
+</tbody></table>
+<p><strong>README:</strong> Auto-generated Angular CLI boilerplate. No custom project description, no deploy link, no architecture overview. This is a signal about documentation culture.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster note</h2>
+<p><strong>Students (from course participants.json):</strong> mukhammadyor17 (lead), Aseke09, dzinakor (GitHub: DzinaKor).</p>
+<p><strong>Mentor:</strong> xsetiqq — not a code contributor (normal, no penalty).</p>
+<p><strong>External contributors:</strong></p>
+<ul>
+<li><strong>Dior1726</strong> — 29 commits on <code>develop</code>, same email as mukhammadyor17 (<code>muxammad_909@mail.ru</code>), GitHub display name "Mukhammadyor". This is mukhammadyor17's <strong>second GitHub account</strong>. Several of his commits through this account carry <code>Co-Authored-By: Claude Sonnet 4.6 &lt;noreply@anthropic.com&gt;</code> in the message. The lead's true commit count is 16 (mukhammadyor17) + 29 (Dior1726) = <strong>~45</strong> on develop. All Claude-assisted commits are from this second account, suggesting heavy Claude Code use for Sprint 1 UI work.</li>
+<li><strong>KostevOleg</strong> — 1 commit: PR #1 "chore: setup code quality tools" (2026-05-13). Infrastructure / code quality bot or curator. Not a student contributor.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table</h2>
+<p>Commit counts are for the <code>develop</code> branch (integration branch). Aseke09's sprint-2 work lives on the unmerged <code>feature/routing-signals</code> branch (+7 commits there not yet in develop). mukhammadyor17 totals combine both accounts.</p>
+<table><thead>
+<tr><th>Student</th><th>Commits (develop)</th><th>PRs (total / merged)</th><th>Diaries (dated entries)</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>mukhammadyor17</strong> (lead)</td><td>~45 (16 as mukhammadyor17 + 29 as Dior1726)</td><td>10 total / 9 merged</td><td>4 (develop branch)</td><td>2026-06-05</td><td>Active lead, multi-account + AI-assisted; FSD refactor initiative</td></tr>
+<tr><td><strong>Aseke09</strong></td><td>10 (develop) + 7 (feature/routing-signals, unmerged)</td><td>6 total / 4 merged</td><td>7 dated entries across develop + feature/routing-signals</td><td>2026-06-05</td><td>Backend-oriented, AI-heavy for Angular concepts, routing work unmerged</td></tr>
+<tr><td><strong>DzinaKor</strong></td><td>29</td><td>8 total / 7 merged</td><td>7 dated entries (most recent: 2026-06-11)</td><td>2026-06-11</td><td>Most diary-consistent, growing reflectiveness, AI for styling + typos</td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 Interview — Components (mentor: xsetiqq, late May). All three students presented.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>mukhammadyor17</td><td>70 / 100</td><td>— (not yet; due 2026-06-23)</td></tr>
+<tr><td>Aseke09</td><td>60 / 100</td><td>— (not yet; due 2026-06-23)</td></tr>
+<tr><td>DzinaKor</td><td>55 / 100</td><td>— (not yet; due 2026-06-23)</td></tr>
+</tbody></table>
+<p><strong>mukhammadyor17 — 70:</strong> Demonstrated good understanding of Sprint 1 topics; explained his personal contribution and code, answered questions on standalone components, bindings, input/output, and project structure. Minor gaps in lifecycle hooks and unfamiliar with the signal-based <code>model()</code> API. Mentor noted this as good Sprint 1 performance overall.</p>
+<p><strong>Aseke09 — 60:</strong> Generally solid grasp of his own work and could explain the overall flow, but explanations often stayed high-level — he understood what the functionality did without always explaining the specific implementation line by line, what data changed and where, or why a particular approach was chosen. Sprint 1 Angular knowledge gaps remain noticeable.</p>
+<p><strong>DzinaKor — 55:</strong> Showed partial familiarity with her implemented features, but explanations were mostly abstract — she named Angular concepts rather than describing the actual behavior of methods or lines. Difficult to get precise answers about data flow, inputs/outputs, and side effects. The mentor's impression: she participated in implementation but does not yet confidently understand the code in detail.</p>
+<p><strong>Score vs activity reconciliation:</strong></p>
+<ul>
+<li><strong>mukhammadyor17 (70 defence, last active 2026-06-05):</strong> The defence score is the strongest on the team and aligns with his FSD rationale in the diary showing independent reasoning. However, he has been less active since early June and his Sprint 1 foundational UI was heavily AI-assisted. The 70 suggests conceptual ownership is real; the AI-commit pattern remains a yellow flag about <em>depth</em> below the surface.</li>
+<li><strong>Aseke09 (60 defence, activity-light on develop but unmerged feature branch active to 2026-06-05):</strong> Score and activity picture align: backend-solid, Angular-surface. The 60 confirms the profile — he understands the flow but struggles with line-level precision on Angular-specific code. The unmerged routing-signals branch is Sprint 2 work in progress, which is expected.</li>
+<li><strong>DzinaKor (55 defence, highest activity: 29 commits, diary updated 2026-06-11):</strong> This is the sharpest divergence on the team. She is the most active contributor by commit count and the most up-to-date diarist, yet scored the lowest at the defence. Her Sprint 3 diary had already flagged this herself ("I forgot what I had done in the first sprint and struggled to find the right words"). The mentor's evaluation confirms the pattern: she does the work but cannot yet explain it in real-time under questioning. Strong participation signal, genuine retention/articulation gap.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>mukhammadyor17 — Team Lead, ~45 commits, 9 merged PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>PR #2 "Feat/layout components" — auth layout, main layout, home page, general page (Sprint 1)</li>
+<li>Migrated page-header links to Angular <code>routerLink</code> (Sprint 1), with correct <code>routerLinkActive + routerLinkActiveOptions</code> standalone imports</li>
+<li><code>BaseCard</code> and <code>BaseTitle</code> reusable base components with SCSS tokens</li>
+<li><code>ProfileCard</code> component and <code>ProfilePage</code> with route registration</li>
+<li>PR #22 "Folder refactoring" — restructured project to FSD (Feature-Sliced Design): <code>/core</code>, <code>/feature</code>, <code>/shared</code> (Sprint 2)</li>
+<li>Merges PRs from all teammates (acts as merge gatekeeper)</li>
+</ul>
+<p><strong>AI reliance flag:</strong> Sprint 1 diary closes with: <em>"In the last 3 commits, I used AI to create the basic UI. The final commit texts and the last note were also generated by AI."</em> Five Sprint 1 commits via Dior1726 account carry <code>Co-Authored-By: Claude Sonnet 4.6</code> in their commit messages. This covers profile page, base-card, layout styles — the foundational UI layer. The FSD refactor in Sprint 2 shows independent reasoning (diary explains the motivation clearly and in own words: "helps other participants quickly understand the project").</p>
+<p><strong>Level:</strong> Functional but surface-level Angular understanding so far. Knows standalone component imports, routerLink, basic routing. Understands project structure (FSD was a conscious team decision). The AI-assisted commits in Sprint 1 mean the foundational UI code may not be deeply owned. Sprint 2 diary is notably shorter and shows less reflection than Sprint 1.</p>
+<p><strong>Probe for interview:</strong></p>
+<ul>
+<li>Ask him to explain <code>routerLinkActive</code> and <code>[routerLinkActiveOptions]="{ exact: true }"</code> from scratch — his diary shows he ran into this. Does he understand why <code>exact: true</code> is needed on the home route?</li>
+<li>Ask him to walk through one of the base components (<code>BaseCard</code>) and explain <code>ng-content</code> — his Sprint 1 diary flagged it as "a good candidate for ng-content" but didn't say he implemented it.</li>
+<li>On FSD: why <code>/core</code> vs <code>/feature</code> vs <code>/shared</code>? Could he set it up from scratch on a new project?</li>
+<li><strong>Red flag to probe:</strong> Two GitHub accounts used on the same repo. Ask about his workflow — awareness is fine, but it's worth confirming the Dior1726 commits represent his own understanding, not wholesale copied AI output.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Aseke09 — 17 commits total, 4 merged PRs, 7 diary entries</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>PR #3 / #5 "feature/components" — product-card component with basic styling and logic (Sprint 1)</li>
+<li>PR #9 "feature/components" — merged component work</li>
+<li>PR #15 "feature/backend-api" — Express proxy server for CommerceTools API, <code>dotenv</code> path resolution with ES module <code>import.meta.url</code>, <code>.gitignore</code> setup for <code>server/node_modules</code> and <code>server/.env</code>, <code>environment.development.ts</code> for Angular build</li>
+<li>Sprint 2: Studied and explored the team's NestJS backend (Docker, PostgreSQL, MinIO, Prisma), analyzed API response structure</li>
+<li>Created <code>CatalogService</code> with <code>HttpClient</code>, <code>ProductsResponse</code> typed interface for paginated backend responses, <code>CartService</code> with signal-based state management</li>
+<li>PR #26 (OPEN, unmerged) "Feature/routing signals" — backend integration + routing</li>
+</ul>
+<p><strong>AI reliance:</strong> Consistent and honest about it. Sprint 2 diary lists AI usage explicitly: "Used AI to understand Angular Signals and service architecture. Used AI to debug TypeScript typing issues and API integration problems. Used AI to design frontend models based on backend responses. Used AI to troubleshoot routing and component communication issues." Sprint 1 also: AI used for ES module path resolution, dotenv troubleshooting, gitignore behavior.</p>
+<p>The pattern is: encounters a concept → reaches for AI for explanation/debugging → then applies it. This is not wholesale generation — he documents what he manually checked vs what AI helped with ("wrote manually the Express proxy server setup… checked manually environment variable loading"). Honest self-assessment.</p>
+<p><strong>Level:</strong> Backend exposure is a genuine differentiator (the only student who explored NestJS/Prisma/Docker). Angular frontend depth is limited — Sprint 2 work on routing and signals is in an unmerged branch. The identified cart routing bug ("Cart link redirects to Profile page") was found but the fix was deferred. Understanding is fragile on the frontend side; more solid on integration and data modeling.</p>
+<p><strong>Probe for interview:</strong></p>
+<ul>
+<li><code>ProductsResponse</code> interface: why did you need a wrapper type instead of a plain <code>Product[]</code>? What does the <code>meta</code> field represent? (Tests whether he understood the pagination pattern or just applied an AI suggestion.)</li>
+<li>Angular Signals vs RxJS: he used signal-based <code>CartService</code> — can he explain when to use <code>signal()</code> vs <code>BehaviorSubject</code>? Does he know what a <code>computed()</code> signal does?</li>
+<li>The routing bug (Cart → Profile): did he fix it? What was the cause? (His diary says he "identified it for future fixes" — check if it's resolved in the open PR.)</li>
+<li>ES module path resolution: <code>__dirname</code> vs <code>fileURLToPath(import.meta.url)</code> — he documented this explicitly, so he should own this answer cleanly.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DzinaKor (dzinakor) — 29 commits, 7 merged PRs, 7+ diary entries</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>PR #12 "Feature/not found page" (Sprint 1)</li>
+<li>PR #13 "Feature/wishlist" + added auth guard for wishlist page (self-initiated extra practice, not assigned)</li>
+<li>PR #14 (Sprint 1 component, blank title — minor hygiene flag)</li>
+<li>PR #18 "Feature/about us: adding about us page with team-cards" + slider functionality (Sprint 2)</li>
+<li>PR #20 "fix: make correct routes to not-found and wishlist pages"</li>
+<li>PR #23 "refactor: add short-text custom pipe to shared and change styling for the team-cards" (Sprint 2 — custom pipe!)</li>
+<li>Sprint 3: started Profile page form, explored Reactive Forms + validations, refactored after PR review, learned <code>git stash</code></li>
+</ul>
+<p><strong>AI reliance:</strong> Declared and categorized well. Sprint 3 diary AI usage: theory explanations, styling SCSS for Profile page, typo checking, simple code mistake inspection. Sprint 2: only typo fix. Sprint 4 (2026-06-11): AI for Docker troubleshooting. The SCSS generation in sprint 3 is the most notable — styling was AI-assisted. The custom pipe (PR #23) and the auth guard (Sprint 2, self-initiated) are more likely own work given the framing.</p>
+<p><strong>Most honest diarist on the team.</strong> Sprint 3 entry: <em>"during the interview with the mentor, I forgot what I had done in the first sprint and struggled to find the right words to describe my code (I understood it but couldn't explain it clearly)"</em> and <em>"started working on the Profile page… then noticed that some of the logic had already been created by my team member."</em> Both are real, self-aware admissions.</p>
+<p><strong>Level:</strong> Growing steadily. Not the strongest Angular technically, but the most consistent learner signal. Created a custom pipe and an auth guard — both show initiative beyond assigned tasks. Profile page work overlapped with a teammate's implementation (coordination failure, not laziness — she caught it herself and started integrating). Reactive Forms is her current frontier.</p>
+<p><strong>Probe for interview:</strong></p>
+<ul>
+<li>The custom <code>short-text</code> pipe: walk me through it. What does <code>PipeTransform</code> require you to implement? What's the <code>transform()</code> method signature? (She wrote it herself — should know it cold.)</li>
+<li>Auth guard on wishlist: what does <code>CanActivateFn</code> return? What happens if a user isn't logged in — where do you redirect? (She did this as self-practice, it's hers.)</li>
+<li>Profile page form: can she explain the difference between Template-driven and Reactive Forms? Which did she use and why? (Her Sprint 3 diary shows she researched this deeply — now test retention.)</li>
+<li>Sprint 3 interview recap: she struggled to explain code in real-time. Ask her to explain the wishlist component line by line. This is explicit in her diary as a practice goal — good signal if she's prepared.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for mentor</h2>
+<p><strong>Overall readiness:</strong> Early-intermediate. The project has a working foundation — routing, standalone components, feature pages, a custom backend integration — but significant work remains unmerged (Aseke09's routing-signals branch with catalog/cart is still open). There are 4 open issues. The team adopted FSD architecture mid-course, which was a sound decision but created some coordination overhead (DzinaKor's Profile page collision with existing implementation).</p>
+<p><strong>Who is strong:</strong> mukhammadyor17 scored highest at the Sprint 1 defence (70) and drives structural decisions (FSD, folder refactor, merges) — despite the AI-assisted Sprint 1 commits, he showed conceptual ownership at the defence. Aseke09 is the strongest technically on backend integration and data modeling; his 60 defence score aligns with that profile (solid flow understanding, weaker on line-level precision). DzinaKor leads on activity, diary consistency, and self-awareness, but her 55 defence score confirms the articulation gap she flagged herself.</p>
+<p><strong>Who to watch:</strong> mukhammadyor17. The two-account situation is unusual and the AI-generated commit messages/notes in Sprint 1 are a yellow flag — not necessarily misconduct, but worth probing whether he owns the code conceptually. His Sprint 2 diary is more genuine and shorter, suggesting the AI-crutch may be reducing. He is the team gatekeeper (all merges go through him) so his Angular understanding matters most structurally.</p>
+<p><strong>Balance:</strong> No passenger in this team — all three have merged PRs and written diaries. DzinaKor's commit count (29) is actually the highest among named student accounts, driven by diary commits and About Us page work.</p>
+<p><strong>AI usage pattern:</strong> Declared by all three students in their diaries. The risk is not that they use AI — they do, openly — but that Angular concepts learned via AI explanations may not have been reinforced by doing. Test for depth by asking each to rebuild or explain from scratch, not to describe what they built.</p>
+<p><strong>Recommended interview angle:</strong> Start with something each student flagged as difficult in their own diary (see Probe sections above). DzinaKor herself wrote that she needs to practice explaining code out loud — take her up on that. For mukhammadyor17, the FSD architecture rationale is the cleanest domain where he showed independent thinking. For Aseke09, the backend API integration is where his real experience lives; Angular depth is the soft spot.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — LazyCoders</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Снимок данных: 2026-06-15. Источник: коммиты в GitHub-репозитории, PR-ы, дневники в development-notes/.</blockquote>
+<p><strong>Краткое резюме:</strong> Три активных студента строят Angular e-commerce магазин; тимлид коммитит с двух GitHub-аккаунтов (один из которых с активным использованием AI), Aseke09 обладает бэкенд-компетентностью, но слабым погружением в Angular, DzinaKor — самый рефлексирующий автор дневника и демонстрирует реальный рост, но опирается на AI в вопросах стилей и проверки опечаток — не пассажир, но и не глубокий Angular-эксперт.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + репозиторий</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>AngularShop — Angular e-commerce SPA (каталог, корзина, вишлист, about-us, профиль, авторизация)</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 21 (CLI-генерация), Angular Material, Signals, Angular Router, standalone components, FSD-архитектура папок (принята в спринте 2), NestJS-бэкенд собственной разработки (написан ментором), PostgreSQL + Prisma + Docker + MinIO</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/mukhammadyor17/angular-shop">https://github.com/mukhammadyor17/angular-shop</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-09</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-11</td></tr>
+<tr><td><strong>Ветка по умолчанию</strong></td><td>main (GitFlow: работа в <code>develop</code> + feature-ветки)</td></tr>
+<tr><td><strong>Открытые issues</strong></td><td>4</td></tr>
+<tr><td><strong>Открытые PR</strong></td><td>2 (PR #25 рефактор папок — mukhammadyor17, PR #26 routing-signals — Aseke09 — оба не смёрджены по состоянию на 2026-06-11)</td></tr>
+</tbody></table>
+<p><strong>README:</strong> Автосгенерированный шаблон Angular CLI. Без описания проекта, ссылки на деплой и обзора архитектуры. Это сигнал о культуре документирования.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заметка о составе команды</h2>
+<p><strong>Студенты (из participants.json курса):</strong> mukhammadyor17 (лид), Aseke09, dzinakor (GitHub: DzinaKor).</p>
+<p><strong>Ментор:</strong> xsetiqq — не является контрибьютором кода (норма, нарушением не считается).</p>
+<p><strong>Внешние контрибьюторы:</strong></p>
+<ul>
+<li><strong>Dior1726</strong> — 29 коммитов в <code>develop</code>, тот же email что у mukhammadyor17 (<code>muxammad_909@mail.ru</code>), отображаемое имя в GitHub — «Mukhammadyor». Это <strong>второй GitHub-аккаунт</strong> mukhammadyor17. Ряд его коммитов через этот аккаунт содержат <code>Co-Authored-By: Claude Sonnet 4.6 &lt;noreply@anthropic.com&gt;</code> в сообщении коммита. Реальное число коммитов лида: 16 (mukhammadyor17) + 29 (Dior1726) = <strong>~45</strong> в develop. Все коммиты с AI-участием сделаны со второго аккаунта, что указывает на активное использование Claude Code для UI-работ в спринте 1.</li>
+<li><strong>KostevOleg</strong> — 1 коммит: PR #1 «chore: setup code quality tools» (2026-05-13). Инфраструктурный / code quality бот или куратор. Не является студентом-контрибьютором.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности</h2>
+<p>Количество коммитов указано для ветки <code>develop</code> (интеграционная ветка). Работа Aseke09 в спринте 2 находится в несмёрдженной ветке <code>feature/routing-signals</code> (+7 коммитов, которых ещё нет в develop). Итоги mukhammadyor17 объединяют оба аккаунта.</p>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (develop)</th><th>PR (всего / смёрдженных)</th><th>Дневники (записи с датой)</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>mukhammadyor17</strong> (лид)</td><td>~45 (16 как mukhammadyor17 + 29 как Dior1726)</td><td>10 всего / 9 смёрджено</td><td>4 (ветка develop)</td><td>2026-06-05</td><td>Активный лид, мультиаккаунт + AI-ассистирование; инициатива FSD-рефактора</td></tr>
+<tr><td><strong>Aseke09</strong></td><td>10 (develop) + 7 (feature/routing-signals, не смёрджено)</td><td>6 всего / 4 смёрджено</td><td>7 записей с датами в develop + feature/routing-signals</td><td>2026-06-05</td><td>Бэкенд-ориентирован, сильная опора на AI в Angular-концепциях, роутинг не смёрджен</td></tr>
+<tr><td><strong>DzinaKor</strong></td><td>29</td><td>8 всего / 7 смёрджено</td><td>7 записей с датами (последняя: 2026-06-11)</td><td>2026-06-11</td><td>Самый последовательный автор дневника, растущая рефлексивность, AI для стилей + опечаток</td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Интервью спринта 1 — Компоненты (ментор: xsetiqq, конец мая). Все трое студентов присутствовали.</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>mukhammadyor17</td><td>70 / 100</td><td>— (ещё не было; дедлайн 2026-06-23)</td></tr>
+<tr><td>Aseke09</td><td>60 / 100</td><td>— (ещё не было; дедлайн 2026-06-23)</td></tr>
+<tr><td>DzinaKor</td><td>55 / 100</td><td>— (ещё не было; дедлайн 2026-06-23)</td></tr>
+</tbody></table>
+<p><strong>mukhammadyor17 — 70:</strong> Продемонстрировал хорошее понимание тем спринта 1: объяснил личный вклад и код, ответил на вопросы по standalone components, байндингам, input/output и структуре проекта. Небольшие пробелы в знании lifecycle hooks, не был знаком с signal-based <code>model()</code> API. Ментор в целом оценил это как хорошее выступление на защите спринта 1.</p>
+<p><strong>Aseke09 — 60:</strong> В целом уверенно ориентировался в своей части работы и мог объяснить общий поток кода, но ответы часто оставались на высоком уровне — он понимал, что делает функциональность, но не всегда объяснял конкретную реализацию строка за строкой: что и где меняется и почему выбран именно такой подход. Пробелы в знании Angular (спринт 1) всё ещё заметны.</p>
+<p><strong>DzinaKor — 55:</strong> Показала частичное знакомство с реализованными фичами, однако объяснения были преимущественно абстрактными — она называла Angular-концепции вместо того, чтобы описывать реальное поведение методов или строк кода. Сложно было получить точные ответы о потоке данных, inputs/outputs и побочных эффектах. Впечатление ментора: участвовала в реализации, но пока не владеет кодом на уровне уверенного объяснения в деталях.</p>
+<p><strong>Сопоставление баллов и активности:</strong></p>
+<ul>
+<li><strong>mukhammadyor17 (70 на защите, последняя активность 2026-06-05):</strong> Лучший балл в команде на защите, согласуется с самостоятельным обоснованием FSD в дневнике. Вместе с тем активность снизилась с начала июня, а фундаментальный UI в спринте 1 был сильно AI-ассистирован. Балл 70 говорит о реальном концептуальном владении; паттерн с AI-коммитами остаётся жёлтым флагом о глубине понимания.</li>
+<li><strong>Aseke09 (60 на защите, низкая активность в develop, но feature-ветка активна до 2026-06-05):</strong> Балл и картина активности совпадают: силён в бэкенде, Angular — поверхностно. 60 подтверждает профиль: понимает поток, но затрудняется с точностью на уровне строк в Angular-коде. Несмёрдженная ветка routing-signals — работа спринта 2 в процессе, что в порядке вещей.</li>
+<li><strong>DzinaKor (55 на защите, наибольшая активность: 29 коммитов, дневник обновлён 2026-06-11):</strong> Наиболее резкое расхождение в команде. Самый активный контрибьютор по числу коммитов и самый актуальный автор дневника — и при этом наименьший балл на защите. Она сама предсказала это в дневнике спринта 3 («во время интервью я забыла, что делала в первом спринте, и не могла найти нужные слова»). Оценка ментора подтверждает паттерн: делает работу, но пока не может объяснить её в режиме реального времени под вопросами. Устойчивый сигнал участия, реальный пробел в удержании и артикуляции знаний.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>mukhammadyor17 — тимлид, ~45 коммитов, 9 смёрдженных PR</h3>
+<p><strong>Что сделал (из PR и дневника):</strong></p>
+<ul>
+<li>PR #2 «Feat/layout components» — auth layout, main layout, home page, general page (спринт 1)</li>
+<li>Перевёл ссылки page-header на Angular <code>routerLink</code> (спринт 1), с правильными standalone-импортами <code>routerLinkActive + routerLinkActiveOptions</code></li>
+<li>Переиспользуемые базовые компоненты <code>BaseCard</code> и <code>BaseTitle</code> с SCSS-токенами</li>
+<li>Компонент <code>ProfileCard</code> и <code>ProfilePage</code> с регистрацией маршрута</li>
+<li>PR #22 «Folder refactoring» — переструктурировал проект под FSD (Feature-Sliced Design): <code>/core</code>, <code>/feature</code>, <code>/shared</code> (спринт 2)</li>
+<li>Мёрджит PR-ы всех участников команды (выступает в роли привратника мёрджей)</li>
+</ul>
+<p><strong>Флаг: зависимость от AI:</strong> Дневник спринта 1 завершается словами: <em>«В последних 3 коммитах я использовал AI для создания базового UI. Тексты финальных коммитов и последняя заметка тоже были сгенерированы AI».</em> Пять коммитов спринта 1 через аккаунт Dior1726 содержат <code>Co-Authored-By: Claude Sonnet 4.6</code> в сообщении. Это касается страницы профиля, base-card, стилей лейаута — фундаментального UI-слоя. FSD-рефактор в спринте 2 демонстрирует самостоятельное мышление (дневник ясно объясняет мотивацию своими словами: «помогает другим участникам быстро понять проект»).</p>
+<p><strong>Уровень:</strong> Функциональное, но поверхностное понимание Angular на данный момент. Знает standalone component imports, routerLink, базовый роутинг. Понимает структуру проекта (FSD был осознанным командным решением). AI-ассистированные коммиты в спринте 1 означают, что фундаментальный UI-код может быть не глубоко присвоен. Дневник спринта 2 заметно короче и менее рефлексивен, чем в спринте 1.</p>
+<p><strong>Что проверять на интервью:</strong></p>
+<ul>
+<li>Попросить объяснить <code>routerLinkActive</code> и <code>[routerLinkActiveOptions]="{ exact: true }"</code> с нуля — в дневнике видно, что он столкнулся с этим. Понимает ли он, зачем нужен <code>exact: true</code> на маршруте главной страницы?</li>
+<li>Попросить пройтись по одному из базовых компонентов (<code>BaseCard</code>) и объяснить <code>ng-content</code> — в дневнике спринта 1 он назвал его «хорошим кандидатом для ng-content», но не сказал, что реализовал.</li>
+<li>По FSD: почему <code>/core</code> vs <code>/feature</code> vs <code>/shared</code>? Смог бы настроить с нуля в новом проекте?</li>
+<li><strong>Красный флаг для проверки:</strong> Два GitHub-аккаунта на одном репозитории. Спросить о его рабочем процессе — осведомлённость допустима, но стоит убедиться, что коммиты Dior1726 отражают его собственное понимание, а не целиком скопированный AI-вывод.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Aseke09 — 17 коммитов всего, 4 смёрдженных PR, 7 записей в дневнике</h3>
+<p><strong>Что сделал (из PR и дневника):</strong></p>
+<ul>
+<li>PR #3 / #5 «feature/components» — компонент product-card с базовыми стилями и логикой (спринт 1)</li>
+<li>PR #9 «feature/components» — смёрдженная компонентная работа</li>
+<li>PR #15 «feature/backend-api» — Express proxy-сервер для CommerceTools API, разрешение путей <code>dotenv</code> с ES module <code>import.meta.url</code>, настройка <code>.gitignore</code> для <code>server/node_modules</code> и <code>server/.env</code>, <code>environment.development.ts</code> для Angular-сборки</li>
+<li>Спринт 2: изучил и исследовал NestJS-бэкенд команды (Docker, PostgreSQL, MinIO, Prisma), проанализировал структуру API-ответов</li>
+<li>Создал <code>CatalogService</code> с <code>HttpClient</code>, типизированный интерфейс <code>ProductsResponse</code> для пагинированных ответов бэкенда, <code>CartService</code> с управлением состоянием на сигналах</li>
+<li>PR #26 (ОТКРЫТ, не смёрджен) «Feature/routing signals» — интеграция с бэкендом + роутинг</li>
+</ul>
+<p><strong>Зависимость от AI:</strong> Последовательно и честно об этом пишет. Дневник спринта 2 явно перечисляет использование AI: «Использовал AI для понимания Angular Signals и архитектуры сервисов. Использовал AI для отладки проблем с типизацией TypeScript и интеграцией API. Использовал AI для проектирования frontend-моделей на основе ответов бэкенда. Использовал AI для отладки проблем с роутингом и взаимодействием компонентов». Спринт 1 тоже: AI использовался для разрешения путей ES module, отладки dotenv, поведения gitignore.</p>
+<p>Паттерн такой: сталкивается с концепцией → обращается к AI за объяснением/отладкой → затем применяет. Это не тотальная генерация — он документирует, что проверил вручную, а где помог AI («написал вручную настройку Express proxy-сервера… проверил вручную загрузку переменных окружения»). Честная самооценка.</p>
+<p><strong>Уровень:</strong> Бэкенд-опыт — реальное отличие (единственный студент, изучивший NestJS/Prisma/Docker). Глубина Angular-фронтенда ограничена — работа по роутингу и сигналам в спринте 2 находится в несмёрдженной ветке. Выявленный баг роутинга корзины («Ссылка на корзину перенаправляет на страницу профиля») был обнаружен, но исправление отложено. Понимание фронтенда нестабильное; с интеграцией и моделированием данных — увереннее.</p>
+<p><strong>Что проверять на интервью:</strong></p>
+<ul>
+<li>Интерфейс <code>ProductsResponse</code>: зачем понадобился тип-обёртка вместо обычного <code>Product[]</code>? Что представляет поле <code>meta</code>? (Проверяет, понял ли он паттерн пагинации или просто применил AI-подсказку.)</li>
+<li>Angular Signals vs RxJS: он использовал <code>CartService</code> на сигналах — может ли объяснить, когда использовать <code>signal()</code> vs <code>BehaviorSubject</code>? Знает ли, что делает <code>computed()</code>-сигнал?</li>
+<li>Баг роутинга (Корзина → Профиль): исправил ли он его? В чём была причина? (В дневнике написано, что «зафиксировал для будущих исправлений» — проверить, решено ли в открытом PR.)</li>
+<li>Разрешение путей ES module: <code>__dirname</code> vs <code>fileURLToPath(import.meta.url)</code> — он явно задокументировал это, поэтому должен дать чёткий ответ.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>DzinaKor (dzinakor) — 29 коммитов, 7 смёрдженных PR, 7+ записей в дневнике</h3>
+<p><strong>Что сделала (из PR и дневника):</strong></p>
+<ul>
+<li>PR #12 «Feature/not found page» (спринт 1)</li>
+<li>PR #13 «Feature/wishlist» + добавила гард авторизации для страницы вишлиста (самостоятельная дополнительная практика, не задание)</li>
+<li>PR #14 (компонент спринта 1, пустой заголовок — мелкий флаг культуры)</li>
+<li>PR #18 «Feature/about us: adding about us page with team-cards» + функциональность слайдера (спринт 2)</li>
+<li>PR #20 «fix: make correct routes to not-found and wishlist pages»</li>
+<li>PR #23 «refactor: add short-text custom pipe to shared and change styling for the team-cards» (спринт 2 — кастомный пайп!)</li>
+<li>Спринт 3: начала форму страницы профиля, изучала Reactive Forms + валидации, рефакторила после PR review, освоила <code>git stash</code></li>
+</ul>
+<p><strong>Зависимость от AI:</strong> Заявлена и хорошо категоризирована. Использование AI в дневнике спринта 3: объяснение теории, стили SCSS для страницы профиля, проверка опечаток, инспекция простых ошибок в коде. Спринт 2: только исправление опечаток. Спринт 4 (2026-06-11): AI для отладки Docker. Генерация SCSS в спринте 3 — наиболее показательный случай: стили были AI-ассистированы. Кастомный пайп (PR #23) и гард авторизации (спринт 2, самостоятельно) скорее всего её собственная работа, судя по контексту.</p>
+<p><strong>Самый честный автор дневника в команде.</strong> Запись спринта 3: <em>«во время интервью с ментором я забыла, что делала в первом спринте, и не могла найти нужные слова, чтобы описать свой код (я понимала его, но не могла объяснить чётко)»</em> и <em>«начала работать над страницей профиля… потом заметила, что часть логики уже создана моим участником команды».</em> Оба — честные, осознанные признания.</p>
+<p><strong>Уровень:</strong> Стабильный рост. Не самая сильная технически в Angular, но самый устойчивый сигнал обучаемости. Создала кастомный пайп и гард авторизации — оба демонстрируют инициативу сверх поставленных задач. Работа над страницей профиля пересеклась с реализацией участника команды (сбой координации, не лень — она сама это заметила и начала интегрировать). Reactive Forms — её текущий рубеж.</p>
+<p><strong>Что проверять на интервью:</strong></p>
+<ul>
+<li>Кастомный пайп <code>short-text</code>: объяснить пошагово. Что требует реализовать <code>PipeTransform</code>? Какова сигнатура метода <code>transform()</code>? (Писала сама — должна знать наизусть.)</li>
+<li>Гард авторизации на вишлисте: что возвращает <code>CanActivateFn</code>? Что происходит, если пользователь не авторизован — куда выполняется редирект? (Делала как самостоятельную практику — это её работа.)</li>
+<li>Форма страницы профиля: может ли объяснить разницу между Template-driven и Reactive Forms? Какую использовала и почему? (Дневник спринта 3 показывает, что она глубоко исследовала этот вопрос — теперь тест на удержание знаний.)</li>
+<li>Резюме интервью спринта 3: ей было сложно объяснять код в реальном времени. Попросить объяснить компонент вишлиста строчку за строчкой. В её дневнике это явно указано как цель для практики — хороший сигнал, если она подготовилась.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая готовность:</strong> Ранний средний уровень. У проекта есть рабочая основа — роутинг, standalone components, страницы функций, интеграция с кастомным бэкендом — но значительный объём работы не смёрджен (ветка routing-signals Aseke09 с каталогом/корзиной всё ещё открыта). Есть 4 открытых issue. Команда приняла FSD-архитектуру на середине курса — решение здравое, но создавшее некоторые накладные расходы на координацию (коллизия DzinaKor со страницей профиля и уже существующей реализацией).</p>
+<p><strong>Кто силён:</strong> mukhammadyor17 получил наибольший балл на защите спринта 1 (70) и принимает структурные решения (FSD, рефактор папок, мёрджи) — несмотря на AI-ассистированные коммиты в спринте 1, на защите он продемонстрировал концептуальное владение материалом. Aseke09 технически наиболее силён в интеграции с бэкендом и моделировании данных; балл 60 на защите соответствует этому профилю (уверенное понимание потока, слабее — точность на уровне строк). DzinaKor лидирует по активности, последовательности в дневнике и самоосознанности, однако балл 55 на защите подтверждает разрыв в артикуляции, который она сама зафиксировала.</p>
+<p><strong>За кем наблюдать:</strong> mukhammadyor17. Ситуация с двумя аккаунтами нестандартна, а AI-сгенерированные сообщения коммитов/заметки в спринте 1 — жёлтый флаг: не обязательно нарушение, но стоит проверить, владеет ли он кодом концептуально. Дневник спринта 2 более аутентичный и короткий, что говорит о возможном снижении опоры на AI-костыль. Он является привратником команды (все мёрджи идут через него), поэтому его понимание Angular структурно наиболее важно.</p>
+<p><strong>Баланс:</strong> В этой команде нет пассажиров — у всех троих есть смёрдженные PR и написанные дневники. Число коммитов DzinaKor (29) фактически самое высокое среди именованных студенческих аккаунтов — за счёт коммитов дневника и работы над страницей About Us.</p>
+<p><strong>Паттерн использования AI:</strong> Задекларирован всеми тремя студентами в дневниках. Риск не в том, что они используют AI — используют, открыто — а в том, что Angular-концепции, усвоенные через объяснения AI, могут не быть закреплены практикой. Проверять глубину, прося каждого воспроизвести или объяснить с нуля, а не описать, что сделал.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> Начать с того, что каждый студент сам назвал сложным в своём дневнике (см. разделы «Что проверять» выше). DzinaKor сама написала, что ей нужно практиковать объяснение кода вслух — используйте это. Для mukhammadyor17 обоснование FSD-архитектуры — наиболее чистая область, где он проявил самостоятельное мышление. Для Aseke09 интеграция с бэкенд-API — место реального опыта; глубина Angular — слабое место.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

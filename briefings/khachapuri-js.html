@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — khachapuri.js · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — khachapuri.js</strong><strong class="lang-ru">Mentor briefing — khachapuri.js</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-red">At risk</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-red">В зоне риска</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — khachapuri.js</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>KiriaIT/CryptoPulse</code> (commits, PRs, GitHub Issues) + sprint diaries 1–2 for all three students. Snapshot date: 2026-06-15.</blockquote>
+<p><strong>One-line summary (candid):</strong> Strong, well-architected lead (KiriaIT) who pre-built scaffolding for teammates; OgOqro joined late but delivered solid Sprint 2 work independently; Freemason-12 is a significant laggard — one commit total, one toy component, no Sprint 2 delivery, and repo went dark after 2026-05-25 with Sprints 3–4 never shipped.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>Name:</strong> CryptoPulse — cryptocurrency portfolio workspace. <strong>Stack:</strong> Angular 21 (standalone, signals, new control flow <code>@if</code>/<code>@for</code>) · Tailwind CSS v4 · Angular Material · Lucide icons · ngx-charts · Binance Spot Testnet public API (no key) · ESLint 9 flat config · Yarn 1.22 · Vitest (Sprint 4, planned) · GitHub Actions CI · Vercel / GitHub Pages deploy. <strong>Repo:</strong> <a href="https://github.com/KiriaIT/CryptoPulse">https://github.com/KiriaIT/CryptoPulse</a> <strong>Created:</strong> 2026-05-08 · <strong>Last push:</strong> 2026-05-25 · <strong>Open issues:</strong> 18 (all Sprint 3–4 planned work — none closed, never shipped). <strong>Live deploy:</strong> <a href="https://crypto-tracker-eta-peach.vercel.app">https://crypto-tracker-eta-peach.vercel.app</a></p>
+<blockquote><strong>Critical flag:</strong> The repo has been inactive for 3 weeks (since 2026-05-25). All 51 commits fall in the window 2026-05-11 to 2026-05-25. Sprint 3 and Sprint 4 items exist as open GitHub issues but have zero commits against them. The team effectively stopped at Sprint 2.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p>Students on the course roster: <strong>KiriaIT</strong> (team lead, marked), <strong>OgOqro</strong>, <strong>freemason-12</strong> (case-insensitive match to contributor <code>Freemason-12</code>).</p>
+<p>No external contributors identified. No mentor appears in the contributors list. <code>participants.json</code> for the Angular stream does not list this team — the team may be unregistered or registered under a different slug; the data here is sourced directly from the repo.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs (merged)</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>KiriaIT</strong> (lead)</td><td>26</td><td>6</td><td>6</td><td>2 (S1 + S2)</td><td>2026-05-25</td><td>High — architect, but repo dark</td></tr>
+<tr><td><strong>OgOqro</strong></td><td>24</td><td>6</td><td>6</td><td>2 (S1 + S2)</td><td>2026-05-25</td><td>Solid — late start, strong finish</td></tr>
+<tr><td><strong>Freemason-12</strong></td><td>1</td><td>1</td><td>1</td><td>1 (S1)</td><td>2026-05-18</td><td>Critical risk — minimal contribution</td></tr>
+</tbody></table>
+<p><strong>PR breakdown:</strong></p>
+<ul>
+<li>KiriaIT: 6 merged (setup, sprint 2 core, auth/routing, refactor)</li>
+<li>OgOqro: 6 merged (WatchlistChip, PriceTicker, sprint-1 diary, WatchlistChip integration, portfolio page, sprint-2 diary)</li>
+<li>Freemason-12: 1 merged (PR #50 — clicker-coin component)</li>
+</ul>
+<blockquote>Note on commit counts: GitHub's contributor API shows KiriaIT=26, OgOqro=24, Freemason-12=1. OgOqro merges many PRs authored by KiriaIT, so his "author" commits (24) include merge commits. Core authored work is proportional.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p><strong>No mentor evaluation on record.</strong> The file <code>temp/angular-pilot/scores/khachapuri-js.json</code> does not exist, which means this team did not present at the Sprint 1 Interview — Components defence (late May). This is itself a risk signal: the Sprint 1 deadline has passed, and there is no score on record for any of the three students.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>KiriaIT</td><td>— (no-show)</td><td>—</td></tr>
+<tr><td>OgOqro</td><td>— (no-show)</td><td>—</td></tr>
+<tr><td>Freemason-12</td><td>— (no-show)</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Reconciliation — scores vs. activity:</strong> The activity picture (KiriaIT and OgOqro each with 6 merged PRs and solid Sprint 1–2 delivery, repo dark since 2026-05-25) cannot be offset by a mentor score because none exists. The no-show at the Sprint 1 defence is a standalone negative data point on top of the already-concerning repo silence. For KiriaIT and OgOqro there is a genuine tension: repo evidence suggests real competence, yet neither defended in Sprint 1. For Freemason-12 the no-show compounds the dropout picture — no code, no diary, no defence.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Student profiles</h2>
+<h3>KiriaIT — team lead, 26 commits / 6 PRs / 2 diaries</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Full project scaffolding from scratch: Angular 21 standalone, strict TS, folder structure (<code>core/shared/features/layout</code>), Tailwind v4 setup, ESLint 9 flat config, Husky pre-commit hooks, CI pipeline (<code>ci.yml</code>), Vercel deploy.</li>
+<li>Signal-based component API throughout: <code>StatCardComponent</code> (Sprint 1) using <code>input.required&lt;string&gt;()</code>, <code>model(false)</code>, <code>output&lt;void&gt;()</code>; <code>MarketOverviewComponent</code> using <code>resource()</code> + <code>computed()</code>.</li>
+<li><code>WalletService</code> (Sprint 2) — reference implementation of Angular signals: private/readonly signal split (<code>_status.asReadonly()</code>), <code>computed()</code> for <code>isConnected</code> and <code>shortAddress</code>, <code>effect()</code> for localStorage write-back. The RxJS/signals boundary is correctly handled: streams inside the service, signals at the boundary.</li>
+<li><code>walletConnectedGuard: CanActivateFn</code> (Sprint 2) — redirects to <code>/connect?return=&lt;url&gt;</code>.</li>
+<li>Routing: 7+ routes, lazy loading via <code>loadChildren</code> and <code>loadComponent</code>.</li>
+<li><code>WalletStorageService</code>, <code>MockBlockchainService</code>, <code>ThemeService</code>.</li>
+<li>Auth flow (Sprint 2+): Supabase <code>AuthService</code>, environment config, user menu, <code>ToastService</code>.</li>
+<li><code>.cursor/rules/rule.mdc</code> — team-wide coding rules enforced via Cursor AI IDE.</li>
+<li>Pre-built sprint task cards (<code>SPRINT-2-TASKS.md</code>) for both teammates with file stubs and acceptance criteria.</li>
+</ul>
+<p><strong>Level:</strong> Solid mid-level. Genuinely understands the signal/RxJS boundary (his Sprint 2 diary explains <code>takeUntilDestroyed(destroyRef)</code> in injection context — not a copy-paste fix). Architecture decisions are deliberate and well-documented. One co-authored-by-Cursor commit visible (<code>refactor: Tailwind-only styling, remove unused UI, add standards and Husky</code>) — targeted refactor, not wholesale AI generation.</p>
+<p><strong>Risks:</strong></p>
+<ul>
+<li>Heavy scaffolding for teammates (pre-built stubs, task cards with file names pre-created) makes it hard to tell how much of OgOqro/Freemason-12's code is genuinely theirs vs. filling in templates.</li>
+<li>Sprint 2 diary reports "~3 hours" for a massive Sprint 2 — suspicious time estimate, possibly underreported or AI-assisted writing.</li>
+</ul>
+<p><strong>Probe:</strong> Ask him to explain <code>takeUntilDestroyed()</code> — specifically, <em>why</em> it must be called at construction time rather than inside a method (he documented finding this bug). Then ask: if you remove <code>effect()</code> from <code>WalletStorageService.write()</code> and use <code>computed()</code> instead, what breaks and why? Tests his understanding of the side-effect boundary.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>OgOqro — 24 commits / 6 PRs / 2 diaries</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Sprint 1: <code>WatchlistChipComponent</code> — OnPush, <code>input.required&lt;string&gt;()</code>, <code>output&lt;string&gt;()</code>, wired into <code>DashboardPageComponent</code> with a filter handler on <code>watchlist</code> signal. <code>PriceTickerComponent</code> — <code>input&lt;number | null&gt;</code> + <code>DecimalPipe</code> moved inside component.</li>
+<li>Sprint 2: <code>PortfolioService</code> — full rewrite from mock to live data. <code>signal&lt;PortfolioHolding[]&gt;([])</code>, <code>computed()</code> for <code>totalValue</code>/<code>bestAsset</code>, <code>setHoldingsFromTickers(tickers)</code> maps Binance ticker → holdings, <code>clearHoldings()</code> for loading/error states. Private/readonly split correctly applied.</li>
+<li><code>PortfolioPageComponent</code> — injects two services via <code>inject()</code>, uses <code>resource()</code> to load Binance 24h snapshot, <code>effect()</code> to react to snapshot state changes and call service methods. Correctly uses <code>firstValueFrom()</code> inside <code>resource()</code> loader.</li>
+<li>About page signal-driven team toggle.</li>
+</ul>
+<p><strong>Level:</strong> Good for a late joiner. OgOqro explicitly admits in his diary that he had zero team-repo experience before this project ("every project I had worked on before was solo") — his Sprint 1 was 6 hours just learning Git. That's honest. The Sprint 2 work is meaningfully more complex: he understood the existing architecture well enough to replace mocked portfolio prices with live Binance data and wire the signal chain correctly. The private/readonly signal split on <code>PortfolioService</code> matches the pattern KiriaIT established — this is either genuine learning or template-filling (the SPRINT-2-TASKS.md card was pre-written by KiriaIT with specific file paths).</p>
+<p><strong>Risks:</strong></p>
+<ul>
+<li>Sprint 1 task card was pre-built by KiriaIT; the pattern OgOqro followed in <code>PortfolioService</code> mirrors exactly what <code>WalletService</code> already does. He may have copied the pattern rather than understood it. No Sprint 3+ diary or code exists.</li>
+<li>The 12-hour time estimate for Sprint 1 (6h reading + 6h building two small components) suggests he is genuinely learning from scratch — this is not a negative, but his Angular depth may be shallow.</li>
+</ul>
+<p><strong>Probe:</strong> Ask him to explain the difference between <code>computed()</code> and <code>effect()</code> without looking at code — specifically <em>why</em> <code>effect()</code> in <code>PortfolioPageComponent</code> is correct and <code>computed()</code> would not work there. This is the exact design decision he documented; if he understands it, great. If he just filled in the task card, he won't be able to answer. Also ask: if <code>firstValueFrom()</code> throws, what happens to the <code>resource()</code> state?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Freemason-12 — 1 commit / 1 PR / 1 diary</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li><code>CoinClickerComponent</code> (<code>src/app/shared/ui/clicker-coin</code>) — a standalone toy component. Uses <code>input&lt;number&gt;()</code> for initial balance, <code>input&lt;number&gt;()</code> for increase/decrease step, <code>output&lt;{value: number, diff: number}&gt;</code>. Clicking increases a counter; a timer decreases it every 2 seconds until zero. This is a gamification widget, not a crypto feature. Time reported: ~4 hours (2–3h reading codebase, rest on the component).</li>
+</ul>
+<p><strong>What is missing:</strong></p>
+<ul>
+<li>No Sprint 2 delivery whatsoever. The <code>SPRINT-2-TASKS.md</code> card prepared by KiriaIT (Markets page + <code>unsavedFormGuard</code>) has zero commits attached to it. The PR list shows Freemason-12 opened exactly one PR (#50, merged 2026-05-19) and never returned.</li>
+<li>No Sprint 2 diary entry. No Sprint 3 or Sprint 4 diary entries or code.</li>
+<li>Last active: 2026-05-18. The repo went dark 2026-05-25, but Freemason-12 went silent a week before that.</li>
+<li>Sprint 2 plan in his diary says "I don't know for now" — that lack of direction materialized into silence.</li>
+</ul>
+<p><strong>Level:</strong> Not assessable beyond "beginner who completed a minimal Sprint 1 component." He reports spending 2–3 hours just reading the codebase and found the timer interval challenging. The clicker-coin component is functional but trivial — it covers the Sprint 1 signal requirement (<code>input()</code>, <code>output()</code>) at a bare minimum.</p>
+<p><strong>Risks:</strong> This student is a de-facto dropout from Sprints 2–4. The interview will expose immediately that he has zero Angular routing, guards, reactive forms, HTTP, RxJS, or testing experience from this course. Do not assume shared knowledge with the rest of the team.</p>
+<p><strong>Probe:</strong> Ask him to explain what <code>input()</code> vs <code>@Input()</code> is — the one concept he demonstrably used. Then ask: what does <code>CanDeactivateFn</code> do and why would you use it? (This was his Sprint 2 assignment; he never built it.) The gap between what he's supposed to know and what he can explain will surface quickly.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Health tier: red (At risk)</strong> — The repo went dark 2026-05-25, abandoned before Sprint 2 even ended; the Jun 23 deadline leniency does not apply here because the team stopped weeks before it. No member showed up to the Sprint 1 defence — there are zero scores on record for anyone. Freemason-12 is a confirmed dropout. A strong individual contributor (KiriaIT) does not make the team healthy when the team as a whole has stopped: OgOqro has been silent since 2026-05-25, Sprints 3–4 are entirely undelivered, and no interview attendance has occurred.</p>
+<p><strong>Overall:</strong> An unbalanced team with a single effective contributor pairing well with a late-but-earnest second contributor, and a third who effectively dropped out after Sprint 1.</p>
+<p><strong>KiriaIT</strong> is the clear engine: he built the entire architecture, CI, deploy pipeline, and pre-scaffolded tasks for his teammates. He is interview-ready on routing, signals, DI, and the RxJS/signals boundary. Main probe angle: check whether his understanding is deep (can he explain from scratch) or architectural pattern memory (he documented bugs and decisions, so there's a good chance it's genuine). Watch for time-estimate inconsistencies in diaries — Sprint 2 in "~3 hours" for that feature volume is hard to believe.</p>
+<p><strong>OgOqro</strong> is a rewarding surprise given his starting point (no team Git experience). His Sprint 2 <code>PortfolioService</code> rewrite shows he internalized the architecture. The risk is that he operated inside pre-built task scaffolding — verify independently whether he understands signal/effect boundaries or just followed the template. His candor about struggle is a good sign.</p>
+<p><strong>Freemason-12</strong> is a real problem. One commit, one toy component, silent for 4+ weeks. Sprints 2, 3, and 4 are completely undelivered. The interview will be uncomfortable but brief — calibrate expectations accordingly and don't let the team's overall quality mask this gap.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ul>
+<li>KiriaIT: one hard re-explain from scratch (the <code>effect()</code> side-effect rule; the <code>takeUntilDestroyed</code> injection-context bug he fixed).</li>
+<li>OgOqro: <code>computed()</code> vs <code>effect()</code> without notes; what happens if the <code>resource()</code> loader rejects.</li>
+<li>Freemason-12: <code>input()</code> vs <code>@Input()</code> (his one concept), then <code>CanDeactivateFn</code> (his Sprint 2 gap) — calibrate to reality immediately.</li>
+</ul>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — khachapuri.js</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>KiriaIT/CryptoPulse</code> (коммиты, PR, GitHub Issues) + дневники спринтов 1–2 для всех трёх студентов. Дата снапшота: 2026-06-15.</blockquote>
+<p><strong>Краткое резюме:</strong> Сильный, хорошо проектирующий лид (KiriaIT), заранее выстроивший скаффолдинг для команды; OgOqro подключился с опозданием, но в Спринте 2 самостоятельно сдал крепкую работу; Freemason-12 — серьёзный отстающий: один коммит за всё время, один игрушечный компонент, нулевая сдача в Спринте 2, репозиторий замолчал после 2026-05-25, Спринты 3–4 так и не были выпущены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>Название:</strong> CryptoPulse — воркспейс криптовалютного портфеля. <strong>Стек:</strong> Angular 21 (standalone, signals, новый control flow <code>@if</code>/<code>@for</code>) · Tailwind CSS v4 · Angular Material · Lucide icons · ngx-charts · Binance Spot Testnet public API (без ключа) · ESLint 9 flat config · Yarn 1.22 · Vitest (Спринт 4, запланировано) · GitHub Actions CI · Vercel / GitHub Pages deploy. <strong>Репозиторий:</strong> <a href="https://github.com/KiriaIT/CryptoPulse">https://github.com/KiriaIT/CryptoPulse</a> <strong>Создан:</strong> 2026-05-08 · <strong>Последний push:</strong> 2026-05-25 · <strong>Открытые issues:</strong> 18 (весь запланированный объём Спринтов 3–4 — ни один не закрыт, ничего не выпущено). <strong>Live deploy:</strong> <a href="https://crypto-tracker-eta-peach.vercel.app">https://crypto-tracker-eta-peach.vercel.app</a></p>
+<blockquote><strong>Критический флаг:</strong> Репозиторий неактивен 3 недели (с 2026-05-25). Все 51 коммит укладываются в окно 2026-05-11 — 2026-05-25. Задачи Спринтов 3 и 4 существуют как открытые GitHub Issues, но ни одного коммита против них нет. Команда фактически остановилась на Спринте 2.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав</h2>
+<p>Студенты в реестре курса: <strong>KiriaIT</strong> (тимлид, отмечен), <strong>OgOqro</strong>, <strong>freemason-12</strong> (регистронезависимое совпадение с контрибьютором <code>Freemason-12</code>).</p>
+<p>Внешних контрибьюторов не выявлено. Ментор в списке контрибьюторов не фигурирует. <code>participants.json</code> Angular-потока эту команду не содержит — команда может быть незарегистрирована или зарегистрирована под другим слагом; данные здесь получены напрямую из репозитория.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снапшот 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>PR (смерджено)</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>KiriaIT</strong> (лид)</td><td>26</td><td>6</td><td>6</td><td>2 (С1 + С2)</td><td>2026-05-25</td><td>Высокий — архитектор, но репо замолчало</td></tr>
+<tr><td><strong>OgOqro</strong></td><td>24</td><td>6</td><td>6</td><td>2 (С1 + С2)</td><td>2026-05-25</td><td>Крепкий — поздний старт, сильный финиш</td></tr>
+<tr><td><strong>Freemason-12</strong></td><td>1</td><td>1</td><td>1</td><td>1 (С1)</td><td>2026-05-18</td><td>Критический риск — минимальный вклад</td></tr>
+</tbody></table>
+<p><strong>Разбивка по PR:</strong></p>
+<ul>
+<li>KiriaIT: 6 смерджено (настройка, ядро Спринта 2, авторизация/роутинг, рефакторинг)</li>
+<li>OgOqro: 6 смерджено (WatchlistChip, PriceTicker, дневник спринта 1, интеграция WatchlistChip, страница портфеля, дневник спринта 2)</li>
+<li>Freemason-12: 1 смерджено (PR #50 — компонент clicker-coin)</li>
+</ul>
+<blockquote>Примечание по количеству коммитов: API контрибьюторов GitHub показывает KiriaIT=26, OgOqro=24, Freemason-12=1. OgOqro мерджит многие PR, авторство которых принадлежит KiriaIT, поэтому его «авторские» коммиты (24) включают merge-коммиты. Реальный объём написанного кода пропорционален этому.</blockquote>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p><strong>Оценок ментора нет.</strong> Файл <code>temp/angular-pilot/scores/khachapuri-js.json</code> отсутствует: команда не присутствовала на интервью Sprint 1 — Components (конец мая). Это само по себе тревожный сигнал: дедлайн Sprint 1 уже прошёл, и ни один из трёх студентов не имеет оценки за защиту.</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>KiriaIT</td><td>— (не явился)</td><td>—</td></tr>
+<tr><td>OgOqro</td><td>— (не явился)</td><td>—</td></tr>
+<tr><td>Freemason-12</td><td>— (не явился)</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Сверка: оценки vs. активность.</strong> Картина активности (KiriaIT и OgOqro — по 6 смерджённых PR и сильная сдача Sprint 1–2, репозиторий замолчал с 2026-05-25) не может быть скорректирована оценкой ментора, поскольку её нет. Неявка на защиту Sprint 1 — отдельный отрицательный факт поверх уже вызывающего молчания репозитория. Для KiriaIT и OgOqro здесь реальное противоречие: репозиторий свидетельствует о компетентности, но ни один из них не защищался в Sprint 1. Для Freemason-12 неявка усугубляет и без того очевидную картину выбывания — ни кода, ни дневника, ни защиты.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>KiriaIT — тимлид, 26 коммитов / 6 PR / 2 дневника</h3>
+<p><strong>Что сделал:</strong></p>
+<ul>
+<li>Полный проектный скаффолдинг с нуля: Angular 21 standalone, строгий TS, структура папок (<code>core/shared/features/layout</code>), настройка Tailwind v4, ESLint 9 flat config, Husky pre-commit hooks, CI-пайплайн (<code>ci.yml</code>), деплой на Vercel.</li>
+<li>Сигнальный API компонентов повсюду: <code>StatCardComponent</code> (Спринт 1) с <code>input.required&lt;string&gt;()</code>, <code>model(false)</code>, <code>output&lt;void&gt;()</code>; <code>MarketOverviewComponent</code> с <code>resource()</code> + <code>computed()</code>.</li>
+<li><code>WalletService</code> (Спринт 2) — эталонная реализация Angular signals: разделение приватного/readonly сигнала (<code>_status.asReadonly()</code>), <code>computed()</code> для <code>isConnected</code> и <code>shortAddress</code>, <code>effect()</code> для записи в localStorage. Граница RxJS/signals корректно обработана: стримы внутри сервиса, сигналы на границе.</li>
+<li><code>walletConnectedGuard: CanActivateFn</code> (Спринт 2) — редирект на <code>/connect?return=&lt;url&gt;</code>.</li>
+<li>Роутинг: 7+ маршрутов, ленивая загрузка через <code>loadChildren</code> и <code>loadComponent</code>.</li>
+<li><code>WalletStorageService</code>, <code>MockBlockchainService</code>, <code>ThemeService</code>.</li>
+<li>Авторизационный флоу (Спринт 2+): Supabase <code>AuthService</code>, конфиг окружения, меню пользователя, <code>ToastService</code>.</li>
+<li><code>.cursor/rules/rule.mdc</code> — командные правила кода, применяемые через Cursor AI IDE.</li>
+<li>Заранее подготовленные карточки задач спринта (<code>SPRINT-2-TASKS.md</code>) для обоих товарищей по команде с файловыми заглушками и критериями приёмки.</li>
+</ul>
+<p><strong>Уровень:</strong> Крепкий мид. Реально понимает границу signal/RxJS (дневник Спринта 2 объясняет <code>takeUntilDestroyed(destroyRef)</code> в контексте инжекции — это не copy-paste фикс). Архитектурные решения осознанны и задокументированы. Один коммит с co-authored-by-Cursor виден (<code>refactor: Tailwind-only styling, remove unused UI, add standards and Husky</code>) — точечный рефакторинг, не оптовая AI-генерация.</p>
+<p><strong>Риски:</strong></p>
+<ul>
+<li>Тяжёлый скаффолдинг для товарищей по команде (готовые заглушки, карточки задач с заранее созданными именами файлов) затрудняет определение того, сколько кода OgOqro/Freemason-12 действительно их, а не просто заполнение шаблонов.</li>
+<li>Дневник Спринта 2 сообщает «~3 часа» на масштабный Спринт 2 — подозрительная оценка времени, возможно, занижена или написана с помощью AI.</li>
+</ul>
+<p><strong>Что проверять:</strong> Попросить объяснить <code>takeUntilDestroyed()</code> — конкретно, <em>почему</em> его необходимо вызывать во время конструирования, а не внутри метода (он задокументировал обнаружение этого бага). Затем спросить: если убрать <code>effect()</code> из <code>WalletStorageService.write()</code> и использовать вместо него <code>computed()</code>, что сломается и почему? Это проверит понимание границы побочных эффектов.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>OgOqro — 24 коммита / 6 PR / 2 дневника</h3>
+<p><strong>Что сделал:</strong></p>
+<ul>
+<li>Спринт 1: <code>WatchlistChipComponent</code> — OnPush, <code>input.required&lt;string&gt;()</code>, <code>output&lt;string&gt;()</code>, подключён к <code>DashboardPageComponent</code> с обработчиком фильтрации по сигналу <code>watchlist</code>. <code>PriceTickerComponent</code> — <code>input&lt;number | null&gt;</code> + <code>DecimalPipe</code>, вынесенный внутрь компонента.</li>
+<li>Спринт 2: <code>PortfolioService</code> — полный переписывание с мока на живые данные. <code>signal&lt;PortfolioHolding[]&gt;([])</code>, <code>computed()</code> для <code>totalValue</code>/<code>bestAsset</code>, <code>setHoldingsFromTickers(tickers)</code> маппит тикер Binance → holdings, <code>clearHoldings()</code> для состояний загрузки/ошибки. Разделение приватного/readonly применено корректно.</li>
+<li><code>PortfolioPageComponent</code> — инжектирует два сервиса через <code>inject()</code>, использует <code>resource()</code> для загрузки 24h-снапшота Binance, <code>effect()</code> для реакции на изменения состояния снапшота и вызова методов сервиса. Корректно использует <code>firstValueFrom()</code> внутри загрузчика <code>resource()</code>.</li>
+<li>Страница About с сигнальным переключателем команды.</li>
+</ul>
+<p><strong>Уровень:</strong> Хороший результат для позднего участника. OgOqro прямо признаёт в дневнике, что до этого проекта не имел опыта работы с командным репозиторием («every project I had worked on before was solo») — его Спринт 1 занял 6 часов только на освоение Git. Это честно. Работа Спринта 2 значительно сложнее: он достаточно разобрался в существующей архитектуре, чтобы заменить моковые цены портфеля живыми данными Binance и правильно выстроить сигнальную цепочку. Разделение приватного/readonly сигнала в <code>PortfolioService</code> совпадает с паттерном, заложенным KiriaIT, — это либо настоящее обучение, либо заполнение шаблона (карточка <code>SPRINT-2-TASKS.md</code> с конкретными путями к файлам была заранее написана KiriaIT).</p>
+<p><strong>Риски:</strong></p>
+<ul>
+<li>Карточка задачи Спринта 1 была заранее подготовлена KiriaIT; паттерн, которому OgOqro следовал в <code>PortfolioService</code>, в точности повторяет то, что уже делает <code>WalletService</code>. Возможно, он скопировал паттерн, а не понял его. Дневников или кода начиная со Спринта 3 нет.</li>
+<li>Оценка в 12 часов на Спринт 1 (6ч чтения + 6ч на два небольших компонента) говорит о том, что он действительно учится с нуля — это не минус, но глубина его знаний Angular может быть поверхностной.</li>
+</ul>
+<p><strong>Что проверять:</strong> Попросить объяснить разницу между <code>computed()</code> и <code>effect()</code> без обращения к коду — конкретно, <em>почему</em> <code>effect()</code> в <code>PortfolioPageComponent</code> правильный выбор, а <code>computed()</code> там не сработал бы. Это именно то архитектурное решение, которое он задокументировал; если понимает — отлично. Если просто заполнял карточку задачи — ответить не сможет. Также спросить: если <code>firstValueFrom()</code> выбрасывает исключение, что происходит с состоянием <code>resource()</code>?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Freemason-12 — 1 коммит / 1 PR / 1 дневник</h3>
+<p><strong>Что сделал:</strong></p>
+<ul>
+<li><code>CoinClickerComponent</code> (<code>src/app/shared/ui/clicker-coin</code>) — самостоятельный игрушечный компонент. Использует <code>input&lt;number&gt;()</code> для начального баланса, <code>input&lt;number&gt;()</code> для шага увеличения/уменьшения, <code>output&lt;{value: number, diff: number}&gt;</code>. Клик увеличивает счётчик; таймер уменьшает его каждые 2 секунды до нуля. Это геймификационный виджет, а не криптофича. Затраченное время по отчёту: ~4 часа (2–3ч на чтение кодовой базы, остальное — на компонент).</li>
+</ul>
+<p><strong>Что отсутствует:</strong></p>
+<ul>
+<li>Никакой сдачи в Спринте 2 вообще. Карточка <code>SPRINT-2-TASKS.md</code>, подготовленная KiriaIT (страница Markets + <code>unsavedFormGuard</code>), не имеет ни одного коммита. Список PR показывает, что Freemason-12 открыл ровно один PR (#50, смерджен 2026-05-19) и больше не появлялся.</li>
+<li>Дневника за Спринт 2 нет. Дневников и кода за Спринты 3 и 4 нет.</li>
+<li>Последняя активность: 2026-05-18. Репозиторий замолчал 2026-05-25, но Freemason-12 ушёл в молчание на неделю раньше.</li>
+<li>План Спринта 2 в его дневнике гласит «I don't know for now» — это отсутствие направления обернулось молчанием.</li>
+</ul>
+<p><strong>Уровень:</strong> Не поддаётся оценке, кроме как «новичок, выполнивший минимальный компонент Спринта 1». По его словам, только чтение кодовой базы заняло 2–3 часа, а таймерный интервал оказался для него сложным. Компонент clicker-coin работоспособен, но тривиален — он покрывает требование Спринта 1 по signals (<code>input()</code>, <code>output()</code>) на минимальном уровне.</p>
+<p><strong>Риски:</strong> Этот студент де-факто выбыл после Спринта 1, Спринты 2–4 не сданы. Интервью немедленно обнажит, что у него нет никакого опыта работы с Angular роутингом, гардами, реактивными формами, HTTP, RxJS или тестированием в рамках этого курса. Не рассчитывайте на знания, общие с остальной командой.</p>
+<p><strong>Что проверять:</strong> Попросить объяснить разницу между <code>input()</code> и <code>@Input()</code> — единственная концепция, которую он явно применял. Затем спросить: что делает <code>CanDeactivateFn</code> и зачем его использовать? (Это было его задание Спринта 2; он так и не реализовал его.) Разрыв между тем, что он должен был знать, и тем, что сможет объяснить, проявится быстро.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Уровень здоровья: красный (В зоне риска)</strong> — репозиторий замолчал 2026-05-25, брошен ещё до окончания Спринта 2; допуск по дедлайну 23 июня к этой команде не применяется, поскольку работа прекратилась за несколько недель до него. Ни один участник не явился на защиту Спринта 1 — ни у кого из троих нет оценки на запись. Freemason-12 — подтверждённый выбывший. Сильный индивидуальный участник (KiriaIT) не делает команду здоровой, когда команда в целом остановилась: OgOqro молчит с 2026-05-25, Спринты 3–4 полностью не сданы, и ни одного участия в интервью не было.</p>
+<p><strong>В целом:</strong> Несбалансированная команда, где единственный эффективный участник хорошо работает в паре с опоздавшим, но добросовестным вторым, а третий фактически выбыл после Спринта 1.</p>
+<p><strong>KiriaIT</strong> — бесспорный двигатель команды: он выстроил всю архитектуру, CI, деплой-пайплайн и заранее подготовил задачи для товарищей. К интервью готов по роутингу, signals, DI и границе RxJS/signals. Основной угол проверки: выяснить, насколько глубоко его понимание (может ли объяснить с нуля) или это архитектурная память паттернов (он документировал баги и решения, поэтому, скорее всего, понимание реальное). Следить за несоответствием временных оценок в дневниках — Спринт 2 «за ~3 часа» при таком объёме фич в это трудно поверить.</p>
+<p><strong>OgOqro</strong> — приятный сюрприз с учётом его стартовой точки (никакого опыта командного Git). Переписывание <code>PortfolioService</code> в Спринте 2 показывает, что он усвоил архитектуру. Риск в том, что он работал внутри заранее подготовленного скаффолдинга задач — независимо проверить, понимает ли он границы signal/effect или просто следовал шаблону. Его честность в рассказе о трудностях — хороший знак.</p>
+<p><strong>Freemason-12</strong> — реальная проблема. Один коммит, один игрушечный компонент, молчит 4+ недели. Спринты 2, 3 и 4 полностью не сданы. Интервью будет неловким, но коротким — скорректируйте ожидания соответственно и не позволяйте общему качеству команды скрыть этот разрыв.</p>
+<p><strong>Рекомендуемый угол интервью:</strong></p>
+<ul>
+<li>KiriaIT: одно сложное объяснение с нуля (правило побочных эффектов <code>effect()</code>; баг injection-context в <code>takeUntilDestroyed</code>, который он починил).</li>
+<li>OgOqro: <code>computed()</code> vs <code>effect()</code> без подсказок; что происходит, если загрузчик <code>resource()</code> отклоняется с ошибкой.</li>
+<li>Freemason-12: <code>input()</code> vs <code>@Input()</code> (его единственная концепция), затем <code>CanDeactivateFn</code> (его провал в Спринте 2) — немедленно откалибровать под реальность.</li>
+</ul>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

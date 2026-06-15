@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — The team implementing the task · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — The team implementing the task</strong><strong class="lang-ru">Mentor briefing — The team implementing the task</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — The team implementing the task</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>pasha-learns/Novachain</code> (commits, PRs, issues) + sprint diaries (sprints 1–2). Snapshot: 2026-06-15. Goal: give the mentor context in 2 minutes before the defence: who did what, who understands, what to dig into.</blockquote>
+<p><strong>Project:</strong> Novachain — Angular SPA, crypto/blockchain trading dashboard theme. Built with Angular 21 + TypeScript, ApexCharts, Binance testnet REST API, standalone components, Signals. Repo created 2026-05-15, last pushed 2026-06-08, 6 open issues (all created by lead as sprint-2 self-tracking issues — not real bugs). Live at <a href="https://pasha-learns.github.io/Novachain/">https://pasha-learns.github.io/Novachain/</a></p>
+<p><strong>One-line summary:</strong> Small, just-started team that shipped a functioning skeleton (auth, dashboard, markets, trade route) in two sprints; the lead carries most of the code weight while Vitalina and Sasha each own one slice; no passengers, but the load is heavily asymmetric and the project is still thin.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<table><thead>
+<tr><th>Login</th><th>Role</th><th>Note</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong></td><td>Student, lead</td><td>Repo owner, bulk of commits</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>Student</td><td>Auth slice owner</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>Student</td><td>Dashboard + infra cleanup</td></tr>
+<tr><td><strong>bearury</strong></td><td><strong>Mentor</strong></td><td>Not in contributors — normal, no code expected</td></tr>
+</tbody></table>
+<p>No external contributors found. <code>vitalina-oleksiienko</code> does not appear in the GitHub contributors API (her commit <code>b6425c4</code> was pushed by the lead but git <code>author.email = vitalina_oleksiienko@yahoo.com</code> — she worked locally, pasha merged). This is common in small teams; diary evidence confirms her work.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total/merged)</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong> (lead)</td><td>7 (own + merge)</td><td>1 / 1 (merged)</td><td>2 (sprint 1, sprint 2)</td><td>2026-06-08</td><td>Strong owner; does architecture, integration, and coordination</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>1 (unlinked, git email confirmed)</td><td>0</td><td>2 (sprint 1, sprint 2)</td><td>2026-06-09</td><td>Owns auth slice; sprint-2 contribution was minor (1 h to re-enable a guard and fix a redirect)</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>1</td><td>0</td><td>2 (sprint1.md, sprint2.md)</td><td>2026-06-08</td><td>Dashboard + ApexCharts owner sprint 1; sprint 2 was maintenance/lint only (~2 h)</td></tr>
+</tbody></table>
+<p><strong>Commit count caveat:</strong> The repo has only 9 commits on main total. This is a GitFlow-light project where most work landed in two merge commits (sprint 1 and sprint 2). The raw contribution numbers are low because each person's sprint work was bundled in a single push. The weight of each person's slice comes from diaries and commit messages, not from commit count alone.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Mentor on record: <strong>bearury</strong> (own team mentor). Sprint 1 interview: "Sprint 1 Interview — Components". No Sprint 2 scores on record yet — expected, as Sprint 2 is in progress (deadline 2026-06-23).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong></td><td>— (not on record)</td><td>—</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>75 / 100</td><td>—</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>100 / 100</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><strong>pasha-learns</strong> did not appear in the Sprint 1 interview record. It is unclear whether he was evaluated separately, was absent, or the record was not filed. No comment provided. This is a gap — the lead's understanding has not been formally verified at the defence level.</li>
+<li><strong>vitalina-oleksiienko</strong> scored 75/100 at Sprint 1. No mentor comment was provided. The briefing evidence shows she built the most Angular-complete feature (auth, reactive forms, signals) — a 75 suggests the mentor found some gaps, likely conceptual rather than implementation. The depth probe (JWT expiry / interceptor) remains the right pressure point.</li>
+<li><strong>sashadrozdov94-spec</strong> scored 100/100 at Sprint 1. No mentor comment was provided. This is the highest score on the team; the briefing flags Sasha's sprint-2 showing as thin (2 hours, only linting) and his diaries as less reflective — a perfect Sprint 1 score combined with light Sprint 2 activity is a divergence worth noting.</li>
+</ul>
+<p><strong>Score vs. activity reconciliation:</strong></p>
+<ul>
+<li><strong>sashadrozdov94-spec — 100 at Sprint 1 / thin Sprint 2.</strong> The defence score says he clearly articulated Components concepts at interview. However, his Sprint 2 contribution was ~2 hours of linting and accessibility fixes with no new feature. These two signals point in opposite directions: strong verbal performance, low follow-through in Sprint 2. At the next interview, the probe should confirm whether the Sprint 1 conceptual understanding translated into continued independent work or whether it was one-time interview performance.</li>
+<li><strong>vitalina-oleksiienko — 75 at Sprint 1 / light Sprint 2.</strong> The 75 and the light Sprint 2 (1 hour) are both consistent — she has real knowledge but something was missing at the defence. The missing piece is most likely the expiry/interceptor question or reactive form internals. Low further risk, but the gap should be confirmed at Sprint 2 interview.</li>
+<li><strong>pasha-learns — no defence record / strongest activity signal.</strong> He is the most active contributor by commit count, architecture, and PR merge, yet has no Sprint 1 evaluation on file. This is the most significant gap in the fuller picture: the person driving the project was not formally assessed.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>pasha-learns — lead, 7 commits / 1 merged PR</h3>
+<p><strong>Built (evidence from commits + diary):</strong></p>
+<ul>
+<li>Project scaffolding: Angular 21 standalone app, base routing, notes folder (2026-05-15–16)</li>
+<li>Markets page: <code>MarketsTableComponent</code> with <code>input()</code> / <code>output()</code> (pairSelected, favoriteToggled), Binance testnet REST on init, <code>/markets</code> route + header link, <code>@for</code> with track on symbol, green/red class binding on 24h change, OnPush change detection (diary 2026-05-18)</li>
+<li>Sprint 2: lazy <code>/trade/:symbol</code> page reading <code>symbol</code> via <code>paramMap</code> + <code>toSignal()</code>, <code>computed()</code> display label; <code>favoriteCount computed</code> on markets page; ESLint CI workflow; GitHub Pages deploy wiring; merged sprint-2 PR (#7, title: "sprint 2: trade route, ESLint CI, GitHub Pages deploy")</li>
+<li>Architecture decision: page-holds-data / component-only-displays-and-fires pattern applied consistently, described in diary with reference to Sasha's pattern on dashboard</li>
+</ul>
+<p><strong>Level:</strong> Actively learning and thinking in Angular idioms. Uses Signals correctly (toSignal, computed, OnPush). Knows what he deferred (WebSocket, filter tabs, sorting) and why ("too much for one week"). Reflects on time honestly (5 h sprint 1, 3 h sprint 2). Not deep yet — trades straightforward solutions rather than complex ones — but the decision-making is sound.</p>
+<p><strong>Probe at interview:</strong> Ask him to walk through the <code>MarketsTableComponent</code> data flow: parent fetches, passes rows via <code>input.required</code>, table fires events via <code>output()</code>. Then: "What would change if we needed real-time WebSocket prices — where exactly would the subscription live and why not inside the table?" This is the architectural question his sprint-2 diary sets up but he explicitly deferred. If he can't answer it, he doesn't understand the smart/dumb split he described; if he can, he's solid. Secondary probe: explain <code>OnPush</code> change detection — what it saves and what it breaks.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vitalina-oleksiienko — 1 commit / 0 PRs / 2 diaries</h3>
+<p><strong>Built (evidence from commit message + diary):</strong></p>
+<ul>
+<li>Sprint 1 (8 hours): <code>AuthService</code> with login/register HTTP requests, JWT storage in <code>localStorage</code>, <code>isAuthenticated</code> computed signal, logout; <code>authGuard</code> and <code>guestGuard</code> for route protection; <code>LoginComponent</code> and <code>RegisterComponent</code> with reactive forms, email/password validation, cross-field password-match group validator; <code>HeaderComponent</code> with SVG logo, <code>routerLinkActive</code>, reactive auth-state-based button display; automatic header hide on /login and /register via <code>toSignal</code> + <code>NavigationEnd</code></li>
+<li>Sprint 2 (1 hour): re-enabled <code>authGuard</code> on <code>/dashboard</code> (had been commented out during sprint 1 integration), fixed <code>RegisterComponent</code> post-signup redirect from broken <code>/settings</code> to <code>/dashboard</code></li>
+</ul>
+<p><strong>Level:</strong> Strongest Angular understanding on the team relative to task complexity for sprint 1. Built the most complete feature in terms of Angular API coverage: reactive forms, cross-field validators, computed signals, <code>toSignal</code> from <code>rxjs-interop</code>, route guards, router event subscription. The sprint-2 diary shows she understands <em>why</em> her sprint-1 fix was needed ("Route guards are only effective when actually attached to routes in <code>app.routes.ts</code> — having the guard function defined is not enough"). Sprint 2 contribution was very light (1 hour), likely because the auth slice was mostly done.</p>
+<p><strong>Risk:</strong> JWT guard only checks token presence, not expiry — she knows this (diary: "the guard only checks token presence, not validity") and explicitly flagged it as future work (HTTP interceptor). This is fine for a course project but the mentor should calibrate: does she understand what would actually break on an expired JWT, or is she just repeating the known gap?</p>
+<p><strong>Probe at interview:</strong> "Walk me through the cross-field password-match validator — what type does the validator function receive, and how do you get both field values?" This is the most specific thing she built from scratch. If she knows <code>AbstractControl</code> → <code>FormGroup</code>, she built it herself. Then: "The guestGuard redirects authenticated users from /login — what happens if the token is in localStorage but has expired?" This tests whether she understands HTTP 401 interception or if the interceptor idea came from a doc/AI suggestion she didn't fully process. Her sprint-2 diary is well-structured and honest — she's a good communicator; the depth check is the interceptor question.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>sashadrozdov94-spec — 1 commit / 0 PRs / 2 diaries</h3>
+<p><strong>Built (evidence from commit + diaries):</strong></p>
+<ul>
+<li>Sprint 1: initialized Git repo, created Angular standalone app structure, integrated CoinGecko API via <code>HttpClient</code> for Ethereum price history, built <code>CryptoChartComponent</code> using <strong>ApexCharts</strong> (presentational, inputs/outputs), implemented smart dashboard component with Angular Signals for state management</li>
+<li>Sprint 2: fixed ESLint accessibility issues on <code>CryptoChartComponent</code> (keyboard support for chart click handler), typed <code>CryptoService</code> to remove <code>any</code>, cleaned up <code>NotFoundComponent</code> for lint compliance, helped set up ESLint flat config, CI workflow, GitHub Pages SPA routing fix (copying <code>index.html</code> → <code>404.html</code>)</li>
+</ul>
+<p><strong>Time declared:</strong> Sprint 1 not stated; sprint 2 ~2 hours.</p>
+<p><strong>Level:</strong> Set up the skeleton and the most visually interesting component (ApexCharts chart). Understands the smart/dumb split (diary: "smart dashboard component leveraging Angular Signals for state management" / CryptoChartComponent is presentational). Sprint-2 work was almost entirely cleanup and maintenance — no new feature. Diary entries are shorter and less reflective than Vitalina's, but the sprint-1 content shows working knowledge.</p>
+<p><strong>Risk area:</strong> ApexCharts is a heavy third-party library. The chart component uses inputs/outputs correctly (pasha's diary explicitly references "sasha's crypto chart" as the pattern template), but the mentor should verify whether Sasha understands what ApexCharts is doing internally or just wired an API. Sprint 2 (~2 hours on linting) is a thin showing.</p>
+<p><strong>Probe at interview:</strong> "In your <code>CryptoChartComponent</code>, how does data get from the <code>CoinGecko API call</code> to what the chart renders?" Walk the chain: HttpClient in service → dashboard component holds signal state → passes via <code>input()</code> → component passes to ApexCharts config. Then ask: "If you needed to add a loading spinner while the API call is in flight, where would you put it and how would you track loading state with signals?" This tests whether he understands the signal flow or only knows which component calls what. Do not ask about ApexCharts internals — that's a library, not an Angular concept.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> The project is in early but functional state. Two sprints shipped auth, dashboard with a live CoinGecko chart, a markets table from Binance testnet, a lazy trade route, ESLint CI, and GitHub Pages deploy. That is a working skeleton — not impressive in depth, but delivered without collapse.</p>
+<p><strong>Balance:</strong> Asymmetric but not alarming. Pasha carries integration, deployment, and architecture. Vitalina owns the most Angular-complete feature (auth). Sasha set up the chart in sprint 1 and did maintenance in sprint 2. No one is a pure passenger, but sprint-2 contributions from Vitalina (1 h) and Sasha (2 h) are thin — both could have built new features instead of only cleanup. If sprint 3 exists, watch whether the non-lead members pick up feature work or stay on cleanup.</p>
+<p><strong>Who is strong:</strong> Vitalina has the strongest demonstrated Angular knowledge per diary — reactive forms with custom group validators, route guards, <code>toSignal</code> interop, all explained clearly. The depth check is the JWT expiry / interceptor question. Pasha is a solid architectural thinker for his level; his smart/dumb component split is deliberate, not accidental. Sasha is harder to read — less written evidence per sprint.</p>
+<p><strong>Who to watch:</strong> Sasha. One commit, 2 hours in sprint 2, and a shorter diary. The sprint-1 ApexCharts component is the most concrete thing he built; sprint 2 was linting. Mentor scored him 100/100 at the Sprint 1 defence — that is reassuring for verbal comprehension, but the light Sprint 2 follow-through means the score and the activity signal diverge. At the interview, probe whether he can reason about the data flow rather than just describe the library setup; the perfect Sprint 1 score raises the bar for what a solid answer looks like.</p>
+<p><strong>Recommended interview angle:</strong> For each student, take the one thing they claim to own and ask them to explain from scratch — not "what does it do" but "how would you rebuild it if the library disappeared." For Pasha: the smart/dumb component split and change detection. For Vitalina: the reactive form group validator. For Sasha: the CoinGecko API → signal → ApexCharts data chain without ApexCharts internals.</p>
+<p><strong>Soft flag:</strong> The repo has 6 open issues all created by the lead on the same minute (2026-06-08T23:28:56–23:29:01) — these are self-tracking issues for sprint 2 deliverables, not real bugs. None are closed. The lead either used issues as a checklist and forgot to close them, or they're tracking genuinely unfinished work (WebSocket, filter tabs, sort, real watchlist). Worth asking Pasha what the current open-issues status is — some of these (e.g. "Sprint 2: enable authGuard on dashboard") appear to be done per the diaries.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Команда, реализующая задачу</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>pasha-learns/Novachain</code> (коммиты, PR, issues) + дневники спринтов (спринты 1–2). Снимок: 2026-06-15. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, что копать.</blockquote>
+<p><strong>Проект:</strong> Novachain — Angular SPA, тема: торговый дашборд для крипто/блокчейна. Написан на Angular 21 + TypeScript, ApexCharts, Binance testnet REST API, standalone-компоненты, Signals. Репозиторий создан 2026-05-15, последний push 2026-06-08, 6 открытых issues (все созданы лидом как задачи для самоконтроля в спринте 2 — не реальные баги). Живой деплой: <a href="https://pasha-learns.github.io/Novachain/">https://pasha-learns.github.io/Novachain/</a></p>
+<p><strong>Внутренний итог в одной строке:</strong> Небольшая, только-начавшая команда, которая за два спринта выкатила рабочий скелет (авторизация, дашборд, маркеты, route для трейда); лид несёт основную часть кодовой нагрузки, Vitalina и Sasha каждая владеют одним срезом; пассажиров нет, но нагрузка сильно асимметрична, а проект пока тонкий.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав</h2>
+<table><thead>
+<tr><th>Логин</th><th>Роль</th><th>Примечание</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong></td><td>Студент, лид</td><td>Владелец репозитория, основная часть коммитов</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>Студент</td><td>Владелец среза авторизации</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>Студент</td><td>Дашборд + инфраструктурная уборка</td></tr>
+<tr><td><strong>bearury</strong></td><td><strong>Ментор</strong></td><td>Отсутствует в contributors — нормально, код не ожидается</td></tr>
+</tbody></table>
+<p>Внешних контрибьюторов не найдено. <code>vitalina-oleksiienko</code> не появляется в GitHub contributors API (её коммит <code>b6425c4</code> был запушен лидом, но git <code>author.email = vitalina_oleksiienko@yahoo.com</code> — она работала локально, pasha влил). Это обычная ситуация в маленьких командах; данные дневников подтверждают её работу.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего/влито)</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong> (лид)</td><td>7 (свои + merge)</td><td>1 / 1 (влит)</td><td>2 (спринт 1, спринт 2)</td><td>2026-06-08</td><td>Сильный владелец; занимается архитектурой, интеграцией и координацией</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>1 (не связан с аккаунтом GitHub, git email подтверждён)</td><td>0</td><td>2 (спринт 1, спринт 2)</td><td>2026-06-09</td><td>Владелец среза авторизации; вклад в спринте 2 минимален (1 ч на повторное включение гарда и фикс редиректа)</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>1</td><td>0</td><td>2 (sprint1.md, sprint2.md)</td><td>2026-06-08</td><td>Владелец дашборда + ApexCharts в спринте 1; спринт 2 — только обслуживание/lint (~2 ч)</td></tr>
+</tbody></table>
+<p><strong>Оговорка по количеству коммитов:</strong> В репозитории всего 9 коммитов на main. Это GitFlow-light проект, где основная работа попала в два merge-коммита (спринт 1 и спринт 2). Сырые числа вклада малы, потому что работа каждого за спринт была упакована в один push. Вес вклада каждого человека следует оценивать по дневникам и сообщениям коммитов, а не по количеству коммитов.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Ментор: <strong>bearury</strong> (штатный ментор команды). Интервью спринта 1: «Sprint 1 Interview — Components». Баллов за спринт 2 пока нет — ожидаемо, спринт 2 в процессе (дедлайн 2026-06-23).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>pasha-learns</strong></td><td>— (записи нет)</td><td>—</td></tr>
+<tr><td><strong>vitalina-oleksiienko</strong></td><td>75 / 100</td><td>—</td></tr>
+<tr><td><strong>sashadrozdov94-spec</strong></td><td>100 / 100</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Примечания:</strong></p>
+<ul>
+<li><strong>pasha-learns</strong> отсутствует в записях интервью спринта 1. Неясно — был ли он оценён отдельно, не явился или запись не была подана. Комментария нет. Это пробел: понимание лида не было формально проверено на уровне защиты.</li>
+<li><strong>vitalina-oleksiienko</strong> набрала 75/100 на спринте 1. Комментария ментора не предоставлено. Данные брифинга показывают, что она построила наиболее Angular-полноценную фичу (авторизация, реактивные формы, сигналы) — 75 баллов говорит о том, что ментор обнаружил некоторые пробелы, вероятно концептуального, а не имплементационного характера. Глубинный вопрос про истечение JWT / interceptor остаётся верной точкой давления.</li>
+<li><strong>sashadrozdov94-spec</strong> набрал 100/100 на спринте 1. Комментария ментора не предоставлено. Это наивысший балл в команде; в брифинге отмечается, что вклад Sasha в спринте 2 тонкий (2 часа, только lint) и дневники менее рефлексивны — идеальный балл за спринт 1 в сочетании с низкой активностью в спринте 2 представляет собой расхождение, заслуживающее внимания.</li>
+</ul>
+<p><strong>Согласование баллов и активности:</strong></p>
+<ul>
+<li><strong>sashadrozdov94-spec — 100 на спринте 1 / тонкий спринт 2.</strong> Балл за защиту говорит о том, что он чётко изложил концепции Components на интервью. Однако вклад в спринте 2 составил ~2 часа lint и исправлений доступности без новых фич. Эти два сигнала указывают в противоположные стороны: сильное вербальное выступление — слабое продолжение в спринте 2. На следующем интервью проверить, переросло ли концептуальное понимание спринта 1 в самостоятельную работу или осталось разовым выступлением.</li>
+<li><strong>vitalina-oleksiienko — 75 на спринте 1 / лёгкий спринт 2.</strong> 75 баллов и минимальный спринт 2 (1 час) согласуются: у неё есть реальные знания, но что-то не дотянуло на защите. Скорее всего, это вопрос про истечение токена/interceptor или внутренняя логика реактивных форм. Серьёзного риска нет, но пробел стоит проверить на интервью спринта 2.</li>
+<li><strong>pasha-learns — нет записи о защите / сильнейший сигнал активности.</strong> Он наиболее активный контрибьютор по коммитам, архитектуре и влиянию PR, однако формальной оценки за спринт 1 нет. Это наиболее значимый пробел в общей картине: человек, ведущий проект, не был формально оценён.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>pasha-learns — лид, 7 коммитов / 1 влитый PR</h3>
+<p><strong>Построил (данные из коммитов + дневника):</strong></p>
+<ul>
+<li>Скаффолдинг проекта: Angular 21 standalone-приложение, базовая маршрутизация, папка notes (2026-05-15–16)</li>
+<li>Страница маркетов: <code>MarketsTableComponent</code> с <code>input()</code> / <code>output()</code> (pairSelected, favoriteToggled), Binance testnet REST при инициализации, роут <code>/markets</code> + ссылка в хедере, <code>@for</code> с track по symbol, привязка классов green/red по изменению за 24ч, OnPush change detection (дневник 2026-05-18)</li>
+<li>Спринт 2: ленивая страница <code>/trade/:symbol</code> читает <code>symbol</code> через <code>paramMap</code> + <code>toSignal()</code>, <code>computed()</code> для отображения метки; <code>favoriteCount computed</code> на странице маркетов; ESLint CI workflow; настройка GitHub Pages deploy; влит PR спринта 2 (#7, заголовок: "sprint 2: trade route, ESLint CI, GitHub Pages deploy")</li>
+<li>Архитектурное решение: паттерн «страница хранит данные / компонент только отображает и отправляет события» применён последовательно, описан в дневнике со ссылкой на паттерн Sasha на дашборде</li>
+</ul>
+<p><strong>Уровень:</strong> Активно учится и мыслит в Angular-идиомах. Использует Signals правильно (toSignal, computed, OnPush). Знает, что отложил (WebSocket, вкладки с фильтрами, сортировка) и почему («слишком много для одной недели»). Честно рефлексирует по времени (5 ч спринт 1, 3 ч спринт 2). Пока не глубок — выбирает прямолинейные решения вместо сложных — но логика принятия решений здравая.</p>
+<p><strong>Что проверять на интервью:</strong> Попросить пройтись по потоку данных <code>MarketsTableComponent</code>: родитель делает запрос, передаёт строки через <code>input.required</code>, таблица стреляет событиями через <code>output()</code>. Затем: «Что изменится, если нам понадобятся цены в реальном времени через WebSocket — где именно будет жить подписка и почему не внутри таблицы?» Это архитектурный вопрос, который дневник спринта 2 подводит, но который он явно отложил. Если не может ответить — не понимает разделение smart/dumb, которое сам описал; если может — стоит крепко. Дополнительно: объяснить OnPush change detection — что экономит и что ломает.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vitalina-oleksiienko — 1 коммит / 0 PR / 2 дневника</h3>
+<p><strong>Построила (данные из сообщения коммита + дневника):</strong></p>
+<ul>
+<li>Спринт 1 (8 часов): <code>AuthService</code> с HTTP-запросами login/register, хранение JWT в <code>localStorage</code>, вычисляемый сигнал <code>isAuthenticated</code>, logout; <code>authGuard</code> и <code>guestGuard</code> для защиты роутов; <code>LoginComponent</code> и <code>RegisterComponent</code> с реактивными формами, валидацией email/пароля, кросс-полевым группвым валидатором на совпадение паролей; <code>HeaderComponent</code> с SVG-логотипом, <code>routerLinkActive</code>, реактивным отображением кнопок в зависимости от состояния авторизации; автоматическое скрытие хедера на /login и /register через <code>toSignal</code> + <code>NavigationEnd</code></li>
+<li>Спринт 2 (1 час): повторно включила <code>authGuard</code> на <code>/dashboard</code> (был закомментирован при интеграции в спринте 1), исправила редирект после регистрации в <code>RegisterComponent</code> с неработающего <code>/settings</code> на <code>/dashboard</code></li>
+</ul>
+<p><strong>Уровень:</strong> Сильнейшее понимание Angular в команде — относительно сложности задачи спринта 1. Построила наиболее полноценную фичу по охвату Angular API: реактивные формы, кросс-полевые валидаторы, вычисляемые сигналы, <code>toSignal</code> из <code>rxjs-interop</code>, гарды роутов, подписка на события роутера. Дневник спринта 2 показывает, что она понимает <em>почему</em> потребовался её фикс спринта 1 («Гарды роутов работают только тогда, когда они действительно подключены к роутам в <code>app.routes.ts</code> — наличия функции гарда недостаточно»). Вклад в спринте 2 очень лёгкий (1 час) — вероятно, потому что срез авторизации был в основном готов.</p>
+<p><strong>Риск:</strong> JWT-гард проверяет только наличие токена, но не его срок действия — она об этом знает (дневник: «гард проверяет только наличие токена, а не его валидность») и явно обозначила это как будущую работу (HTTP interceptor). Для курсового проекта нормально, но ментору стоит проверить: понимает ли она, что реально сломается при истёкшем JWT, или просто воспроизводит известный пробел?</p>
+<p><strong>Что проверять на интервью:</strong> «Расскажи про кросс-полевой валидатор совпадения паролей — какой тип принимает функция-валидатор и как ты получаешь значения обоих полей?» Это самое конкретное, что она построила с нуля. Если знает <code>AbstractControl</code> → <code>FormGroup</code> — построила сама. Затем: «guestGuard перенаправляет авторизованных пользователей с /login — что произойдёт, если токен есть в localStorage, но его срок истёк?» Проверяет, понимает ли она HTTP 401 interception, или идея про interceptor пришла из документации/AI и не была до конца осмыслена. Её дневник спринта 2 структурирован и честен — она хороший коммуникатор; глубинная проверка — вопрос про interceptor.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>sashadrozdov94-spec — 1 коммит / 0 PR / 2 дневника</h3>
+<p><strong>Построил (данные из коммита + дневников):</strong></p>
+<ul>
+<li>Спринт 1: инициализировал git-репозиторий, создал структуру Angular standalone-приложения, интегрировал CoinGecko API через <code>HttpClient</code> для истории цены Ethereum, построил <code>CryptoChartComponent</code> на <strong>ApexCharts</strong> (презентационный, inputs/outputs), реализовал smart dashboard-компонент с Angular Signals для управления состоянием</li>
+<li>Спринт 2: исправил проблемы доступности ESLint в <code>CryptoChartComponent</code> (поддержка клавиатуры для обработчика клика на графике), типизировал <code>CryptoService</code> чтобы убрать <code>any</code>, навёл порядок в <code>NotFoundComponent</code> для соответствия lint, помог настроить ESLint flat config, CI workflow, фикс SPA-маршрутизации GitHub Pages (копирование <code>index.html</code> → <code>404.html</code>)</li>
+</ul>
+<p><strong>Задекларированное время:</strong> Спринт 1 — не указано; спринт 2 ~2 часа.</p>
+<p><strong>Уровень:</strong> Настроил скелет и наиболее визуально интересный компонент (график ApexCharts). Понимает разделение smart/dumb (дневник: «smart dashboard-компонент с Angular Signals для управления состоянием» / CryptoChartComponent — презентационный). Работа спринта 2 почти целиком — уборка и обслуживание, новых фич нет. Записи в дневнике короче и менее рефлексивны, чем у Vitalina, но содержание спринта 1 демонстрирует рабочие знания.</p>
+<p><strong>Зона риска:</strong> ApexCharts — тяжёлая сторонняя библиотека. Компонент с графиком использует inputs/outputs правильно (дневник pasha явно ссылается на «crypto chart sasha» как на образец паттерна), но ментору стоит проверить, понимает ли Sasha, что ApexCharts делает внутри, или просто подключил API. Спринт 2 (~2 часа на lint) — слабый показатель.</p>
+<p><strong>Что проверять на интервью:</strong> «В твоём <code>CryptoChartComponent</code> — как данные попадают от <code>вызова CoinGecko API</code> к тому, что рендерит график?» Пройти цепочку: HttpClient в сервисе → dashboard-компонент хранит состояние в сигнале → передаёт через <code>input()</code> → компонент передаёт в конфигурацию ApexCharts. Затем: «Если нужно добавить спиннер загрузки пока API-вызов в полёте — куда его поместить и как отслеживать состояние загрузки с помощью сигналов?» Проверяет, понимает ли он поток сигналов или знает только какой компонент что вызывает. Не спрашивать про внутренности ApexCharts — это библиотека, не концепция Angular.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>Общее:</strong> Проект на ранней, но рабочей стадии. За два спринта выкачены авторизация, дашборд с живым графиком CoinGecko, таблица маркетов из Binance testnet, ленивый route для трейда, ESLint CI и деплой на GitHub Pages. Это рабочий скелет — не впечатляет глубиной, но доставлен без обвала.</p>
+<p><strong>Баланс:</strong> Асимметричный, но не критичный. Pasha несёт интеграцию, деплой и архитектуру. Vitalina владеет наиболее Angular-полноценной фичей (авторизация). Sasha настроил график в спринте 1 и занимался обслуживанием в спринте 2. Чистых пассажиров нет, но вклад Vitalina (1 ч) и Sasha (2 ч) в спринте 2 тонкий — оба могли бы построить новые фичи вместо одной только уборки. Если есть спринт 3, следить, возьмут ли не-лиды фичи или останутся на уборке.</p>
+<p><strong>Кто силён:</strong> Vitalina демонстрирует сильнейшее Angular-знание по дневникам — реактивные формы с кастомными группвыми валидаторами, гарды роутов, <code>toSignal</code> interop, всё объяснено ясно. Глубинная проверка — вопрос про истечение JWT / interceptor. Pasha — крепкий архитектурный мыслитель для своего уровня; разделение smart/dumb — осознанное, не случайное. Sasha сложнее считать — меньше письменных свидетельств за спринт.</p>
+<p><strong>За кем следить:</strong> Sasha. Один коммит, 2 часа в спринте 2, более короткий дневник. Компонент с ApexCharts в спринте 1 — самое конкретное, что он построил; спринт 2 — lint. Ментор поставил ему 100/100 на защите спринта 1 — это обнадёживает с точки зрения вербального понимания, но тонкое продолжение в спринте 2 означает, что балл и сигнал активности расходятся. На интервью проверить, способен ли он рассуждать о потоке данных, а не просто описывать настройку библиотеки; идеальный балл за спринт 1 повышает планку для того, что считается сильным ответом.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> Для каждого студента — взять ту вещь, которую они заявляют своей, и попросить объяснить с нуля — не «что это делает», а «как бы ты это пересобрал, если бы библиотека исчезла». Для Pasha: разделение smart/dumb и change detection. Для Vitalina: группвый валидатор реактивной формы. Для Sasha: цепочка CoinGecko API → сигнал → данные ApexCharts без внутренностей ApexCharts.</p>
+<p><strong>Мягкий флаг:</strong> В репозитории 6 открытых issues, все созданы лидом в одну минуту (2026-06-08T23:28:56–23:29:01) — это задачи для самоконтроля доставки спринта 2, не реальные баги. Ни один не закрыт. Лид либо использовал issues как чеклист и забыл закрыть, либо они отслеживают действительно незавершённую работу (WebSocket, вкладки фильтров, сортировка, настоящий watchlist). Стоит спросить Pasha про текущий статус открытых issues — некоторые (например, «Sprint 2: enable authGuard on dashboard») судя по дневникам уже сделаны.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

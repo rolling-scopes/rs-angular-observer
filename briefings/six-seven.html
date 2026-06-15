@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Six Seven · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Six Seven</strong><strong class="lang-ru">Mentor briefing — Six Seven</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Six Seven</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>klinx01/67-shop</code> (commits, PRs, development-notes diaries). Snapshot: 2026-06-15. Goal: give the mentor 2 minutes of honest context before the defence: who did what, who understands what, what to probe.</blockquote>
+<p><strong>One-line summary:</strong> Two-person team with an asymmetric commit split (klinx01 drives infrastructure and integration, reamplify1 contributes focused feature PRs). Both are using Angular Signals and modern API patterns correctly, but both explicitly document relying on AI to plan their component decomposition — the interview should test whether they can navigate that independently.</p>
+<p><strong>Project:</strong> 67-shop — Angular 21 SPA product catalog with real-time text filter, Signals-based state, lazy routing, AuthService + functional route guard, Angular Material header, deployed on Vercel (<a href="https://67-shop-lyart.vercel.app).">https://67-shop-lyart.vercel.app).</a> Repo created 2026-05-15, last push 2026-06-08. 8 open issues (Sprint 3 task list). No tests.</p>
+<p><strong>Stack:</strong> Angular 21 · TypeScript (strict) · SCSS · Angular Material (CDK + Material) · Angular Signals (<code>signal</code>, <code>computed</code>, <code>output</code>, <code>input.required</code>) · functional routing + lazy loading · functional <code>authGuard</code> · GitHub Actions CI (lint + build) · Vercel deploy.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>reamplify1</strong> (lead)</td><td>13</td><td>6 merged</td><td>3 (on main) + 1 (update-diary branch)</td><td>2026-06-06</td><td>Solid; writes genuinely reflective entries, but AI-assisted planning is explicit</td></tr>
+<tr><td><strong>klinx01</strong></td><td>29</td><td>10 merged</td><td>3 (on main)</td><td>2026-06-08</td><td>Most active contributor; scaffolding-heavy; openly depends on AI to understand task breakdown</td></tr>
+</tbody></table>
+<p><strong>Roster note:</strong> both contributors are students (confirmed against participants.json). No external contributors detected. No mentor commits. Repo owner is klinx01.</p>
+<p><strong>Balance:</strong> Asymmetric but not alarming. klinx01 has 29 commits vs. reamplify1's 13, and 10 PRs vs. 6. The split maps to role: klinx01 handles project structure, merges, deployment, and diary logistics; reamplify1 builds features with noticeably more polished PR descriptions and more architectural awareness in diaries.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>reamplify1</strong></td><td>100 / 100</td><td>not yet (due 2026-06-23)</td></tr>
+<tr><td><strong>klinx01</strong></td><td>100 / 100</td><td>not yet (due 2026-06-23)</td></tr>
+</tbody></table>
+<p>Mentor: <strong>milana1726</strong> · Sprint 1 Interview — Components (late May).</p>
+<p>Both students received a perfect score at the Sprint 1 defence. No written comment was left by the mentor for either student — the score alone is the signal.</p>
+<p><strong>Reconciliation — scores vs. activity:</strong></p>
+<ul>
+<li><strong>reamplify1 (100 at defence, last active 2026-06-06):</strong> Score and activity are consistent. The 100 validates what the diary entries suggest — genuine understanding of the patterns he shipped (Signal inputs, <code>authGuard</code>, CI). Minor divergence: his last commit was 2026-06-06, nine days before the snapshot. For a team that is mid-Sprint 2, this is not alarming, but worth watching if he stays quiet past the Sprint 2 deadline.</li>
+<li><strong>klinx01 (100 at defence, documented AI-dependency across three diaries):</strong> This is the notable divergence. Diary entries across the full project duration self-report an inability to decompose tasks without AI ("I ask the AI to explain what to do, otherwise I can't visualize the interaction"), yet he passed the Sprint 1 interview at 100. Two readings are possible: (a) he understands the mechanics well enough to answer interview questions even if his self-directed design process leans on AI; (b) the Sprint 1 scope (Components) is narrow enough that a well-rehearsed walkthrough can score 100 without revealing the decomposition gap. Sprint 2 (Routing & Signals) is broader — this is where the gap, if real, is more likely to surface. The whiteboard-style data-flow probe in the conclusion below remains the recommended test.</li>
+</ul>
+<p>Sprint 2 scores are not yet available and should not be expected before 2026-06-23.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Student profiles</h2>
+<h3>reamplify1 — lead · 13 commits · 6 merged PRs · 4 diary entries</h3>
+<p><strong>Built (grounded in PRs + diary):</strong></p>
+<ul>
+<li>PR #2: ProductCard component with <code>input.required&lt;Product&gt;()</code> Signal input — debugged the missing <code>()</code> call on <code>input.required</code> himself, understood why Angular missed the binding</li>
+<li>PR #10: Set up ESLint (<code>@angular-eslint/schematics</code>) + GitHub Actions CI (lint + build on every push/PR to main and dev-sprint-2) — PR description shows he knew what he was configuring</li>
+<li>PR #11: Functional routing with lazy <code>loadComponent</code>, 404 page, <code>pathMatch: 'full'</code>, <code>&lt;router-outlet&gt;</code> replacing hardcoded layout</li>
+<li>PR #12 / diary 2026-05-27 (update-diary branch): AuthService on Signals (<code>.asReadonly()</code> pattern — single source of truth), functional <code>authGuard</code> using <code>inject()</code> + <code>CanActivateFn</code>, protected <code>/cart</code> route</li>
+<li>PR #19: Styling improvements to ProductFilter and ProductCard (<code>:host { display: block }</code> fix for CSS Grid height collapse — debugged independently)</li>
+<li>PR #21: Feature/header (footer integration)</li>
+</ul>
+<p><strong>Level:</strong> Above average for the sprint. reamplify1 writes the most technically precise diary entries of the two — he describes the Signal input missing-parentheses bug with exact cause, explains Angular's per-instance component isolation, describes the <code>authGuard</code> <code>.asReadonly()</code> choice as "architectural best practice" and names it as such. He reached for <code>NgRx/service</code> as his Sprint 2 goal (diary 2026-05-17). The CI/lint PR and detailed PR descriptions (with explicit "How to Test" steps) suggest he cares about process.</p>
+<p><strong>Reliance on AI:</strong> Not explicitly mentioned in his diaries — but his diary entries are notably well-structured and technical, which could reflect AI-assisted writing. No hard evidence either way; unlike klinx01, he does not self-report AI use for task planning.</p>
+<p><strong>Probe (the can-you-create-it test):</strong> Ask him to <strong>rebuild the functional <code>authGuard</code> from scratch</strong> — name the function signature (<code>CanActivateFn</code>), write the <code>inject()</code> call, describe what <code>.asReadonly()</code> prevents, and explain what happens if the guard returns <code>false</code> (does it redirect or just block?). This is precisely his PR #12. If he can do it without looking it up, great. If he stalls on the <code>CanActivateFn</code> return type or doesn't know whether a boolean <code>false</code> blocks silently, that flags the boundary between "understood" and "assembled." Secondary probe: what is the difference between a class-based guard (<code>implements CanActivate</code>) and a functional guard — why did the course move to functional?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>klinx01 — 29 commits · 10 merged PRs · 3 diary entries</h3>
+<p><strong>Built (grounded in PRs + diary):</strong></p>
+<ul>
+<li>PR #1 + diary 2026-05-17: ProductFilter component, connected filter → ProductCard via signal chain (filtering by product name in real time)</li>
+<li>PR #3: Dev sprint 1 merge (drove the sprint integration)</li>
+<li>PRs #13–#16 (with a revert): ProductService with <code>computed()</code> for item count, ProductList component — the revert (PR #15 reverts PR #13, PR #14 re-merges, PR #16 adds ProductList) shows a fumbled service merge that was corrected through PRs rather than force-push, which is actually good git hygiene practice</li>
+<li>PR #17: Diary update via dedicated branch (<code>update-diary</code>)</li>
+<li>PR #18: Vercel deployment + README update</li>
+<li>PR #22 + diary 2026-06-07: HeaderComponent extracted from inline code into standalone component, Angular Material integration — noted that he only refactored existing code into a component, did not write from scratch</li>
+<li>PR #23: Sprint 2 final merge into main</li>
+</ul>
+<p><strong>Level:</strong> Active and hands-on, but by his own account struggles with task decomposition. Diary 2026-05-17: "I couldn't figure out how to build the data chain, so I had to ask the AI to lay out the plan of action and explain signals from scratch." Diary 2026-05-27: "I have the same problem — I can't break tasks into pieces, so I have to ask the AI to explain the interaction." Diary 2026-06-07: "I don't understand how our project should look, what it should be — I find it very hard to visualize what to add next."</p>
+<p>This self-reported pattern (AI as decomposition oracle) is the main risk. He executes what the plan says, but the planning itself is outsourced. The revert/re-merge sequence on ProductService (PRs #13→#15→#14) hints at exploratory trial-and-error without a clear upfront design.</p>
+<p><strong>Probe (the can-you-create-it test):</strong> Ask him to <strong>walk through the data flow between ProductFilter → ProductList → ProductCard using only Signals</strong> — no AI, whiteboard or verbal. Specifically: where does the filter signal live, who owns it, how does ProductList receive the filtered list, how does ProductCard receive a single item. This is the exact architecture from his Sprint 1 PR #1 + diary. If he can describe it end-to-end with the right signal primitives (<code>signal()</code>, <code>computed()</code>, <code>input.required()</code>), he understood it. If he reconstructs it correctly but only after a prompt, it's surface-level. If he draws a blank on who "owns" the filter state, that's the gap.</p>
+<p>Secondary: ask why he reverted PR #13 (ProductService) and re-merged. Can he explain what went wrong and how he diagnosed it?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Health tier: GREEN — Healthy.</strong> Both students passed Sprint 1 at 100/100, the repo is active (last push 2026-06-08), and a working deployed product exists. klinx01's documented AI-dependency is a conceptual gap worth probing at Sprint 2, but it does not override a clean defence result.</p>
+<p>A functional two-person team that has shipped a working deployed product (Vercel) with Angular Signals, lazy routing, auth guard, CI, and Angular Material in ~3 weeks from a standing start. That is a solid Sprint 1–2 result.</p>
+<p><strong>The single largest risk</strong> is klinx01's explicitly self-reported inability to decompose tasks without AI assistance — confirmed across three diary entries spanning the entire project. He can execute instructions and navigate the PR workflow, but his own words are: "I ask the AI to explain what to do, otherwise I can't visualize the interaction." The interview should establish whether there is an understanding layer underneath, or whether the AI is the only architectural model he has.</p>
+<p><strong>reamplify1</strong> is the stronger of the two: technically precise diaries, well-structured PRs with test instructions, correct use of modern Angular patterns (<code>CanActivateFn</code>, <code>.asReadonly()</code>, <code>inject()</code>). The question is whether the vocabulary reflects genuine understanding or well-absorbed documentation. The authGuard rebuild probe will separate the two.</p>
+<p><strong>Open Sprint 3 issues</strong> (8 open) include Reactive Forms, Custom Directive/Pipe, Content Projection, OnPush Change Detection, InjectionToken — these are exactly the topics that will expose conceptual depth vs. pattern matching. It is worth asking each student which one they picked and why.</p>
+<p><strong>No tests</strong> exist in the project (vitest is listed as a devDependency but <code>ng test</code> is Angular's default Karma/Jasmine setup — the project has neither configured). This is a gap worth flagging.</p>
+<p><strong>Recommended interview angle:</strong> concrete reconstruction, not vocabulary. For klinx01 — the Signal data-flow whiteboard. For reamplify1 — the authGuard rebuild from the function signature. Then for both: "Sprint 3 has 8 issues — pick one you haven't touched yet, talk me through how you'd implement it without looking anything up."</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Six Seven</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>klinx01/67-shop</code> (коммиты, PR, дневники development-notes). Снимок: 2026-06-15. Цель: дать ментору 2 минуты честного контекста перед защитой — кто что делал, кто что понимает, что проверять.</blockquote>
+<p><strong>Внутренняя характеристика одной строкой:</strong> Команда из двух человек с асимметричным распределением коммитов (klinx01 ведёт инфраструктуру и интеграцию, reamplify1 вносит сфокусированные фичевые PR). Оба корректно используют Angular Signals и современные API-паттерны, но оба явно документируют, что опираются на AI при планировании декомпозиции компонентов — интервью должно проверить, могут ли они ориентироваться в этом самостоятельно.</p>
+<p><strong>Проект:</strong> 67-shop — Angular 21 SPA каталог товаров с текстовым фильтром в реальном времени, состоянием на Signals, ленивым роутингом, AuthService + функциональный гард маршрута, заголовок на Angular Material, задеплоен на Vercel (<a href="https://67-shop-lyart.vercel.app).">https://67-shop-lyart.vercel.app).</a> Репозиторий создан 2026-05-15, последний пуш 2026-06-08. 8 открытых задач (список задач Sprint 3). Тестов нет.</p>
+<p><strong>Стек:</strong> Angular 21 · TypeScript (strict) · SCSS · Angular Material (CDK + Material) · Angular Signals (<code>signal</code>, <code>computed</code>, <code>output</code>, <code>input.required</code>) · функциональный роутинг + ленивая загрузка · функциональный <code>authGuard</code> · GitHub Actions CI (lint + build) · Vercel deploy.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Срез активности (2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>reamplify1</strong> (лид)</td><td>13</td><td>6 смёрджено</td><td>3 (в main) + 1 (ветка update-diary)</td><td>2026-06-06</td><td>Твёрдый; пишет по-настоящему рефлексивные записи, но AI-ассистированное планирование явно обозначено</td></tr>
+<tr><td><strong>klinx01</strong></td><td>29</td><td>10 смёрджено</td><td>3 (в main)</td><td>2026-06-08</td><td>Самый активный контрибьютор; много скаффолдинга; открыто зависит от AI в понимании декомпозиции задач</td></tr>
+</tbody></table>
+<p><strong>Примечание по ростеру:</strong> оба контрибьютора — студенты (подтверждено по participants.json). Внешних контрибьюторов не обнаружено. Коммитов ментора нет. Владелец репозитория — klinx01.</p>
+<p><strong>Баланс:</strong> Асимметричный, но не критичный. У klinx01 29 коммитов против 13 у reamplify1, и 10 PR против 6. Разбивка соответствует ролям: klinx01 занимается структурой проекта, мёржами, деплоем и ведением дневников; reamplify1 строит фичи с заметно более тщательными описаниями PR и большей архитектурной осознанностью в дневниках.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (баллы за защиту)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>reamplify1</strong></td><td>100 / 100</td><td>ещё нет (дедлайн 2026-06-23)</td></tr>
+<tr><td><strong>klinx01</strong></td><td>100 / 100</td><td>ещё нет (дедлайн 2026-06-23)</td></tr>
+</tbody></table>
+<p>Ментор: <strong>milana1726</strong> · Sprint 1 Interview — Components (конец мая).</p>
+<p>Оба студента получили максимальный балл на защите Sprint 1. Письменный комментарий ментором не оставлен ни для кого из двух — только сам балл.</p>
+<p><strong>Сверка оценок и активности:</strong></p>
+<ul>
+<li><strong>reamplify1 (100 на защите, последняя активность 2026-06-06):</strong> Оценка и активность согласуются. Максимальный балл подтверждает то, что следует из дневниковых записей, — подлинное понимание реализованных паттернов (Signal-инпуты, <code>authGuard</code>, CI). Небольшое расхождение: последний коммит датирован 2026-06-06, то есть за девять дней до среза. Для команды в середине Sprint 2 это не тревожный сигнал, но стоит следить, если молчание затянется после дедлайна Sprint 2.</li>
+<li><strong>klinx01 (100 на защите, задокументированная зависимость от AI в трёх дневниках):</strong> Это заметное расхождение. Дневниковые записи на протяжении всего проекта фиксируют неспособность декомпозировать задачи без AI («я прошу AI объяснить, что делать, иначе не могу представить взаимодействие»), и тем не менее он прошёл интервью Sprint 1 на 100 баллов. Возможны два прочтения: (а) он достаточно хорошо понимает механику, чтобы отвечать на вопросы интервью, даже если в самостоятельном проектировании опирается на AI; (б) объём Sprint 1 (компоненты) достаточно узок, чтобы хорошо отрепетированный разбор дал 100 баллов, не обнажив пробел в декомпозиции. Sprint 2 (роутинг и сигналы) шире — именно здесь пробел, если он есть, скорее всего проявится. Рекомендованный в заключении устный разбор потока данных по-прежнему остаётся основным методом проверки.</li>
+</ul>
+<p>Баллы за Sprint 2 ещё не выставлены и не должны ожидаться до 2026-06-23.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>reamplify1 — лид · 13 коммитов · 6 смёрдженных PR · 4 записи в дневнике</h3>
+<p><strong>Сделал (подтверждено PR и дневником):</strong></p>
+<ul>
+<li>PR #2: компонент ProductCard с Signal-инпутом <code>input.required&lt;Product&gt;()</code> — самостоятельно отладил пропущенный вызов <code>()</code> у <code>input.required</code>, понял, почему Angular не подхватил байндинг</li>
+<li>PR #10: настройка ESLint (<code>@angular-eslint/schematics</code>) + GitHub Actions CI (lint + build на каждый пуш/PR в main и dev-sprint-2) — описание PR показывает, что он понимал, что настраивает</li>
+<li>PR #11: функциональный роутинг с ленивым <code>loadComponent</code>, страница 404, <code>pathMatch: 'full'</code>, <code>&lt;router-outlet&gt;</code> заменяет захардкоженный layout</li>
+<li>PR #12 / дневник 2026-05-27 (ветка update-diary): AuthService на Signals (паттерн <code>.asReadonly()</code> — единственный источник истины), функциональный <code>authGuard</code> через <code>inject()</code> + <code>CanActivateFn</code>, защищённый маршрут <code>/cart</code></li>
+<li>PR #19: улучшения стилей ProductFilter и ProductCard (фикс <code>:host { display: block }</code> для схлопывания высоты CSS Grid — отладил самостоятельно)</li>
+<li>PR #21: Feature/header (интеграция footer)</li>
+</ul>
+<p><strong>Уровень:</strong> Выше среднего для спринта. reamplify1 пишет самые технически точные записи в дневнике из двух — он описывает баг с пропущенными скобками у Signal input с точным объяснением причины, объясняет изоляцию компонентов по экземплярам в Angular, называет выбор <code>.asReadonly()</code> в <code>authGuard</code> «архитектурной лучшей практикой» и использует именно это слово. В дневнике от 2026-05-17 он ставил себе целью <code>NgRx/service</code> на Sprint 2. PR с CI/lint и подробные описания PR (с явными шагами «Как тестировать») говорят о том, что ему важен процесс.</p>
+<p><strong>Зависимость от AI:</strong> В его дневниках явно не упоминается — но записи заметно структурированы и технически насыщены, что может отражать AI-ассистированное написание. Прямых доказательств нет в ту или другую сторону; в отличие от klinx01, он не признаётся, что использует AI для планирования задач.</p>
+<p><strong>Что проверять (тест «можешь ли ты это создать»):</strong> Попросите его <strong>воссоздать функциональный <code>authGuard</code> с нуля</strong> — назвать сигнатуру функции (<code>CanActivateFn</code>), написать вызов <code>inject()</code>, объяснить, от чего защищает <code>.asReadonly()</code>, и рассказать, что происходит, если гард возвращает <code>false</code> (он делает редирект или просто блокирует?). Это в точности его PR #12. Если справится без подсказок — отлично. Если забуксует на возвращаемом типе <code>CanActivateFn</code> или не знает, блокирует ли булевый <code>false</code> молча, — это покажет границу между «понял» и «собрал». Дополнительный вопрос: в чём разница между классовым гардом (<code>implements CanActivate</code>) и функциональным — почему в курсе перешли на функциональный?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>klinx01 — 29 коммитов · 10 смёрдженных PR · 3 записи в дневнике</h3>
+<p><strong>Сделал (подтверждено PR и дневником):</strong></p>
+<ul>
+<li>PR #1 + дневник 2026-05-17: компонент ProductFilter, подключение фильтра → ProductCard через цепочку сигналов (фильтрация по названию товара в реальном времени)</li>
+<li>PR #3: мёрж dev sprint 1 (вёл интеграцию спринта)</li>
+<li>PR #13–#16 (с реверсией): ProductService с <code>computed()</code> для счётчика товаров, компонент ProductList — реверсия (PR #15 откатывает PR #13, PR #14 мёрджит заново, PR #16 добавляет ProductList) показывает неловкий мёрдж сервиса, исправленный через PR, а не форс-пушем, что на самом деле хорошая git-гигиена</li>
+<li>PR #17: обновление дневника через отдельную ветку (<code>update-diary</code>)</li>
+<li>PR #18: деплой на Vercel + обновление README</li>
+<li>PR #22 + дневник 2026-06-07: HeaderComponent вынесен из инлайн-кода в standalone-компонент, интеграция Angular Material — отметил, что лишь рефакторил существующий код в компонент, а не писал с нуля</li>
+<li>PR #23: итоговый мёрдж Sprint 2 в main</li>
+</ul>
+<p><strong>Уровень:</strong> Активный и практикующий, но по его собственному признанию испытывает трудности с декомпозицией задач. Дневник 2026-05-17: «Я не мог понять, как построить цепочку данных, поэтому пришлось попросить AI составить план действий и объяснить signals с нуля». Дневник 2026-05-27: «У меня та же проблема — я не могу разбить задачи на части, поэтому прошу AI объяснить взаимодействие». Дневник 2026-06-07: «Я не понимаю, как должен выглядеть наш проект, чем он должен быть — мне очень трудно представить, что добавлять дальше».</p>
+<p>Этот самопризнанный паттерн (AI как оракул декомпозиции) — главный риск. Он исполняет то, что говорит план, но само планирование отдано на аутсорс. Последовательность реверсии и повторного мёржа ProductService (PR #13→#15→#14) намекает на исследовательский метод проб и ошибок без чёткого дизайна заранее.</p>
+<p><strong>Что проверять (тест «можешь ли ты это создать»):</strong> Попросите его <strong>объяснить поток данных между ProductFilter → ProductList → ProductCard, используя только Signals</strong> — без AI, устно или на доске. Конкретно: где живёт сигнал фильтра, кто им владеет, как ProductList получает отфильтрованный список, как ProductCard получает один элемент. Это в точности архитектура из его PR #1 Sprint 1 + дневника. Если опишет сквозной поток с правильными примитивами сигналов (<code>signal()</code>, <code>computed()</code>, <code>input.required()</code>) — понял. Если воспроизведёт верно, но только после наводки — поверхностное усвоение. Если не сможет назвать, кто «владеет» состоянием фильтра, — это и есть пробел.</p>
+<p>Дополнительно: спросите, почему он откатил PR #13 (ProductService) и смёрджил заново. Может ли он объяснить, что пошло не так и как он это диагностировал?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Статус: ЗЕЛЁНЫЙ — В порядке.</strong> Оба студента сдали Sprint 1 на 100/100, репозиторий активен (последний пуш 2026-06-08), задеплоенный продукт работает. Задокументированная зависимость klinx01 от AI — концептуальный пробел, который стоит проверить на защите Sprint 2, но он не перекрывает чистый результат защиты.</p>
+<p>Рабочая команда из двух человек, которая за ~3 недели с нуля выпустила задеплоенный рабочий продукт (Vercel) с Angular Signals, ленивым роутингом, auth guard, CI и Angular Material. Это крепкий результат Sprint 1–2.</p>
+<p><strong>Главный риск</strong> — явно самопризнанная неспособность klinx01 декомпозировать задачи без AI, подтверждённая тремя записями в дневнике на протяжении всего проекта. Он умеет исполнять инструкции и работать с PR-воркфлоу, но его собственные слова: «Я прошу AI объяснить, что делать, иначе не могу представить взаимодействие». Интервью должно установить, есть ли за этим слой понимания, или AI — единственная архитектурная модель, которой он располагает.</p>
+<p><strong>reamplify1</strong> — более сильный из двух: технически точные дневники, хорошо структурированные PR с инструкциями по тестированию, корректное использование современных паттернов Angular (<code>CanActivateFn</code>, <code>.asReadonly()</code>, <code>inject()</code>). Вопрос в том, отражает ли словарный запас подлинное понимание или хорошо усвоенную документацию. Задание на воссоздание authGuard разграничит одно от другого.</p>
+<p><strong>Открытые задачи Sprint 3</strong> (8 открытых) включают Reactive Forms, Custom Directive/Pipe, Content Projection, OnPush Change Detection, InjectionToken — это именно те темы, которые покажут концептуальную глубину против распознавания паттернов. Стоит спросить каждого студента, какую из них он выбрал и почему.</p>
+<p><strong>Тестов нет</strong> в проекте (vitest указан как devDependency, но <code>ng test</code> — это стандартная настройка Angular на Karma/Jasmine; ни то ни другое не настроено). Это пробел, который стоит обозначить.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> конкретное воспроизведение, не терминология. Для klinx01 — разбор потока данных на Signals устно или на доске. Для reamplify1 — воссоздание authGuard из сигнатуры функции. Затем обоим: «В Sprint 3 есть 8 задач — выбери одну, которую ещё не трогал, и объясни мне, как бы ты её реализовал, не гугля».</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

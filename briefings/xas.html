@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — XAS · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — XAS</strong><strong class="lang-ru">Mentor briefing — XAS</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — XAS</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>SlavikusVOG/XASon-online-store</code> (commits, PRs, issues) + sprint diaries 1–2. Snapshot: 2026-06-15. Goal — give the mentor context in 2 minutes before the defence: who built what, who understands it, what to dig into.</blockquote>
+<p><strong>One-line summary:</strong> Solid, balanced team of three building a Commercetools-backed Angular store; the lead carries the auth/API integration (heaviest load, ~35 hrs sprint 2), annevci owns infra + UI patterns with clear understanding, xevoider is the strongest on refactoring/architecture but thinner on diary output — no red flags, no passengers.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>XASon Online Store</strong> — SPA online shop selling fictional merchandise from cartoons, movies and games ("want a Krabby Patty formula? We have it"). Feature scope: product catalog with filter/sort, cart, user profile, authentication via Commercetools API.</p>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td>Repo</td><td><code>SlavikusVOG/XASon-online-store</code></td></tr>
+<tr><td>Stack</td><td>Angular 21 · NgRx Signals (<code>@ngrx/signals</code> ^21.1) · TaigaUI ^5.8 · Commercetools OAuth · Vercel deploy</td></tr>
+<tr><td>Created</td><td>2026-05-12</td></tr>
+<tr><td>Last pushed</td><td>2026-06-13</td></tr>
+<tr><td>Open issues</td><td>9 (6 open, 3 infra/sprint tracking)</td></tr>
+<tr><td>Deploy</td><td><a href="https://xason-online-store-deploy.vercel.app/">https://xason-online-store-deploy.vercel.app/</a> (Vercel, linked in README; deploy issue #50 is open, status unclear)</td></tr>
+<tr><td>GitFlow</td><td>Yes — <code>develop</code> + feature branches; diaries on dedicated branches merged into <code>main</code></td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster: students vs. external</h2>
+<p>All three contributors in the GitHub API are course students. No external contributors, no mentor commits detected. The participants.json confirms: <code>SlavikusVOG</code> (lead), <code>annevci</code>, <code>xevoider</code> — all <code>role: student</code>.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>SlavikusVOG</strong> (lead)</td><td>98</td><td>17</td><td>14</td><td>2 (S1 + S2)</td><td>2026-06-08</td><td>High — auth/API integration owner, heaviest sprint</td></tr>
+<tr><td><strong>annevci</strong></td><td>36</td><td>7</td><td>7</td><td>2 (S1 + S2)</td><td>2026-06-08</td><td>Solid — infra + UI patterns, clear understanding</td></tr>
+<tr><td><strong>xevoider</strong></td><td>30</td><td>7</td><td>7</td><td>2 (S1 + S2)</td><td>2026-06-08</td><td>Good — refactoring + NgRx Signals, AI-assisted tooling setup</td></tr>
+</tbody></table>
+<p>Balance is healthy. No one is a passenger: each member has both PRs and diary entries in both sprints. All three were last active on the same day (2026-06-08, sprint 2 merge day). Sprint 3 work appears to have started (open PRs #48, #49 from SlavikusVOG), but no sprint 3 diaries yet — which matches the sprint 3 checkpoint requirement still having all checkboxes unchecked (issue #51).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>SlavikusVOG</strong></td><td>100 / 100</td><td>— (due 2026-06-23)</td></tr>
+<tr><td><strong>xevoider</strong></td><td>100 / 100</td><td>— (due 2026-06-23)</td></tr>
+<tr><td><strong>annevci</strong></td><td>75 / 100</td><td>— (due 2026-06-23)</td></tr>
+</tbody></table>
+<p>Mentor: <strong>bearury</strong> · Interview: Sprint 1 — Components (late May).</p>
+<ul>
+<li><strong>SlavikusVOG (100):</strong> "Demonstrated in-depth knowledge of the topics studied." Defence confirms the repo picture: the OAuth integration load and auth-flow ownership are backed by solid understanding.</li>
+<li><strong>xevoider (100):</strong> "Demonstrates in-depth knowledge of the topics studied." This is the key reconciliation point — see below.</li>
+<li><strong>annevci (75):</strong> "Confidently explains what was done and why, but deeper knowledge needs more work" (original RU: <em>Уверенно объясняет, что сделано и почему, но более глубокие знания требут проработки</em>). She can narrate her decisions but the mentor found gaps when probing below the surface.</li>
+</ul>
+<p><strong>Reconciliation — where scores and activity diverge:</strong></p>
+<ul>
+<li><strong>xevoider: activity-light but scored 100.</strong> The briefing flagged his 30-commit count and AI-assisted tooling setup as risks worth probing. The Sprint 1 defence fully resolved the understanding question: the mentor rated him equal to the lead. His lower output in Sprint 2 (2 refactoring PRs + 1 library migration vs. teammates' feature PRs) is a workload split, not a comprehension gap. The AI-tooling probe remains useful for completeness, but the dropout/passenger risk is off the table.</li>
+<li><strong>annevci: activity-strong but scored 75.</strong> The briefing assessed her as the team member with "the clearest understanding-to-output ratio" based on diary quality and CI ownership. The defence score tells a different story: her surface explanations are confident, but the mentor found she needs to go deeper. The probe questions (re-implement <code>authGuard</code> from scratch, explain <code>OnPush</code> implications) are especially warranted given this signal — don't let diary quality substitute for live technical probing.</li>
+<li><strong>SlavikusVOG: no divergence.</strong> High activity + 100 defence = consistent picture. The mega-PR process concern (#47) remains but is a team workflow issue, not an understanding gap.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>SlavikusVOG — lead · 98 commits · 17 PRs (14 merged)</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Sprint 1: Generated project scaffold, login/register/user-profile page components, signal-based forms (diary mentions learning signal forms and resolving input-display issues).</li>
+<li>Sprint 2 (heaviest): Commercetools OAuth integration — anonymous session first, then customer login/sign-in layered on top; structured as four services (<code>AppCredentialsService</code>, <code>LocalStorageService</code>, <code>AnonymousSessionService</code>, <code>CustomerSessionService</code>); environment configuration with file replacements for local vs prod; HTTP auth helpers; cart page (renamed from basket, mock money types, signal type fix); README deploy section (PR #41); and bundled sprint 2 as a 100-file PR #47 that also absorbed teammates' diary files.</li>
+<li>Sprint 3 (in progress): Angular v22 upgrade (PR #48, open); refactor to signals for access/refresh tokens (PR #49, open, 4 files).</li>
+</ul>
+<p><strong>Level:</strong> Experienced integrator. Diary sprint 2 is terse but specific — problem/solution pairs on OAuth scopes, environment misconfiguration, naming inconsistency. ~35 hours logged sprint 2. The Commercetools auth flow (anonymous → customer, form-urlencoded with Bearer, refresh token cookies) is genuinely non-trivial and he got it working. Risk: the sprint 2 mega-PR (#47, 100 files, no description) is a code-review anti-pattern — bundling everyone's work and diaries suggests he is the bottleneck coordinator, which can hide team members' independent understanding.</p>
+<p><strong>Probe:</strong> Ask him to walk through the Commercetools auth flow from scratch — specifically: why anonymous session first, how the customer token is obtained on top of it, and how refresh is handled. If he built it himself, this will take 90 seconds. Also probe the signal-token refactor (#49): what problem does replacing <code>BehaviorSubject</code> with a signal solve here, and does he understand the Angular DI lifecycle implications?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>annevci — 36 commits · 7 PRs (all 7 merged)</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Sprint 1: Navigation bar component (PR #20); studied layout-based architecture for conditional header rendering (chose layout components over <code>@if</code> in app.component — documented the reasoning); participated in team structure discussions.</li>
+<li>Sprint 2: TaigaUI library setup — installed and configured <code>@taiga-ui/core</code>, <code>kit</code>, <code>icons</code>, <code>cdk</code> (PR #28); CI/CD pipeline with lint/test/format/build stages + PR template (PR #33); functional route guards <code>authGuard</code> and <code>redirectIfAuthGuard</code> using <code>CanActivateFn</code> with <code>inject()</code> (PR #44); complete Main page feature — <code>HomePage</code> composed of four sub-components (<code>PromoBanner</code>, <code>CategoryNav</code>, <code>FeaturedProducts</code>, <code>PromoCodesDisplay</code>), each using signal-based <code>input()</code>/<code>output()</code>, lazy-loaded via <code>loadComponent</code>/<code>loadChildren</code> (PR #45). All new components use <code>ChangeDetectionStrategy.OnPush</code>.</li>
+</ul>
+<p><strong>Level:</strong> Above average for sprint 2. Diary quality is the strongest on the team — she explains <em>why</em> a decision was made (layout vs. <code>@if</code>), not just what was done. She explicitly studied functional guard docs, wrote <code>authGuard</code> and <code>redirectIfAuthGuard</code> herself, and then updated the redirect target after the home page was added — showing she understands the dependency chain. The CI/CD pipeline (with caching) is a real contribution, not a template paste. The main page decomposition into four signal-input components is clean and modern.</p>
+<p><strong>Risk:</strong> Some reliance on AI for initial research visible in sprint 1 ("I researched different solutions using Google and discussions with AI chat tools"), but she filtered and chose — not blindly applied. Worth checking independently. <strong>Sprint 1 defence score (75/100) adds weight to this:</strong> the mentor found that she explains decisions confidently but lacks depth when pressed further — the gap between diary quality and live technical probing is real.</p>
+<p><strong>Probe:</strong> Route guard mechanics are her clearest ownership claim — ask her to re-implement <code>authGuard</code> from scratch (no IDE), explain <code>CanActivateFn</code> vs class-based guard, and why <code>inject()</code> works inside a function. Then probe <code>ChangeDetectionStrategy.OnPush</code> — what exactly does it change, and what can break if you forget it on a signal-based component? The CI/CD setup is a bonus probe: what does the <code>cache</code> step in the workflow actually cache and why.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>xevoider — 30 commits · 7 PRs (all 7 merged)</h3>
+<p><strong>Built:</strong></p>
+<ul>
+<li>Sprint 1: Full project setup — ESLint + Prettier + Husky + lint-staged (PR #1); catalog page with product cards on mock data (PR #15); first version of <code>ApiService</code>.</li>
+<li>Sprint 2: Import refactor — opinionated folder structure for features (PR #35); router refactor — moves routes to constants, adds lazy loading, binds URL params to component inputs (PR #36); migrated <code>CatalogService</code> to NgRx Signal Store <code>CatalogStore</code> (PR #31). Diary mentions reading NgRx Signal Store docs and applying them in this PR.</li>
+</ul>
+<p><strong>Level:</strong> Architecture-minded. He set up the entire dev toolchain (ESLint/Prettier/Husky) and was the one to introduce NgRx Signals to the project. The router refactor (constants + lazy loading + URL param binding to inputs) shows he's reading docs and applying patterns rather than copy-pasting boilerplate. Diary is shorter and more structured than teammates', with honest uncertainty ("I will ask AI first about this situation and try to make it to implement a solution for me" — on the HttpClient typing problem).</p>
+<p><strong>Risk:</strong> Sprint 1 diary explicitly mentions going to Gemini for ESLint/Prettier config. This is the most direct AI-tool mention in the team. He also preemptively says he will "ask AI to implement a solution" for a TypeScript types problem. For tooling setup, AI assistance is low-risk. <strong>Sprint 1 defence score (100/100) resolves the biggest risk:</strong> the mentor confirmed in-depth knowledge — his lower commit count and AI-assisted tooling setup are a workload split and learning style, not comprehension gaps. His commit count (30) is the lowest on the team, and sprint 2 output is structurally lighter than teammates', but the understanding is confirmed solid. The probe on NgRx Signals remains useful for completeness and interview depth, not because of a red flag.</p>
+<p><strong>Probe:</strong> NgRx Signal Store is his biggest claim — ask him to explain what <code>signalStore</code>, <code>withState</code>, <code>withMethods</code>, and <code>patchState</code> do, and why this replaced a plain service. Then ask the can-you-create-it question: sketch a minimal Signal Store for a list of items with a <code>load</code> method — no reference material. Also probe the router refactor: what is the difference between <code>loadComponent</code> and <code>loadChildren</code>, and what does URL param binding to component inputs require in <code>provideRouter</code>.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>XAS is a functional, honest, no-passenger team of three. Everyone shipped PRs in both sprints, wrote diaries in both sprints, and was active through sprint 2 close (June 8). The project is ambitious — Commercetools OAuth is a real backend, not a mock API — and it's actually deployed to Vercel.</p>
+<p><strong>Strengths:</strong> annevci has the clearest understanding-to-output ratio (best diary, clean component decomposition, owns CI); SlavikusVOG pulled the hardest sprint (OAuth integration, ~35 hrs) and is pushing Angular v22 upgrade in sprint 3; xevoider introduced NgRx Signals and the router architecture the team is building on.</p>
+<p><strong>Watch:</strong> (1) SlavikusVOG's sprint 2 mega-PR (#47, 100 files, no description body) is a process smell — he may be the hub absorbing everyone's work, which can mask individual gaps. Probe each student independently on their specific PRs, not the bundled sprint merge. (2) <strong>annevci's Sprint 1 defence score (75/100) is the one signal to keep in focus:</strong> diary quality is strong, but the mentor found gaps when probing deeper. Don't let confident narration substitute for technical depth — the route guard and <code>OnPush</code> probes are especially important. (3) xevoider's AI-assisted tooling risk is resolved by his 100/100 defence — the tooling probe is interesting but low stakes. (4) Sprint 3 checkpoint (issue #51) is entirely unchecked — reactive forms, custom directive/pipe, <code>InjectionToken</code> are all pending. The team has ~1 sprint to land these; Angular v22 upgrade in progress simultaneously adds risk.</p>
+<p><strong>Recommended interview angle:</strong> Assign each student one thing they claim to own and ask them to rebuild it from scratch. For SlavikusVOG — Commercetools anonymous→customer auth flow; for annevci — <code>authGuard</code> with <code>CanActivateFn</code> and <code>inject()</code> from scratch; for xevoider — a minimal NgRx Signal Store sketch from first principles. The diary trail is rich enough to ask specific, grounded questions rather than generic Angular theory.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — XAS</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>SlavikusVOG/XASon-online-store</code> (коммиты, PR, issues) + дневники спринтов 1–2. Снимок: 2026-06-15. Цель — дать ментору контекст за 2 минуты до защиты: кто что построил, кто понимает, что копать.</blockquote>
+<p><strong>Однострочное резюме:</strong> Крепкая, сбалансированная команда из трёх человек, строящая Angular-магазин на базе Commercetools; лид тащит auth/API-интеграцию (наибольшая нагрузка, ~35 ч в спринте 2), annevci владеет инфрой и UI-паттернами с чётким пониманием, xevoider сильнее всех в рефакторинге/архитектуре, но дневники тоньше — красных флагов нет, балласта нет.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>XASon Online Store</strong> — SPA-магазин, продающий вымышленные товары из мультфильмов, кино и игр («хочешь формулу краб-бургера? У нас есть»). Функциональный охват: каталог товаров с фильтрацией/сортировкой, корзина, профиль пользователя, аутентификация через Commercetools API.</p>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td>Репозиторий</td><td><code>SlavikusVOG/XASon-online-store</code></td></tr>
+<tr><td>Стек</td><td>Angular 21 · NgRx Signals (<code>@ngrx/signals</code> ^21.1) · TaigaUI ^5.8 · Commercetools OAuth · Vercel deploy</td></tr>
+<tr><td>Создан</td><td>2026-05-12</td></tr>
+<tr><td>Последний push</td><td>2026-06-13</td></tr>
+<tr><td>Открытые issues</td><td>9 (6 открытых, 3 инфра/трекинг спринтов)</td></tr>
+<tr><td>Deploy</td><td><a href="https://xason-online-store-deploy.vercel.app/">https://xason-online-store-deploy.vercel.app/</a> (Vercel, ссылка в README; issue #50 открыт, статус неясен)</td></tr>
+<tr><td>GitFlow</td><td>Да — <code>develop</code> + feature-ветки; дневники на выделенных ветках, вливаются в <code>main</code></td></tr>
+</tbody></table>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав: студенты vs. сторонние</h2>
+<p>Все три контрибьютора в GitHub API — студенты курса. Сторонних контрибьюторов нет, коммитов ментора не обнаружено. participants.json подтверждает: <code>SlavikusVOG</code> (лид), <code>annevci</code>, <code>xevoider</code> — все <code>role: student</code>.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Влитые PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>SlavikusVOG</strong> (лид)</td><td>98</td><td>17</td><td>14</td><td>2 (С1 + С2)</td><td>2026-06-08</td><td>Высокий — владелец auth/API-интеграции, тяжелейший спринт</td></tr>
+<tr><td><strong>annevci</strong></td><td>36</td><td>7</td><td>7</td><td>2 (С1 + С2)</td><td>2026-06-08</td><td>Крепкий — инфра + UI-паттерны, чёткое понимание</td></tr>
+<tr><td><strong>xevoider</strong></td><td>30</td><td>7</td><td>7</td><td>2 (С1 + С2)</td><td>2026-06-08</td><td>Хороший — рефакторинг + NgRx Signals, настройка инструментария с AI</td></tr>
+</tbody></table>
+<p>Баланс здоровый. Балласта нет: у каждого есть и PR, и записи дневника в обоих спринтах. Все трое были активны в один и тот же день (2026-06-08, день вливания спринта 2). Работа над спринтом 3, похоже, началась (открытые PR #48, #49 от SlavikusVOG), но дневников спринта 3 ещё нет — что соответствует тому, что все чекбоксы в требованиях к чекпоинту спринта 3 (issue #51) ещё не отмечены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>SlavikusVOG</strong></td><td>100 / 100</td><td>— (срок 2026-06-23)</td></tr>
+<tr><td><strong>xevoider</strong></td><td>100 / 100</td><td>— (срок 2026-06-23)</td></tr>
+<tr><td><strong>annevci</strong></td><td>75 / 100</td><td>— (срок 2026-06-23)</td></tr>
+</tbody></table>
+<p>Ментор: <strong>bearury</strong> · Интервью: Спринт 1 — Components (конец мая).</p>
+<ul>
+<li><strong>SlavikusVOG (100):</strong> «Продемонстрировал глубокое знание изученных тем». Защита подтверждает картину из репозитория: нагрузка по OAuth-интеграции и владение auth-потоком обеспечены реальным пониманием.</li>
+<li><strong>xevoider (100):</strong> «Демонстрирует глубокое знание изученных тем». Ключевой момент для сверки сигналов — см. ниже.</li>
+<li><strong>annevci (75):</strong> «Уверенно объясняет, что сделано и почему, но более глубокие знания требуют проработки». Она умеет рассказать о своих решениях, однако ментор обнаружил пробелы при углублённых вопросах.</li>
+</ul>
+<p><strong>Сверка — где баллы и активность расходятся:</strong></p>
+<ul>
+<li><strong>xevoider: активность низкая, балл — 100.</strong> В брифинге 30 коммитов и AI-настройка инструментария были обозначены как риски, требующие проверки. Защита Спринта 1 полностью снимает вопрос о понимании: ментор оценил его наравне с лидом. Меньший выхлоп в Спринте 2 (2 рефакторинг-PR + 1 миграция библиотеки) — это распределение нагрузки, а не пробел в знаниях. Вопрос про AI-инструментарий остаётся уместным для полноты, но риск «пассажир/аутсайдер» снят.</li>
+<li><strong>annevci: активность высокая, балл — 75.</strong> Брифинг оценивал её как члена команды с «наилучшим соотношением понимания к результату» — на основе качества дневника и владения CI. Балл за защиту рассказывает другую историю: поверхностные объяснения уверенные, но ментор нашёл, что глубина требует доработки. Вопросы для проверки (реализовать <code>authGuard</code> с нуля, объяснить последствия <code>OnPush</code>) особенно важны с учётом этого сигнала — не позволяйте качеству дневника заменить живую техническую проверку.</li>
+<li><strong>SlavikusVOG: расхождений нет.</strong> Высокая активность + 100 за защиту = цельная картина. Процессная проблема с мегa-PR (#47) остаётся, но это вопрос командного workflow, а не понимания.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>SlavikusVOG — лид · 98 коммитов · 17 PR (14 влито)</h3>
+<p><strong>Что построил:</strong></p>
+<ul>
+<li>Спринт 1: Сгенерировал скаффолдинг проекта, компоненты страниц login/register/user-profile, сигнальные формы (дневник упоминает изучение сигнальных форм и решение проблем с отображением input).</li>
+<li>Спринт 2 (наибольшая нагрузка): OAuth-интеграция с Commercetools — сначала анонимная сессия, затем поверх неё вход клиента (customer login/sign-in); структурировано как четыре сервиса (<code>AppCredentialsService</code>, <code>LocalStorageService</code>, <code>AnonymousSessionService</code>, <code>CustomerSessionService</code>); настройка окружения с file replacements для локального и prod; HTTP auth-хелперы; страница корзины (переименована из basket, мок-типы для денег, фикс типа сигнала); секция deploy в README (PR #41); и финальный мегa-PR #47 спринта 2 на 100 файлов, поглотивший также файлы дневников товарищей по команде.</li>
+<li>Спринт 3 (в процессе): Обновление до Angular v22 (PR #48, открыт); рефакторинг к сигналам для access/refresh-токенов (PR #49, открыт, 4 файла).</li>
+</ul>
+<p><strong>Уровень:</strong> Опытный интегратор. Дневник спринта 2 краткий, но конкретный — пары проблема/решение по OAuth-скоупам, некорректной конфигурации окружения, несоответствию имён. ~35 часов залогировано в спринте 2. Auth-поток Commercetools (анонимный → клиент, form-urlencoded с Bearer, refresh-токен в куках) реально нетривиален, и он его завёл. Риск: мегa-PR спринта 2 (#47, 100 файлов, без описания) — антипаттерн code-review; то, что в него вошли работы всех и дневники, говорит о том, что он является узким местом-координатором, за которым может скрываться неравномерное самостоятельное понимание членов команды.</p>
+<p><strong>Что проверять:</strong> Попросите его с нуля объяснить auth-поток Commercetools — конкретно: зачем сначала анонимная сессия, как поверх неё получается токен клиента и как обрабатывается refresh. Если он строил это сам, уложится в 90 секунд. Также проверьте рефакторинг к сигнальным токенам (#49): какую проблему решает замена <code>BehaviorSubject</code> на сигнал, и понимает ли он последствия для жизненного цикла Angular DI?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>annevci — 36 коммитов · 7 PR (все 7 влиты)</h3>
+<p><strong>Что построила:</strong></p>
+<ul>
+<li>Спринт 1: Компонент навигационной панели (PR #20); изучила архитектуру на основе layout-компонентов для условного рендеринга header (выбрала layout-компоненты вместо <code>@if</code> в app.component — задокументировала обоснование); участвовала в обсуждениях структуры команды.</li>
+<li>Спринт 2: Настройка библиотеки TaigaUI — установила и сконфигурировала <code>@taiga-ui/core</code>, <code>kit</code>, <code>icons</code>, <code>cdk</code> (PR #28); CI/CD-пайплайн с этапами lint/test/format/build + шаблон PR (PR #33); функциональные роут-гарды <code>authGuard</code> и <code>redirectIfAuthGuard</code> через <code>CanActivateFn</code> с <code>inject()</code> (PR #44); полная фича главной страницы — <code>HomePage</code>, составленная из четырёх компонентов (<code>PromoBanner</code>, <code>CategoryNav</code>, <code>FeaturedProducts</code>, <code>PromoCodesDisplay</code>), каждый использует сигнальные <code>input()</code>/<code>output()</code>, ленивая загрузка через <code>loadComponent</code>/<code>loadChildren</code> (PR #45). Все новые компоненты используют <code>ChangeDetectionStrategy.OnPush</code>.</li>
+</ul>
+<p><strong>Уровень:</strong> Выше среднего по спринту 2. Качество дневника — лучшее в команде: она объясняет <em>почему</em> принято то или иное решение (layout vs. <code>@if</code>), а не просто что было сделано. Она специально изучала документацию по функциональным гардам, самостоятельно написала <code>authGuard</code> и <code>redirectIfAuthGuard</code>, а затем обновила цель редиректа после добавления главной страницы — это показывает понимание цепочки зависимостей. CI/CD-пайплайн (с кэшированием) — реальный вклад, а не вставка шаблона. Разбивка главной страницы на четыре компонента с сигнальными input'ами — чистый и современный подход.</p>
+<p><strong>Риск:</strong> В спринте 1 заметна некоторая опора на AI при первичных исследованиях («I researched different solutions using Google and discussions with AI chat tools»), однако она фильтровала и выбирала, а не применяла вслепую. Стоит проверить независимо. <strong>Балл за защиту Спринта 1 (75/100) усиливает этот сигнал:</strong> ментор обнаружил, что она уверенно объясняет решения, но при углублённых вопросах знания ещё требуют проработки — разрыв между качеством дневника и живой технической проверкой реален.</p>
+<p><strong>Что проверять:</strong> Роут-гарды — её наиболее явная область владения. Попросите реализовать <code>authGuard</code> с нуля (без IDE), объяснить <code>CanActivateFn</code> vs. гард на основе класса и почему <code>inject()</code> работает внутри функции. Затем проверьте <code>ChangeDetectionStrategy.OnPush</code> — что именно меняет эта стратегия и что может сломаться, если забыть её на сигнальном компоненте? CI/CD-настройка — дополнительный вопрос: что именно кэширует шаг <code>cache</code> в workflow и зачем.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>xevoider — 30 коммитов · 7 PR (все 7 влиты)</h3>
+<p><strong>Что построил:</strong></p>
+<ul>
+<li>Спринт 1: Полная настройка проекта — ESLint + Prettier + Husky + lint-staged (PR #1); страница каталога с карточками товаров на мок-данных (PR #15); первая версия <code>ApiService</code>.</li>
+<li>Спринт 2: Рефакторинг импортов — принципиальная структура папок для фич (PR #35); рефакторинг роутера — переносит роуты в константы, добавляет ленивую загрузку, привязывает URL-параметры к input'ам компонентов (PR #36); мигрировал <code>CatalogService</code> в NgRx Signal Store <code>CatalogStore</code> (PR #31). Дневник упоминает чтение документации NgRx Signal Store и применение в этом PR.</li>
+</ul>
+<p><strong>Уровень:</strong> Думает архитектурно. Он настроил весь dev-инструментарий (ESLint/Prettier/Husky) и стал тем, кто внёс NgRx Signals в проект. Рефакторинг роутера (константы + ленивая загрузка + привязка URL-параметров к input'ам) показывает, что он читает документацию и применяет паттерны, а не копирует бойлерплейт. Дневник короче и структурированнее, чем у товарищей, с честной неопределённостью («I will ask AI first about this situation and try to make it to implement a solution for me» — по проблеме типизации HttpClient).</p>
+<p><strong>Риск:</strong> Дневник спринта 1 явно упоминает обращение к Gemini за конфигурацией ESLint/Prettier. Это самое прямое упоминание AI-инструментов в команде. Он также превентивно говорит, что «попросит AI реализовать решение» для проблемы с TypeScript-типами. Для настройки инструментария AI-помощь — низкий риск. <strong>Балл за защиту Спринта 1 (100/100) снимает главный риск:</strong> ментор подтвердил глубокое знание — меньшее число коммитов и AI-помощь в инструментарии это стиль работы и распределение нагрузки, а не пробел в понимании. Количество коммитов (30) наименьшее в команде, а выхлоп спринта 2 структурно невелик, однако понимание подтверждено. Вопросы по NgRx Signal Store остаются уместными для глубины интервью, а не как тревожный сигнал.</p>
+<p><strong>Что проверять:</strong> NgRx Signal Store — его главная заявка. Попросите объяснить, что делают <code>signalStore</code>, <code>withState</code>, <code>withMethods</code> и <code>patchState</code>, и почему это заменило обычный сервис. Затем задайте вопрос «а сможешь создать»: набросайте минимальный Signal Store для списка элементов с методом <code>load</code> — без справочных материалов. Также проверьте рефакторинг роутера: в чём разница между <code>loadComponent</code> и <code>loadChildren</code>, и что требуется в <code>provideRouter</code> для привязки URL-параметров к input'ам компонентов?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p>XAS — функциональная, честная команда из трёх человек без балласта. Каждый отгружал PR в обоих спринтах, писал дневники в обоих спринтах и был активен до закрытия спринта 2 (8 июня). Проект амбициозный — Commercetools OAuth — это настоящий бэкенд, не мок-API — и он реально задеплоен на Vercel.</p>
+<p><strong>Сильные стороны:</strong> У annevci наилучшее соотношение понимания к выходному результату (лучший дневник, чистая декомпозиция компонентов, владение CI); SlavikusVOG вытянул тяжелейший спринт (OAuth-интеграция, ~35 ч) и в спринте 3 уже толкает обновление до Angular v22; xevoider внёс NgRx Signals и архитектуру роутера, на которой команда строит дальше.</p>
+<p><strong>На что смотреть:</strong> (1) Мегa-PR спринта 2 у SlavikusVOG (#47, 100 файлов, без тела описания) — запах процессной проблемы: он может быть хабом, поглощающим чужую работу, что способно маскировать индивидуальные пробелы. Опрашивайте каждого студента независимо по их конкретным PR, а не по суммарному вливанию спринта. (2) <strong>Балл annevci за защиту Спринта 1 (75/100) — основной сигнал для внимания:</strong> качество дневника высокое, но ментор нашёл пробелы при углублённых вопросах. Не позволяйте уверенному изложению заменить техническую глубину — проверки роут-гардов и <code>OnPush</code> особенно важны. (3) Риск xevoider, связанный с AI-инструментарием, снят оценкой 100/100 — вопрос про инструментарий уместен, но не несёт нагрузки красного флага. (4) Чекпоинт спринта 3 (issue #51) полностью не отмечен — реактивные формы, кастомная директива/пайп, <code>InjectionToken</code> — всё ещё впереди. У команды примерно один спринт, чтобы это закрыть; параллельное обновление до Angular v22 добавляет риск.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> Дайте каждому студенту одну вещь, которую они заявляют своей, и попросите пересобрать её с нуля. Для SlavikusVOG — auth-поток Commercetools anonymous→customer; для annevci — <code>authGuard</code> с <code>CanActivateFn</code> и <code>inject()</code> с нуля; для xevoider — набросок минимального NgRx Signal Store от первых принципов. След дневников достаточно богат, чтобы задавать конкретные, заземлённые вопросы, а не общую Angular-теорию.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

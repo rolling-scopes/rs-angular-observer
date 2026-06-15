@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — ngKittyDebugLeftPaw · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — ngKittyDebugLeftPaw</strong><strong class="lang-ru">Mentor briefing — ngKittyDebugLeftPaw</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — ngKittyDebugLeftPaw</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>ngKittyDebug/angular-ngKittyDebugLeft</code> (commits, PRs, issues) + sprint diaries 1–3. Snapshot: 2026-06-15.</blockquote>
+<blockquote>Goal: give the mentor 2 minutes of context before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-line summary:</strong> A healthy, balanced three-person team — strong articulate lead, diligent honest mid-level, reflective but slower third member — building a PokeDex SPA on Angular 22 with bleeding-edge APIs (signals, <code>httpResource</code>, signal forms). Nobody is a passenger. The main interview angle: each student has claimed at least one genuinely hard thing — probe whether they can reconstruct it from scratch, not just describe it.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project & Stack</h2>
+<p><strong>Project:</strong> PokeDex SPA — Angular 22 + Taiga UI v5 + NgRx, TypeScript 5.9, Vitest, RxJS. Signals-first architecture (<code>resource</code>, <code>httpResource</code>, signal forms). ESLint + Prettier + Stylelint + commitlint + Husky strict rules. Deployed to Netlify: <a href="https://ngkittydebugleftpaw.netlify.app/">https://ngkittydebugleftpaw.netlify.app/</a></p>
+<p><strong>Repo:</strong> <a href="https://github.com/ngKittyDebug/angular-ngKittyDebugLeft">https://github.com/ngKittyDebug/angular-ngKittyDebugLeft</a> <strong>Created:</strong> 2026-05-06 <strong>Pushed (default branch):</strong> 2026-06-11 (main); develop branch is latest active, pushed 2026-06-14 <strong>Open issues:</strong> 43 (mix of Sprint 3 task cards and JsPowWow codebase-audit findings) <strong>Default branch:</strong> main (GitFlow: main ← develop ← feature/*)</p>
+<p>Notable technical decision: the team migrated to Angular 22 <strong>mid-course</strong> (Sprint 2, PR #109). They are deliberately using bleeding-edge features — this is strength and primary interview risk combined.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><strong>AlexGorSer</strong> — team lead (confirmed <code>isLead: true</code> in participants.json)</li>
+<li><strong>pavelkuvsh1noff</strong> — frontend developer</li>
+<li><strong>Oksi2510</strong> — design / frontend developer</li>
+</ul>
+<p><strong>External contributors (excluded from assessment):</strong></p>
+<ul>
+<li><strong>oreskag</strong> — mentor (listed as <code>role: mentor</code> in participants.json; 1 commit, no code PRs — normal)</li>
+<li><strong>JsPowWow</strong> — infrastructure / curator / review automation. Opened 13 PRs: CI workflows, Telegram/Discord scheduled notifications, PartyKit realtime deploy, GitHub MCP integration, and "Klavdiy" codebase-audit bot (which auto-raises issues on code smells). Also active on the <code>feat/frenzy-mvp-next</code> branch (realtime multiplayer Easter-egg feature). Not a student. His codebase-audit issues (PRs #140–169) explain a chunk of the 43 open issues.</li>
+<li><strong>dashque</strong> — 1 commit (likely infra or cross-org action; not on this team's roster)</li>
+<li><strong>OreskaG</strong> — 1 commit (same login as mentor oreskag with different case; infra)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs merged</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>AlexGorSer</strong> (lead)</td><td>135</td><td>29</td><td>28</td><td>3</td><td>2026-06-08 (main/develop)</td><td>High — reflective, articulate</td></tr>
+<tr><td><strong>pavelkuvsh1noff</strong></td><td>110</td><td>16</td><td>15</td><td>4</td><td>2026-06-14 (develop)</td><td>High — persistent, honest</td></tr>
+<tr><td><strong>Oksi2510</strong></td><td>63</td><td>14</td><td>13</td><td>5</td><td>2026-06-14 (feature branch)</td><td>Steady — reflective, slightly behind on new APIs</td></tr>
+</tbody></table>
+<p>Commit counts from <code>contributors</code> endpoint; reflect all commits across all branches in the default history. Diary counts: files with parseable dates across all diary branches merged into <code>development-notes</code>.</p>
+<p>Balance is healthy. No passenger. Even the least-active student (Oksi) has 63 commits, 13 merged PRs, and 5 diaries. All three are active into mid-June.</p>
+<p><strong>AlexGorSer alert — 1-week gap:</strong> His last code commit on develop/main was 2026-06-08. He opened a Sprint 3 draft PR (#147) on 2026-06-10, but it contains <strong>zero commits authored by him</strong> (13 pavelkuvsh1noff, 8 Oksi2510, 4 JsPowWow). He has created Sprint 3 issues (#151–162), so planning is happening, but no code output yet since June 8. Worth a quick nudge before the interview.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>AlexGorSer</strong></td><td>100 / 100</td><td>not yet (due 2026-06-23)</td></tr>
+<tr><td><strong>pavelkuvsh1noff</strong></td><td>100 / 100</td><td>not yet (due 2026-06-23)</td></tr>
+<tr><td><strong>Oksi2510</strong></td><td>100 / 100</td><td>not yet (due 2026-06-23)</td></tr>
+</tbody></table>
+<p>All three students presented at the Sprint 1 Interview — Components and received a perfect score from mentor <strong>oreskag</strong>. No written comment was recorded for any of them. Sprint 2 scores ("Sprint 2 Interview — Routing & Signals") are not yet on record; the defence window closes 2026-06-23.</p>
+<p><strong>Score vs. activity reconciliation:</strong></p>
+<ul>
+<li><strong>AlexGorSer</strong> — 100 at Sprint 1, but the repo snapshot (2026-06-15) shows a code-silence week since June 8 while his teammates are actively shipping Sprint 2/3 work. The Sprint 1 result confirms he was solid on Components fundamentals; the current gap is a Sprint 2/3 signal, not a retroactive concern about Sprint 1. Still worth probing Sprint 3 code status at the upcoming defence.</li>
+<li><strong>pavelkuvsh1noff</strong> — 100 at Sprint 1, and currently the most active student in the team (develop pushes through June 14). Score and activity are fully consistent — no divergence.</li>
+<li><strong>Oksi2510</strong> — 100 at Sprint 1, which directly contradicts her own self-assessment ("my teammates are already using new Angular features, and I haven't even opened the new docs yet"). The mentor did not share that concern at the Sprint 1 defence. Two possible readings: she was well-prepared on Components despite the perceived gap on newer APIs; or the defence confirmed she meets the baseline and the self-assessment reflects aspirational anxiety rather than a real deficit. Either reading is positive. Do not let her self-deprecating diary language lower your calibration before the Sprint 2 defence.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>AlexGorSer — lead · 135 commits / 29 PRs / 3 diaries</h3>
+<p><strong>Built</strong> (grounded in PRs and diary):</p>
+<ul>
+<li>Sprint 1: CI protection, repo setup, ESLint config, Header component (PR #38), PokeAPI models/interfaces (PR #71 — documented every field).</li>
+<li>Sprint 2: Lazy-loaded feature routing — each feature owns its <code>routes.ts</code> file, imported into a central <code>features.routes.ts</code>. Footer, TabBar (via Taiga UI), Auth Guard (PR #107), Login Form Service on reactive forms (PR #106), Pokemon Storage Service + pagination storage (PR #113), Angular 22 migration lead (PR #109).</li>
+<li>Diary (sprint-2, 2026-06-08): 8 issues closed this sprint. Explains his lazy-routing structure as a deliberate anti-conflict architecture: "if several teammates need to change their own routes, the conflict can only occur in the top-level ChildrenRoutes, in just a couple of lines." That's a real design decision, not cargo-culting.</li>
+<li>Sprint 3 (WIP): Has created issue cards for filter service, filter component, interceptors (Auth Bearer, Refresh), user profile storage — but no code merged yet as of 2026-06-15.</li>
+</ul>
+<p><strong>Level:</strong> Strong. Not only builds things but documents the trade-offs. His diary shows he rejected his first TabBar implementation when the code review pushed back on hamburger menus — adapted without complaining. His routing structure choice shows he's thinking about the whole team, not just his ticket. The Angular 22 migration (5-phase, PR #109) was his initiative and he handled the rebase complexity.</p>
+<p><strong>Probe:</strong></p>
+<ol>
+<li><strong>Lazy-loaded routing structure</strong> — ask him to sketch the file tree and explain which file holds <code>loadChildren</code> and why each feature owns its own <code>routes.ts</code>. Can he articulate what breaks if you put them all in <code>app.routes.ts</code> on a 5-person team? (He can — he wrote it down.)</li>
+<li><strong>Auth Guard</strong> — ask what happens if the guard's <code>canActivate</code> is async. Can he write a guard that checks a JWT expiry before allowing navigation?</li>
+<li><strong>Angular 22 migration</strong> — he led 5 phases. Ask which breaking change was hardest and what he checked after each phase. Good signal of depth vs. copy-paste migration.</li>
+<li>The 1-week code gap is not yet a crisis (he planned Sprint 3 issues), but if the interview touches Sprint 3 deliverables, verify he's started work, not just filed issues.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>pavelkuvsh1noff — 110 commits / 16 PRs / 4 diaries</h3>
+<p><strong>Built</strong> (grounded in PRs and diary):</p>
+<ul>
+<li>Sprint 1: Not-found (404) page with animated GIF (spent 10+ hours on the GIF export alone — his own honest accounting). Theme-switcher service (PR #67). Auth/login basic layout (PR #70). Main catalog page skeleton (PR #69).</li>
+<li>Sprint 2: Pokemon card component (figure/figcaption, <code>@for</code> for type badges via Taiga UI <code>Badge</code>, progressive bar from Taiga UI, SCSS <code>@each</code> for type-color classes — PR #90). Pokemon profile page (PR #91). Signup form service on <strong>signal forms</strong> (~8h, PR #125 — includes honest post-mortem). Radar/spider chart for pokemon stats via <code>echarts</code> library (PR #138). HTTP data service using <code>httpResource()</code> — with caching attempt later removed. Skeleton loader on main catalog using Taiga UI skeleton.</li>
+<li>Sprint 3 (WIP, most active student right now): Refactored pokemon profile with evolution chain (PR #138 merged 2026-06-14), <code>httpResource()</code>-based API service, error handling, GIF images in evolution chain. As of 2026-06-14 actively pushing to develop.</li>
+<li>Diary (sprint-3, 2026-06-15): Explicitly calls out that <code>httpResource()</code> was chosen over raw <code>fetch</code>/RxJS pipeline — and explains the API: <code>.value()</code>, <code>.isLoading()</code>, <code>.error()</code>. Also mentions that the caching service he wrote was ultimately dropped because "the browser already does this." Self-correcting — good sign.</li>
+</ul>
+<p><strong>Signal forms honesty (from sprint-2 diary):</strong> He used <code>provideSignalFormsConfig</code> from Taiga UI to wire signal-based reactive forms, noted the integration required selector-patching in the library, and concluded: "should not take a new feature while the library doesn't support it." He identified fragility himself. This is the highest-value interview probe point.</p>
+<p><strong>Level:</strong> Persistent and honest. The deepest diary writer after AlexGorSer. He over-invested in the 404 GIF (14+ hours total, the gif still has artifacts he's unhappy with) — this is a perfectionism flag that cuts both ways: high quality bar, but risk of time sink on non-critical path. His <code>httpResource</code> diary entry shows genuine understanding of Signals integration, not just "I pasted the code from docs."</p>
+<p><strong>Probe (highest value — "can you recreate it"):</strong></p>
+<ol>
+<li><strong>Recursive evolution chain component</strong> — this is 100% his, built by hand. Ask him to sketch the recursive component interface on a whiteboard: what props does each node receive, where does the recursion stop, how does Eevee's 7-branch split render correctly? If he can explain it from scratch, that's a genuine pass.</li>
+<li><strong>Signal forms / <code>httpResource</code></strong> — ask him to explain what <code>httpResource()</code> returns and what <code>.value()</code> is (signal or observable?). Then ask: what happens to the running request if the input signal changes? (Answer: it's automatically cancelled.) If he can answer without looking it up, he genuinely understood it.</li>
+<li><strong>The signal-forms fragility he flagged</strong> — ask him to explain <em>what</em> was fragile. What exactly did <code>provideSignalFormsConfig</code> do to the selectors? This is the Feynman test: if he can't reconstruct the mechanism, the flag was surface-level; if he can, the honesty came from understanding.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Oksi2510 — 63 commits / 14 PRs / 5 diaries</h3>
+<p><strong>Built</strong> (grounded in PRs and diary):</p>
+<ul>
+<li>Sprint 1: About page layout and styles (PR #86, #99), team card design. Transloco i18n integration (PR #65). First diary (2026-05-18): took on i18n and theme-switching specifically because she'd never implemented them from scratch before — deliberate learning choice.</li>
+<li>Sprint 2: User profile page init + basic layout (PR #105). <code>HideNav</code> directive — custom directive that hides the nav bar on scroll (PR #104), then rewritten to add 50px scroll threshold (PR #135, after <strong>three rewrites</strong>). routerLink fix in navigation (PR #139 — correct <code>routerLink</code> binding vs old approach).</li>
+<li>Sprint 3 (WIP, active on feature branch): Filter component — started as "just UI tweaks" but evolved into substantial logic (her own words in diary). Active commits on <code>feat/filter-component-add-filter-component</code> as of 2026-06-14.</li>
+<li>Diary count: 5 entries (most in the team if sprint-3 diary is counted), including diary #5 from 2026-06-13 — the only student with a sprint-3 diary already committed.</li>
+</ul>
+<p><strong>Honest self-assessment quotes:</strong></p>
+<ul>
+<li>Sprint-2 diary: "my teammates are already using new Angular features, and I haven't even opened the new docs yet."</li>
+<li>Sprint-3 diary: "I started thinking it was just UI, and ended up writing a solid chunk of logic without noticing."</li>
+</ul>
+<p>These are not excuses — they are calibrated self-assessment. Do not read "behind on Angular 22" as disengagement.</p>
+<p><strong>Level:</strong> Steady contributor, strongest on UI/UX quality and self-reflection. Least commit volume, but per-diary depth is comparable. The three-rewrite directive story (she rewrote <code>HideNav</code> three times) is the key interview probe: was it persistence, or did she understand each iteration?</p>
+<p><strong>Probe:</strong></p>
+<ol>
+<li><strong>HideNav directive — three rewrites</strong> — ask her to describe the three versions: what did the first one do wrong, what did the second version fix, why did the third version (with the <code>50px threshold</code> input property) win? If she can explain the iteration rationale, that's deep understanding. If she describes only the final version, the rewrites may have been trial-and-error.</li>
+<li><strong><code>routerLink</code> binding fix</strong> (PR #139) — she fixed an incorrect binding. Ask: what was wrong with the original? What is the difference between <code>routerLink="/path"</code> and <code>[routerLink]="'/path'"</code> and when do you need the brackets? A simple but revealing Angular fundamentals check.</li>
+<li><strong>Transloco / i18n</strong> — she integrated it specifically to learn. Ask her to explain what Transloco's <code>TranslocoService.translate()</code> does vs a pipe — and whether tree-shaking applies to translation files. Not a trick; a genuine depth check on a feature she owns.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall readiness:</strong> Above average for the cohort stage. Three active students, healthy commit distribution (135 / 110 / 63), no one coasting. All three are writing diaries. The team migrated to Angular 22 mid-course and is actively using <code>httpResource</code>, signal forms, and <code>@defer</code> — ambitious but also fragile if they don't understand the plumbing.</p>
+<p><strong>Who is strong:</strong> AlexGorSer as lead sets a solid technical tone — architecture decisions are documented and defensible. pavelkuvsh1noff is the most active right now and his diary honesty is rare and valuable.</p>
+<p><strong>Who to watch:</strong> AlexGorSer has a code-silence week (June 8–15) while others are shipping. He's planned Sprint 3 issues but has zero code commits since June 8. This may resolve before the interview — but if it doesn't, ask him directly which Sprint 3 task he's currently working on.</p>
+<p><strong>AI / library reliance risk:</strong> Moderate. Taiga UI components are used heavily (TabBar, ProgressBar, Skeleton, Badge), which is acceptable. The signal-forms integration pavelkuvsh1noff flagged as "vibe-coded" is the one area where library depth matters — the probe above will reveal whether that's honest introspection or surface awareness. No evidence of wholesale AI-generated components; the commit granularity and diary specifics (e.g., naming the actual bug in PR review) suggest hands-on work.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ul>
+<li>AlexGorSer: routing architecture + Angular 22 migration decisions (not "what did you do" but "what would break if X"). Check Sprint 3 code status.</li>
+<li>pavelkuvsh1noff: recursive evolution component reconstruction from scratch — this is the cleanest "can you create it" test in the team. Then signal-forms fragility as a secondary.</li>
+<li>Oksi2510: three-rewrite directive story — open-ended ("walk me through why you rewrote it twice"). Then <code>routerLink</code> binding as a quick baseline Angular fundamentals check. Calibrate difficulty to her self-assessed gap; her engagement is genuine.</li>
+</ul>
+<p><strong>Tone:</strong> this team has good internal communication (meeting notes, clear PRs, cross-review). They'll respond well to structured questions. Avoid generic "explain Angular Signals" — use their specific PRs and diary entries to make questions concrete.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — ngKittyDebugLeftPaw</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>ngKittyDebug/angular-ngKittyDebugLeft</code> (коммиты, PR-ы, issues) + дневники спринтов 1–3. Снимок: 2026-06-15.</blockquote>
+<blockquote>Цель: дать ментору 2 минуты контекста перед защитой — кто что делал, кто понимает, что проверять.</blockquote>
+<p><strong>Резюме:</strong> Здоровая, сбалансированная команда из трёх человек — сильный и внятный лид, старательный и честный middle, вдумчивый, но чуть более медленный третий участник — строит PokeDex SPA на Angular 22 с передовыми API (signals, <code>httpResource</code>, сигнальные формы). Пассажиров нет. Главный угол на собеседовании: каждый студент заявил хотя бы одну по-настоящему сложную вещь — проверьте, могут ли они воспроизвести её с нуля, а не просто описать.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<p><strong>Проект:</strong> PokeDex SPA — Angular 22 + Taiga UI v5 + NgRx, TypeScript 5.9, Vitest, RxJS. Архитектура signals-first (<code>resource</code>, <code>httpResource</code>, сигнальные формы). ESLint + Prettier + Stylelint + commitlint + Husky со строгими правилами. Задеплоено на Netlify: <a href="https://ngkittydebugleftpaw.netlify.app/">https://ngkittydebugleftpaw.netlify.app/</a></p>
+<p><strong>Репозиторий:</strong> <a href="https://github.com/ngKittyDebug/angular-ngKittyDebugLeft">https://github.com/ngKittyDebug/angular-ngKittyDebugLeft</a> <strong>Создан:</strong> 2026-05-06 <strong>Последний push (основная ветка):</strong> 2026-06-11 (main); ветка develop активная, последний push 2026-06-14 <strong>Открытые issues:</strong> 43 (смесь карточек задач Спринта 3 и находок аудита кода от JsPowWow) <strong>Основная ветка:</strong> main (GitFlow: main ← develop ← feature/*)</p>
+<p>Важное техническое решение: команда мигрировала на Angular 22 <strong>в середине курса</strong> (Спринт 2, PR #109). Они намеренно используют передовые фичи — это одновременно сила и главный риск на собеседовании.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав</h2>
+<p><strong>Студенты (ростер курса):</strong></p>
+<ul>
+<li><strong>AlexGorSer</strong> — тимлид (подтверждено <code>isLead: true</code> в participants.json)</li>
+<li><strong>pavelkuvsh1noff</strong> — frontend-разработчик</li>
+<li><strong>Oksi2510</strong> — дизайн / frontend-разработчик</li>
+</ul>
+<p><strong>Внешние контрибьюторы (не оцениваются):</strong></p>
+<ul>
+<li><strong>oreskag</strong> — ментор (указан как <code>role: mentor</code> в participants.json; 1 коммит, нет code PR-ов — норма)</li>
+<li><strong>JsPowWow</strong> — инфраструктура / куратор / автоматизация ревью. Открыл 13 PR-ов: CI-воркфлоу, Telegram/Discord scheduled notifications, PartyKit realtime deploy, GitHub MCP интеграция и бот «Клавдий» для аудита кода (автоматически поднимает issues на code smell-ы). Также активен в ветке <code>feat/frenzy-mvp-next</code> (realtime-мультиплеер, пасхальная фича). Студентом не является. Его issues по аудиту кода (PR-ы #140–169) объясняют часть из 43 открытых issues.</li>
+<li><strong>dashque</strong> — 1 коммит (вероятно, инфра или cross-org экшен; не из ростера этой команды)</li>
+<li><strong>OreskaG</strong> — 1 коммит (тот же логин, что ментор oreskag, с другим регистром; инфра)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR-ы (всего)</th><th>PR-ы вмержено</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>AlexGorSer</strong> (лид)</td><td>135</td><td>29</td><td>28</td><td>3</td><td>2026-06-08 (main/develop)</td><td>Высокий — вдумчивый, внятный</td></tr>
+<tr><td><strong>pavelkuvsh1noff</strong></td><td>110</td><td>16</td><td>15</td><td>4</td><td>2026-06-14 (develop)</td><td>Высокий — упорный, честный</td></tr>
+<tr><td><strong>Oksi2510</strong></td><td>63</td><td>14</td><td>13</td><td>5</td><td>2026-06-14 (feature-ветка)</td><td>Стабильный — рефлексивный, чуть отстаёт по новым API</td></tr>
+</tbody></table>
+<p>Количество коммитов — из endpoint-а <code>contributors</code>; учитывает все коммиты по всем веткам в истории по умолчанию. Количество дневников: файлы с парсируемыми датами по всем diary-веткам, вмерженным в <code>development-notes</code>.</p>
+<p>Баланс здоровый. Пассажиров нет. Даже наименее активный студент (Oksi) имеет 63 коммита, 13 вмерженных PR-ов и 5 дневников. Все трое активны в середине июня.</p>
+<p><strong>Предупреждение по AlexGorSer — недельный перерыв:</strong> Его последний коммит с кодом в develop/main — 2026-06-08. Он открыл черновик PR #147 для Спринта 3 10 июня, но там <strong>ни одного коммита, authored им</strong> (13 — pavelkuvsh1noff, 8 — Oksi2510, 4 — JsPowWow). Он создал issues для Спринта 3 (#151–162), то есть планирование идёт, но кода нет с 8 июня. Перед собеседованием стоит легонько подтолкнуть.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td><strong>AlexGorSer</strong></td><td>100 / 100</td><td>не проводился (дедлайн 2026-06-23)</td></tr>
+<tr><td><strong>pavelkuvsh1noff</strong></td><td>100 / 100</td><td>не проводился (дедлайн 2026-06-23)</td></tr>
+<tr><td><strong>Oksi2510</strong></td><td>100 / 100</td><td>не проводился (дедлайн 2026-06-23)</td></tr>
+</tbody></table>
+<p>Все три студента участвовали в собеседовании «Sprint 1 Interview — Components» и получили максимальный балл от ментора <strong>oreskag</strong>. Письменных комментариев ни по одному из них зафиксировано не было. Баллы за Спринт 2 («Sprint 2 Interview — Routing & Signals») пока отсутствуют; окно для защиты закрывается 2026-06-23.</p>
+<p><strong>Сопоставление баллов и активности репозитория:</strong></p>
+<ul>
+<li><strong>AlexGorSer</strong> — 100 на Спринте 1, однако снимок репозитория (2026-06-15) показывает отсутствие коммитов с кодом с 8 июня, тогда как тиммейты активно шипят. Результат Спринта 1 подтверждает, что по теме Components он был в форме; текущий перерыв — сигнал Спринтов 2/3, а не повод пересматривать оценку за Спринт 1. Тем не менее на ближайшей защите стоит уточнить, начат ли код Спринта 3.</li>
+<li><strong>pavelkuvsh1noff</strong> — 100 на Спринте 1, и он же сейчас самый активный студент команды (пуши в develop по 14 июня). Балл и активность полностью согласуются — расхождений нет.</li>
+<li><strong>Oksi2510</strong> — 100 на Спринте 1, что прямо противоречит её собственной самооценке («мои тиммейты уже используют новые фичи Angular, а я ещё не открывала новую документацию»). Ментор этих опасений не разделил. Два возможных прочтения: она была хорошо подготовлена по Components, несмотря на воспринимаемый пробел в новых API; или защита подтвердила, что базовый уровень у неё в порядке, а самооценка отражает стремление к более высокой планке, а не реальный дефицит. Оба прочтения позитивны. Не позволяйте самокритичному тону её дневников занизить вашу калибровку перед защитой Спринта 2.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>AlexGorSer — лид · 135 коммитов / 29 PR-ов / 3 дневника</h3>
+<p><strong>Что сделал</strong> (подтверждено PR-ами и дневником):</p>
+<ul>
+<li>Спринт 1: CI-защита, настройка репозитория, конфиг ESLint, компонент Header (PR #38), модели/интерфейсы PokeAPI (PR #71 — задокументировал каждое поле).</li>
+<li>Спринт 2: lazy-загрузка с разбивкой по фичам — каждая фича хранит свой файл <code>routes.ts</code>, импортируемый в центральный <code>features.routes.ts</code>. Footer, TabBar (через Taiga UI), Auth Guard (PR #107), Login Form Service на реактивных формах (PR #106), Pokemon Storage Service + хранение пагинации (PR #113), лидировал миграцию на Angular 22 (PR #109).</li>
+<li>Дневник (sprint-2, 2026-06-08): закрыто 8 issues за спринт. Объясняет структуру lazy-роутинга как намеренную антиконфликтную архитектуру: «если нескольким тиммейтам нужно менять свои роуты, конфликт может возникнуть только в верхнеуровневом ChildrenRoutes, всего в паре строк». Это реальное архитектурное решение, а не слепое копирование.</li>
+<li>Спринт 3 (в работе): создал карточки issues для filter service, filter component, interceptors (Auth Bearer, Refresh), хранилища профиля пользователя — но кода вмержено нет по состоянию на 2026-06-15.</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный. Не просто реализует, но и документирует компромиссы. В дневнике видно, как он отказался от первой реализации TabBar после замечаний на code review по hamburger-меню — адаптировался без возражений. Выбор структуры роутинга показывает, что он думает о всей команде, а не только о своём тикете. Миграция на Angular 22 (5 фаз, PR #109) — его инициатива, и он разобрался со сложностью rebase-а.</p>
+<p><strong>Что проверять:</strong></p>
+<ol>
+<li><strong>Структура lazy-загрузки роутинга</strong> — попросите набросать дерево файлов и объяснить, в каком файле лежит <code>loadChildren</code> и почему каждая фича хранит свой <code>routes.ts</code>. Может ли он чётко сформулировать, что сломается, если всё запихнуть в <code>app.routes.ts</code> в команде из 5 человек? (Может — он это записал.)</li>
+<li><strong>Auth Guard</strong> — спросите, что произойдёт, если <code>canActivate</code> у гарда асинхронный. Может ли он написать гард, который проверяет истечение JWT до разрешения навигации?</li>
+<li><strong>Миграция на Angular 22</strong> — он руководил 5 фазами. Спросите, какое breaking change далось труднее всего и что он проверял после каждой фазы. Хороший сигнал глубины против «я просто обновил».</li>
+<li>Недельный перерыв с кодом пока не кризис (он запланировал issues для Спринта 3), но если на собеседовании зайдёт речь о deliverables Спринта 3 — убедитесь, что работа начата, а не только поданы issues.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>pavelkuvsh1noff — 110 коммитов / 16 PR-ов / 4 дневника</h3>
+<p><strong>Что сделал</strong> (подтверждено PR-ами и дневником):</p>
+<ul>
+<li>Спринт 1: страница Not-found (404) с анимированным GIF (потратил 10+ часов только на экспорт GIF — его собственная честная оценка). Сервис переключения темы (PR #67). Базовый макет Auth/login (PR #70). Скелет главной страницы каталога (PR #69).</li>
+<li>Спринт 2: компонент карточки покемона (figure/figcaption, <code>@for</code> для бейджей типов через Taiga UI <code>Badge</code>, прогресс-бар из Taiga UI, SCSS <code>@each</code> для классов цвета типа — PR #90). Страница профиля покемона (PR #91). Сервис формы регистрации на <strong>сигнальных формах</strong> (~8ч, PR #125 — включает честный post-mortem). Radar/spider-чарт для характеристик покемона через библиотеку <code>echarts</code> (PR #138). HTTP-сервис данных через <code>httpResource()</code> — с попыткой кэширования, которая впоследствии была удалена. Skeleton-лоадер в главном каталоге через Taiga UI skeleton.</li>
+<li>Спринт 3 (в работе, самый активный студент сейчас): рефакторинг профиля покемона с цепочкой эволюций (PR #138 вмержен 2026-06-14), API-сервис на <code>httpResource()</code>, обработка ошибок, GIF-изображения в цепочке эволюций. По состоянию на 2026-06-14 активно пушит в develop.</li>
+<li>Дневник (sprint-3, 2026-06-15): явно указывает, что <code>httpResource()</code> был выбран вместо сырого <code>fetch</code>/RxJS-пайплайна — и объясняет API: <code>.value()</code>, <code>.isLoading()</code>, <code>.error()</code>. Также упоминает, что написанный им сервис кэширования в итоге был выброшен, потому что «браузер и так это делает». Самокоррекция — хороший знак.</li>
+</ul>
+<p><strong>Честность по сигнальным формам (из дневника sprint-2):</strong> Использовал <code>provideSignalFormsConfig</code> из Taiga UI для подключения реактивных форм на сигналах, отметил, что интеграция потребовала патчинга селекторов в библиотеке, и пришёл к выводу: «не стоит брать новую фичу, пока библиотека её не поддерживает». Хрупкость он выявил сам. Это самая ценная точка проверки на собеседовании.</p>
+<p><strong>Уровень:</strong> Упорный и честный. Самый подробный автор дневников после AlexGorSer. Перевложился в GIF для 404 (14+ часов суммарно, GIF до сих пор с артефактами, которыми он недоволен) — перфекционистский флаг с двойным смыслом: высокая планка качества, но риск потонуть в некритичном пути. Запись в дневнике про <code>httpResource</code> демонстрирует реальное понимание интеграции Signals, а не просто «я вставил код из доков».</p>
+<p><strong>Что проверять (высшая ценность — «сможете ли воспроизвести»):</strong></p>
+<ol>
+<li><strong>Рекурсивный компонент цепочки эволюций</strong> — это на 100% его, написан руками. Попросите набросать на доске интерфейс рекурсивного компонента: какие props получает каждый узел, где рекурсия останавливается, как корректно рендерится разветвление Eevee на 7 веток? Если объяснит с нуля — это настоящий зачёт.</li>
+<li><strong>Сигнальные формы / <code>httpResource</code></strong> — спросите, что возвращает <code>httpResource()</code> и чем является <code>.value()</code> (signal или observable?). Затем: что происходит с текущим запросом, если изменится входной сигнал? (Ответ: он автоматически отменяется.) Если ответит без подсказок — он действительно понял.</li>
+<li><strong>Хрупкость сигнальных форм, которую он обозначил</strong> — попросите объяснить, <em>что именно</em> было хрупким. Что конкретно сделал <code>provideSignalFormsConfig</code> с селекторами? Это тест Фейнмана: если не может воспроизвести механизм — флаг был поверхностным; если может — честность шла от понимания.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Oksi2510 — 63 коммита / 14 PR-ов / 5 дневников</h3>
+<p><strong>Что сделала</strong> (подтверждено PR-ами и дневником):</p>
+<ul>
+<li>Спринт 1: макет и стили страницы About (PR #86, #99), дизайн командной карточки. Интеграция Transloco i18n (PR #65). Первый дневник (2026-05-18): взяла i18n и переключение темы именно потому, что никогда раньше не реализовывала их с нуля — осознанный выбор ради учёбы.</li>
+<li>Спринт 2: инициализация страницы профиля пользователя + базовый макет (PR #105). Директива <code>HideNav</code> — кастомная директива, скрывающая навбар при скролле (PR #104), затем переписана с добавлением порога скролла в 50px (PR #135, после <strong>трёх переписываний</strong>). Исправление routerLink в навигации (PR #139 — правильный биндинг <code>routerLink</code> против старого подхода).</li>
+<li>Спринт 3 (в работе, активна в feature-ветке): компонент фильтра — начинался как «просто правки UI», но вырос в существенную логику (её собственные слова в дневнике). Активные коммиты в <code>feat/filter-component-add-filter-component</code> по состоянию на 2026-06-14.</li>
+<li>Количество дневников: 5 записей (больше всех в команде, если считать дневник sprint-3), включая дневник #5 от 2026-06-13 — единственный студент с уже зафиксированным дневником третьего спринта.</li>
+</ul>
+<p><strong>Цитаты из честной самооценки:</strong></p>
+<ul>
+<li>Дневник sprint-2: «мои тиммейты уже используют новые фичи Angular, а я ещё не открывала новую документацию».</li>
+<li>Дневник sprint-3: «я начала думать, что это просто правки UI, и в итоге незаметно для себя написала приличный кусок логики».</li>
+</ul>
+<p>Это не отговорки — это точная самооценка. Не читайте «отстаёт по Angular 22» как незаинтересованность.</p>
+<p><strong>Уровень:</strong> Стабильный контрибьютор, сильнее всего в качестве UI/UX и рефлексии. Наименьший объём коммитов, но глубина каждого дневника сопоставима. История с тремя переписываниями директивы (<code>HideNav</code>) — ключевая точка проверки: было ли это упорством, или она понимала каждую итерацию?</p>
+<p><strong>Что проверять:</strong></p>
+<ol>
+<li><strong>Директива <code>HideNav</code> — три переписывания</strong> — попросите описать три версии: что было не так в первой, что исправила вторая, почему победила третья (с input-свойством <code>50px threshold</code>)? Если объяснит логику итераций — это глубокое понимание. Если опишет только финальную версию — переписывания могли быть методом проб и ошибок.</li>
+<li><strong>Исправление биндинга <code>routerLink</code></strong> (PR #139) — она исправила некорректный биндинг. Спросите: что было не так с оригиналом? В чём разница между <code>routerLink="/path"</code> и <code>[routerLink]="'/path'"</code> и когда нужны скобки? Простая, но показательная проверка базовых знаний Angular.</li>
+<li><strong>Transloco / i18n</strong> — интегрировала специально ради учёбы. Спросите, чем <code>TranslocoService.translate()</code> отличается от пайпа — и применяется ли tree-shaking к файлам переводов. Не ловушка; настоящая проверка глубины по фиче, которой она владеет.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая готовность:</strong> Выше среднего для данного этапа потока. Три активных студента, здоровое распределение коммитов (135 / 110 / 63), никто не едет балластом. Все трое ведут дневники. Команда мигрировала на Angular 22 в середине курса и активно использует <code>httpResource</code>, сигнальные формы и <code>@defer</code> — амбициозно, но хрупко, если они не понимают внутренней механики.</p>
+<p><strong>Кто силён:</strong> AlexGorSer как лид задаёт уверенный технический тон — архитектурные решения задокументированы и защищаемы. pavelkuvsh1noff сейчас самый активный, и его честность в дневниках — редкость и ценность.</p>
+<p><strong>За кем следить:</strong> У AlexGorSer неделя без кода (8–15 июня), пока остальные шипят. Он запланировал issues для Спринта 3, но ни одного коммита с кодом с 8 июня. Возможно, это разрешится до собеседования — но если нет, спросите его напрямую, над какой задачей Спринта 3 он сейчас работает.</p>
+<p><strong>Риск зависимости от AI / библиотек:</strong> Умеренный. Компоненты Taiga UI используются активно (TabBar, ProgressBar, Skeleton, Badge) — это допустимо. Интеграция сигнальных форм, которую pavelkuvsh1noff назвал «вайб-кодингом», — единственная область, где важна глубина знания библиотеки; приведённая выше проверка покажет, честная ли это рефлексия или поверхностное ощущение. Признаков массово AI-сгенерированных компонентов нет: гранулярность коммитов и конкретика в дневниках (например, называют реальный баг в PR-ревью) говорят о работе руками.</p>
+<p><strong>Рекомендуемый угол на собеседовании:</strong></p>
+<ul>
+<li>AlexGorSer: архитектура роутинга + решения при миграции на Angular 22 (не «что сделал», а «что сломается, если X»). Проверить статус кода в Спринте 3.</li>
+<li>pavelkuvsh1noff: воспроизведение рекурсивного компонента цепочки эволюций с нуля — это самый чистый тест «сможешь ли создать» в команде. Хрупкость сигнальных форм — вторым вопросом.</li>
+<li>Oksi2510: история трёх переписываний директивы — открытый вопрос («расскажите, почему переписывали дважды»). Затем биндинг <code>routerLink</code> как быстрая базовая проверка Angular. Калибруйте сложность под её самооценку; её вовлечённость настоящая.</li>
+</ul>
+<p><strong>Тон:</strong> в команде хорошая внутренняя коммуникация (протоколы встреч, понятные PR-ы, взаимное ревью). Они хорошо реагируют на структурированные вопросы. Избегайте общих «объясни Angular Signals» — используйте конкретные PR-ы и записи в дневниках, чтобы вопросы были предметными.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

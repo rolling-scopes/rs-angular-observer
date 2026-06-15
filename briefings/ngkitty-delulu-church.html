@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — &lt;ngKitty-delulu-church /&gt; · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — &lt;ngKitty-delulu-church /&gt;</strong><strong class="lang-ru">Mentor briefing — &lt;ngKitty-delulu-church /&gt;</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — <ngKitty-delulu-church /></h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repo <code>ngKittyDebug/angular-ngKittyDebugRight</code> (commits, PRs, diary files) + README. Snapshot 2026-06-15. Goal: give the mentor two minutes of context before the interview — who built what, who understands it, where to probe.</blockquote>
+<p><strong>Project:</strong> "The Church of the Holy Deploy" — a satirical developer SPA. Features: tarot oracle (3-card spread), developer confession booth, daily NASA cosmic photo, weather-reactive UI, "Ghost Coder" grandfather-programmer character with blinking eyes, user auth with Firebase, developer diary tracker. Deployed on Netlify: <a href="https://delulu-church.netlify.app/">https://delulu-church.netlify.app/</a></p>
+<p><strong>Stack:</strong> Angular 22.0.0, TypeScript 6.0.3, Taiga UI, Transloco (i18n, RU/EN), Firebase Auth + Firestore, MyMemory translation API, Tarot API, NASA API, Vitest, ESLint + Stylelint + Prettier, Netlify Functions (CORS proxy for Tarot API). Angular 22 is bleeding-edge — signals, <code>linkedSignal</code>, <code>resource</code>, signal-based model inputs. Tooling is professional-grade: pnpm, <code>knip</code> for dead-code detection, strict lint.</p>
+<p><strong>Repo:</strong> <a href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight">https://github.com/ngKittyDebug/angular-ngKittyDebugRight</a> — created 2026-05-06, pushed 2026-06-14, 45 open issues.</p>
+<p><strong>Roster:</strong> 3 students + mentor <code>OreskaG</code> (confirmed in <code>participants.json</code> — present for support, no student code expected from them). <code>JsPowWow</code> appears in contributors with 38 commits and 4 merged PRs — this is the curator/infrastructure account: their PRs are <code>chore: add agent skills infrastructure</code>, <code>feat(koans): add netlify functions backend</code>, <code>feat(koans): add koan content files</code>, <code>docs+chore: CLAUDE.md, koan skill</code>. This is course infra (review bot "Sasarik" / Claudius), not student work. Exclude from student assessment. <code>AlexGorSer</code> (2 merged PRs: profile design fix + i18n fix) — not in the student roster; likely a guest reviewer who submitted PRs. Also exclude.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<p><strong>One-line summary:</strong> Strong, driven lead (dashque) carrying the project architecturally; Alena has grown from copy-paste to writing genuine Angular code with good diary depth; kozochkina82 has a real PR gap (7 closed/abandoned, only 13 merged) and her diary is lightweight — the most uncertain of the three, worth a calibration probe.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>dashque</strong> (lead)</td><td>225</td><td>50</td><td>44</td><td>6</td><td>2026-06-14</td><td>very high — architect + executor</td></tr>
+<tr><td><strong>Alena1409</strong></td><td>89</td><td>25</td><td>22</td><td>7</td><td>2026-06-08</td><td>solid — consistent delivery</td></tr>
+<tr><td><strong>kozochkina82</strong></td><td>110</td><td>22</td><td>13</td><td>5 (4 found on branch, +1 Jun)</td><td>2026-06-03</td><td>mixed — commits up, merged PRs low, diary thin</td></tr>
+</tbody></table>
+<p><strong>Commit note on kozochkina82:</strong> 110 commits is visually high, but includes many merge commits, style fixes, and "apply suggestion from @dashque" co-authored commits. Her merged PR count of 13 (vs 7 closed/abandoned) is the more reliable signal of independent delivery.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 Interview — Components · Mentor: <code>oreskag</code> · Sprint 2 interview not yet held (deadline 2026-06-23).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>dashque</strong></td><td>100 / 100</td><td>—</td></tr>
+<tr><td><strong>Alena1409</strong></td><td>100 / 100</td><td>—</td></tr>
+<tr><td><strong>kozochkina82</strong></td><td>50 / 100</td><td>—</td></tr>
+</tbody></table>
+<p>No written comments were recorded by the mentor for any of the three students.</p>
+<p><strong>Reconciliation — where scores and repo activity agree or diverge:</strong></p>
+<ul>
+<li><strong>dashque (100):</strong> Score fully consistent with repo activity. She is the architect and executor of this project; the mentor's top mark aligns with 225 commits, 44 merged PRs, and the Angular 22 migration. No divergence.</li>
+<li><strong>Alena1409 (100):</strong> Score is consistent with diary depth and merged PR quality. Her last recorded activity is 2026-06-08 — a week before the snapshot — which is a minor gap but unremarkable mid-Sprint 2. The 100 at the Sprint 1 defence validates that her diary-visible growth (eye-blink directive debugging chain, <code>canActivate</code>/<code>canMatch</code> articulation) translated into real knowledge at interview time. No meaningful divergence.</li>
+<li><strong>kozochkina82 (50):</strong> <strong>Score confirms the activity-based caution signals.</strong> The briefing flagged her as the most uncertain member: 7 closed/abandoned PRs, 13 merged (lowest ratio), thin diaries, self-declared partial understanding of the facade pattern. The 50/100 defence score is the external validation that these signals were real, not noise. The repo picture and the mentor's evaluation point in the same direction. This is the key risk to carry into the Sprint 2 interview.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Student profiles</h2>
+<h3>dashque — team lead, 225 commits / 44 merged PRs / 6 diaries</h3>
+<p><strong>Built</strong> (from merged PRs and diary):</p>
+<ul>
+<li>Full project setup: conventions docs, style guides, GitHub board with decomposed tasks, CI workflows, reviewer automation (PR #26, #33)</li>
+<li>App shell + sidebar + layout + navigation architecture (PR #39, #50, #71, #79)</li>
+<li>Login/registration forms with guards (PR #70, #115), guard for dirty forms (PR #160), modal service (PR #159)</li>
+<li>Custom preloading strategy — different pages pre-fetched for guest vs. authenticated user (PR #193)</li>
+<li>Firebase auth migration from Netlify Identity — rewrote auth service, added User service that seeds Firestore on registration (PR #217)</li>
+<li>Tarot API service with Netlify Functions CORS proxy, 3-card oracle component (PR #198, #216)</li>
+<li><strong>Migration of the entire project to Angular 22</strong> mid-course (PR #199)</li>
+<li>Tarot translation service via MyMemory API with language-switch re-fetch logic; <code>linkedSignal</code> to reset stale spread results on intent/role change (sprint-3 diary)</li>
+<li>Card view component (PR #225), log-in/log-out moved to header (PR #200)</li>
+</ul>
+<p><strong>Level:</strong> The strongest Angular practitioner on this team by a significant margin. Arrived with prior professional experience (mentions "I didn't plan to lead, just wanted to learn Angular and code"). Takes on architecture decisions herself — route structure, service scoping, DI strategy. Sprint-3 diary is the most technically dense: she articulates <em>why</em> <code>linkedSignal</code> is the right tool ("a computed signal you can mutate — I used to think that was an anti-pattern, now I see when it's necessary"), discusses resolver vs. <code>resource</code> trade-offs for the NASA component, and self-identifies what still needs cleanup. One notable warning sign: sprint-2 diary explicitly describes a serious team conflict ("one team member ignores instructions, violates style guides, doesn't check PRs before submitting — this is exhausting") and frames two exit options. This is a leadership and interpersonal challenge worth noting, not just a technical one.</p>
+<p><strong>Probe:</strong></p>
+<ul>
+<li>Ask her to explain <code>linkedSignal</code> from scratch: what problem it solves, how it differs from <code>computed</code>, why she called it "an anti-pattern at first."</li>
+<li>Ask about the preloading strategy — how does it know which chunks to preload for a guest vs. authenticated user? Where does the decision live?</li>
+<li>If time: Firebase auth → Firestore seed flow. What happens on Google OAuth sign-in vs. email registration? How does <code>UserService</code> interact with <code>AuthService</code>?</li>
+<li>Don't let her coast on "I set everything up" — push for the <em>why</em> behind any one architectural decision.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Alena1409 — 89 commits / 22 merged PRs / 7 diaries</h3>
+<p><strong>Built</strong> (from merged PRs and diary):</p>
+<ul>
+<li>Footer, card component, 404 page (PR #38, #43, #67)</li>
+<li>Transloco i18n service setup (PR #84)</li>
+<li>Login form with Taiga UI (PR #89)</li>
+<li>Auth guard (<code>canActivate</code>/<code>canMatch</code> — diary shows she understands the distinction) (PR #150)</li>
+<li>Confess block, sin-items refactor (PR #154, #185)</li>
+<li>Shrift ("absolution") page component (PR #107)</li>
+<li><strong>Eye-blink directive</strong> for the Ghost Coder character — Renderer2 + signal-based class toggle, iterative debugging (PR #224)</li>
+<li>"Basic code by coder" component (PR #223), CoderQuotes service (open PR #228)</li>
+</ul>
+<p><strong>Level:</strong> Genuinely learning and producing. The eye-blink directive diary (sprint-3, 2026-06-08) is the strongest evidence of real understanding: she shows the <em>wrong</em> first version (two directives on two elements fighting each other), explains why it broke (independent timer state), and then shows the correct refactor (one directive on the parent element, signal-controlled CSS class). She cites Renderer2's safety advantage but ultimately moves away from it for the right reason. The sprint-2 diary on routing shows she absorbed preloading from dashque's code and can explain it with her own words and examples. She also correctly diagnosed a <code>providedIn: 'root'</code> DI scope problem after the team review. Risk area: her diaries mention "talking to the AI and it gave me APIs for Mercury retrograde status" — that specific feature was exploratory brainstorming, not production code, so not a red flag by itself. The CoderQuotes service (open PR) is unreviewed; unclear if it's complete.</p>
+<p><strong>Probe:</strong></p>
+<ul>
+<li>Ask her to <strong>recreate the eye-blink directive from scratch</strong> on a whiteboard — this is exactly where she went wrong, debugged, and fixed. That whole chain is in her diary. If she can retrace it, she owns it.</li>
+<li><code>canActivate</code> vs. <code>canMatch</code> — she documented the difference herself; verify she can articulate it without the notes.</li>
+<li>Ask what <code>@let</code> does in templates and why she used it for the login form control (her own decision, her own diary).</li>
+<li>Stretch: DI scope — <code>providedIn: 'root'</code> vs. component-level vs. route-level providers. She bumped into this; does she have a mental model now?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>kozochkina82 — 110 commits / 13 merged PRs / 5 diaries</h3>
+<p><strong>Built</strong> (from merged PRs and diary):</p>
+<ul>
+<li>Navigation structure, reusable header component, favicon (PR #40, #72, #86)</li>
+<li>Header theme button style fix (PR #87, #103)</li>
+<li>Profile component and routing, chronicles page routing (PR #100, #106)</li>
+<li>Auth guard for authorized users (PR #158)</li>
+<li>Diary notes PRs (PR #75, #142, #149, #187)</li>
+<li>Facade pattern for profile/sidebar (sprint-2 diary — in progress, describes it as "not fully understood")</li>
+<li>Open PR #230 ("add models") — status unknown</li>
+</ul>
+<p><strong>Caution signals:</strong></p>
+<ol>
+<li><strong>7 closed/abandoned PRs</strong> out of 22 total — the highest ratio on the team. Several are direct re-dos of the same feature (e.g., profile component was attempted 3+ times: PR #88 closed, #100 merged; similar pattern for Development Notes PRs #73/#75, #138/#142). This is not necessarily a skill gap — she documents confusion with branch management in her diary ("I accidentally created branches from main instead of develop, had to redo everything") — but it inflates the commit count and suggests operational friction.</li>
+<li><strong>Facade pattern</strong> described in sprint-2 diary as "somewhat understood, but probably not completely." The June diary confirms facade was mentor-directed ("at the mentor's suggestion, logic from layout and sidebar was moved to a facade"). The understanding may be surface-level.</li>
+<li><strong>Diary entry quality is thinner</strong> than the other two. The sprint-2 June diary entry is the most substantive (shows the profile refactor reasoning: "I realized profile is a feature, not a core UI component") but it's also shorter. Sprint-1 diary is two paragraphs.</li>
+<li><strong>Open PR #230 ("add models") and open PR #111 (profile architecture analysis)</strong> suggest unfinished threads.</li>
+</ol>
+<p><strong>What's genuinely hers:</strong> The routing (chronicles, profile), the header component, the auth guard, and the favicon — these are clean, merged, standalone contributions. The theme button fix went through multiple iterations but landed. She organized a team livestream in sprint-1 (her own note: "first experience streaming in English, consider it a success").</p>
+<p><strong>Probe:</strong></p>
+<ul>
+<li>Ask her to <strong>explain the facade pattern from scratch</strong> — what problem does it solve, where does it sit in the component tree, why not just put the logic in the component? She was guided into it; check if she absorbed the reasoning.</li>
+<li>Routing: lazy loading vs. eager loading — she used <code>loadComponent</code>, can she explain why?</li>
+<li>Ask what <code>CanMatchFn</code> does (Alena documented this; kozochkina also added a similar guard — did she understand the same concept independently?).</li>
+<li>Branch management: gently ask how she organizes her branches. The diary confusion is worth surfacing — "what do you do when you realize you branched off the wrong base?"</li>
+<li>Be calibrated: she's genuinely engaged (first streaming in English, 5 diaries, consistent commits through June). The issue is depth, not disengagement.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>A team with a pronounced talent gap but no passengers. The lead (dashque) is the clear architect and carries the project — Angular 22 migration, Firebase auth design, CORS proxy via Netlify Functions, custom preloading strategy. She has professional experience before the course and is doing engineering-level work. Alena has made real progress: she can write a directive from scratch, understands DI scope well enough to fix it, and her diary shows iterative debugging rather than copy-paste — confirmed by a 100/100 Sprint 1 defence score. kozochkina82 is the confirmed weakest link: the commit count is misleading (many re-dos and co-authored suggestions), merged PR volume is low for her contribution count, facade/DI understanding is declared partial in her own words, and the Sprint 1 defence score of 50/100 validates all of these signals. Her Sprint 2 interview is the most important calibration opportunity on this team.</p>
+<p><strong>Key risk to probe:</strong> With a lead this capable, the risk is that the two others learned by <em>watching</em> more than <em>doing</em>. The preloading strategy, Firebase migration, and tarot service are entirely dashque's. Make sure Alena and kozochkina can articulate their own features from first principles, not just explain the team's work in general.</p>
+<p><strong>Recommended interview angle:</strong></p>
+<ul>
+<li><strong>dashque:</strong> <code>linkedSignal</code> internals + preloading strategy decision. Ask what she'd do differently if she weren't the lead (tests coverage, team dynamics). High ceiling — let her show depth.</li>
+<li><strong>Alena1409:</strong> Eye-blink directive rebuild from scratch (the exact thing she got wrong and fixed). Her own words. Don't let her describe what it does — ask her to write it.</li>
+<li><strong>kozochkina82:</strong> Facade pattern from scratch ("draw the dependency diagram before and after"). Calibrate: if she can't explain facades, check whether she understands basic DI scope first. Not adversarial — calibrating.</li>
+</ul>
+<p><strong>Team dynamic note:</strong> dashque's sprint-2 diary explicitly describes a conflict with a team member over style guide compliance. This is worth a brief open question to all three: "How did the team handle disagreements during the sprint?" — the responses will tell you a lot about communication and self-awareness independent of Angular knowledge.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — <ngKitty-delulu-church /></h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>ngKittyDebug/angular-ngKittyDebugRight</code> (коммиты, PR, дневниковые файлы) + README. Снимок от 2026-06-15. Цель: дать ментору две минуты контекста перед интервью — кто что сделал, кто понимает, где проверять.</blockquote>
+<p><strong>Проект:</strong> «The Church of the Holy Deploy» — сатирический SPA для разработчиков. Функции: таро-оракул (расклад из 3 карт), исповедальня разработчика, ежедневное космическое фото NASA, погодно-реактивный UI, персонаж «Ghost Coder» — дед-программист с мигающими глазами, авторизация через Firebase, трекер дневника разработчика. Задеплоен на Netlify: <a href="https://delulu-church.netlify.app/">https://delulu-church.netlify.app/</a></p>
+<p><strong>Стек:</strong> Angular 22.0.0, TypeScript 6.0.3, Taiga UI, Transloco (i18n, RU/EN), Firebase Auth + Firestore, MyMemory translation API, Tarot API, NASA API, Vitest, ESLint + Stylelint + Prettier, Netlify Functions (CORS-прокси для Tarot API). Angular 22 — режущий край: сигналы, <code>linkedSignal</code>, <code>resource</code>, model inputs на основе сигналов. Инструментарий профессионального уровня: pnpm, <code>knip</code> для обнаружения мёртвого кода, строгий lint.</p>
+<p><strong>Репозиторий:</strong> <a href="https://github.com/ngKittyDebug/angular-ngKittyDebugRight">https://github.com/ngKittyDebug/angular-ngKittyDebugRight</a> — создан 2026-05-06, запушен 2026-06-14, 45 открытых issues.</p>
+<p><strong>Состав:</strong> 3 студента + ментор <code>OreskaG</code> (подтверждено в <code>participants.json</code> — присутствует для поддержки, студенческого кода от них не ожидается). <code>JsPowWow</code> появляется среди контрибьюторов с 38 коммитами и 4 влитыми PR — это учётная запись куратора/инфраструктуры: их PR — <code>chore: add agent skills infrastructure</code>, <code>feat(koans): add netlify functions backend</code>, <code>feat(koans): add koan content files</code>, <code>docs+chore: CLAUDE.md, koan skill</code>. Это инфраструктура курса (ревью-бот «Sasarik» / Claudius), не студенческая работа. Исключить из оценки студентов. <code>AlexGorSer</code> (2 влитых PR: фикс дизайна профиля + фикс i18n) — не в списке студентов; вероятно, гостевой ревьюер, который отправил PR. Тоже исключить.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<p><strong>Краткое резюме:</strong> Сильный, целеустремлённый лид (dashque) тянет проект архитектурно; Alena выросла от копирования чужого кода до написания настоящего Angular-кода с хорошей глубиной дневников; kozochkina82 имеет реальный PR-gap (7 закрытых/заброшенных, всего 13 влитых) и её дневник поверхностный — самая неопределённая из троих, стоит провести калибровочную проверку.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>Влито PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>dashque</strong> (лид)</td><td>225</td><td>50</td><td>44</td><td>6</td><td>2026-06-14</td><td>очень высокий — архитектор + исполнитель</td></tr>
+<tr><td><strong>Alena1409</strong></td><td>89</td><td>25</td><td>22</td><td>7</td><td>2026-06-08</td><td>уверенный — стабильная доставка</td></tr>
+<tr><td><strong>kozochkina82</strong></td><td>110</td><td>22</td><td>13</td><td>5 (4 найдено на ветке, +1 июнь)</td><td>2026-06-03</td><td>смешанный — коммитов много, влитых PR мало, дневник тонкий</td></tr>
+</tbody></table>
+<p><strong>Примечание о коммитах kozochkina82:</strong> 110 коммитов визуально много, но включает множество merge-коммитов, правок стиля и коммитов «apply suggestion from @dashque» с соавторством. Количество влитых PR — 13 (против 7 закрытых/заброшенных) — более надёжный показатель самостоятельной доставки.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы защиты)</h2>
+<p>Sprint 1 Interview — Components · Ментор: <code>oreskag</code> · Интервью по Sprint 2 ещё не проводилось (дедлайн 2026-06-23).</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>dashque</strong></td><td>100 / 100</td><td>—</td></tr>
+<tr><td><strong>Alena1409</strong></td><td>100 / 100</td><td>—</td></tr>
+<tr><td><strong>kozochkina82</strong></td><td>50 / 100</td><td>—</td></tr>
+</tbody></table>
+<p>Письменных комментариев ментор ни по одному из трёх студентов не оставил.</p>
+<p><strong>Сопоставление — где баллы и активность репо совпадают или расходятся:</strong></p>
+<ul>
+<li><strong>dashque (100):</strong> Оценка полностью согласуется с активностью репо. Она — архитектор и исполнитель проекта; высший балл ментора соответствует 225 коммитам, 44 влитым PR и миграции на Angular 22. Расхождений нет.</li>
+<li><strong>Alena1409 (100):</strong> Оценка согласуется с глубиной дневников и качеством влитых PR. Последняя зафиксированная активность — 2026-06-08, за неделю до снимка, — небольшой разрыв, но ничем не примечательный в середине Sprint 2. Балл 100 на защите подтверждает, что рост, видимый в дневниках (цепочка отладки директивы мигания глаз, объяснение <code>canActivate</code>/<code>canMatch</code>), конвертировался в реальные знания на интервью. Значимых расхождений нет.</li>
+<li><strong>kozochkina82 (50):</strong> <strong>Балл подтверждает тревожные сигналы активности.</strong> Брифинг отмечал её как наиболее неопределённого участника: 7 закрытых/заброшенных PR, 13 влитых (самое низкое соотношение), поверхностные дневники, самостоятельно задекларированное частичное понимание паттерна facade. Оценка 50/100 на защите — внешнее подтверждение того, что эти сигналы были реальными, а не фоновым шумом. Репозиторная картина и оценка ментора указывают в одном направлении. Это ключевой риск, который нужно нести в интервью Sprint 2.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>dashque — тимлид, 225 коммитов / 44 влитых PR / 6 дневников</h3>
+<p><strong>Сделала</strong> (из влитых PR и дневника):</p>
+<ul>
+<li>Полная настройка проекта: документы по соглашениям, гайды по стилю, GitHub-доска с декомпозированными задачами, CI-воркфлоу, автоматизация ревьюеров (PR #26, #33)</li>
+<li>App shell + боковая панель + лейаут + архитектура навигации (PR #39, #50, #71, #79)</li>
+<li>Формы логина/регистрации с гардами (PR #70, #115), гард для «грязных» форм (PR #160), modal service (PR #159)</li>
+<li>Кастомная стратегия предзагрузки — разные страницы предзагружаются для гостя vs. авторизованного пользователя (PR #193)</li>
+<li>Миграция Firebase Auth с Netlify Identity — переписала auth service, добавила User service, который заполняет Firestore при регистрации (PR #217)</li>
+<li>Tarot API service с CORS-прокси через Netlify Functions, компонент оракула с раскладом из 3 карт (PR #198, #216)</li>
+<li><strong>Миграция всего проекта на Angular 22</strong> в середине курса (PR #199)</li>
+<li>Сервис перевода таро через MyMemory API с логикой повторной загрузки при смене языка; <code>linkedSignal</code> для сброса устаревших результатов расклада при смене intent/role (дневник sprint-3)</li>
+<li>Компонент просмотра карты (PR #225), перенос логина/логаута в хедер (PR #200)</li>
+</ul>
+<p><strong>Уровень:</strong> Сильнейший Angular-практик в команде со значительным отрывом. Пришла с профессиональным опытом (упоминает «не планировала быть лидом, просто хотела учить Angular и кодить»). Самостоятельно принимает архитектурные решения — структура маршрутов, область видимости сервисов, DI-стратегия. Дневник sprint-3 — самый технически насыщенный: она формулирует <em>почему</em> <code>linkedSignal</code> — правильный инструмент («вычисляемый сигнал, который можно мутировать — раньше думала, что это антипаттерн, теперь понимаю, когда он нужен»), обсуждает компромиссы resolver vs. <code>resource</code> для NASA-компонента и сама определяет, что ещё нуждается в доработке. Одна заметная тревожная точка: дневник sprint-2 явно описывает серьёзный командный конфликт («один участник команды игнорирует инструкции, нарушает гайды по стилю, не проверяет PR перед отправкой — это изматывает») и формулирует два варианта выхода. Это лидерский и межличностный вызов, достойный внимания — не только технический.</p>
+<p><strong>Что проверять:</strong></p>
+<ul>
+<li>Попросить объяснить <code>linkedSignal</code> с нуля: какую проблему решает, чем отличается от <code>computed</code>, почему сначала назвала это «антипаттерном».</li>
+<li>Спросить про стратегию предзагрузки — откуда она знает, какие чанки предзагружать для гостя vs. авторизованного пользователя? Где живёт это решение?</li>
+<li>Если будет время: поток Firebase Auth → заполнение Firestore. Что происходит при Google OAuth vs. email-регистрации? Как <code>UserService</code> взаимодействует с <code>AuthService</code>?</li>
+<li>Не давать ей ехать на «я всё настроила» — добиваться <em>почему</em> за любым одним архитектурным решением.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Alena1409 — 89 коммитов / 22 влитых PR / 7 дневников</h3>
+<p><strong>Сделала</strong> (из влитых PR и дневника):</p>
+<ul>
+<li>Футер, компонент карточки, страница 404 (PR #38, #43, #67)</li>
+<li>Настройка Transloco i18n service (PR #84)</li>
+<li>Форма логина с Taiga UI (PR #89)</li>
+<li>Auth guard (<code>canActivate</code>/<code>canMatch</code> — дневник показывает, что понимает разницу) (PR #150)</li>
+<li>Блок исповеди, рефакторинг sin-items (PR #154, #185)</li>
+<li>Компонент страницы shrift («отпущение грехов») (PR #107)</li>
+<li><strong>Директива мигания глаз</strong> для персонажа Ghost Coder — Renderer2 + переключение класса на основе сигнала, итеративная отладка (PR #224)</li>
+<li>Компонент «Basic code by coder» (PR #223), CoderQuotes service (открытый PR #228)</li>
+</ul>
+<p><strong>Уровень:</strong> По-настоящему учится и производит результат. Дневник о директиве мигания глаз (sprint-3, 2026-06-08) — сильнейшее свидетельство реального понимания: она показывает <em>неправильную</em> первую версию (две директивы на двух элементах, конфликтующие друг с другом), объясняет, почему она сломалась (независимое состояние таймера), а затем показывает правильный рефакторинг (одна директива на родительском элементе, CSS-класс управляется сигналом). Приводит аргумент о безопасности Renderer2, но в итоге отказывается от него по правильной причине. Дневник sprint-2 о роутинге показывает, что она усвоила предзагрузку из кода dashque и может объяснить её своими словами и примерами. Также верно диагностировала проблему области видимости DI <code>providedIn: 'root'</code> после командного ревью. Зона риска: её дневники упоминают «разговор с ИИ, который дал мне API для статуса ретроградного Меркурия» — это конкретная фича была исследовательским брейнстормом, а не production-кодом, само по себе не тревожный сигнал. CoderQuotes service (открытый PR) не прошёл ревью; неясно, завершён ли он.</p>
+<p><strong>Что проверять:</strong></p>
+<ul>
+<li>Попросить <strong>воссоздать директиву мигания глаз с нуля</strong> на доске — это именно то место, где она ошиблась, отладила и починила. Вся эта цепочка есть в её дневнике. Если сможет воспроизвести — она владеет этим.</li>
+<li><code>canActivate</code> vs. <code>canMatch</code> — она сама задокументировала разницу; проверить, может ли объяснить без заметок.</li>
+<li>Спросить, что делает <code>@let</code> в шаблонах и почему она использовала это для контрола формы логина (её собственное решение, её собственный дневник).</li>
+<li>Дополнительно: область видимости DI — <code>providedIn: 'root'</code> vs. уровень компонента vs. уровень маршрута. Она с этим столкнулась; есть ли у неё теперь ментальная модель?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>kozochkina82 — 110 коммитов / 13 влитых PR / 5 дневников</h3>
+<p><strong>Сделала</strong> (из влитых PR и дневника):</p>
+<ul>
+<li>Структура навигации, переиспользуемый компонент хедера, favicon (PR #40, #72, #86)</li>
+<li>Фикс стиля кнопки темы в хедере (PR #87, #103)</li>
+<li>Компонент профиля и роутинг, роутинг страницы chronicles (PR #100, #106)</li>
+<li>Auth guard для авторизованных пользователей (PR #158)</li>
+<li>PR с дневниковыми заметками (PR #75, #142, #149, #187)</li>
+<li>Паттерн facade для профиля/боковой панели (дневник sprint-2 — в процессе, описывает как «не до конца понятый»)</li>
+<li>Открытый PR #230 («add models») — статус неизвестен</li>
+</ul>
+<p><strong>Тревожные сигналы:</strong></p>
+<ol>
+<li><strong>7 закрытых/заброшенных PR</strong> из 22 всего — самое высокое соотношение в команде. Несколько — прямые переделки одной и той же фичи (например, компонент профиля пытался создаться 3+ раза: PR #88 закрыт, #100 влит; похожий паттерн для PR с заметками разработки #73/#75, #138/#142). Это не обязательно пробел в навыках — она документирует путаницу с управлением ветками в дневнике («я случайно создавала ветки от main вместо develop, приходилось всё переделывать») — но это раздувает количество коммитов и говорит об операционных затруднениях.</li>
+<li><strong>Паттерн facade</strong> описан в дневнике sprint-2 как «немного понятый, но, наверное, не до конца». Июньский дневник подтверждает, что facade был инициирован ментором («по предложению ментора, логика из лейаута и боковой панели была вынесена в facade»). Понимание может быть поверхностным.</li>
+<li><strong>Качество дневниковых записей тоньше</strong>, чем у двух других. Июньская запись дневника sprint-2 — самая содержательная (показывает рассуждение о рефакторинге профиля: «я поняла, что profile — это feature, а не core UI component»), но она короче. Дневник sprint-1 — два абзаца.</li>
+<li><strong>Открытый PR #230 («add models») и открытый PR #111 (анализ архитектуры профиля)</strong> указывают на незавершённые треды.</li>
+</ol>
+<p><strong>Что действительно её:</strong> Роутинг (chronicles, profile), компонент хедера, auth guard и favicon — это чистые, влитые, самостоятельные вклады. Фикс кнопки темы прошёл несколько итераций, но был завершён. Она организовала командный стрим в sprint-1 (её собственная заметка: «первый опыт стрима на английском, считаю успехом»).</p>
+<p><strong>Что проверять:</strong></p>
+<ul>
+<li>Попросить <strong>объяснить паттерн facade с нуля</strong> — какую проблему решает, где располагается в дереве компонентов, почему нельзя просто положить логику в компонент? Её направил туда ментор; проверить, усвоила ли она логику.</li>
+<li>Роутинг: lazy loading vs. eager loading — она использовала <code>loadComponent</code>, может ли объяснить почему?</li>
+<li>Спросить, что делает <code>CanMatchFn</code> (Alena это задокументировала; kozochkina тоже добавила похожий гард — поняла ли она ту же концепцию самостоятельно?).</li>
+<li>Управление ветками: мягко спросить, как она организует свои ветки. Путаница в дневнике стоит того, чтобы поднять — «что ты делаешь, когда понимаешь, что создала ветку от неправильной базы?».</li>
+<li>Будь откалиброван: она по-настоящему вовлечена (первый стрим на английском, 5 дневников, стабильные коммиты до июня). Проблема — в глубине, не в отстранённости.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p>Команда с выраженным разрывом в уровне, но без пассажиров. Лид (dashque) — явный архитектор и тянет проект — миграция на Angular 22, дизайн Firebase Auth, CORS-прокси через Netlify Functions, кастомная стратегия предзагрузки. У неё есть профессиональный опыт до курса, и она делает работу инженерного уровня. Alena реально прогрессировала: может написать директиву с нуля, понимает область видимости DI достаточно, чтобы починить, и её дневник показывает итеративную отладку, а не копипасту — подтверждено оценкой 100/100 на защите Sprint 1. kozochkina82 — подтверждённое слабое звено: количество коммитов вводит в заблуждение (много переделок и соавторских подсказок), объём влитых PR низкий для её количества вкладов, понимание facade/DI декларируется как частичное её собственными словами, и оценка 50/100 на защите Sprint 1 подтверждает все эти сигналы. Интервью Sprint 2 — важнейшая калибровочная возможность для этой команды.</p>
+<p><strong>Ключевой риск для проверки:</strong> При таком способном лиде риск в том, что двое других учились, <em>наблюдая</em>, а не <em>делая</em>. Стратегия предзагрузки, миграция Firebase и tarot service — целиком у dashque. Убедись, что Alena и kozochkina могут объяснить свои собственные фичи с первых принципов, а не просто пересказать работу команды в общем.</p>
+<p><strong>Рекомендуемый угол интервью:</strong></p>
+<ul>
+<li><strong>dashque:</strong> Внутренности <code>linkedSignal</code> + решение по стратегии предзагрузки. Спросить, что она сделала бы иначе, если бы не была лидом (покрытие тестами, командная динамика). Высокая планка — пусть покажет глубину.</li>
+<li><strong>Alena1409:</strong> Воссоздание директивы мигания глаз с нуля (именно то, что она сделала неправильно и починила). Её собственные слова. Не давать описывать, что она делает — просить написать её.</li>
+<li><strong>kozochkina82:</strong> Паттерн facade с нуля («нарисуй диаграмму зависимостей до и после»). Калибруй: если не может объяснить facade, проверь сначала, понимает ли базовую область видимости DI. Не против неё — калибровка.</li>
+</ul>
+<p><strong>Заметка о командной динамике:</strong> Дневник dashque sprint-2 явно описывает конфликт с участником команды по поводу соблюдения гайда по стилю. Стоит задать короткий открытый вопрос всем троим: «Как команда справлялась с разногласиями в течение спринта?» — ответы расскажут многое о коммуникации и самосознании, независимо от знания Angular.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

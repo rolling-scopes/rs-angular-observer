@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Muze · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Muze</strong><strong class="lang-ru">Mentor briefing — Muze</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Muze</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>muze-space/Muze</code> (commits, PRs, issues) + sprint development notes. Snapshot: 2026-06-15. Goal: give the mentor two-minute context before the defence — who built what, who understands it, what to probe.</blockquote>
+<p><strong>One-line summary:</strong> A two-person team with an inverted commit split (ileshchanka 66 commits / vladaworkflow-ops 23) and 14 merged PRs total; both are engaged and diary-disciplined, but vladaworkflow-ops has logged no diary entry since June 1 and Sprint 3 course requirements are all still open as issues — the team is behind on the current sprint and the lead contributed fewer commits than the non-lead.</p>
+<p><strong>Project:</strong> Muze — music streaming SPA on Angular 21.2 + TypeScript 5.9, backed by the public Jamendo API. Features: popular tracks, search, auth guard on Library route, audio player component, DurationPipe, NotFound page, About Us page, GitHub Pages CI/CD deployment, ESLint CI workflow. Repo created 2026-05-11, last pushed 2026-06-08. 11 open issues (mix of Sprint 2 diary requirement, Sprint 3 requirements, and bug/feature backlog).</p>
+<p><strong>Repo:</strong> <a href="https://github.com/muze-space/Muze">https://github.com/muze-space/Muze</a> · Default branch: <code>main</code> · 3 branches total: <code>main</code>, <code>sprint-1</code> (stale), <code>gh-pages</code> (deploy).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<table><thead>
+<tr><th>Login</th><th>Role</th><th>Notes</th></tr>
+</thead><tbody>
+<tr><td><strong>vladaworkflow-ops</strong></td><td>Student · Lead</td><td>Course roster lead</td></tr>
+<tr><td><strong>ileshchanka</strong></td><td>Student</td><td>Course roster member</td></tr>
+<tr><td><strong>vladboisa</strong></td><td>Mentor</td><td>Does not appear in commits or PRs — normal</td></tr>
+</tbody></table>
+<p>No external contributors beyond the two students. <code>vladboisa</code> (mentor) has no commits or PRs — normal for this course.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs (merged)</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>ileshchanka</strong></td><td>66</td><td>5</td><td>5</td><td>7 (S1×3 + S2×4)</td><td>2026-06-08</td><td>Strong builder, more output than the lead</td></tr>
+<tr><td><strong>vladaworkflow-ops</strong> (lead)</td><td>23</td><td>9</td><td>9</td><td>6 (S1×4 + S2×2)</td><td>2026-06-01</td><td>More PRs but less code; silent in June</td></tr>
+</tbody></table>
+<p>Commit count note: GitHub's contributor endpoint counts all commits to main. ileshchanka significantly outpaces the declared lead in raw commits. vladaworkflow-ops authored more PRs (9 vs 5) but with fewer total commits, suggesting smaller-scope PRs (footer, 404 page, README docs, search wiring, footer, auth logic). The commit asymmetry is notable but not alarming — they have different work styles, and diary cadence for both is healthy through Sprint 2.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 interview: "Sprint 1 Interview — Components" · Mentor: vladboisa</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>ileshchanka</strong></td><td>85</td><td>— (not yet)</td></tr>
+<tr><td><strong>vladaworkflow-ops</strong></td><td>75</td><td>— (not yet)</td></tr>
+</tbody></table>
+<p><strong>ileshchanka (85):</strong> The mentor found him confident and capable of comparing approaches, but noted he tends to skip critical nuances and trade-offs. This aligns with the activity picture: strong, self-directed builder who resolves blockers (Jamendo genres) but may not yet stress-test his own design decisions.</p>
+<p><strong>vladaworkflow-ops (75):</strong> The mentor found her confident when explaining code but observed a mix of partial knowledge and notable gaps. Her 75 confirms she showed up and engaged at the defence — it is not a dropout or no-show signal — but the gaps flagged by the mentor, combined with her post-defence silence since June 1, make this the main watch item going into Sprint 2.</p>
+<p><strong>Reconciliation — score vs activity:</strong></p>
+<ul>
+<li>ileshchanka is active-strong (last commit 2026-06-08) AND scored 85. Both signals point the same direction: he is the team's safer bet at defence, though the mentor's note on missing trade-off depth is a targeted probe angle.</li>
+<li>vladaworkflow-ops scored a respectable 75 at Sprint 1 (she defended, not a no-show), but has been silent in the repo since June 1 — a post-defence activity dip. The 75 tells us she has foundational knowledge; the silence tells us she may not be building right now. These are divergent signals: the defence score is more positive than the activity picture alone would suggest, but the gap-flagged defence + post-defence silence together keep this in watch territory.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>ileshchanka — 66 commits / 5 PRs / 7 diary entries</h3>
+<p><strong>Built</strong> (from PRs + diary evidence):</p>
+<ul>
+<li>Home page + header component (PR #6)</li>
+<li>Popular tracks + track-item component (PR #9): understood <code>@Input()</code> / <code>@Output()</code> / <code>ngOnInit()</code></li>
+<li><code>ApiService</code> + <code>trackService</code> for main page, enums for API, About Us page (PR #11)</li>
+<li>Track-item enhanced + search component logic + DurationPipe for duration formatting (PR #14) — diary confirms understanding of how pipes work</li>
+<li>Sprint 2 merge (PR #16) — sets up routing, adds Library/Search/About-Us stub components, signals (<code>signal()</code>, <code>computed()</code>, <code>effect()</code>), <code>authGuard</code> with <code>canActivate</code>, GitHub Pages deployment workflow, ESLint CI</li>
+<li>Documented hitting Jamendo API limitation (no genres endpoint) and resolved it himself: extracted genres from page description + hardcoded — a concrete engineering decision, not just "it works"</li>
+</ul>
+<p><strong>Level:</strong> The most active builder on the team. Diary entries are honest and specific (time logged: 2–6 hours per entry). Progression is clear: components → services + API → routing + signals + guards + CI. The signals diary entry shows conceptual understanding: <em>"signal() automatically triggers Change Detection in OnPush. computed() is for derived values, effect() is for side effects"</em> — brief but accurate. Has not written a Sprint 3 diary entry yet.</p>
+<p><strong>Probe (can-you-create-it test):</strong> Ask him to rebuild <code>authGuard</code> with <code>canActivate</code> from scratch and explain when the guard fires relative to the component lifecycle. Then probe: why <code>computed()</code> rather than <code>effect()</code> for derived values in the Search component — he stated the difference, so make him demonstrate it. If he can do both, he has real Angular fundamentals.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vladaworkflow-ops — 23 commits / 9 PRs / 6 diary entries (Lead)</h3>
+<p><strong>Built</strong> (from PRs + diary evidence):</p>
+<ul>
+<li>Project setup + README structure (PR #2, #3, #4, #5) — scaffolding, diary folders</li>
+<li>Footer component (PR #7)</li>
+<li>Search wiring: parent-child event communication via <code>output()</code> (PR #8) — diary confirms learned event emission</li>
+<li>NotFound page with AI-generated styles (PR #10) — explicitly stated in diary: "style was generated with AI"</li>
+<li>Auth logic: login component + routing configuration (PR #12) — diary shows she investigated Jamendo auth limitations and documented three possible approaches before settling on a temporary login form; solid investigation diary entry</li>
+<li>Audio player component + play button on tracks + minor layout tweaks (PR #13) — diary is thin (bullet list only, no reflection)</li>
+<li>Sprint 1 merge (PR #5/docs)</li>
+</ul>
+<p><strong>Level:</strong> Investigative and process-oriented — the auth investigation diary (May 30) is the strongest individual diary entry on the team: she documented the API constraint, listed three architectural options (custom backend, Google OAuth, Jamendo OAuth), and made a reasoned temporary decision. That's real engineering thinking. However: AI-generated CSS on the 404 page (own diary admission), audio player diary has no "what I learned" entry, and she has been quiet since June 1. The PR:commit ratio is high (9 PRs / 23 commits), suggesting some PRs were structural/docs rather than feature-heavy.</p>
+<p><strong>Probe (can-you-create-it test):</strong> The auth investigation is her strongest asset — ask her to walk through the three options she documented and explain the trade-off that made her defer the decision. Then probe: can she implement <code>output()</code> event communication between two components from scratch without looking at the existing code? Watch for whether she can draw the parent-child data flow on a whiteboard. The AI-generated footer styles are a mild signal — check whether she can explain the CSS she shipped.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Risks and flags</h2>
+<ol>
+<li><strong>Sprint 3 requirements all open as issues.</strong> Eight Sprint 3 items are open GitHub issues: OnPush on ≥3 components, <code>InjectionToken</code> or custom provider, reactive form, form validation, custom directive or pipe, Sprint 3 diary. As of June 8 (last push), none appear closed. The interview may catch them mid-sprint.</li>
+</ol>
+<ol>
+<li><strong>Sprint 2 diary requirement still open.</strong> One open issue: "[Sprint 2] At least 1 diary entry for Sprint 2 by each team member" — it's unclear which student is missing this; both have S2 entries on main, so this may be a tracking artifact or vladaworkflow-ops's S2 entries didn't meet the date-filename requirement.</li>
+</ol>
+<ol>
+<li><strong>vladaworkflow-ops silent in June.</strong> Last diary: May 31. Last commit: June 1. ileshchanka has been active through June 8. Not a crisis (course is running), but worth probing if the workload split is sustainable.</li>
+</ol>
+<ol>
+<li><strong>AI-assisted CSS.</strong> vladaworkflow-ops explicitly noted "style was generated with AI" for the NotFound page. Audio player (her PR) — no diary learning reflection. Not heavy reliance, but one concrete data point to verify she owns what she shipped.</li>
+</ol>
+<ol>
+<li><strong>No visible unit tests.</strong> README mentions Vitest (<code>ng test</code>), but no test files found in the tree, and no PR titles reference tests. This may be a Sprint 3 requirement not yet started.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p>This is a functional two-person team with healthy diary discipline and clear feature progression over two sprints. Both students are real contributors — no passenger. The commit split is inverted relative to lead/non-lead roles (ileshchanka built more), but this is a style difference, not a red flag.</p>
+<p><strong>ileshchanka</strong> is the stronger builder by volume and is the more active voice in the codebase right now. He's hitting Angular fundamentals correctly (routing, services, signals, guards, pipes) and documented his own API workaround. He's the safe bet for a confident defence.</p>
+<p><strong>vladaworkflow-ops</strong> shows analytical strength (the auth investigation diary is genuinely good) but weaker follow-through on recent sprint items and one confirmed AI-assist. She likely understands more than the commit count suggests, but the interview should verify ownership of what she shipped, not just familiarity.</p>
+<p><strong>Recommended interview angle:</strong> For ileshchanka — rebuild <code>authGuard</code> and explain signal semantics from scratch (can-you-create-it). For vladaworkflow-ops — walk through the auth architecture decision tree she documented, then demo <code>output()</code> event flow from memory. For both — ask about Sprint 3 status: what's done, what's left, and why OnPush matters (that's the conceptual hinge of the sprint).</p>
+<p>The team is on track for a passing defence if Sprint 3 items land this week. The main risk is time pressure, not comprehension.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Briefing для ментора — Muze</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>muze-space/Muze</code> (коммиты, PR, issues) + заметки по разработке спринтов. Снимок: 2026-06-15. Цель: дать ментору двухминутный контекст перед защитой — кто что построил, кто понимает материал, что проверять.</blockquote>
+<p><strong>Краткое резюме:</strong> Команда из двух человек с инвертированным распределением коммитов (ileshchanka 66 коммитов / vladaworkflow-ops 23) и 14 смёрженными PR суммарно; оба вовлечены и дисциплинированы по дневникам, однако vladaworkflow-ops не делала записей в дневник с 1 июня, а все требования Sprint 3 по-прежнему висят открытыми issues — команда отстаёт по текущему спринту, и лид внёс меньше коммитов, чем нелид.</p>
+<p><strong>Проект:</strong> Muze — музыкальный стриминговый SPA на Angular 21.2 + TypeScript 5.9, работающий через публичный API Jamendo. Функции: популярные треки, поиск, auth guard на маршруте Library, компонент аудиоплеера, DurationPipe, страница NotFound, страница About Us, CI/CD-деплой на GitHub Pages, ESLint CI workflow. Репозиторий создан 2026-05-11, последний пуш 2026-06-08. 11 открытых issues (смесь требования дневника Sprint 2, требований Sprint 3 и бэклога багов/фич).</p>
+<p><strong>Репозиторий:</strong> <a href="https://github.com/muze-space/Muze">https://github.com/muze-space/Muze</a> · Ветка по умолчанию: <code>main</code> · Всего 3 ветки: <code>main</code>, <code>sprint-1</code> (устаревшая), <code>gh-pages</code> (деплой).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<table><thead>
+<tr><th>Логин</th><th>Роль</th><th>Примечания</th></tr>
+</thead><tbody>
+<tr><td><strong>vladaworkflow-ops</strong></td><td>Студент · Лид</td><td>Лид по списку курса</td></tr>
+<tr><td><strong>ileshchanka</strong></td><td>Студент</td><td>Участник по списку курса</td></tr>
+<tr><td><strong>vladboisa</strong></td><td>Ментор</td><td>Не фигурирует в коммитах или PR — норма</td></tr>
+</tbody></table>
+<p>Сторонних контрибьюторов, кроме двух студентов, нет. <code>vladboisa</code> (ментор) не имеет коммитов или PR — это норма для данного курса.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>PR (смёрджено)</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>ileshchanka</strong></td><td>66</td><td>5</td><td>5</td><td>7 (S1×3 + S2×4)</td><td>2026-06-08</td><td>Сильный строитель, больше результата, чем у лида</td></tr>
+<tr><td><strong>vladaworkflow-ops</strong> (лид)</td><td>23</td><td>9</td><td>9</td><td>6 (S1×4 + S2×2)</td><td>2026-06-01</td><td>Больше PR, меньше кода; молчит в июне</td></tr>
+</tbody></table>
+<p>Примечание по числу коммитов: эндпоинт контрибьюторов GitHub считает все коммиты в main. ileshchanka значительно обгоняет объявленного лида по сырому числу коммитов. vladaworkflow-ops создала больше PR (9 против 5), но с меньшим суммарным числом коммитов — это говорит о PR меньшего объёма (футер, страница 404, документация README, подключение поиска, логика авторизации). Асимметрия коммитов заметна, но не тревожна — у них разные стили работы, и каденция дневников у обоих здоровая на протяжении Sprint 2.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Интервью Sprint 1: «Sprint 1 Interview — Components» · Ментор: vladboisa</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td><strong>ileshchanka</strong></td><td>85</td><td>— (ещё не проводилось)</td></tr>
+<tr><td><strong>vladaworkflow-ops</strong></td><td>75</td><td>— (ещё не проводилось)</td></tr>
+</tbody></table>
+<p><strong>ileshchanka (85):</strong> Ментор отметил уверенность и умение сравнивать подходы, но указал, что студент склонен пропускать ключевые нюансы и компромиссы. Это согласуется с картиной активности: сильный, самостоятельный строитель, который решает блокеры (жанры Jamendo), но пока не всегда критически анализирует собственные проектные решения.</p>
+<p><strong>vladaworkflow-ops (75):</strong> Ментор отметил уверенность при объяснении кода, однако зафиксировал сочетание неполных знаний и заметных пробелов. Оценка 75 подтверждает, что студентка явилась и включилась в защиту — это не сигнал дропаута или неявки, — но зафиксированные ментором пробелы в сочетании с молчанием с 1 июня делают её главным наблюдательным пунктом перед Sprint 2.</p>
+<p><strong>Согласование — оценка vs активность:</strong></p>
+<ul>
+<li>ileshchanka активен в репозитории (последний коммит 2026-06-08) И получил 85. Оба сигнала смотрят в одну сторону: он надёжный претендент на защиту. Замечание ментора о нехватке глубины при анализе компромиссов — точечный угол для пробинга, не системная проблема.</li>
+<li>vladaworkflow-ops получила достойные 75 на Sprint 1 (явилась, не no-show), но молчит в репозитории с 1 июня — активность упала после защиты. 75 говорит, что базовые знания есть; молчание говорит, что прямо сейчас она, возможно, не строит. Сигналы расходятся: оценка за защиту позитивнее, чем картина активности в одиночку, но пробелы, зафиксированные ментором, плюс постзащитное молчание вместе удерживают её в зоне наблюдения.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>ileshchanka — 66 коммитов / 5 PR / 7 записей в дневник</h3>
+<p><strong>Что построил</strong> (по данным PR и дневников):</p>
+<ul>
+<li>Главная страница + компонент header (PR #6)</li>
+<li>Популярные треки + компонент track-item (PR #9): разобрался с <code>@Input()</code> / <code>@Output()</code> / <code>ngOnInit()</code></li>
+<li><code>ApiService</code> + <code>trackService</code> для главной страницы, перечисления (enums) для API, страница About Us (PR #11)</li>
+<li>Улучшение track-item + логика компонента search + DurationPipe для форматирования длительности (PR #14) — дневник подтверждает понимание того, как работают pipes</li>
+<li>Мёрдж Sprint 2 (PR #16) — настройка маршрутизации, добавление заглушек компонентов Library/Search/About-Us, сигналы (<code>signal()</code>, <code>computed()</code>, <code>effect()</code>), <code>authGuard</code> с <code>canActivate</code>, workflow деплоя на GitHub Pages, ESLint CI</li>
+<li>Задокументировал наткнулся на ограничение API Jamendo (нет эндпоинта для жанров) и самостоятельно решил проблему: извлёк жанры из описания страницы + захардкодил — конкретное инженерное решение, а не просто «работает»</li>
+</ul>
+<p><strong>Уровень:</strong> Самый активный строитель в команде. Записи в дневник честные и конкретные (фиксируется время: 2–6 часов за запись). Прогрессия очевидна: компоненты → сервисы + API → маршрутизация + сигналы + гарды + CI. Запись в дневнике про сигналы демонстрирует концептуальное понимание: <em>«signal() автоматически запускает Change Detection в OnPush. computed() — для производных значений, effect() — для побочных эффектов»</em> — кратко, но точно. Запись в дневник для Sprint 3 ещё не написал.</p>
+<p><strong>Что проверять (тест «создай сам»):</strong> Попросить пересобрать <code>authGuard</code> с <code>canActivate</code> с нуля и объяснить, когда гард срабатывает относительно жизненного цикла компонента. Затем уточнить: почему <code>computed()</code>, а не <code>effect()</code> для производных значений в компоненте Search — он обозначил разницу, так что пусть продемонстрирует. Если справится с обоими — у него есть настоящие основы Angular.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vladaworkflow-ops — 23 коммита / 9 PR / 6 записей в дневник (Лид)</h3>
+<p><strong>Что построила</strong> (по данным PR и дневников):</p>
+<ul>
+<li>Настройка проекта + структура README (PR #2, #3, #4, #5) — скаффолдинг, папки дневников</li>
+<li>Компонент footer (PR #7)</li>
+<li>Подключение поиска: коммуникация родитель-потомок через <code>output()</code> (PR #8) — дневник подтверждает, что освоила эмиссию событий</li>
+<li>Страница NotFound со стилями, сгенерированными AI (PR #10) — прямо указано в дневнике: «стиль сгенерирован с помощью AI»</li>
+<li>Логика авторизации: компонент login + конфигурация маршрутизации (PR #12) — дневник показывает, что исследовала ограничения авторизации Jamendo и задокументировала три возможных подхода, прежде чем остановиться на временной форме логина; основательная исследовательская запись в дневнике</li>
+<li>Компонент аудиоплеера + кнопка воспроизведения на треках + мелкие правки вёрстки (PR #13) — дневник поверхностный (только список пунктов, без рефлексии)</li>
+<li>Мёрдж Sprint 1 (PR #5/docs)</li>
+</ul>
+<p><strong>Уровень:</strong> Аналитический и ориентированный на процесс — запись в дневнике об авторизации (30 мая) — сильнейшая индивидуальная запись в команде: задокументировала ограничение API, перечислила три архитектурных варианта (собственный бэкенд, Google OAuth, Jamendo OAuth) и приняла обоснованное временное решение. Это настоящее инженерное мышление. Однако: CSS-стили на странице 404 сгенерированы AI (собственное признание в дневнике), дневник по аудиоплееру не содержит раздела «что я поняла», а с 1 июня она молчит. Соотношение PR:коммиты высокое (9 PR / 23 коммита), что говорит о том, что часть PR была структурной/документационной, а не фичевой.</p>
+<p><strong>Что проверять (тест «создай сам»):</strong> Исследование авторизации — её главный актив: попросить разобрать три задокументированных варианта и объяснить компромисс, который заставил отложить решение. Затем проверить: может ли она с нуля, не заглядывая в существующий код, реализовать событийную коммуникацию через <code>output()</code> между двумя компонентами? Смотреть, сможет ли она нарисовать поток данных родитель-потомок на доске. Стили для footer, сгенерированные AI, — слабый сигнал: проверить, может ли она объяснить CSS, который задеплоила.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Риски и флаги</h2>
+<ol>
+<li><strong>Все требования Sprint 3 висят открытыми issues.</strong> Восемь пунктов Sprint 3 — открытые GitHub issues: OnPush на ≥3 компонентах, <code>InjectionToken</code> или кастомный провайдер, реактивная форма, валидация формы, кастомная директива или pipe, дневник Sprint 3. По состоянию на 8 июня (последний пуш) ни один не выглядит закрытым. Интервью может застать их в середине спринта.</li>
+</ol>
+<ol>
+<li><strong>Требование дневника Sprint 2 всё ещё открыто.</strong> Один открытый issue: «[Sprint 2] Не менее 1 записи в дневник за Sprint 2 от каждого участника» — неясно, у кого именно отсутствует; у обоих есть S2-записи в main, так что это может быть артефактом трекинга либо записи vladaworkflow-ops за S2 не прошли требование к формату имени файла с датой.</li>
+</ol>
+<ol>
+<li><strong>vladaworkflow-ops молчит в июне.</strong> Последняя запись в дневник: 31 мая. Последний коммит: 1 июня. ileshchanka был активен вплоть до 8 июня. Не кризис (курс идёт), но стоит уточнить, устойчиво ли распределение нагрузки.</li>
+</ol>
+<ol>
+<li><strong>CSS с помощью AI.</strong> vladaworkflow-ops прямо указала «стиль сгенерирован с помощью AI» для страницы NotFound. Аудиоплеер (её PR) — рефлексии по итогам в дневнике нет. Не критичная зависимость от AI, но один конкретный момент, который стоит верифицировать: понимает ли она, что задеплоила.</li>
+</ol>
+<ol>
+<li><strong>Юнит-тестов не видно.</strong> README упоминает Vitest (<code>ng test</code>), но тестовых файлов в дереве не найдено, и ни один заголовок PR не упоминает тесты. Вероятно, это требование Sprint 3, к которому ещё не приступали.</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p>Это функциональная команда из двух человек с здоровой дисциплиной ведения дневников и чёткой прогрессией фич на протяжении двух спринтов. Оба студента — настоящие контрибьюторы, пассажиров нет. Распределение коммитов инвертировано относительно ролей лид/нелид (ileshchanka построил больше), но это разница в стилях, а не красный флаг.</p>
+<p><strong>ileshchanka</strong> — более сильный строитель по объёму и более активный голос в кодовой базе прямо сейчас. Он правильно осваивает основы Angular (маршрутизация, сервисы, сигналы, гарды, pipes) и задокументировал собственное решение проблемы с API. Он — надёжный претендент на уверенную защиту.</p>
+<p><strong>vladaworkflow-ops</strong> демонстрирует аналитическую силу (дневник по авторизации — действительно хороший), но слабее следует за текущими пунктами спринта, и есть один подтверждённый случай использования AI. Скорее всего, она понимает больше, чем говорит число коммитов, но интервью должно верифицировать её владение тем, что она задеплоила, а не просто знакомство с темой.</p>
+<p><strong>Рекомендуемый угол интервью:</strong> Для ileshchanka — пересобрать <code>authGuard</code> и объяснить семантику сигналов с нуля (тест «создай сам»). Для vladaworkflow-ops — разобрать дерево решений по авторизации, которое она задокументировала, затем продемонстрировать поток событий через <code>output()</code> по памяти. Для обоих — спросить про статус Sprint 3: что готово, что осталось, и почему OnPush важен (это концептуальный стержень спринта).</p>
+<p>Команда на пути к защите с проходным результатом, если пункты Sprint 3 будут закрыты на этой неделе. Основной риск — давление по времени, а не уровень понимания.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

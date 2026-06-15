@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — NgStorm · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — NgStorm</strong><strong class="lang-ru">Mentor briefing — NgStorm</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Watch</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-amber">Под наблюдением</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — NgStorm</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<p><strong>One-line summary:</strong> Two-student team in practice — iskonplus carries ~60 % of commits and 73 % of PRs, anast-ananko owns auth/registration/profile and contributes meaningfully; shchepadzmitry dropped off after week 1 with 7 commits and 3 PRs and has written exactly one diary entry.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td>Name</td><td>ShopFront — Online Bookstore</td></tr>
+<tr><td>Repo</td><td><a href="https://github.com/anast-ananko/shop-front">https://github.com/anast-ananko/shop-front</a></td></tr>
+<tr><td>Deploy</td><td><a href="https://shopfront-bookstore.netlify.app">https://shopfront-bookstore.netlify.app</a></td></tr>
+<tr><td>Created</td><td>2026-05-12</td></tr>
+<tr><td>Last push</td><td>2026-06-15</td></tr>
+<tr><td>Open issues</td><td>6</td></tr>
+<tr><td>Stack</td><td>Angular 19+, Angular Material, Angular Signals, Angular Router (lazy-loaded), RxJS, SCSS, Netlify deploy</td></tr>
+<tr><td>Backend</td><td>commercetools (SaaS e-commerce API — OAuth2 tokens, Customers API, catalog)</td></tr>
+</tbody></table>
+<p>This is a real-stack project: no JSON mock backend, no MSW — actual commercetools calls from day one. That's both a strength (students touched OAuth2 flows, action-based customer update API, token chaining) and a complexity risk (harder to isolate Angular concepts from API quirks).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<table><thead>
+<tr><th>Login</th><th>Role</th><th>Real name</th><th>Note</th></tr>
+</thead><tbody>
+<tr><td>anast-ananko</td><td>student, <strong>lead</strong></td><td>Nastassia Ananka</td><td>Student</td></tr>
+<tr><td>iskonplus</td><td>student</td><td>Artur Tamashevich</td><td>Student</td></tr>
+<tr><td>shchepadzmitry</td><td>student</td><td>Dzmitry Shchapiorka</td><td>Student (GitHub login <code>ShchepaDzmitry</code>)</td></tr>
+<tr><td>ramanmilashevich</td><td><strong>mentor</strong></td><td>—</td><td>External — 0 commits to repo, normal</td></tr>
+</tbody></table>
+<p>No unknown external contributors. All commits are from the three students above.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity table</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs merged</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td>iskonplus</td><td>99</td><td>42</td><td>40</td><td>11 dated entries</td><td>2026-06-14</td><td>Strong, consistent</td></tr>
+<tr><td>anast-ananko</td><td>68</td><td>17</td><td>16</td><td>4 dated entries</td><td>2026-06-08</td><td>Solid; active lead</td></tr>
+<tr><td>shchepadzmitry</td><td>7</td><td>3</td><td>3</td><td>1 dated entry</td><td>2026-05-22</td><td>Dropped off — RISK</td></tr>
+</tbody></table>
+<p>Diary counting: dated filenames in <code>development-notes/</code> folder on <code>main</code> branch (GitFlow pattern — <code>diary</code> branch is the active unmerged branch; <code>main</code> is the merged state). The <code>diary</code> branch has 3 extra iskonplus entries (06-13) not yet in main at time of analysis.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 interview conducted by ramanmilashevich (RamanMilashevich on GitHub).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>iskonplus</td><td>100</td><td>— (not yet due)</td></tr>
+<tr><td>anast-ananko</td><td>100</td><td>— (not yet due)</td></tr>
+<tr><td>shchepadzmitry</td><td>50</td><td>— (not yet due)</td></tr>
+</tbody></table>
+<p><strong>iskonplus — Sprint 1: 100.</strong> The mentor noted a profound understanding of all Angular topics, confident navigation of complex concepts and trade-offs, and clear leadership qualities during the discussion.</p>
+<p><strong>anast-ananko — Sprint 1: 100.</strong> The mentor highlighted deep, comprehensive understanding of sprint material, the ability to articulate the "why" behind code decisions flawlessly, initiative during the call, insightful questions, and a consistent focus on writing good code.</p>
+<p><strong>shchepadzmitry — Sprint 1: 50.</strong> The student defended their Swiper slider work with reasonable arguments, and theoretical understanding was rated acceptable. However, the mentor explicitly observed that the student does not dedicate enough time to development and active project participation, and recommended more hands-on coding investment.</p>
+<h3>Score vs. activity reconciliation</h3>
+<ul>
+<li><strong>iskonplus (100 / 99 commits / active 2026-06-14):</strong> Scores and repo activity align fully — the strongest performer by both signals.</li>
+<li><strong>anast-ananko (100 / 68 commits / active 2026-06-08):</strong> Consistent across both signals as well. The activity gap since 06-08 is within normal Sprint-2 rhythm and not a concern at this stage.</li>
+<li><strong>shchepadzmitry (50 / 7 commits / last active 2026-05-22):</strong> The mentor's Sprint 1 comment already flagged insufficient time investment. The subsequent 24-day silence confirms the concern rather than contradicts it. The two signals reinforce each other: a 50 on the only defence combined with no post-defence repo activity is the clearest risk in the team. The score is not a 0 — he defended what he built — but the mentor's own language ("needs to invest more time in hands-on coding to fully contribute") was predictive.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>iskonplus (Artur Tamashevich)</h3>
+<p><strong>Built</strong> (from 42 PRs across 5 weeks):</p>
+<ul>
+<li>Sprint 1: SearchBook component with Angular Signals state in service, ProductCard with signal inputs, Google Material Icons integration.</li>
+<li>Sprint 2: Routing setup + lazy loading, 404 page, Details page, HTTP requests (commercetools catalog), app initializer for data loading, sign-in page with commercetools OAuth2 auth, guest guard, cart page with quantity controls, total price recalculation, and <code>@Output</code>-based parent-child communication.</li>
+<li>Sprint 3: Cart badge in header (Angular Material Badge, reactive signals update), search page, profile page (tab navigation, Favorites tab, reusable <code>PaginatedBooksCatalogComponent</code>), SCSS flex mixin + refactoring, Angular View Transitions for route animations, <code>OnPush</code> change detection across all components, responsive carousel.</li>
+<li>Consistent diary: 11 entries spanning 2026-05-13 to 2026-06-13 (note: 4 in diary branch not yet in main).</li>
+</ul>
+<p><strong>Level:</strong> Advanced junior verging on mid-level. Handles RxJS patterns (<code>takeUntilDestroyed</code>, <code>switchMap</code>), understands <code>OnPush</code> trade-offs, writes reusable components (<code>PaginatedBooksCatalogComponent</code>), uses <code>@ViewChildren</code> deliberately, writes thoughtful diary entries. Most entries explicitly note "AI tools were not used" — his learning log reads as genuine discovery (e.g., realizing <code>takeUntilDestroyed</code> vs manual unsubscribe). One exception: "Used AI for learning purposes and discussing implementation approaches" (profile tabs, 06-10) and "Used AI to learn and configure Angular View Transitions" (06-13) — both framed as learning aid, not copy-paste.</p>
+<p><strong>Probe for interview:</strong> Ask him to explain <code>OnPush</code> change detection from first principles — when does Angular skip change detection for a component, what triggers it again, and what breaks if you mutate an object inside an <code>OnPush</code> component instead of replacing the reference. He switched the whole app to <code>OnPush</code> in PR #67; make him justify every implication. Also probe <code>ViewChildren</code>/<code>QueryList</code> — he used it for the clear-cart feature; can he explain why it's needed there vs. a service approach?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>anast-ananko (Nastassia Ananka) — Team Lead</h3>
+<p><strong>Built</strong> (from 17 PRs):</p>
+<ul>
+<li>Sprint 1: Project bootstrap (Angular CLI, ESLint + Prettier config), Header + Footer components.</li>
+<li>Sprint 2: Registration form (full commercetools flow: OAuth2 → register customer → auto-login → redirect), <code>authRequiredGuard</code> (CanActivateFn with <code>UrlTree</code> redirect — she explicitly learned the UrlTree-vs-router.navigate distinction).</li>
+<li>Sprint 3: User Profile page — full CRUD: display customer data, inline edit per field, password change (<code>switchMap</code> to chain token refresh + customer reload), address management (shipping/billing/default flags, Angular Material Dialog for new address, add/edit/delete), custom <code>passwordMatchValidator</code>, custom directive with <code>ControlContainer</code> to share country/postal-code validation logic without prop-drilling. Sprint-2 diary entry for 06-07 is the most technically dense in the team.</li>
+</ul>
+<p><strong>Level:</strong> Solid junior with growing architectural instinct. The directive-with-<code>ControlContainer</code> solution is non-trivial and shows she doesn't stop at "it works" — she extracted reusable validation logic. The Sprint 2 registration implementation (16-hour diary entry) tackled OAuth2, sequential requests, action-based customer versioning — all real complexity. Diary writing is less frequent (4 entries) but each is detailed. Lead role appears real: she set up CI, opened issues, owns the auth/profile domain end-to-end.</p>
+<p><strong>Probe for interview:</strong> Ask her to walk through the <code>switchMap</code> chain she wrote for password change (change password → get new token → reload customer). Can she explain why <code>switchMap</code> is the right operator here vs <code>concatMap</code> or <code>mergeMap</code>? What happens if the user clicks "save" twice quickly? Also: the custom directive with <code>ControlContainer</code> — what is <code>ControlContainer</code>, why does injecting it in a directive work, and when would it break?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>shchepadzmitry (Dzmitry Shchapiorka)</h3>
+<p><strong>Built</strong> (from 3 PRs):</p>
+<ul>
+<li>PR: "Slider component" (2026-05-17) — Swiper library integration, external arrow controls using template reference variable.</li>
+<li>PR: "feat: add diary dev notes" (2026-05-18) — one diary entry.</li>
+<li>PR: "feat: add home/popular/promo/latest components & refactor: make slider..." (2026-05-22) — home page sections and slider refactor.</li>
+<li>Last commit: 2026-05-22. No activity for 24 days as of 2026-06-15.</li>
+</ul>
+<p><strong>Level:</strong> Cannot assess with confidence — 3 PRs, 7 commits, 1 diary entry, and silence since week 2. The single diary entry (Sprint 1, Swiper slider) is minimal: 1 hour, describes using <code>Swiper Library</code> to avoid implementing a slider from scratch. No diary entries for Sprint 2 or 3.</p>
+<p><strong>Risk flag:</strong> This student is effectively a passenger from week 2 onward. The team's output has not degraded because iskonplus absorbed the slack, but shchepadzmitry cannot be assessed on Sprint 2 or 3 Angular topics — routing, guards, signals, reactive forms, HTTP — because there is no evidence they engaged with any of it.</p>
+<p><strong>Probe for interview:</strong> Start with the Swiper slider PR — what is a template reference variable, how did you bind the arrows to the slider instance, could you implement a simple slider without the library? If they can answer confidently, move to routing (lazy loading: what is it, why does it matter for bundle size). If they cannot answer the slider question in depth, the Swiper work may have been scaffolded or minimally understood.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for mentor</h2>
+<p><strong>Overall readiness:</strong> Two students are ready to defend (iskonplus: strong; anast-ananko: solid). shchepadzmitry is unprepared unless there is activity not visible in the public repo.</p>
+<p><strong>Balance:</strong> The commit distribution (99 / 68 / 7) is problematic. iskonplus has driven the majority of the application — search, cart, product details, auth pages, profile tabs, animations, OnPush migration — across three sprints. anast-ananko owns auth/registration/profile domain clearly. shchepadzmitry's contributions end at the Swiper slider and three home-page sections in week 1–2.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>iskonplus and anast-ananko both tackled the commercetools API honestly (OAuth2 flows, action arrays, token chaining) — this is real complexity, not tutorial work.</li>
+<li>No evidence of wholesale AI copy-paste in either active student. iskonplus explicitly notes when AI is used (2 of 11 entries, for learning/conceptual questions). anast-ananko's diary shows genuine struggle and iterative reasoning.</li>
+<li>The team adopted signals early and used them consistently (<code>computed</code>, <code>signal</code>, signal inputs) — not just boilerplate.</li>
+<li><code>OnPush</code> migration across all components is an atypical sprint-3 move for beginners.</li>
+</ul>
+<p><strong>Risks:</strong></p>
+<ul>
+<li>shchepadzmitry: 24 days of silence is a hard risk. Recommend the mentor open with a direct question on what he built in Sprint 2/3. If blank, the issue must be escalated.</li>
+<li>The commercetools backend adds coupling: some Angular concepts (DI, services, state) may be entangled with API specifics in their mental model. Probe "what would you change if the backend were a plain REST API with simple JWT auth?"</li>
+<li>Open issues include "Basket (Cart) Page Implementation" and "User Profile Page Implementation" — these appear to be tracking issues, not bugs, but 6 open issues at checkpoint time is worth a quick scan.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> Start iskonplus on <code>OnPush</code> and <code>ViewChildren</code> (he touched both last sprint). Start anast-ananko on the <code>switchMap</code> / operator-choice question and the <code>ControlContainer</code> directive. For shchepadzmitry: begin at the Swiper PR, confirm basic understanding, then quickly probe routing and lazy loading — the gap between his claimed work and the rest of the course content will be apparent within 5 minutes.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — NgStorm</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<p><strong>Краткое резюме:</strong> Фактически команда из двух человек — iskonplus тянет ~60 % коммитов и 73 % PR, anast-ananko владеет auth/регистрацией/профилем и вносит весомый вклад; shchepadzmitry выпал после первой недели — 7 коммитов, 3 PR, ровно одна запись в дневнике.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td>Название</td><td>ShopFront — Online Bookstore</td></tr>
+<tr><td>Репо</td><td><a href="https://github.com/anast-ananko/shop-front">https://github.com/anast-ananko/shop-front</a></td></tr>
+<tr><td>Деплой</td><td><a href="https://shopfront-bookstore.netlify.app">https://shopfront-bookstore.netlify.app</a></td></tr>
+<tr><td>Создан</td><td>2026-05-12</td></tr>
+<tr><td>Последний пуш</td><td>2026-06-15</td></tr>
+<tr><td>Открытых issues</td><td>6</td></tr>
+<tr><td>Стек</td><td>Angular 19+, Angular Material, Angular Signals, Angular Router (lazy-loaded), RxJS, SCSS, Netlify deploy</td></tr>
+<tr><td>Бэкенд</td><td>commercetools (SaaS e-commerce API — OAuth2-токены, Customers API, каталог)</td></tr>
+</tbody></table>
+<p>Это проект на реальном стеке: никакого JSON-мок-бэкенда, никакого MSW — реальные вызовы commercetools с первого дня. Это и сила (студенты столкнулись с OAuth2-потоками, action-based API обновления клиентов, цепочками токенов), и риск сложности (сложнее отделить концепции Angular от особенностей API).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<table><thead>
+<tr><th>Логин</th><th>Роль</th><th>Имя</th><th>Примечание</th></tr>
+</thead><tbody>
+<tr><td>anast-ananko</td><td>student, <strong>lead</strong></td><td>Nastassia Ananka</td><td>Студентка</td></tr>
+<tr><td>iskonplus</td><td>student</td><td>Artur Tamashevich</td><td>Студент</td></tr>
+<tr><td>shchepadzmitry</td><td>student</td><td>Dzmitry Shchapiorka</td><td>Студент (GitHub-логин <code>ShchepaDzmitry</code>)</td></tr>
+<tr><td>ramanmilashevich</td><td><strong>mentor</strong></td><td>—</td><td>Внешний — 0 коммитов в репо, это норма</td></tr>
+</tbody></table>
+<p>Неизвестных внешних контрибьюторов нет. Все коммиты принадлежат трём студентам выше.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Таблица активности</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>PR влиты</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td>iskonplus</td><td>99</td><td>42</td><td>40</td><td>11 датированных записей</td><td>2026-06-14</td><td>Сильный, стабильный</td></tr>
+<tr><td>anast-ananko</td><td>68</td><td>17</td><td>16</td><td>4 датированных записи</td><td>2026-06-08</td><td>Уверенный; активный лид</td></tr>
+<tr><td>shchepadzmitry</td><td>7</td><td>3</td><td>3</td><td>1 датированная запись</td><td>2026-05-22</td><td>Выпал — РИСК</td></tr>
+</tbody></table>
+<p>Подсчёт дневников: датированные имена файлов в папке <code>development-notes/</code> на ветке <code>main</code> (паттерн GitFlow — ветка <code>diary</code> является активной и ещё не влитой; <code>main</code> — влитое состояние). В ветке <code>diary</code> есть 3 дополнительные записи iskonplus (06-13), которых ещё не было в main на момент анализа.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Интервью Спринта 1 провёл ramanmilashevich (RamanMilashevich на GitHub).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>iskonplus</td><td>100</td><td>— (срок ещё не наступил)</td></tr>
+<tr><td>anast-ananko</td><td>100</td><td>— (срок ещё не наступил)</td></tr>
+<tr><td>shchepadzmitry</td><td>50</td><td>— (срок ещё не наступил)</td></tr>
+</tbody></table>
+<p><strong>iskonplus — Спринт 1: 100.</strong> Ментор отметил глубокое понимание всех тем Angular, уверенную ориентацию в сложных концепциях и компромиссах, а также явные лидерские качества в ходе обсуждения.</p>
+<p><strong>anast-ananko — Спринт 1: 100.</strong> Ментор выделил глубокое и всестороннее знание материала спринта, способность безупречно объяснить «почему» стоящих за кодом решений, инициативность во время звонка, вдумчивые вопросы и постоянное стремление писать качественный код.</p>
+<p><strong>shchepadzmitry — Спринт 1: 50.</strong> Студент защитил свою часть (слайдер на Swiper) с разумными аргументами, теоретическое понимание оценено как приемлемое. Однако ментор прямо отметил, что студент уделяет недостаточно времени разработке и активному участию в проекте, и рекомендовал больше практической работы с кодом.</p>
+<h3>Сверка баллов и активности в репозитории</h3>
+<ul>
+<li><strong>iskonplus (100 / 99 коммитов / активен 2026-06-14):</strong> Оценка и активность в репо полностью совпадают — сильнейший участник по обоим сигналам.</li>
+<li><strong>anast-ananko (100 / 68 коммитов / активна 2026-06-08):</strong> Оба сигнала тоже согласуются. Паузa в активности с 06-08 вписывается в нормальный ритм Спринта 2 и на данный момент не вызывает беспокойства.</li>
+<li><strong>shchepadzmitry (50 / 7 коммитов / последняя активность 2026-05-22):</strong> Комментарий ментора на Спринте 1 уже зафиксировал нехватку времени на разработку. Последующие 24 дня тишины подтверждают эту озабоченность, а не противоречат ей. Оба сигнала усиливают друг друга: 50 баллов на единственной защите в сочетании с отсутствием активности после неё — наиболее очевидный риск в команде. Оценка не нулевая — он защитил то, что сделал, — однако собственные слова ментора («необходимо больше времени уделять практическому написанию кода для полноценного вклада в команду») оказались пророческими.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>iskonplus (Artur Tamashevich)</h3>
+<p><strong>Сделал</strong> (из 42 PR за 5 недель):</p>
+<ul>
+<li>Спринт 1: компонент SearchBook с состоянием на Angular Signals в сервисе, ProductCard с сигнальными inputs, интеграция Google Material Icons.</li>
+<li>Спринт 2: настройка роутинга + lazy loading, страница 404, страница Details, HTTP-запросы (каталог commercetools), app initializer для загрузки данных, страница входа с OAuth2-аутентификацией через commercetools, гард для гостей, страница корзины с управлением количеством, пересчёт итоговой цены, коммуникация родитель-потомок через <code>@Output</code>.</li>
+<li>Спринт 3: бейдж корзины в хедере (Angular Material Badge, реактивное обновление через сигналы), страница поиска, страница профиля (табовая навигация, вкладка Избранное, переиспользуемый <code>PaginatedBooksCatalogComponent</code>), SCSS-миксин для flex + рефакторинг, Angular View Transitions для анимаций роутера, <code>OnPush</code>-обнаружение изменений во всех компонентах, адаптивная карусель.</li>
+<li>Стабильный дневник: 11 записей с 2026-05-13 по 2026-06-13 (примечание: 4 в ветке diary ещё не влиты в main).</li>
+</ul>
+<p><strong>Уровень:</strong> Продвинутый джун, вплотную приближающийся к мидлу. Уверенно работает с паттернами RxJS (<code>takeUntilDestroyed</code>, <code>switchMap</code>), понимает компромиссы <code>OnPush</code>, пишет переиспользуемые компоненты (<code>PaginatedBooksCatalogComponent</code>), осознанно использует <code>@ViewChildren</code>, ведёт вдумчивый дневник. В большинстве записей явно отмечено «AI-инструменты не использовались» — его учебный журнал читается как подлинное исследование (например, осознание разницы между <code>takeUntilDestroyed</code> и ручной отпиской). Исключение: «Использовал AI для обучения и обсуждения подходов к реализации» (вкладки профиля, 06-10) и «Использовал AI для изучения и настройки Angular View Transitions» (06-13) — оба случая представлены как учебный инструмент, а не копи-паст.</p>
+<p><strong>Что проверять на интервью:</strong> Попросить объяснить <code>OnPush</code>-обнаружение изменений с нуля — когда Angular пропускает проверку изменений для компонента, что снова её запускает и что сломается, если мутировать объект внутри <code>OnPush</code>-компонента вместо замены ссылки. Он перевёл всё приложение на <code>OnPush</code> в PR #67; пусть обоснует каждое последствие. Также проверить <code>ViewChildren</code>/<code>QueryList</code> — он использовал это для очистки корзины; может ли объяснить, зачем это нужно именно там, а не через сервис?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>anast-ananko (Nastassia Ananka) — тимлид</h3>
+<p><strong>Сделала</strong> (из 17 PR):</p>
+<ul>
+<li>Спринт 1: бутстрап проекта (Angular CLI, конфиг ESLint + Prettier), компоненты Header и Footer.</li>
+<li>Спринт 2: форма регистрации (полный поток через commercetools: OAuth2 → регистрация клиента → автовход → редирект), <code>authRequiredGuard</code> (CanActivateFn с редиректом через <code>UrlTree</code> — она явно разобралась в различии UrlTree vs router.navigate).</li>
+<li>Спринт 3: страница профиля пользователя — полный CRUD: отображение данных клиента, инлайн-редактирование по полям, смена пароля (<code>switchMap</code> для цепочки обновления токена + перезагрузки клиента), управление адресами (флаги shipping/billing/default, Angular Material Dialog для нового адреса, добавление/редактирование/удаление), кастомный <code>passwordMatchValidator</code>, кастомная директива с <code>ControlContainer</code> для переиспользования логики валидации страны/почтового кода без проп-дриллинга. Запись дневника за Спринт 2 от 06-07 — самая технически насыщенная в команде.</li>
+</ul>
+<p><strong>Уровень:</strong> Уверенный джун с растущим архитектурным чутьём. Решение с директивой и <code>ControlContainer</code> нетривиально и показывает, что она не останавливается на «просто работает» — она вынесла переиспользуемую логику валидации. Реализация регистрации в Спринте 2 (дневниковая запись про 16 часов работы) включала OAuth2, последовательные запросы, version-based обновление клиента — всё это реальная сложность. Дневник ведётся реже (4 записи), но каждая детальная. Роль лида выглядит настоящей: она настроила CI, открывала issues, владеет доменом auth/профиля от начала до конца.</p>
+<p><strong>Что проверять на интервью:</strong> Попросить пройтись по <code>switchMap</code>-цепочке, которую она написала для смены пароля (сменить пароль → получить новый токен → перезагрузить клиента). Может ли объяснить, почему здесь подходит <code>switchMap</code>, а не <code>concatMap</code> или <code>mergeMap</code>? Что произойдёт, если пользователь быстро дважды нажмёт «сохранить»? Также: кастомная директива с <code>ControlContainer</code> — что такое <code>ControlContainer</code>, почему его инъекция в директиву работает и когда это сломается?</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>shchepadzmitry (Dzmitry Shchapiorka)</h3>
+<p><strong>Сделал</strong> (из 3 PR):</p>
+<ul>
+<li>PR: «Slider component» (2026-05-17) — интеграция библиотеки Swiper, внешнее управление стрелками через template reference variable.</li>
+<li>PR: «feat: add diary dev notes» (2026-05-18) — одна запись в дневнике.</li>
+<li>PR: «feat: add home/popular/promo/latest components & refactor: make slider...» (2026-05-22) — секции главной страницы и рефакторинг слайдера.</li>
+<li>Последний коммит: 2026-05-22. Никакой активности 24 дня на дату 2026-06-15.</li>
+</ul>
+<p><strong>Уровень:</strong> Оценить уверенно невозможно — 3 PR, 7 коммитов, 1 запись в дневнике и тишина со второй недели. Единственная запись в дневнике (Спринт 1, слайдер Swiper) минимальна: 1 час, описывает использование <code>Swiper Library</code>, чтобы не писать слайдер с нуля. Записей за Спринт 2 или 3 нет.</p>
+<p><strong>Риск-флаг:</strong> Этот студент де-факто выбыл начиная со второй недели. Результат команды не упал, потому что iskonplus взял на себя весь провис, но оценить shchepadzmitry по темам Спринтов 2 и 3 — роутинг, гарды, сигналы, реактивные формы, HTTP — невозможно: нет свидетельств, что он вообще с ними работал.</p>
+<p><strong>Что проверять на интервью:</strong> Начать с PR со слайдером Swiper — что такое template reference variable, как вы привязали стрелки к экземпляру слайдера, смогли бы реализовать простой слайдер без библиотеки? Если отвечает уверенно — перейти к роутингу (lazy loading: что это, почему важно для размера бандла). Если не может ответить на вопрос про слайдер в деталях, работа над Swiper могла быть наспех написана или минимально понята.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая готовность:</strong> Двое студентов готовы к защите (iskonplus — сильный; anast-ananko — уверенный). shchepadzmitry не готов, если в публичном репо нет скрытой активности.</p>
+<p><strong>Баланс:</strong> Распределение коммитов (99 / 68 / 7) проблематично. iskonplus продвигал большую часть приложения — поиск, корзину, карточки товаров, страницы auth, вкладки профиля, анимации, миграцию на OnPush — на протяжении трёх спринтов. anast-ananko чётко владеет доменом auth/регистрации/профиля. Вклад shchepadzmitry заканчивается на слайдере Swiper и трёх секциях главной страницы в 1–2 неделях.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>Оба активных студента честно разбирались с API commercetools (OAuth2-потоки, массивы actions, цепочки токенов) — это реальная сложность, а не туториальная работа.</li>
+<li>У обоих активных студентов нет признаков массового AI-копипаста. iskonplus явно отмечает использование AI (2 из 11 записей, для обучения/концептуальных вопросов). Дневник anast-ananko показывает настоящую борьбу и итеративное размышление.</li>
+<li>Команда рано внедрила сигналы и использовала их последовательно (<code>computed</code>, <code>signal</code>, сигнальные inputs) — не просто как шаблонный код.</li>
+<li>Миграция на <code>OnPush</code> по всем компонентам — нетипичный шаг для третьего спринта у начинающих.</li>
+</ul>
+<p><strong>Риски:</strong></p>
+<ul>
+<li>shchepadzmitry: 24 дня тишины — жёсткий риск. Рекомендую ментору сразу открыть прямым вопросом о том, что он делал в Спринтах 2 и 3. Если пустота — вопрос нужно эскалировать.</li>
+<li>Бэкенд на commercetools добавляет связанность: некоторые концепции Angular (DI, сервисы, состояние) могут быть переплетены со спецификой API в их ментальной модели. Проверить: «что бы ты изменил, если бы бэкенд был обычным REST API с простым JWT-auth?»</li>
+<li>Среди открытых issues — «Basket (Cart) Page Implementation» и «User Profile Page Implementation» — похоже, это трекинговые issues, а не баги, но 6 открытых issues на момент чекпоинта стоит бегло просмотреть.</li>
+</ul>
+<p><strong>Рекомендуемый угол на интервью:</strong> Начать с iskonplus на <code>OnPush</code> и <code>ViewChildren</code> (он касался обоих в последнем спринте). Начать с anast-ananko на вопросе об операторе в <code>switchMap</code> и директиве с <code>ControlContainer</code>. Для shchepadzmitry: начать с PR по Swiper, проверить базовое понимание, затем быстро перейти к роутингу и lazy loading — пробел между его заявленной работой и остальным содержимым курса станет очевиден за 5 минут.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>

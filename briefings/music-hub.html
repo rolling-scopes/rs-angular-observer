@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Music-Hub · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Music-Hub</strong><strong class="lang-ru">Mentor briefing — Music-Hub</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-15 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-15 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Music-Hub</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>evgeniia-korolova/ng-music-flow</code> (commits, PRs, dev branch diaries). Snapshot: 2026-06-15. Goal: give the mentor two minutes of context before the defence — who did what, who understands it, where to probe.</blockquote>
+<p><strong>One-line summary:</strong> A well-executed Angular + NestJS music app with a genuinely active lead who built the hard parts herself; two engaged teammates at different depths; no passengers, but interview should stress-test the lead's "I set this up, do I understand it?" zone (Signals architecture + CI/CD tooling) and confirm the other two can explain what they delivered independently.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project</h2>
+<p><strong>App:</strong> NgMusicFlow — Angular 21 SPA + NestJS backend for music discovery and streaming via the <a href="<a href="https://jamendo.com">https://jamendo.com</a>">Jamendo API</a>. Live deploy: <a href="https://ng-music-flow.netlify.app/discover/popular">https://ng-music-flow.netlify.app/discover/popular</a></p>
+<p><strong>Stack:</strong> Angular 21 (Zone mode), NgRx SignalStore, SCSS + Tailwind CSS, Vitest + Playwright (Browser Mode), NestJS + TypeORM + Passport JWT, Husky + Lint-staged + Semantic Release, GitHub Actions CI.</p>
+<p><strong>Repo:</strong> <a href="https://github.com/evgeniia-korolova/ng-music-flow">https://github.com/evgeniia-korolova/ng-music-flow</a> Created: 2026-05-09 | Last push: 2026-06-15 | Default branch: <code>dev</code> (GitFlow) | Open issues: 9</p>
+<p><strong>Architecture choices worth noting:</strong> Feature-Sliced Design (FSD) chosen for folder structure. Full-stack monorepo (<code>client/</code> Angular + <code>api/</code> NestJS). SignalStore used as primary state layer. InjectionToken for <code>TRACK_DATA_PROVIDER</code> to decouple TracksStore from individual components. Netlify deploy with proxy to keep Jamendo API key server-side only.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>evgeniia-korolova</code> — Team Lead</li>
+<li><code>vitiok2021</code> — Developer (diary folder name: <code>vitiok2009</code> — same person, confirmed via README credit "Viktor Petsko / vitiok2021")</li>
+<li><code>mero93</code> — Developer</li>
+</ul>
+<p><strong>External (not assessed):</strong></p>
+<ul>
+<li><code>julila</code> — Mentor (role: mentor in participants.json; zero commits — normal)</li>
+</ul>
+<p>No unaccounted external contributors in the GitHub contributor list.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity (snapshot 2026-06-15)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs (total)</th><th>PRs (merged)</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>evgeniia-korolova</strong> (lead)</td><td>133</td><td>35</td><td>34</td><td>2</td><td>2026-06-15</td><td>Very high — drives architecture and integration</td></tr>
+<tr><td><strong>vitiok2021</strong></td><td>78</td><td>14</td><td>14</td><td>2</td><td>2026-06-15</td><td>Solid — consistent delivery, clear learning arc</td></tr>
+<tr><td><strong>mero93</strong></td><td>100</td><td>9</td><td>8</td><td>5</td><td>2026-06-08</td><td>Active but narrower scope (full-stack auth silo)</td></tr>
+</tbody></table>
+<p>Balance: no passenger. All three merged real feature PRs. Lead carries a disproportionate share of architecture and CI work (34 merged PRs vs 14 and 8 for teammates), which is expected for a lead role but worth noting — the team is healthy, not co-dependent.</p>
+<p><strong>Diary count note:</strong> <code>vitiok2021</code> diary is filed under <code>vitiok2009/</code> folder — two dated entries found on <code>dev</code> branch (2026-05-15, 2026-06-01). <code>mero93</code> has the most dated entries (5: 2026-05-18, 05-25, 06-01, 06-04, 06-08). <code>evgeniia-korolova</code> has 2 (2026-05-12, 2026-05-26), which are the most detailed of all three.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Mentor: <strong>Julila</strong> · Sprint 1 Interview — Components (late May).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>evgeniia-korolova</td><td>100</td><td>not yet held</td></tr>
+<tr><td>vitiok2021</td><td>100</td><td>not yet held</td></tr>
+<tr><td>mero93</td><td>100</td><td>not yet held</td></tr>
+</tbody></table>
+<p><strong>Per-student digest (mentor comments, Sprint 1):</strong></p>
+<ul>
+<li><strong>evgeniia-korolova (100):</strong> "Just great student, deep interest and understanding." No caveats — mentor confirms depth, not just output.</li>
+<li><strong>vitiok2021 (100):</strong> "Viktor prepared well for the Sprint review, could explain his code, and demonstrated full command of his work — handling a straightforward task with the full expected complexity." Mentor explicitly noted he can <em>talk about</em> the code, not just show it.</li>
+<li><strong>mero93 (100):</strong> "Merab has strong opinions and can advocate his decisions — very good understanding of his own work." Mentor's framing emphasises ownership and confidence, consistent with the auth-silo profile.</li>
+</ul>
+<p><strong>Reconciliation — where score and activity diverge:</strong></p>
+<ul>
+<li><strong>mero93:</strong> Scored 100 at the Sprint 1 defence, confirming genuine understanding of what he built. However, the repo activity picture tells a different story on execution rhythm: twice missed his own sprint plan, self-reported motivation dips in diaries, and as of the 2026-06-15 snapshot was last seen active 2026-06-08 (7 days prior). The defence score validates depth of knowledge on what he owns; it does not erase the pattern of running behind schedule. Both signals are real. At the interview, probe whether the auth work is now actually integrated into the app.</li>
+<li><strong>evgeniia-korolova and vitiok2021:</strong> No divergence — 100 at defence, active through 2026-06-15. Score and activity are fully consistent.</li>
+</ul>
+<p><strong>Health tier: Green — Healthy.</strong></p>
+<p>All three members scored 100 at the Sprint 1 defence (no partial scores, no no-shows). The lead and vitiok2021 are active through the snapshot date. mero93's execution rhythm warrants a watchful eye at the interview, but a 100 at defence plus continued (if slower) activity does not meet the bar for amber. Sprint 2 is in progress and not yet due (deadline 2026-06-23) — current state is expected.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Student profiles</h2>
+<h3>evgeniia-korolova — Lead, 133 commits / 34 merged PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Full project scaffold: FSD folder structure, Angular environments, lazy-loaded routing with Main Layouts (PR #6)</li>
+<li>ESLint + Prettier + Husky + lint-staged + GitHub Actions CI (PR #6, #16, #18, #22)</li>
+<li>Semantic Release pipeline with conventional commits — resolved dependency issues across 6 consecutive PRs (#92–#99), suggesting she debugged this from scratch</li>
+<li>TracksStore with SignalStore, InjectionToken (<code>TRACK_DATA_PROVIDER</code>) to decouple component data access, tracks-list / track-card components with fake waveform fallback (diary sprint-1)</li>
+<li>SearchStore — reactive form sidebar with filters, client-side alphabet sorting (needed because Jamendo fuzzy-tag search ignores sort params), "Load More" pagination with dedup by track ID (PRs #76, #78, diary sprint-2)</li>
+<li><code>LinkedSignal</code> to solve computed signal not firing until template call (diary sprint-2 — non-trivial insight)</li>
+<li><code>location.replaceState()</code> instead of <code>router.navigate()</code> to fix <code>AbortError: Transition was skipped</code> (diary sprint-2)</li>
+<li>Audio player with waveform (PR #102)</li>
+<li>Netlify deploy with proxy for API key protection (PR #62)</li>
+<li>reset-filters + scroll-to-top buttons (PR #103), header refactor (PR #105)</li>
+</ul>
+<p><strong>Level:</strong> Strong Angular practitioner with infrastructure instincts. She debugged non-trivial Signal edge cases (computed not triggering until template, <code>LinkedSignal</code> workaround) and documented them precisely. The Semantic Release debugging run (6 PRs in one day) shows persistence over tooling, not just feature delivery. She explicitly credits Gemini for CI/CD help but demonstrates she understood the output — she describes the problem, the attempted solution, and the residual issue in her own words. Risk zone: very high single-contributor share of architecture; interview should confirm she can <em>explain</em> her choices, not just that she made them.</p>
+<p><strong>Probe (the "can you rebuild it?" test):</strong></p>
+<ul>
+<li>Ask her to explain <code>InjectionToken</code> for <code>TRACK_DATA_PROVIDER</code> from scratch: why not just inject the store directly? What does the token buy you in testability?</li>
+<li>The SearchStore <code>LinkedSignal</code> story: walk me through why a regular <code>computed</code> didn't work there. What's the difference?</li>
+<li>Semantic Release setup: what is the role of <code>commit-analyzer</code> and why did it require <code>conventional-changelog-conventionalcommits</code> as a peer dependency? (She debugged this — she should know.)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vitiok2021 — Developer, 78 commits / 14 merged PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>Tailwind CSS setup + global theme colors (PR #9)</li>
+<li>Artist card component with <code>input()</code> signal, artists-list with <code>@for</code> control flow (PR #15)</li>
+<li>Artists page with NgRx SignalStore + styling (PR #40)</li>
+<li>Footer (PR #42)</li>
+<li>Genres list + genre card (PR #53)</li>
+<li>Artist profile page (Smart Component pattern): child dumb components for artist-card, album-card list, track-card; <code>rxMethod</code> with <code>forkJoin</code> to parallelize three API calls and avoid waterfall requests (PR #57)</li>
+<li>Album details page with AlbumStore, DTO→Domain mapper function (PR #72)</li>
+<li>Route fixes (PRs #86, #101)</li>
+<li>404 page (PR #81)</li>
+</ul>
+<p><strong>Level:</strong> Clear, consistent learner. The forkJoin/waterfall diary entry (2026-06-01) is the best evidence of genuine understanding: he explains the sequential-request problem, identifies the cause (child components making independent calls), and describes the fix (moving loading to parent, forkJoin). He also notes the <code>NG0950: Input is required</code> error in tests and the correct fix (<code>setInput</code> before <code>detectChanges</code>). Declares AI (Gemini) use for "structuring and translating" text only — the technical reasoning reads as his own. Diary also honestly lists FSD as initially confusing — he worked through it.</p>
+<p><strong>Level risk:</strong> Lighter on infrastructure (no CI, no routing setup, no build tooling) — he consumed what the lead scaffolded. Worth checking whether he understands FSD layers, or just placed files where the structure said to.</p>
+<p><strong>Probe:</strong></p>
+<ul>
+<li>The <code>forkJoin</code> fix: why does <code>switchMap</code> fit here? What would happen if you used <code>mergeMap</code> instead? (He used <code>rxMethod</code> + <code>switchMap</code> + <code>forkJoin</code> — confirm he knows why.)</li>
+<li>Smart vs dumb component pattern: who decides where data is fetched? Could <code>AlbumStore</code> be provided at component level instead of root? What would change?</li>
+<li><code>@defer</code> / <code>@placeholder</code>: he mentions using it in sprint-1 — what triggers the defer? Can you control it programmatically?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>mero93 — Developer, 100 commits / 8 merged PRs</h3>
+<p><strong>Built (from PRs + diary):</strong></p>
+<ul>
+<li>NestJS app initialization (PR #14)</li>
+<li>Header component + theme toggler (PR #23)</li>
+<li>Navigation bar (PR #41)</li>
+<li>Button component with variants + sizes (PR #48)</li>
+<li>Icon component with custom registry + lazy loading, removed LucideIcons library (PR #59)</li>
+<li>Client-side auth: registration form, login form, custom input component, autofocus directive, routing for auth pages (PR #75, diary 2026-06-01)</li>
+<li>NestJS API auth: TypeORM + Passport JWT + global interceptor for response wrapping + global exception filter + users/auth controllers (PR #88, diary 2026-06-08)</li>
+<li>Auth guard on client (PR #90)</li>
+<li>Header state changes based on auth status (PR #—, diary 2026-06-04)</li>
+</ul>
+<p><strong>Level:</strong> Full-stack capable but working in a self-contained auth silo. The NestJS diary entries are technically detailed (TypeORM, JWT strategy, global interceptor, exception filter) — he knows what he set up. The component work (Button, Icon with lazy registry) shows good UI engineering sensibility. 100 commits but only 8 merged PRs suggests either frequent small commits or some squashing — commit-to-PR ratio is worth noting but not alarming.</p>
+<p><strong>Risk flags:</strong></p>
+<ol>
+<li>He missed his own sprint plan twice in a row ("I wanted to finish API auth too, but only managed client-side" — 2026-06-01; "only on Monday I had a chance to work on API" — 2026-06-08). Self-reported motivation issues in one entry. Output arrived, but there's a pattern of running behind schedule.</li>
+<li>His feature scope is narrower than commit count suggests: the auth system is one vertical, and it's still not fully integrated (no "initialize factory" on bootstrap, no token-refresh flow as of last diary).</li>
+<li>The PR-to-commit ratio is an outlier: 100 commits, 8 merged PRs — either large PRs or a different branching pattern. Not a red flag alone, but worth noting.</li>
+</ol>
+<p><strong>Probe:</strong></p>
+<ul>
+<li>The JWT auth setup: what does the Passport strategy actually do? Where does <code>validate()</code> get called in the request lifecycle?</li>
+<li>Global interceptor vs middleware vs guard: you used all three patterns — when would you choose each?</li>
+<li>Icon lazy-loading registry: how does Angular load the icon lazily? What happens on first render vs second?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A healthy, active three-person team with no passengers. The lead carried the architecture load (which is expected) but both teammates delivered real features with real technical depth. The project is deployed, has CI/CD, semantic release, a working NestJS backend, and meaningful features beyond a basic CRUD.</p>
+<p><strong>Strong point:</strong> evgeniia-korolova is the most technically mature lead in the cohort's pilot sample — she not only sets up the infrastructure but documents <em>why</em> she debugged it that way. vitiok2021 shows a genuine learning arc: from <code>input()</code> basics to <code>forkJoin</code> parallelization in four weeks, with honest problem-diagnosis in diaries.</p>
+<p><strong>Watch carefully at interview:</strong></p>
+<ul>
+<li><strong>evgeniia-korolova:</strong> The architecture is hers, but she used Gemini for Vitest CI debugging and Semantic Release troubleshooting. Probe whether she can explain the <em>why</em> behind her own choices, not just the <em>what</em>. Specifically: InjectionToken rationale, LinkedSignal vs computed, and what Semantic Release's commit-analyzer actually does.</li>
+<li><strong>mero93:</strong> Technically capable but works best in isolation. Auth silo is solid; don't expect him to speak fluently about SignalStore or FSD — those aren't his layers. Probe on what he owns (JWT lifecycle, global interceptor pattern). Also worth a gentle check on whether the auth is actually integrated into the app or still mock-connected.</li>
+<li><strong>vitiok2021:</strong> Solid understanding of what he built. Gap is infrastructure/tooling — he consumed the scaffold. FSD layer awareness is the probe point.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> Per the "create to understand" principle — give each student one thing they built and ask them to sketch it from scratch on a whiteboard (or explain it step by step). For Evgeniia: InjectionToken + TRACK_DATA_PROVIDER. For Viktor: the forkJoin waterfall fix. For Merab: JWT Passport strategy request lifecycle. All three left enough diary evidence to ask <em>specific</em> questions rather than generic Angular theory.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Бриффинг для ментора — Music-Hub</h1>
+<h3>Брифинг к кросс-интервью · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>evgeniia-korolova/ng-music-flow</code> (коммиты, PR, дневники ветки dev). Снимок: 2026-06-15. Цель: дать ментору две минуты контекста перед защитой — кто что делал, кто понимает, где проверять.</blockquote>
+<p><strong>Откровенное резюме в одну строку:</strong> Хорошо реализованное музыкальное приложение на Angular + NestJS с действительно активным лидом, который сам построил самые сложные части; двое вовлечённых участников разного уровня глубины; пассажиров нет, но интервью должно стресс-тестировать зону «я это настроила — понимаю ли я это?» (архитектура Signals + инструменты CI/CD) и подтвердить, что двое других могут самостоятельно объяснить то, что они реализовали.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект</h2>
+<p><strong>Приложение:</strong> NgMusicFlow — Angular 21 SPA + NestJS бэкенд для поиска и стриминга музыки через <a href="<a href="https://jamendo.com">https://jamendo.com</a>">Jamendo API</a>. Живой деплой: <a href="https://ng-music-flow.netlify.app/discover/popular">https://ng-music-flow.netlify.app/discover/popular</a></p>
+<p><strong>Стек:</strong> Angular 21 (Zone mode), NgRx SignalStore, SCSS + Tailwind CSS, Vitest + Playwright (Browser Mode), NestJS + TypeORM + Passport JWT, Husky + Lint-staged + Semantic Release, GitHub Actions CI.</p>
+<p><strong>Репозиторий:</strong> <a href="https://github.com/evgeniia-korolova/ng-music-flow">https://github.com/evgeniia-korolova/ng-music-flow</a> Создан: 2026-05-09 | Последний push: 2026-06-15 | Ветка по умолчанию: <code>dev</code> (GitFlow) | Открытые issues: 9</p>
+<p><strong>Архитектурные решения, заслуживающие внимания:</strong> Feature-Sliced Design (FSD) выбран для структуры папок. Полностековый монорепозиторий (<code>client/</code> Angular + <code>api/</code> NestJS). SignalStore используется как основной слой состояния. InjectionToken для <code>TRACK_DATA_PROVIDER</code> — чтобы развязать TracksStore с отдельными компонентами. Деплой на Netlify с прокси, чтобы держать ключ Jamendo API только на сервере.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (по списку курса):</strong></p>
+<ul>
+<li><code>evgeniia-korolova</code> — Team Lead</li>
+<li><code>vitiok2021</code> — Developer (папка дневника: <code>vitiok2009</code> — один и тот же человек, подтверждено через строку в README «Viktor Petsko / vitiok2021»)</li>
+<li><code>mero93</code> — Developer</li>
+</ul>
+<p><strong>Внешние (не оцениваются):</strong></p>
+<ul>
+<li><code>julila</code> — Mentor (роль: mentor в participants.json; ноль коммитов — норма)</li>
+</ul>
+<p>Неучтённых внешних контрибьюторов в списке GitHub нет.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (снимок 2026-06-15)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR (всего)</th><th>PR (merged)</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>evgeniia-korolova</strong> (лид)</td><td>133</td><td>35</td><td>34</td><td>2</td><td>2026-06-15</td><td>Очень высокая — движет архитектурой и интеграцией</td></tr>
+<tr><td><strong>vitiok2021</strong></td><td>78</td><td>14</td><td>14</td><td>2</td><td>2026-06-15</td><td>Уверенная — стабильная поставка, чёткая кривая обучения</td></tr>
+<tr><td><strong>mero93</strong></td><td>100</td><td>9</td><td>8</td><td>5</td><td>2026-06-08</td><td>Активен, но более узкий охват (изолированный вертикальный стек auth)</td></tr>
+</tbody></table>
+<p>Баланс: пассажиров нет. Все трое смерджили реальные фичевые PR. Лид несёт несоразмерно большую долю архитектуры и CI (34 merged PR против 14 и 8 у тиммейтов) — это ожидаемо для роли лида, но стоит отметить: команда здорова, а не созависима.</p>
+<p><strong>Примечание по дневникам:</strong> дневник <code>vitiok2021</code> находится в папке <code>vitiok2009/</code> — в ветке <code>dev</code> найдены две записи с датами (2026-05-15, 2026-06-01). У <code>mero93</code> больше всего записей с датами (5: 2026-05-18, 05-25, 06-01, 06-04, 06-08). У <code>evgeniia-korolova</code> — 2 (2026-05-12, 2026-05-26), но они самые подробные из всех трёх.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Ментор: <strong>Julila</strong> · Sprint 1 Interview — Components (конец мая).</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>evgeniia-korolova</td><td>100</td><td>ещё не проводился</td></tr>
+<tr><td>vitiok2021</td><td>100</td><td>ещё не проводился</td></tr>
+<tr><td>mero93</td><td>100</td><td>ещё не проводился</td></tr>
+</tbody></table>
+<p><strong>Дайджест по студентам (комментарии ментора, Sprint 1):</strong></p>
+<ul>
+<li><strong>evgeniia-korolova (100):</strong> «Просто отличная студентка, глубокий интерес и понимание.» Без оговорок — ментор подтверждает глубину, а не только результат.</li>
+<li><strong>vitiok2021 (100):</strong> «Виктор хорошо подготовился к обзору спринта, мог объяснить свой код, умеет говорить о нём, сделал несложную задачу с полной ожидаемой сложностью.» Ментор явно отметил, что он умеет <em>рассказать</em> о коде, а не просто показать его.</li>
+<li><strong>mero93 (100):</strong> «Мераб имеет чёткую позицию и умеет отстаивать свои решения — очень хорошее понимание проделанной работы.» Формулировка ментора подчёркивает ответственность и уверенность, что согласуется с профилем изолированного auth-вертикаля.</li>
+</ul>
+<p><strong>Сопоставление: где оценка расходится с активностью в репозитории:</strong></p>
+<ul>
+<li><strong>mero93:</strong> Получил 100 на защите Sprint 1 — настоящее понимание того, что он построил, подтверждено. Однако картина активности в репозитории говорит о другом ритме выполнения: дважды не выполнял собственный план спринта, самостоятельно признавал проблемы с мотивацией в дневниках, и по снимку 2026-06-15 последняя активность — 2026-06-08 (7 дней назад). Оценка на защите подтверждает глубину знаний в зоне ответственности; она не отменяет паттерна отставания от графика. Оба сигнала реальны. На интервью стоит проверить, действительно ли auth-функционал интегрирован в приложение.</li>
+<li><strong>evgeniia-korolova и vitiok2021:</strong> Расхождений нет — 100 на защите, активность вплоть до 2026-06-15. Оценка и активность полностью согласованы.</li>
+</ul>
+<p><strong>Уровень здоровья: Зелёный — Healthy.</strong></p>
+<p>Все три участника получили 100 на защите Sprint 1 (нет частичных оценок, нет неявившихся). Лид и vitiok2021 активны вплоть до даты снимка. Ритм выполнения у mero93 заслуживает внимательного взгляда на интервью, но 100 на защите плюс продолжающаяся (пусть и замедленная) активность не дотягивают до планки amber. Sprint 2 в процессе, срок — 2026-06-23 — текущее состояние ожидаемо.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>evgeniia-korolova — Lead, 133 коммита / 34 merged PR</h3>
+<p><strong>Что реализовала (из PR + дневника):</strong></p>
+<ul>
+<li>Полный скаффолд проекта: структура папок FSD, Angular environments, ленивая маршрутизация с Main Layouts (PR #6)</li>
+<li>ESLint + Prettier + Husky + lint-staged + GitHub Actions CI (PR #6, #16, #18, #22)</li>
+<li>Пайплайн Semantic Release с conventional commits — разрешила проблемы зависимостей в 6 последовательных PR (#92–#99), что говорит о том, что она отлаживала это с нуля</li>
+<li>TracksStore с SignalStore, InjectionToken (<code>TRACK_DATA_PROVIDER</code>) для развязки доступа к данным в компонентах, компоненты tracks-list / track-card с запасным фейковым waveform (дневник, спринт 1)</li>
+<li>SearchStore — реактивная форма-сайдбар с фильтрами, алфавитная сортировка на клиенте (нужна, потому что нечёткий поиск по тегам Jamendo игнорирует параметры сортировки), пагинация «Загрузить ещё» с дедупликацией по ID трека (PR #76, #78, дневник, спринт 2)</li>
+<li><code>LinkedSignal</code> для решения проблемы, когда вычисленный сигнал не срабатывал до обращения из шаблона (дневник, спринт 2 — нетривиальный инсайт)</li>
+<li><code>location.replaceState()</code> вместо <code>router.navigate()</code> для устранения <code>AbortError: Transition was skipped</code> (дневник, спринт 2)</li>
+<li>Аудиоплеер с waveform (PR #102)</li>
+<li>Деплой на Netlify с прокси для защиты API-ключа (PR #62)</li>
+<li>Кнопки сброса фильтров и прокрутки вверх (PR #103), рефакторинг хедера (PR #105)</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный Angular-практик с инфраструктурным чутьём. Отладила нетривиальные краевые случаи Signals (вычисленный сигнал не триггерится до шаблона, обходной вариант с <code>LinkedSignal</code>) и задокументировала их точно. Серия отладки Semantic Release (6 PR за один день) демонстрирует упорство в работе с инструментарием, а не только поставку фич. Явно указывает на помощь Gemini в CI/CD, но демонстрирует, что поняла результат — описывает проблему, предпринятое решение и остаточную проблему своими словами. Зона риска: очень высокая доля архитектуры у одного контрибьютора; интервью должно подтвердить, что она может <em>объяснить</em> свои решения, а не просто что она их приняла.</p>
+<p><strong>Что проверять (тест «можешь воссоздать?»):</strong></p>
+<ul>
+<li>Попросить объяснить <code>InjectionToken</code> для <code>TRACK_DATA_PROVIDER</code> с нуля: почему не просто инжектировать стор напрямую? Что даёт токен с точки зрения тестируемости?</li>
+<li>История SearchStore с <code>LinkedSignal</code>: объясни, почему там не подошёл обычный <code>computed</code>. В чём разница?</li>
+<li>Настройка Semantic Release: какова роль <code>commit-analyzer</code> и почему потребовал <code>conventional-changelog-conventionalcommits</code> как peer dependency? (Она это отлаживала — должна знать.)</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>vitiok2021 — Developer, 78 коммитов / 14 merged PR</h3>
+<p><strong>Что реализовал (из PR + дневника):</strong></p>
+<ul>
+<li>Настройка Tailwind CSS + глобальные цвета темы (PR #9)</li>
+<li>Компонент artist card с сигналом <code>input()</code>, список artists-list с управляющей конструкцией <code>@for</code> (PR #15)</li>
+<li>Страница Artists с NgRx SignalStore + стилизация (PR #40)</li>
+<li>Footer (PR #42)</li>
+<li>Список жанров + карточка жанра (PR #53)</li>
+<li>Страница Artist profile (паттерн Smart Component): дочерние dumb-компоненты для artist-card, списка album-card, track-card; <code>rxMethod</code> с <code>forkJoin</code> для параллелизации трёх API-вызовов и устранения waterfall-запросов (PR #57)</li>
+<li>Страница Album details с AlbumStore, функция-маппер DTO→Domain (PR #72)</li>
+<li>Исправления маршрутов (PR #86, #101)</li>
+<li>Страница 404 (PR #81)</li>
+</ul>
+<p><strong>Уровень:</strong> Чёткий, последовательный обучающийся. Запись в дневнике про forkJoin/waterfall (2026-06-01) — лучшее свидетельство настоящего понимания: объясняет проблему последовательных запросов, находит причину (дочерние компоненты делают независимые вызовы) и описывает решение (переносит загрузку в родителя, forkJoin). Также отмечает ошибку <code>NG0950: Input is required</code> в тестах и верное исправление (<code>setInput</code> перед <code>detectChanges</code>). Декларирует использование AI (Gemini) только для «структурирования и перевода» текста — техническое мышление читается как его собственное. В дневнике честно признаёт, что FSD поначалу был непонятен — разобрался.</p>
+<p><strong>Риск по уровню:</strong> Слабее в инфраструктуре (нет CI, нет настройки маршрутизации, нет сборочного инструментария) — потреблял то, что скаффолдировал лид. Стоит проверить, понимает ли он слои FSD или просто раскладывал файлы туда, куда указывала структура.</p>
+<p><strong>Что проверять:</strong></p>
+<ul>
+<li>Исправление с <code>forkJoin</code>: почему здесь подходит <code>switchMap</code>? Что произошло бы, если бы использовали <code>mergeMap</code>? (Использовал <code>rxMethod</code> + <code>switchMap</code> + <code>forkJoin</code> — убедиться, что понимает почему.)</li>
+<li>Паттерн Smart vs dumb component: кто решает, где загружаются данные? Можно ли предоставить <code>AlbumStore</code> на уровне компонента вместо root? Что изменится?</li>
+<li><code>@defer</code> / <code>@placeholder</code>: упоминает использование в спринте 1 — что триггерит defer? Можно ли управлять им программно?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>mero93 — Developer, 100 коммитов / 8 merged PR</h3>
+<p><strong>Что реализовал (из PR + дневника):</strong></p>
+<ul>
+<li>Инициализация NestJS-приложения (PR #14)</li>
+<li>Компонент Header + переключатель темы (PR #23)</li>
+<li>Навигационная панель (PR #41)</li>
+<li>Компонент Button с вариантами + размерами (PR #48)</li>
+<li>Компонент Icon с кастомным реестром + ленивой загрузкой, удалена библиотека LucideIcons (PR #59)</li>
+<li>Auth на клиенте: форма регистрации, форма входа, кастомный компонент input, директива autofocus, маршрутизация для страниц auth (PR #75, дневник 2026-06-01)</li>
+<li>API auth на NestJS: TypeORM + Passport JWT + глобальный интерцептор для оборачивания ответов + глобальный фильтр исключений + контроллеры users/auth (PR #88, дневник 2026-06-08)</li>
+<li>Гард auth на клиенте (PR #90)</li>
+<li>Изменения состояния хедера в зависимости от статуса auth (PR #—, дневник 2026-06-04)</li>
+</ul>
+<p><strong>Уровень:</strong> Полностековый, способный, но работает в самодостаточном auth-силосе. Записи в дневнике по NestJS технически детализированы (TypeORM, JWT strategy, глобальный интерцептор, фильтр исключений) — знает, что настраивал. Компонентная работа (Button, Icon с ленивым реестром) демонстрирует хорошее чутьё в UI-инженерии. 100 коммитов, но только 8 merged PR — возможно, частые мелкие коммиты или какое-то squashing; соотношение коммитов к PR заслуживает внимания, но не критично.</p>
+<p><strong>Тревожные признаки:</strong></p>
+<ol>
+<li>Дважды подряд не выполнял собственный план спринта («хотел закончить ещё и API auth, но успел только клиентскую часть» — 2026-06-01; «только в понедельник нашёл время поработать над API» — 2026-06-08). В одной из записей самостоятельно признаёт проблемы с мотивацией. Результат в итоге приходил, но прослеживается паттерн отставания от графика.</li>
+<li>Реальный охват фич уже, чем подсказывает количество коммитов: auth-система — один вертикаль, и она до сих пор не полностью интегрирована (нет «initialize factory» при старте, нет token-refresh flow по состоянию на последний дневник).</li>
+<li>Соотношение PR к коммитам — выброс: 100 коммитов, 8 merged PR — либо крупные PR, либо другой паттерн ветвления. Сам по себе не тревожный признак, но стоит отметить.</li>
+</ol>
+<p><strong>Что проверять:</strong></p>
+<ul>
+<li>Настройка JWT auth: что на самом деле делает стратегия Passport? Где вызывается <code>validate()</code> в жизненном цикле запроса?</li>
+<li>Глобальный интерцептор vs middleware vs гард: ты использовал все три паттерна — когда выбирать каждый?</li>
+<li>Реестр ленивой загрузки иконок: как Angular загружает иконку лениво? Что происходит при первом рендере против второго?</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>В целом:</strong> Здоровая, активная команда из трёх человек без пассажиров. Лид несла архитектурную нагрузку (что ожидаемо), но оба тиммейта поставили реальные фичи с реальной технической глубиной. Проект задеплоен, есть CI/CD, semantic release, рабочий NestJS-бэкенд и значимые фичи, выходящие за рамки базового CRUD.</p>
+<p><strong>Сильная сторона:</strong> evgeniia-korolova — технически наиболее зрелый лид в пилотной выборке когорты: она не только настраивает инфраструктуру, но и документирует <em>почему</em> отладила именно так. vitiok2021 демонстрирует настоящую кривую обучения: от основ <code>input()</code> до параллелизации через <code>forkJoin</code> за четыре недели, с честной диагностикой проблем в дневниках.</p>
+<p><strong>Внимательно проследить на интервью:</strong></p>
+<ul>
+<li><strong>evgeniia-korolova:</strong> Архитектура её, но Gemini использовался при отладке Vitest CI и настройке Semantic Release. Проверить, может ли она объяснить <em>почему</em> за её собственными решениями, а не только <em>что</em>. Конкретно: обоснование InjectionToken, LinkedSignal vs computed, и что на самом деле делает commit-analyzer в Semantic Release.</li>
+<li><strong>mero93:</strong> Технически способен, но лучше всего работает в изоляции. Auth-силос надёжный; не ожидать, что он свободно говорит о SignalStore или FSD — это не его слои. Проверять то, чем он владеет (жизненный цикл JWT, паттерн глобального интерцептора). Также стоит мягко проверить, действительно ли auth интегрирован в приложение или всё ещё подключён через заглушки.</li>
+<li><strong>vitiok2021:</strong> Уверенное понимание того, что построил. Пробел — инфраструктура/инструментарий: потреблял готовый скаффолд. Ключевая точка проверки — осознанность работы со слоями FSD.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> По принципу «создать, чтобы понять» — попросить каждого студента взять одну реализованную им вещь и зарисовать её с нуля на доске (или объяснить шаг за шагом). Для Евгении: InjectionToken + TRACK_DATA_PROVIDER. Для Виктора: исправление waterfall через forkJoin. Для Мераба: жизненный цикл запроса в JWT Passport strategy. Все трое оставили достаточно свидетельств в дневниках, чтобы задавать <em>конкретные</em> вопросы, а не абстрактную Angular-теорию.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-15</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-15</footer>
+</body>
+</html>
