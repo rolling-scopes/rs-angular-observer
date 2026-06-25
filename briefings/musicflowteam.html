@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — MusicFlowTeam · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — MusicFlowTeam</strong><strong class="lang-ru">Mentor briefing — MusicFlowTeam</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">mid scores, no feedback</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">средние оценки, без фидбэка</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — MusicFlowTeam</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>dusixx/music-flow</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Amber — two active, technically strong students who delivered genuine work continuously through Sprint 3. Both scored 75 at Sprint 2 with no mentor comment (mentor: <code>teleuzi</code>), which is unexplained given the depth visible in their diaries: dusixx implemented a custom carousel from scratch, Jamendo caching layer, and Signal Forms; inalitvinka solved a Firebase Auth race condition, built Firestore CRUD architecture, and managed a complex CI/CD pipeline. The unexplained 75s are the main open question. Secondary flag: an unrostered third contributor (<code>ngInit</code>) was active in sprint-1 week 1 only.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>music-flow — music streaming SPA (Jamendo API, Firebase Auth/Firestore, Angular 22)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 22, TypeScript strict, Taiga UI v5, Firebase Auth, Cloud Firestore, RxJS, Signal Forms, SCSS, Jamendo API v3</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/dusixx/music-flow">https://github.com/dusixx/music-flow</a></td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://music-flow-team.netlify.app/">https://music-flow-team.netlify.app/</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-10</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-23</td></tr>
+<tr><td><strong>Open issues</strong></td><td>9</td></tr>
+</tbody></table>
+<p>Notable stack choices: Angular 22 with Signal Forms (new API), <code>resource</code>/<code>rxResource</code> for reactive data fetching, Taiga UI v5 for component library, Firestore without AngularFire (pure Firebase SDK), custom cacheable paginated service for Jamendo API, CI/CD via GitHub Actions → Netlify. The team proactively upgraded to Angular 22 in Sprint 3 after its release (PR #99, June 9).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>dusixx</code> — Team Lead (took the role by default after setting up the repo; per sprint-1 diary, "the role is completely formal")</li>
+<li><code>inalitvinka</code> (Ina Litvinka) — member</li>
+</ul>
+<p><strong>Mentor:</strong></p>
+<ul>
+<li><code>aliaksei-sl</code> (Aleksei Nikolaev) — appears in git history with 17 commits in May 11–14 (early setup/code review participation). Normal mentor engagement, no penalty.</li>
+</ul>
+<p><strong>External contributors:</strong></p>
+<ul>
+<li><code>ngInit</code> — NOT in the course roster. 23 commits (GitHub API), 6 PRs, all activity May 11–14 (sprint-1 week 1). Built the initial layout, header, and footer. Has two diary entries in the <code>development-notes/ngInit/</code> branch. No activity after May 14. Appears to have been a third team member who dropped at the very start; their sprint-1 work was merged and built upon. The mentor should be aware: the initial layout/header/footer (PRs #12, #20, #21) are ngInit's work, not dusixx's or inalitvinka's.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>dusixx</strong> (lead)</td><td>241</td><td>29</td><td>27</td><td>5</td><td>2026-06-23</td><td>high — continuous delivery through sprint 3</td></tr>
+<tr><td><strong>inalitvinka</strong></td><td>254</td><td>25</td><td>25</td><td>6</td><td>2026-06-22</td><td>high — continuous delivery through sprint 3</td></tr>
+</tbody></table>
+<p>Commit counts are from the GitHub contributors API (merged commits on main) and confirmed via <code>git shortlog --all</code>. Note: inalitvinka's commits appear under both <code>inalitvinka</code> (24) and <code>Ina Litvinka</code> (230) in git history — total ~254. Both students are roughly equal in commit output.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1 score</th><th>Sprint 1 mentor</th><th>Sprint 1 comment</th><th>Sprint 2 score</th><th>Sprint 2 mentor</th><th>Sprint 2 comment</th></tr>
+</thead><tbody>
+<tr><td>dusixx</td><td>100</td><td>aliaksei-sl</td><td>_(no comment)_</td><td>75</td><td>teleuzi</td><td>_(no comment)_</td></tr>
+<tr><td>inalitvinka</td><td>100</td><td>aliaksei-sl</td><td>_(no comment)_</td><td>75</td><td>teleuzi</td><td>_(no comment)_</td></tr>
+</tbody></table>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>dusixx (100 → 75):</strong> Sprint 1 score of 100 is consistent with his diary evidence: deep exploration of the button directive mechanics (<code>afterRenderEffect</code>, <code>Renderer2</code>, <code>getBoundingClientRect</code>), explicit reflection on why one approach worked and another didn't. The Sprint 2 drop to 75 is unexpected given his diary output for Sprint 2 — routing with lazy loading, a bespoke <code>BreakpointService</code>, <code>model()</code> for two-way binding between the mobile menu and header, and a fully custom carousel. One possible explanation: the 75 reflects interview nerves or gaps in formal Angular vocabulary rather than missing implementation knowledge. No comment from <code>teleuzi</code> means we cannot know. The mentor should probe him on <code>model()</code> semantics and <code>resource</code> vs. plain <code>HttpClient</code> to calibrate.</li>
+</ul>
+<ul>
+<li><strong>inalitvinka (100 → 75):</strong> The same unexplained drop. Her Sprint 2 diary is exceptionally detailed — she documented the Firebase Auth race condition, derived a three-state <code>AuthState</code> model (<code>loading | auth | guest</code>) to fix the Guard flicker, handled Firebase Secrets in GitHub Actions, and built a typed Firestore service layer. The 75 is hard to reconcile with this output unless the interview touched abstract Angular theory (Change Detection internals, RxJS operators by name) rather than the concepts she actually applied. Her diaries show she can explain what she built and why, in writing. Whether she can do that verbally under pressure is what the Sprint 2 interview presumably tested. The mentor should check: does she understand <code>toObservable()</code> and <code>filter()</code> in the Guard beyond the snippet she wrote?</li>
+</ul>
+<p><strong>Overall reconciliation:</strong> Both students delivered genuine sprint-2 work (diaries confirm hours: dusixx 52h, inalitvinka ~23h across three diary entries). The uniform 75 from <code>teleuzi</code> with no comment leaves the calibration opaque. The mentor conducting Sprint 3 should use probing questions to separate "knows the concept and can explain it" from "has working code but cannot articulate the mechanism."</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>dusixx (lead) — 241 commits / 29 PRs (27 merged) / 5 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries, sprint 1–3):</p>
+<ul>
+<li><em>Sprint 1:</em> Project initialization (repo setup, ESLint/Stylelint/commitlint/Prettier/Husky, <code>OnPush</code> as default in <code>angular.json</code>, path aliases, PR template — ~4–5h). Custom button directive/component: iterated from component → attrribute directive → attribute component using <code>Renderer2</code> to inject spinner/icon, <code>afterRenderEffect</code> for width stabilization, <code>afterEveryRender</code> for text tracking, <code>getBoundingClientRect</code> for precision (~24h + refactor). Error 404 page (~2h). PR #28, #26, #42.</li>
+</ul>
+<ul>
+<li><em>Sprint 2:</em> Routing with lazy loading and <code>guestGuard</code> using <code>UrlTree</code> return (PR #40). Main layout with resizable sidebar via <code>angular-split</code>, <code>BreakpointService</code> for mobile/tablet/desktop breakpoints, mobile menu with <code>model()</code> two-way binding, <code>viewChild.required()</code> for blur on button (PR #46, #49, #55, #58, #60, #75, #77, #83). Track card component with <code>isHovered</code> input, <code>isPlaying</code> state, <code>output&lt;Track&gt;()</code> for play/favorite events, <code>playStopPropagation</code> directive, <code>DurationPipe</code>, <code>PlaysCountPipe</code> (PR #68). Custom carousel with <code>scroll-snap-type</code>, <code>scrollBy</code>, <code>ResizeObserver</code>, <code>atStart</code>/<code>atEnd</code> signals, <code>playerCarouselItem</code> directive (PR #70). Discover page with mock data on carousel (PR #70). Dev diary: PR #62, #85.</li>
+</ul>
+<ul>
+<li><em>Sprint 3:</em> Button refactored from attribute directive to attribute component (<code>host: {...}</code> for event binding, template-based rendering) (PR #106). Angular 22 upgrade (PR #99). Auth pages (Login/Signup) with Signal Forms, <code>pattern()</code> validation, <code>confirm password</code> with <code>validate()</code>, server error clearing on form change, <code>MutationObserver</code> to fix Taiga UI <code>data-mode='invalid'</code> on first render (PR #106 + fixes). Jamendo API service with HTTP interceptor for 5xx/network errors (PR #115). Paginated cache with TTL, reference-counted entity deduplication, sorted key generation (PR #121). <code>TrackService</code> with abstract <code>store service</code> for API state + pagination (PR #121). RxJS operators: <code>switchMap</code>, <code>debounceTime</code>, <code>distinctUntilChanged</code>, <code>takeUntilDestroyed</code>. Dev diaries: PR #111, #125.</li>
+</ul>
+<p><strong>Level:</strong> Strong Angular practitioner who iterates rather than copies. The sprint-1 diary is one of the most technically detailed in this cohort — he documented the <code>requestAnimationFrame</code> → <code>afterRenderEffect</code> migration in the button directive, understood why the first approach was suboptimal, and rebuilt it. Sprint-2 carousel implementation from scratch (after a library carousel failed) shows problem-solving independence. Sprint-3 cache with reference counting is a non-trivial data structure. Explores Angular internals beyond course minimum.</p>
+<p><strong>Risk:</strong> The 75 at Sprint 2 from <code>teleuzi</code> is unexplained. Given the depth of his work, the gap is likely in formal Angular theory vocabulary (lifecycle hook names, specific RxJS operator semantics) rather than applied understanding. Also: in sprint 1 he noted "the lead role is completely formal" — confirm he has been active in code review and coordination in addition to his own PRs.</p>
+<p><strong>Probe at interview:</strong> Ask him to walk through the carousel implementation: "How does <code>scroll-snap-type</code> work and why did you use it over a library?" (his own solution, should be easy). Then push to theory: "In Sprint 2 you used <code>model()</code> for the mobile menu — what does <code>model()</code> actually return and how does it differ from <code>input()</code> + <code>output()</code> separately?" If he can answer without stuttering, the 75 was likely a verbal fluency issue. Also: "Your custom button uses <code>afterRenderEffect</code> — when does that fire relative to <code>ngAfterViewInit</code>?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>inalitvinka — 254 commits / 25 PRs (25 merged) / 6 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries, sprint 1–3):</p>
+<ul>
+<li><em>Sprint 1:</em> README (PR #8). <code>About</code> page with <code>TeamMemberCard</code> component, <code>input.required()</code>, <code>@for</code>, <code>@if</code>, mock data split into <code>about.models.ts</code> and <code>about.data.ts</code> (PR #29). Self-refactored from multiple separate inputs to single <code>member</code> object input mid-sprint. Reviewed dusixx's button PR and provided feedback on <code>ngAfterViewChecked</code>. (~15h)</li>
+</ul>
+<ul>
+<li><em>Sprint 2:</em> CI pipeline via GitHub Actions (lint/format/build gates, intentionally broke and fixed to verify behavior) (PR #37). CD pipeline to Netlify (solved double-deploy conflict between Netlify auto-publish and GH Actions, understood <code>refs/heads/dev</code> vs. <code>github.ref</code>, <code>_redirects</code> placement) (PR #50, #64). Firebase Authentication integration: replaced mock <code>AuthService</code>, implemented <code>login</code>/<code>logout</code>/<code>register</code>, designed three-state <code>AuthState</code> model (<code>loading | auth | guest</code>) to fix Guard flicker on reload, <code>authGuard</code> using <code>toObservable()</code> + <code>filter(state !== 'loading')</code> + <code>take(1)</code> (PR #67). GitHub Secrets migration for Firebase config: removed credentials from repo, created <code>scripts/create-environment.sh</code>, updated CI/CD workflow to generate <code>environment.ts</code> at build time (PR #67 area). Firestore CRUD service: <code>FirestoreService</code> with generic typed <code>setData/getData/updateData/deleteDoc</code>, <code>fromFirestore</code> converter adding <code>snapshot.id</code> to data, Firestore Rules split into <code>create/update/delete</code> to fix delete permission bug, <code>PlaylistApiService</code> (PR #84). Refactored auth SSOT profile (PR #101). Dev diaries: PR #39 (CI), #64 (CD/5 stages of grief), #86 (Firebase + Firestore).</li>
+</ul>
+<ul>
+<li><em>Sprint 3:</em> Library layout base and playlist creation (PR #112). Playlist form with Taiga UI dialog, Signal Forms, Firebase save, redirect to new playlist, <code>createAuthGuard</code> factory to eliminate guard code duplication via closures (PR #112). <code>PlaylistForm</code> refactored to universal shared component (create + edit). <code>TrackRow</code> universal component with <code>&lt;ng-content&gt;</code> slots. <code>DurationPipe</code>. <code>PlaylistTracksHeader</code>. <code>PlaylistMenu</code> with Taiga UI v5 dropdown. Delete playlist with confirmation modal. Remove track with minimum-1 validation. Fixed object mutation bug in form reset via spread operator. Fixed stale UI after delete via <code>playlistResource.reload()</code> which cascades to <code>tracksResource</code>. Fixed form cache on modal re-open via <code>viewChild&lt;PlaylistForm&gt;('playlistFormRef')</code> to call <code>resetForm()</code> on parent. Defended architecture choices in GitHub code review. Dev diaries: PR #116, #124.</li>
+</ul>
+<p><strong>Level:</strong> The most operationally thorough member of this team. Her diaries are unusually detailed, written in a narrative voice that reveals genuine understanding: the Firebase race condition diary explains <em>why</em> <code>loading | auth | guest</code> was needed (not just how), the CD diary documents the double-deploy mechanics with screenshots, the Firestore diary explains the <code>request.resource</code> vs. <code>resource</code> rules distinction correctly. She has debugged non-trivial infrastructure (GH Secrets + Netlify + Angular environments) and non-trivial frontend architecture (reactive Guard with <code>toObservable</code>, stale-UI fix with cascading <code>resource.reload()</code>). Writes English diaries, Russian when more comfortable — both are substantive.</p>
+<p><strong>Risk:</strong> The 75 at Sprint 2 is harder to reconcile here than for dusixx. Her diary output for Sprint 2 demonstrates she can explain complex async concepts in writing. The risk is that under verbal interview pressure she may not have articulated the <em>mechanism</em> clearly enough (e.g., why <code>toObservable()</code> was needed, what <code>filter</code> operator does). Also: Sprint 3 is heavy on Taiga UI fights (dropdown borders, dialog caching) — confirm she is not spending disproportionate time on UI library wrestling vs. Angular concepts.</p>
+<p><strong>Probe at interview:</strong> Start with the Firebase Guard: "Walk me through the <code>authGuard</code> — specifically, what does <code>toObservable()</code> do here, and why did you need <code>filter</code> and <code>take(1)</code> rather than just reading the signal directly?" This is her own code and her own diary. If she explains it fluently, the 75 was likely interview nerves. Then probe Firestore: "What's the difference between <code>request.resource.data</code> and <code>resource.data</code> in Firestore Rules, and when would each one be <code>null</code>?" (she documented this fix explicitly in her diary).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A strong two-person team that has been consistently productive through all three sprints. The product is live on Netlify, has real Firebase Auth and Firestore integration, a Jamendo API caching layer, and playlist management. The repo was last pushed on June 23 (sprint-3 merge). Both students are working at a level above the course minimum.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>Both students write substantive diaries that document genuine problem-solving, not just output lists. The depth of reflection is consistent with real understanding.</li>
+<li>dusixx demonstrates Angular internals knowledge well above the norm: <code>afterRenderEffect</code>, <code>Renderer2</code>, custom scroll carousel, paginated cache with reference counting.</li>
+<li>inalitvinka demonstrates DevOps + architecture depth: Firebase Auth race condition resolution, typed Firestore service layer, guard factory pattern using closures, cascading <code>resource.reload()</code> for stale UI.</li>
+<li>The team runs GitFlow, documents decisions in meeting notes (5 recorded meetings in the repo), uses issue templates, and manages code review thoughtfully — one diary entry documents defending an architectural decision on GitHub with a counterargument.</li>
+<li>Proactive: upgraded to Angular 22 the week it released; discussed implications before implementing.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li><strong>Unexplained 75s at Sprint 2:</strong> Both students scored 75 from <code>teleuzi</code> with zero comment. The mentor conducting Sprint 3 cannot know whether this reflects a genuine theory gap or a verbal fluency gap in one interview. Use the probe questions above to calibrate quickly.</li>
+<li><strong><code>ngInit</code>:</strong> An unrostered contributor built layout/header/footer in sprint-1 week 1 and disappeared. Their work is in the codebase. Students should be able to explain that code even if they didn't write it — or be asked to identify it honestly. This should not be penalized, but the mentor should know this context.</li>
+<li><strong>Taiga UI friction:</strong> Multiple diary entries across sprint 3 document fights with Taiga UI dropdown borders and dialog caching. Confirm the students are learning Angular concepts through this process, not just working around a library.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> For each student, start with one concrete technical decision from their own diary — not a generic Angular question — and ask for the mechanism behind it. The diaries are specific enough that generic answers will immediately expose any gaps. For dusixx: <code>model()</code> semantics or <code>afterRenderEffect</code>. For inalitvinka: the auth Guard's <code>toObservable</code> + <code>filter</code> chain or the Firestore Rules <code>request.resource</code> vs. <code>resource</code> distinction. Both should be able to answer; if either stumbles, that is the calibration signal.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — MusicFlowTeam</h1>
+<h3>Межинтервьюный брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>dusixx/music-flow</code> (коммиты, PR, дневники разработки по всем веткам). Снимок 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, о чём спросить.</blockquote>
+<p><strong>Краткий вывод:</strong> Amber — два активных технически сильных студента, непрерывно работавших вплоть до Спринта 3. Оба получили 75 на защите Спринта 2 без комментария ментора (ментор: <code>teleuzi</code>). Это необъяснимо на фоне глубины, видной в их дневниках: dusixx реализовал карусель с нуля, кешируемый сервис для Jamendo и Signal Forms; inalitvinka решила гонку состояний Firebase Auth, выстроила типизированный CRUD-слой на Firestore и отладила сложный CI/CD. Необъяснённые 75 — главный открытый вопрос. Второй флаг: неучтённый третий участник (<code>ngInit</code>) был активен только в первую неделю Спринта 1.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>music-flow — музыкальный стриминг-SPA (Jamendo API, Firebase Auth/Firestore, Angular 22)</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 22, TypeScript strict, Taiga UI v5, Firebase Auth, Cloud Firestore, RxJS, Signal Forms, SCSS, Jamendo API v3</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/dusixx/music-flow">https://github.com/dusixx/music-flow</a></td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://music-flow-team.netlify.app/">https://music-flow-team.netlify.app/</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-10</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-23</td></tr>
+<tr><td><strong>Открытые issues</strong></td><td>9</td></tr>
+</tbody></table>
+<p>Примечательные технические решения: Angular 22 с Signal Forms (новый API), <code>resource</code>/<code>rxResource</code> для реактивной загрузки данных, Taiga UI v5, Firestore без AngularFire (чистый Firebase SDK), собственный кешируемый постраничный сервис для Jamendo API, CI/CD через GitHub Actions → Netlify. Команда самостоятельно обновилась до Angular 22 в Спринте 3 сразу после выхода версии (PR #99, 9 июня).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (реестр курса):</strong></p>
+<ul>
+<li><code>dusixx</code> — тимлид (по умолчанию, как создатель репозитория; в дневнике Спринта 1: «роль абсолютно формальная»)</li>
+<li><code>inalitvinka</code> (Ina Litvinka) — участник</li>
+</ul>
+<p><strong>Ментор:</strong></p>
+<ul>
+<li><code>aliaksei-sl</code> (Aleksei Nikolaev) — присутствует в git-истории под именем «Aleksei Nikolaev» с 17 коммитами 11–14 мая (ранняя настройка / code-review). Обычное участие ментора, без штрафов.</li>
+</ul>
+<p><strong>Внешние участники:</strong></p>
+<ul>
+<li><code>ngInit</code> — НЕ входит в реестр курса. 23 коммита (GitHub API), 6 PR, вся активность — 11–14 мая (первая неделя Спринта 1). Реализовал начальный layout, header и footer. Оставил два дневника в ветке <code>development-notes/ngInit/</code>. Активность после 14 мая отсутствует. По-видимому, был третьим участником команды, выбывшим в самом начале; его sprint-1 код слит в основную ветку и использован дальше. Ментор должен знать: начальный layout/header/footer (PR #12, #20, #21) — работа <code>ngInit</code>, а не dusixx или inalitvinka.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смержено PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>dusixx</strong> (лид)</td><td>241</td><td>29</td><td>27</td><td>5</td><td>2026-06-23</td><td>высокий — непрерывная доставка до спринта 3</td></tr>
+<tr><td><strong>inalitvinka</strong></td><td>254</td><td>25</td><td>25</td><td>6</td><td>2026-06-22</td><td>высокий — непрерывная доставка до спринта 3</td></tr>
+</tbody></table>
+<p>Количество коммитов — из GitHub API (смёрженные коммиты в main) и подтверждено через <code>git shortlog --all</code>. Коммиты inalitvinka разбиты на <code>inalitvinka</code> (24) и <code>Ina Litvinka</code> (230) — итого ~254. Оба студента примерно равны по объёму коммитов.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (защиты)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Ментор С1</th><th>Комментарий С1</th><th>Спринт 2</th><th>Ментор С2</th><th>Комментарий С2</th></tr>
+</thead><tbody>
+<tr><td>dusixx</td><td>100</td><td>aliaksei-sl</td><td>_(нет комментария)_</td><td>75</td><td>teleuzi</td><td>_(нет комментария)_</td></tr>
+<tr><td>inalitvinka</td><td>100</td><td>aliaksei-sl</td><td>_(нет комментария)_</td><td>75</td><td>teleuzi</td><td>_(нет комментария)_</td></tr>
+</tbody></table>
+<p><strong>Сверка — расхождения между оценками защиты и активностью в репозитории:</strong></p>
+<ul>
+<li><strong>dusixx (100 → 75):</strong> Оценка 100 в Спринте 1 соответствует доказательствам в дневнике: детальное исследование механики директивы кнопки (<code>afterRenderEffect</code>, <code>Renderer2</code>, <code>getBoundingClientRect</code>), явная рефлексия о том, почему один подход сработал, а другой — нет. Снижение до 75 в Спринте 2 неожиданно, учитывая выход дневника за этот период: роутинг с lazy loading, собственный <code>BreakpointService</code>, <code>model()</code> для двусторонней привязки мобильного меню к хедеру, кастомная карусель с нуля. Возможное объяснение: 75 отражает нервозность на интервью или пробелы в формальной Angular-терминологии, а не отсутствие прикладных знаний. Комментария от <code>teleuzi</code> нет — установить причину невозможно. Ментор должен проверить владение семантикой <code>model()</code> и пониманием <code>resource</code> vs. простой <code>HttpClient</code>.</li>
+</ul>
+<ul>
+<li><strong>inalitvinka (100 → 75):</strong> Такое же необъяснённое снижение. Дневник Спринта 2 исключительно детален — она задокументировала гонку состояний Firebase Auth, вывела трёхсостоянную модель <code>AuthState</code> (<code>loading | auth | guest</code>) для устранения flicker в Guard, перенесла Firebase-секреты в GitHub Secrets, выстроила типизированный слой Firestore. Оценка 75 трудно согласуется с этим объёмом — разве что интервью проверяло абстрактную теорию Angular (Change Detection, имена операторов RxJS), а не концепции, которые она реально применяла. Её дневники показывают, что она умеет объяснить написанное и зачем — письменно. Вопрос: делает ли она это так же под давлением устного интервью. Ментор должен проверить: понимает ли она <code>toObservable()</code> и <code>filter()</code> в Guard глубже, чем просто написанный сниппет.</li>
+</ul>
+<p><strong>Общая сверка:</strong> Оба студента выполнили реальную работу в Спринте 2 (дневники подтверждают: dusixx — 52 часа, inalitvinka — ~23 часа в трёх записях). Единообразная оценка 75 от <code>teleuzi</code> без комментариев делает калибровку непрозрачной. Ментор, проводящий защиту Спринта 3, должен использовать уточняющие вопросы, чтобы разграничить «знает концепцию и может объяснить» и «код работает, но механизм не артикулирован».</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>dusixx (лид) — 241 коммит / 29 PR (27 смёрджено) / 5 дневников</h3>
+<p><strong>Что сделано</strong> (по PR и дневникам, Спринты 1–3):</p>
+<ul>
+<li><em>Спринт 1:</em> Инициализация проекта (репо, ESLint/Stylelint/commitlint/Prettier/Husky, <code>OnPush</code> по умолчанию в <code>angular.json</code>, path aliases, шаблон PR — ~4–5 ч). Кастомная кнопка — директива → атрибутная директива → атрибутный компонент: итеративная разработка с <code>Renderer2</code> для инжекции спиннера/иконки, <code>afterRenderEffect</code> для стабилизации ширины, <code>afterEveryRender</code> для отслеживания текста, <code>getBoundingClientRect</code> для точности (~24 ч + рефакторинг). Страница 404. PR #28, #26, #42.</li>
+</ul>
+<ul>
+<li><em>Спринт 2:</em> Роутинг с lazy loading и <code>guestGuard</code> через возврат <code>UrlTree</code> (PR #40). Главный layout с resizable sidebar через <code>angular-split</code>, <code>BreakpointService</code> для breakpoint mobile/tablet/desktop, мобильное меню с двусторонней привязкой <code>model()</code>, <code>viewChild.required()</code> для blur на кнопке (PR #46–#83). Компонент карточки трека с инпутом <code>isHovered</code>, состоянием <code>isPlaying</code>, <code>output&lt;Track&gt;()</code> для событий play/favorite, директива <code>playerStopPropagation</code>, пайпы <code>DurationPipe</code> и <code>PlaysCountPipe</code> (PR #68). Кастомная карусель с <code>scroll-snap-type</code>, <code>scrollBy</code>, <code>ResizeObserver</code>, сигналами <code>atStart</code>/<code>atEnd</code>, директива <code>playerCarouselItem</code> (PR #70). Страница Discover с mock-данными на карусели. Дневники: PR #62, #85.</li>
+</ul>
+<ul>
+<li><em>Спринт 3:</em> Кнопка переработана из атрибутной директивы в атрибутный компонент (обработка событий через <code>host: {...}</code>, рендер через шаблон) (PR #106). Обновление до Angular 22 (PR #99). Страницы Login/Signup на Signal Forms: <code>pattern()</code>, <code>validate()</code> для confirm-пароля, сброс серверной ошибки при редактировании, <code>MutationObserver</code> для фикса <code>data-mode='invalid'</code> в Taiga UI при первом рендере. Jamendo API сервис с HTTP-перехватчиком для ошибок 5xx/сети (PR #115). Постраничный кеш с TTL, дедупликацией сущностей через счётчики ссылок, сортированной генерацией ключей (PR #121). <code>TrackService</code> с абстрактным <code>store service</code> для состояний API и пагинации. Операторы RxJS: <code>switchMap</code>, <code>debounceTime</code>, <code>distinctUntilChanged</code>, <code>takeUntilDestroyed</code>. Дневники: PR #111, #125.</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный Angular-практик, который итерирует, а не копирует. Дневник Спринта 1 — один из наиболее технически детальных в когорте: задокументирован переход <code>requestAnimationFrame</code> → <code>afterRenderEffect</code> в директиве кнопки, осмыслено, почему первый подход был субоптимальным. Реализация карусели с нуля (после того как библиотечная не завелась) свидетельствует о самостоятельном решении проблем. Кеш с подсчётом ссылок в Спринте 3 — нетривиальная структура данных. Исследует Angular-внутренности сверх минимума курса.</p>
+<p><strong>Риск:</strong> Оценка 75 на Спринте 2 от <code>teleuzi</code> не объяснена. Учитывая глубину работы, разрыв, скорее всего, в формальном Angular-словаре (названия хуков жизненного цикла, семантика конкретных операторов RxJS), а не в прикладных знаниях. Также: в дневнике Спринта 1 он сам написал «роль тимлида абсолютно формальная» — стоит убедиться, что он активно участвовал в code review и координации помимо собственных PR.</p>
+<p><strong>Вопросы на защите:</strong> Попросить описать реализацию карусели: «Как работает <code>scroll-snap-type</code> и почему вы выбрали это решение, а не библиотеку?» (его собственное решение, должно быть легко). Затем перейти к теории: «В Спринте 2 вы использовали <code>model()</code> для мобильного меню — что именно возвращает <code>model()</code> и чем это отличается от отдельных <code>input()</code> + <code>output()</code>?» Если отвечает без запинки, оценка 75 — вероятно, вопрос устного изложения, а не знаний. Также: «Кастомная кнопка использует <code>afterRenderEffect</code> — когда он срабатывает относительно <code>ngAfterViewInit</code>?»</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>inalitvinka — 254 коммита / 25 PR (25 смёрджено) / 6 дневников</h3>
+<p><strong>Что сделано</strong> (по PR и дневникам, Спринты 1–3):</p>
+<ul>
+<li><em>Спринт 1:</em> README (PR #8). Страница <code>About</code> с компонентом <code>TeamMemberCard</code>, <code>input.required()</code>, <code>@for</code>, <code>@if</code>, mock-данные разделены на <code>about.models.ts</code> и <code>about.data.ts</code> (PR #29). В середине спринта сама провела рефакторинг: несколько отдельных inputs → один объект <code>member</code>. Участвовала в code review PR dusixx с кнопкой, указала на <code>ngAfterViewChecked</code>. (~15 ч)</li>
+</ul>
+<ul>
+<li><em>Спринт 2:</em> CI-pipeline через GitHub Actions (lint/format/build, намеренно сломала и починила для проверки) (PR #37). CD-pipeline на Netlify (устранила конфликт двойного деплоя Netlify + GH Actions, разобралась с <code>refs/heads/dev</code> vs. <code>github.ref</code>, размещением <code>_redirects</code>) (PR #50, #64). Интеграция Firebase Authentication: заменила mock-<code>AuthService</code>, реализовала <code>login</code>/<code>logout</code>/<code>register</code>, разработала трёхсостоянную модель <code>AuthState</code> (<code>loading | auth | guest</code>) для устранения Guard-flicker при перезагрузке, <code>authGuard</code> через <code>toObservable()</code> + <code>filter(state !== 'loading')</code> + <code>take(1)</code>. Миграция конфигурации Firebase в GitHub Secrets: удалила credentials из репо, создала <code>scripts/create-environment.sh</code>, обновила CI/CD-workflow (PR #67-зона). Сервис Firestore: типизированный <code>FirestoreService</code> с <code>setData/getData/updateData/deleteDoc</code>, конвертер <code>fromFirestore</code> для вшивания <code>snapshot.id</code>, разделение Firestore Rules на <code>create/update/delete</code> для исправления бага удаления, <code>PlaylistApiService</code> (PR #84). Рефакторинг auth SSOT (PR #101). Дневники: PR #39 (CI), #64 (CD / «5 стадий горя»), #86 (Firebase + Firestore).</li>
+</ul>
+<ul>
+<li><em>Спринт 3:</em> Базовый layout Library и создание плейлистов (PR #112). Форма создания плейлиста с диалогом Taiga UI, Signal Forms, сохранением в Firebase, редиректом на новый плейлист. Фабрика <code>createAuthGuard</code> через JavaScript-замыкания для устранения дублирования кода Guards. <code>PlaylistForm</code> рефакторинг в универсальный компонент (create + edit). Универсальный <code>TrackRow</code> с <code>&lt;ng-content&gt;</code> слотами. <code>DurationPipe</code>. <code>PlaylistTracksHeader</code>. <code>PlaylistMenu</code> на Taiga UI v5. Удаление плейлиста с модальным подтверждением. Удаление трека с валидацией «минимум 1 песня». Исправление мутации объекта в reset-формы через spread operator. Исправление устаревшего UI после удаления через <code>playlistResource.reload()</code> (каскад на <code>tracksResource</code>). Исправление кеша формы при повторном открытии модала через <code>viewChild&lt;PlaylistForm&gt;('playlistFormRef')</code>. Аргументированный ответ на замечания code review в GitHub. Дневники: PR #116, #124.</li>
+</ul>
+<p><strong>Уровень:</strong> Наиболее операционально тщательный участник команды. Её дневники необычно детальны и написаны в нарративной манере, раскрывающей подлинное понимание: дневник о гонке состояний объясняет <em>почему</em> нужна модель <code>loading | auth | guest</code>, а не просто <em>как</em>; дневник о CD документирует механику двойного деплоя со скриншотами; дневник о Firestore корректно объясняет разницу между <code>request.resource</code> и <code>resource</code> в Rules. Она отладила нетривиальную инфраструктуру (GH Secrets + Netlify + Angular environments) и нетривиальную frontend-архитектуру (реактивный Guard с <code>toObservable</code>, фикс устаревшего UI через каскадный <code>resource.reload()</code>). Пишет дневники на английском, иногда переходит на русский — оба варианта содержательны.</p>
+<p><strong>Риск:</strong> Оценка 75 на Спринте 2 здесь труднее объяснима, чем у dusixx. Дневниковый выход Спринта 2 демонстрирует способность письменно объяснять сложные асинхронные концепции. Риск в том, что под давлением устного интервью она могла не артикулировать <em>механизм</em> достаточно чётко (например: зачем нужен <code>toObservable()</code>, что делает оператор <code>filter</code>). Также: в нескольких записях Спринта 3 задокументированы бои с border-ами Taiga UI и кешированием диалога — стоит убедиться, что она изучает Angular-концепции через этот процесс, а не просто обходит ограничения библиотеки.</p>
+<p><strong>Вопросы на защите:</strong> Начать с Firebase Guard: «Пройдите по реализации <code>authGuard</code> — что конкретно делает здесь <code>toObservable()</code> и почему вам понадобился <code>filter</code> с <code>take(1)</code>, а не просто чтение сигнала напрямую?» Это её собственный код и её собственный дневник. Если объясняет уверенно — оценка 75 была, вероятно, нервозностью на интервью. Затем про Firestore: «В чём разница между <code>request.resource.data</code> и <code>resource.data</code> в Firestore Rules и когда каждый из них бывает <code>null</code>?» (она задокументировала этот фикс в дневнике явно).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>Общее:</strong> Сильная двойка, продуктивно работавшая во всех трёх спринтах. Продукт задеплоен на Netlify, имеет реальную Firebase Auth и Firestore-интеграцию, кеширующий слой для Jamendo API и управление плейлистами. Последний push — 23 июня (мёрдж Спринта 3). Оба студента работают выше минимума курса.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>Оба пишут содержательные дневники, документирующие реальное решение проблем, а не просто списки выполненного. Глубина рефлексии соответствует настоящему пониманию.</li>
+<li>dusixx демонстрирует знание Angular-внутренностей выше нормы: <code>afterRenderEffect</code>, <code>Renderer2</code>, кастомная скролл-карусель, постраничный кеш с подсчётом ссылок.</li>
+<li>inalitvinka демонстрирует глубину в DevOps и архитектуре: решение гонки состояний Firebase Auth, типизированный Firestore-слой, фабрика Guards через замыкания, каскадный <code>resource.reload()</code> для устаревшего UI.</li>
+<li>Команда использует GitFlow, документирует решения в meeting notes (5 записанных встреч в репо), применяет шаблоны issues и вдумчиво проводит code review — в одном дневнике задокументирован аргументированный ответ на замечание в GitHub.</li>
+<li>Проактивны: обновились до Angular 22 в неделю выхода; обсудили последствия до реализации.</li>
+</ul>
+<p><strong>На что обратить внимание:</strong></p>
+<ul>
+<li><strong>Необъяснённые 75 в Спринте 2:</strong> Оба студента получили 75 от <code>teleuzi</code> без единого комментария. Ментор, проводящий Спринт 3, не может знать, отражает ли это реальный теоретический пробел или пробел в устном изложении на одном интервью. Используйте приведённые выше вопросы для быстрой калибровки.</li>
+<li><strong><code>ngInit</code>:</strong> Неучтённый участник реализовал layout/header/footer в первую неделю Спринта 1 и исчез. Его код находится в кодовой базе. Студенты должны уметь объяснить этот код, даже если не писали его сами — или честно это признать. Штрафовать не следует, но ментор должен знать этот контекст.</li>
+<li><strong>Friction с Taiga UI:</strong> Несколько записей Спринта 3 посвящены борьбе с border-ами dropdown и кешированием диалога. Убедитесь, что студенты изучают Angular-концепции через этот процесс, а не просто обходят ограничения библиотеки.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Для каждого студента начните с одного конкретного технического решения из его дневника — не с обобщённого Angular-вопроса — и спросите про механизм за ним. Дневники достаточно конкретны, чтобы обобщённые ответы немедленно обнажили пробелы. Для dusixx: семантика <code>model()</code> или <code>afterRenderEffect</code>. Для inalitvinka: цепочка <code>toObservable</code> + <code>filter</code> в Guard или разница <code>request.resource</code> vs. <code>resource</code> в Firestore Rules. Оба должны ответить; если кто-то спотыкается — это сигнал для калибровки.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

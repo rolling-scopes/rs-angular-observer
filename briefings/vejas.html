@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Vejas · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Vejas</strong><strong class="lang-ru">Mentor briefing — Vejas</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Vejas</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>ZedMalatesta/Vejas-frontend</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — all three members active through the sprint-3 deadline (2026-06-22), each with sprint-3 diary entries and merged PRs. ZedMalatesta (lead) is the standout technically, amelur owns the auth domain solidly, olucens is present but carries the lightest load and showed weaker theoretical depth at the Sprint 2 defence (75). Probe depth at interview, particularly for olucens.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Vejas — co-watching platform. Users synchronize shared viewing of YouTube videos in named rooms with a local chat panel</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 19+, TypeScript strict, Angular Signals, Reactive Forms, Supabase (auth + planned Realtime), ESLint / angular-eslint, GitHub Actions CI/CD, GitHub Pages</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/ZedMalatesta/Vejas-frontend">https://github.com/ZedMalatesta/Vejas-frontend</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Open issues</strong></td><td>8</td></tr>
+<tr><td><strong>Deploy</strong></td><td>GitHub Pages (custom deploy.yml, Jekyll override removed in sprint 2)</td></tr>
+</tbody></table>
+<p>Notable stack choices: no third-party component library (all components hand-rolled). Supabase for auth is already wired (<code>user_metadata</code> consumed in chat). Realtime sync (for chat and playback) is planned but not yet implemented — worth asking about the gap between the product vision and current state.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>ZedMalatesta</code> — Team Lead</li>
+<li><code>amelur</code> — Auth / Forms</li>
+<li><code>olucens</code> — Homepage / Channels / Theme (GitHub identity: "Alexander Kuzmin" / "Oleksandr Kuzmin" — two machine configs, same person; combined ~17 commits across branches)</li>
+</ul>
+<p><strong>Mentors:</strong></p>
+<ul>
+<li><code>eu-peregudova</code> — Sprint 1 interviewer (listed in participants.json). Appears in contributor list due to commits on their own machine; normal, no penalty.</li>
+<li><code>ramanmilashevich</code> — Sprint 2 interviewer. No commits; normal.</li>
+</ul>
+<p><strong>External contributors:</strong> None identified outside the roster and mentors.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>ZedMalatesta</strong> (lead)</td><td>73</td><td>13</td><td>12</td><td>4</td><td>2026-06-22</td><td>high — primary Room feature engine + infra</td></tr>
+<tr><td><strong>amelur</strong></td><td>25</td><td>9</td><td>9</td><td>4</td><td>2026-06-22</td><td>high — full auth domain, forms work</td></tr>
+<tr><td><strong>olucens</strong></td><td>~17</td><td>4</td><td>4</td><td>3</td><td>2026-06-22</td><td>watch — present, lighter output, shorter diaries</td></tr>
+</tbody></table>
+<p>Commit counts from <code>git shortlog --all</code> (ZedMalatesta 73, amelur 25, Alexander/Oleksandr Kuzmin ~17 combined). GitHub contributors API (main branch only) shows 42 / 17 / 8 — lower for olucens because more of their work landed as fewer large commits. PR counts are from the GitHub API. One ZedMalatesta PR (#24 "Routing/deploy") was closed without merge (superseded by #23 the same day).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation</h2>
+<p>All three students defended both Sprint 1 (mentor: <code>eu-peregudova</code>) and Sprint 2 (mentor: <code>ramanmilashevich</code>).</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>ZedMalatesta</td><td>100</td><td>90</td></tr>
+<tr><td>amelur</td><td>100</td><td>88</td></tr>
+<tr><td>olucens</td><td>100</td><td>75</td></tr>
+</tbody></table>
+<p><strong>Sprint 1 mentor comments (eu-peregudova):</strong></p>
+<ul>
+<li>ZedMalatesta: "Great! Your initiative and leadership allow you to get the maximum out of the experience, keep going!"</li>
+<li>amelur: "Great job, continue deepen your understanding!"</li>
+<li>olucens: "Great job! Keep the momentum going for future sprints."</li>
+</ul>
+<p><strong>Sprint 2 mentor comments (ramanmilashevich):</strong></p>
+<ul>
+<li><strong>ZedMalatesta (90/100):</strong> "The candidate demonstrated a strong, proactive approach during the interview, driving a productive technical discussion and covering most of the Sprint 2 topics without relying on leading questions… showed a solid practical and theoretical understanding of core Angular concepts, including Routing (Guards, Lazy Loading), Signals, and basic Dependency Injection. Areas for Improvement: some hesitation regarding deeper 'under-the-hood' mechanics… needs to strengthen knowledge of Change Detection nuances (e.g., the exact differences between markForCheck() and detectChanges()) and advanced DI edge cases."</li>
+</ul>
+<ul>
+<li><strong>amelur (88/100):</strong> "The candidate delivered a strong performance… demonstrated a solid grasp of the core Angular concepts and effectively explaining their code… confidently navigated the project repository and clearly demonstrated the working application. Showed a strong practical understanding of Routing and Signals… Areas for Improvement: minor gaps when discussing more specific areas, such as the exact mechanisms of custom directives (e.g., HostBinding vs. HostListener) and the underlying details of the Change Detection strategies."</li>
+</ul>
+<ul>
+<li><strong>olucens (75/100):</strong> "The candidate demonstrated a basic, surface-level understanding of the Sprint 2 topics but lacked proactivity during the interview. The discussion was largely passive, requiring frequent prompting and leading questions… is familiar with their project's codebase and is able to explain the general, high-level purpose of the features they implemented. Struggled to answer several technical questions across the core modules and showed gaps in their theoretical knowledge… needs to take a much more active approach to their learning and deepen their technical understanding to confidently articulate their architectural decisions."</li>
+</ul>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>ZedMalatesta (100→90 / high activity):</strong> The drop from 100 to 90 is consistent with the mentor's note: solid practitioner who drives the interview but shows shallow spots under the hood (Change Detection internals, advanced DI edge cases). His sprint-2 diary confirms this: he understood <code>computed()</code> vs <code>effect()</code> through breaking things, not from docs — genuine learning, not rote preparation. The 90 is honest. His sprint-3 work (reactive forms, <code>InjectionToken</code>, custom <code>ScrollIntoViewDirective</code>, chat) shows continued depth and self-improvement.</li>
+</ul>
+<ul>
+<li><strong>amelur (100→88 / high activity):</strong> Similar pattern: strong practical understanding, gap on mechanisms (<code>HostBinding</code> vs <code>HostListener</code>, Change Detection specifics). Her sprint-3 diary is in Russian, shorter than ZedMalatesta's, but reflects real work: auth styles, <code>canActivate</code> + <code>canDeactivate</code> guards, profile page scaffold. No divergence — solid contributor who operates at "Good" level, clear about what she doesn't yet know.</li>
+</ul>
+<ul>
+<li><strong>olucens (100→75 / lighter activity):</strong> The sharpest divergence in the team — aced sprint 1 (likely high component knowledge), then scored 75 at sprint 2 with passive interview behaviour. His repo output is thinner than teammates: 4 PRs total, shorter diary entries (~3–4 hours per sprint). Sprint-3 diary shows he spotted and self-corrected a real bug (the <code>effect()</code> in <code>app.ts</code> was not truly reactive; he moved it to <code>ThemeService</code> to fix it) — that is a positive signal of genuine understanding. But his sprint-2 diary shows he was still reading documentation and planning rewrites rather than shipping them. The gap between the 100 at sprint 1 and the 75 + passive interview at sprint 2 may reflect effort level, not ability. Worth probing.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>ZedMalatesta (lead) — 73 commits / 13 PRs (12 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Room screen — <code>video-player</code>, <code>text-input</code>, <code>button</code>, <code>link-input</code> components; YouTube iframe with <code>DomSanitizer.bypassSecurityTrustResourceUrl()</code> wrapped in <code>computed()</code> (PR #14, #15).</li>
+<li>Sprint 2: Playlist feature — <code>PlaylistService</code> (injectable, <code>providedIn: 'root'</code>), <code>playlist</code> component, <code>playlist-item</code> model (PR #17); refactored providers, extracted YouTube ID parsing to utility; ESLint (<code>angular-eslint</code> + <code>typescript-eslint</code>) config + fixed 44 linter errors across codebase (PR #20); GitHub Actions CI (linter on push) + GitHub Pages deploy with correct <code>--base-href</code>, overrode auto-generated Jekyll workflow (PRs #21, #23); added lazy loading for Room route via <code>loadComponent</code> (PR #23). 12 hours logged.</li>
+<li>Sprint 3: Rewrote <code>LinkInput</code> / <code>TextInput</code> to Reactive Forms with <code>FormGroup</code>, <code>FormControl</code>, <code>Validators.required</code>, and custom <code>youtubeUrlValidator</code> (PR #32); added <code>ScrollIntoViewDirective</code> (<code>appScrollIntoView</code>) using <code>effect()</code> + <code>scrollIntoView({ behavior: 'smooth' })</code> (PR #32); <code>YOUTUBE_PLAYER_CONFIG</code> <code>InjectionToken</code> with <code>providedIn: 'root'</code> factory (PR #32); <code>ChangeDetectionStrategy.OnPush</code> on <code>VideoPlayer</code>, <code>Playlist</code>, <code>Button</code>, <code>AuthButton</code>; local chat panel with <code>Chat</code> component, reactive form input, author from Supabase <code>user_metadata</code>, auto-scroll via <code>effect()</code> + <code>ViewChild</code> (PRs #33, #34). 8 hours logged.</li>
+<li>4 diary entries: sprint 1 (2026-05-18), sprint 2 (2026-06-08), sprint 3 (2026-06-22), plus an older entry.</li>
+</ul>
+<p><strong>Level:</strong> The most technically articulate member of the team. His diaries read like engineering post-mortems: he documents what he tried, why it broke, and the exact mechanism he learned. Sprint-2 entry is a model of signal understanding — the <code>effect()</code> + <code>resetKey</code> counter pattern, why <code>readonly</code> is mandatory on signals, why Jekyll was overriding the Angular deploy. Sprint-3 entry is equally precise: the naming conflict with <code>[formControl]</code> vs an <code>input()</code> named <code>control</code>, which components are safe for OnPush and which are not (the plain-field <code>async</code> problem). No AI use mentioned in diaries. The work is credibly his own.</p>
+<p><strong>Risk:</strong> Minor. The mentor flagged Change Detection internals (<code>markForCheck()</code> vs <code>detectChanges()</code>) and advanced DI edge cases. His sprint-3 diary shows he understands the OnPush + async pitfall at a practical level but may not have the vocabulary to discuss it at interview depth.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the <code>YOUTUBE_PLAYER_CONFIG</code> injection token — where is it defined, what <code>providedIn</code> value did you use, and how would you override it in a specific component subtree?" (his own code, should be precise). Then go deeper: "Your sprint-2 diary mentions keeping <code>OnPush</code> off components that set a plain class field after an async Promise. What happens to change detection in that case, and what are the two ways to fix it?" Tests his understanding of <code>markForCheck()</code> vs converting to signals — the exact gap the mentor noted.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>amelur — 25 commits / 9 PRs (9 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Login and register pages with Supabase auth; routing between pages; custom <code>button</code> component with <code>input()</code>/<code>output()</code> for checkpoint compliance; <code>ngOnInit</code> / <code>ngOnDestroy</code> lifecycle hooks (PR #13, #12).</li>
+<li>Sprint 2: Forgot password and change password pages (PR #18); <code>canActivate</code> + <code>canDeactivate</code> guards (PR #22); auth styles (PR #28, sprint 3 deadline). Sprint-2 diary notes she plans to rewrite forms with Reactive Forms.</li>
+<li>Sprint 3: Register form page with Reactive Forms and <code>OnPush</code> strategy (PR #30, #36 — submitted twice, second superseded first). Profile page scaffold (in progress per sprint-3 diary). Auth styles for authorization page (PR #28, merged 2026-06-09). 3 diary entries with practical reflection; sprint-3 diary in Russian. 4 diary entries total.</li>
+</ul>
+<p><strong>Level:</strong> Consistent, steady contributor. Owns the entire auth domain. Her sprint-1 diary highlights an honest uncertainty — not clear on shared component architecture, planned to resolve in team call. Sprint-2 diary is brief but grounded: describes guards implemented, acknowledges plans to rewrite to Reactive Forms. Sprint-3 diary is written in Russian and shows she is working through the Signals vs RxJS distinction; the uncertainty about whether a full backend is needed ("или можно обойтись supabase") is an open question for the project, not a personal gap. She self-assigns reasonable scope, ships it, and reflects on what she doesn't yet understand. The mentor's 88 is accurate: strong on practice, minor gaps on mechanism-level theory (directives, Change Detection).</p>
+<p><strong>Risk:</strong> Low. The repeated PR (#30 and #36 both titled "feat: add register form and OnPush strategy") looks like a resubmit — #30 merged 2026-06-22 at 17:11, #36 merged at 20:34, same day. Check if this is a corrective fix or a duplication. Her sprint-2 diary mentions the Reactive Forms rewrite as a plan; the sprint-3 PR delivers on it. No gap in follow-through.</p>
+<p><strong>Probe at interview:</strong> "You implemented <code>canDeactivate</code> — walk me through the guard: what interface does it implement, how does the router call it, and when would you return an Observable instead of a boolean?" (her own work from sprint 2). Then: "You moved to Reactive Forms for the register page — how does a <code>FormGroup</code> with <code>Validators.required</code> differ from validating the same field with a signal and a <code>computed()</code>, and why did you choose Reactive Forms?" Good test of whether she understood the trade-off or just followed ZedMalatesta's pattern.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>olucens — ~17 commits / 4 PRs (4 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: <code>channel-card</code> and <code>channel-list</code> components with mock data from a service; <code>ViewersPipe</code> to format viewer counts (K/M/B); light/dark color schema with system preference detection (PR #11, #16). Diary mentions 8 hours, genuine first-contact with pipes and <code>computed()</code>.</li>
+<li>Sprint 2: Header component with <code>RouterLink</code>, conditional auth links, logout button (injecting <code>AuthService</code> via <code>inject()</code>); lazy loading for <code>/room</code> route; reactive search in <code>channel-list</code> using <code>filteredChannels</code> computed signal; theme reactivity with <code>timeOfDay</code> signal + <code>effect()</code> wrapping <code>initAutoTheme()</code> (PR #27). 4 hours logged. Sprint-2 diary is unusually candid: he lists 5 bugs he introduced and fixed, including <code>effect()</code> that didn't actually track the signal, a component importing itself (circular ref), and <code>@Inject</code> decorator used incorrectly as a property decorator.</li>
+<li>Sprint 3: Fixed <code>ViewersPipe</code> usage (moved from <code>new ViewersPipe().transform()</code> to proper Angular pipe in template); added <code>OnPush</code> to <code>channel-card</code> and <code>channel-list</code>; introduced <code>THEME_CONFIG</code> <code>InjectionToken</code> registered via <code>useValue</code>; extracted all theme logic to <code>ThemeService</code> with a genuinely reactive <code>effect()</code> (fixing the sprint-2 bug he documented); replaced inline footer with a <code>Footer</code> component using <code>ng-content</code> for content projection (PR #31). 3 hours logged.</li>
+</ul>
+<p><strong>Level:</strong> Present and improving, but the lightest contributor by both volume and diary depth. That said, his sprint-2 diary is actually the most instructive one on bugs: he documented the <code>effect()</code> non-reactivity issue himself before the mentor or a teammate caught it, and he fixed it in sprint 3. That kind of self-correction loop is valuable. His sprint-3 diary entry explains the <code>InjectionToken</code> choice clearly: "deciding where DI fit naturally — auth forms are owned by teammates, so the cleanest place for InjectionToken in my zone was the theme config." Reasonable, territory-aware reasoning. The 75 at sprint 2 and "passive" interview behaviour are the main flags — ability may be there, effort and interview confidence need development.</p>
+<p><strong>Risk:</strong> Moderate. Lightest PR count (4 across 3 sprints), shortest diary entries (~3–4 hours per sprint). However all work is substantive: pipes, DI tokens, <code>ThemeService</code>, OnPush — he did not take easy shortcuts. The issue is volume and interview readiness, not disengagement. His sprint-3 diary ends with questions still open (backend vs Supabase, data structure for profile page) — the uncertainty is real, which may translate to passivity under questioning.</p>
+<p><strong>Probe at interview:</strong> Start with something he built and self-corrected: "In your sprint-2 diary you documented that the <code>effect()</code> in <code>app.ts</code> didn't actually track any signal. Walk me through why that was a bug and what you changed in sprint 3 to fix it." This tests whether he genuinely understands the mechanism or just copy-pasted a fix. Then: "You used <code>InjectionToken</code> with <code>useValue</code> for <code>THEME_CONFIG</code> — what problem does that solve that you couldn't solve by just injecting <code>ThemeService</code> directly?" Tests conceptual depth vs recipe following. Avoid jumping to topics he didn't own.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A three-person team with full participation through sprint 3 and a working deployed application (GitHub Pages). The product concept is coherent and technically ambitious — co-watching with room-based auth, synchronized chat, planned Supabase Realtime. The team runs a proper GitFlow with CI, ESLint, and branch-per-feature. Process maturity is solid.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>ZedMalatesta is a technically strong lead: proactive at interviews, ships non-trivial work each sprint, writes precise diary entries that document actual learning. Sprint-3 reactive forms + custom directive + DI token + chat is the heaviest single-sprint output on the team.</li>
+<li>All three members have sprint-3 diaries submitted by the deadline — no one went silent.</li>
+<li>olucens self-corrected a <code>effect()</code> bug across two sprints (documented the problem in sprint 2, fixed in sprint 3) — this is evidence of genuine learning, not just ticket completion.</li>
+<li>amelur follows through: sprint-2 diary said "I need to rewrite to Reactive Forms"; sprint-3 PR delivers it.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>olucens: 75 at sprint 2 with a passive interview style. Lightest contribution volume. Needs to step up theoretical articulation — can he explain the <code>InjectionToken</code> and <code>ThemeService</code> he just built from first principles, or did he execute the pattern without owning it?</li>
+<li>Supabase Realtime: The chat is currently local-only (mock data, no persistence). The product vision (synchronized co-watching, shared chat) requires Realtime. Neither team member's diary has a concrete plan for implementation. Worth asking ZedMalatesta directly: "What's the gap between the current local chat and a room where two users see the same messages?"</li>
+<li>PR duplication: amelur submitted the register-form PR twice on the same day (#30 and #36). Minor, but worth a quick check on whether both are necessary or the second superseded the first.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> For ZedMalatesta — go under the hood on Change Detection (<code>markForCheck()</code> vs <code>detectChanges()</code> vs signals) and advanced DI (multi-providers, <code>@Optional</code>, <code>@SkipSelf</code>). For amelur — probe the trade-off between Reactive Forms and signals-based forms (she chose both, ask her to defend the choice). For olucens — use his own sprint-2 bug list as interview material; make him explain what he fixed and why, not what features he shipped.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Vejas</h1>
+<h3>Кросс-интервью брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>ZedMalatesta/Vejas-frontend</code> (коммиты, PR, дневники разработки по всем веткам). Снимок данных: 2026-06-24. Цель: дать ментору контекст за 2 минуты перед защитой — кто что сделал, кто понимает материал, что проверить на интервью.</blockquote>
+<p><strong>Одна строка:</strong> Зелёная команда — все трое активны до дедлайна спринта 3 (2026-06-22), у каждого есть записи в дневнике и смерженные PR. ZedMalatesta (лид) технически сильнейший, amelur уверенно владеет доменом авторизации, olucens присутствует, но вносит наименьший вклад и на защите Спринта 2 показал меньшую теоретическую глубину (75). На интервью стоит проверить глубину понимания, особенно у olucens.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Vejas — платформа совместного просмотра. Пользователи синхронизируют воспроизведение YouTube-видео в именных комнатах с локальным чатом</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 19+, TypeScript strict, Angular Signals, Reactive Forms, Supabase (авторизация + планируемый Realtime), ESLint / angular-eslint, GitHub Actions CI/CD, GitHub Pages</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/ZedMalatesta/Vejas-frontend">https://github.com/ZedMalatesta/Vejas-frontend</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Открытые issues</strong></td><td>8</td></tr>
+<tr><td><strong>Деплой</strong></td><td>GitHub Pages (кастомный deploy.yml, Jekyll-override удалён в спринте 2)</td></tr>
+</tbody></table>
+<p>Особенности стека: сторонних UI-библиотек нет, все компоненты написаны вручную. Supabase для авторизации уже интегрирован (<code>user_metadata</code> используется в чате). Realtime-синхронизация (чат и воспроизведение) запланирована, но не реализована — стоит спросить о разрыве между продуктовым видением и текущим состоянием.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (список курса):</strong></p>
+<ul>
+<li><code>ZedMalatesta</code> — Team Lead</li>
+<li><code>amelur</code> — авторизация / формы</li>
+<li><code>olucens</code> — главная страница / каналы / тема (в git: "Alexander Kuzmin" / "Oleksandr Kuzmin" — две конфигурации одной машины, один человек; совокупно ~17 коммитов по всем веткам)</li>
+</ul>
+<p><strong>Менторы:</strong></p>
+<ul>
+<li><code>eu-peregudova</code> — интервьюер Спринта 1 (указан в participants.json). Встречается в contributor-списке из-за коммитов со своей машины — норма, без штрафов.</li>
+<li><code>ramanmilashevich</code> — интервьюер Спринта 2. Коммитов нет — норма.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong> не выявлены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смерженных PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>ZedMalatesta</strong> (лид)</td><td>73</td><td>13</td><td>12</td><td>4</td><td>2026-06-22</td><td>высокий — основной двигатель Room + инфраструктура</td></tr>
+<tr><td><strong>amelur</strong></td><td>25</td><td>9</td><td>9</td><td>4</td><td>2026-06-22</td><td>высокий — полный домен авторизации, работа с формами</td></tr>
+<tr><td><strong>olucens</strong></td><td>~17</td><td>4</td><td>4</td><td>3</td><td>2026-06-22</td><td>наблюдение — присутствует, вклад легче, дневники короче</td></tr>
+</tbody></table>
+<p>Количество коммитов по <code>git shortlog --all</code>. GitHub Contributors API (только main) даёт 42 / 17 / 8 — olucens меньше, потому что больше работы уходило в крупные коммиты. Один PR ZedMalatesta (#24 "Routing/deploy") закрыт без мержа — заменён PR #23 в тот же день.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора</h2>
+<p>Все трое защитились на Спринте 1 (ментор: <code>eu-peregudova</code>) и на Спринте 2 (ментор: <code>ramanmilashevich</code>).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>ZedMalatesta</td><td>100</td><td>90</td></tr>
+<tr><td>amelur</td><td>100</td><td>88</td></tr>
+<tr><td>olucens</td><td>100</td><td>75</td></tr>
+</tbody></table>
+<p><strong>Комментарии ментора к Спринту 1 (eu-peregudova):</strong></p>
+<ul>
+<li>ZedMalatesta: «Great! Your initiative and leadership allow you to get the maximum out of the experience, keep going!»</li>
+<li>amelur: «Great job, continue deepen your understanding!»</li>
+<li>olucens: «Great job! Keep the momentum going for future sprints.»</li>
+</ul>
+<p><strong>Комментарии ментора к Спринту 2 (ramanmilashevich):</strong></p>
+<ul>
+<li><strong>ZedMalatesta (90/100):</strong> «Кандидат продемонстрировал сильный, проактивный подход во время интервью, взял на себя инициативу в техническом обсуждении и раскрыл большинство тем Спринта 2 без наводящих вопросов… показал уверенное практическое и теоретическое понимание основных концепций Angular: Routing (Guards, Lazy Loading), Signals, базовый DI. Зоны роста: некоторая неуверенность в механике "под капотом" — нужно укрепить знание нюансов Change Detection (разница между <code>markForCheck()</code> и <code>detectChanges()</code>) и продвинутых кейсов DI.»</li>
+</ul>
+<ul>
+<li><strong>amelur (88/100):</strong> «Кандидат продемонстрировал сильную работу на интервью, уверенно объяснял код… уверенно ориентировался в репозитории, показал работающее приложение. Сильное практическое понимание Routing и Signals, аргументировал выбор реализации без промедления. Зоны роста: небольшие пробелы при обсуждении деталей кастомных директив (<code>HostBinding</code> vs <code>HostListener</code>) и внутренних механизмов Change Detection.»</li>
+</ul>
+<ul>
+<li><strong>olucens (75/100):</strong> «Кандидат продемонстрировал базовое, поверхностное понимание тем Спринта 2, но не проявлял инициативы на интервью. Обсуждение было преимущественно пассивным, требовало частых наводящих вопросов… знаком с кодовой базой, может объяснить назначение фич на высоком уровне. Испытывал затруднения с техническими вопросами по основным модулям, показал пробелы в теоретических знаниях. Необходимо занять более активную позицию в обучении и углубить техническое понимание.»</li>
+</ul>
+<p><strong>Сверка — расхождения между оценками защиты и активностью в репозитории:</strong></p>
+<ul>
+<li><strong>ZedMalatesta (100→90 / высокая активность):</strong> Снижение с 100 до 90 согласуется с комментарием ментора: сильный практик, который ведёт интервью сам, но показывает пробелы на глубоком уровне (внутренняя механика Change Detection, продвинутые кейсы DI). Дневник спринта 2 подтверждает: <code>computed()</code> vs <code>effect()</code> понял через собственные ошибки, а не из документации — настоящее обучение. Оценка 90 честная. Работа в спринте 3 (Reactive Forms, <code>InjectionToken</code>, кастомная <code>ScrollIntoViewDirective</code>, чат) демонстрирует продолжение роста.</li>
+</ul>
+<ul>
+<li><strong>amelur (100→88 / высокая активность):</strong> Схожая картина: сильная практика, пробелы на уровне механизмов (<code>HostBinding</code> vs <code>HostListener</code>, нюансы Change Detection). Дневник спринта 3 на русском — короче, чем у ZedMalatesta, но отражает реальную работу. Расхождений нет — надёжный контрибьютор уровня «Good», честно осознаёт свои пробелы.</li>
+</ul>
+<ul>
+<li><strong>olucens (100→75 / более лёгкая активность):</strong> Самое заметное расхождение в команде: идеальный Спринт 1, затем 75 и пассивное интервью на Спринте 2. PR-активность ниже (4 PR, ~3–4 часа в спринте по дневникам). При этом дневник спринта 2 — самый честный по документации ошибок: он сам выявил нереактивный <code>effect()</code> и задокументировал 5 других багов, которые исправил. В спринте 3 он действительно починил эту проблему. Разрыв между 100 на Спринте 1 и 75 на Спринте 2 с пассивным поведением, скорее всего, отражает уровень усилий, а не способностей. Стоит проверить.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>ZedMalatesta (лид) — 73 коммита / 13 PR (12 смерженных) / 4 дневника</h3>
+<p><strong>Что сделал</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 1: Room-экран — компоненты <code>video-player</code>, <code>text-input</code>, <code>button</code>, <code>link-input</code>; YouTube iframe с <code>DomSanitizer.bypassSecurityTrustResourceUrl()</code> внутри <code>computed()</code> (PR #14, #15). Логирует ~6 часов.</li>
+<li>Спринт 2: Функция плейлиста — <code>PlaylistService</code> (injectable, <code>providedIn: 'root'</code>), компонент <code>playlist</code>, модель <code>playlist-item</code> (PR #17); рефакторинг провайдеров, вынес парсинг YouTube ID в утилиту; ESLint (<code>angular-eslint</code> + <code>typescript-eslint</code>) + исправил 44 ошибки линтера по всему проекту (PR #20); GitHub Actions CI (линтер на push) + деплой на GitHub Pages с <code>--base-href</code>, удалил автосозданный Jekyll workflow (PR #21, #23); lazy loading для Room через <code>loadComponent</code> (PR #23). ~12 часов.</li>
+<li>Спринт 3: Переписал <code>LinkInput</code> / <code>TextInput</code> на Reactive Forms с <code>FormGroup</code>, <code>FormControl</code>, <code>Validators.required</code> и кастомным <code>youtubeUrlValidator</code> (PR #32); <code>ScrollIntoViewDirective</code> (<code>appScrollIntoView</code>) на <code>effect()</code> + <code>scrollIntoView({ behavior: 'smooth' })</code> (PR #32); <code>InjectionToken</code> <code>YOUTUBE_PLAYER_CONFIG</code> с фабрикой <code>providedIn: 'root'</code> (PR #32); <code>ChangeDetectionStrategy.OnPush</code> на <code>VideoPlayer</code>, <code>Playlist</code>, <code>Button</code>, <code>AuthButton</code>; локальный чат-панель с компонентом <code>Chat</code>, Reactive Forms, автором из Supabase <code>user_metadata</code>, авто-скроллом через <code>effect()</code> + <code>ViewChild</code> (PR #33, #34). ~8 часов.</li>
+</ul>
+<p><strong>Уровень:</strong> Технически наиболее глубокий член команды. Дневники читаются как технические постмортемы: что попробовал, почему сломалось, какой именно механизм понял. Использование ИИ в дневниках не упоминается. Работа достоверно его собственная.</p>
+<p><strong>Риск:</strong> Минимальный. Ментор указал на Change Detection (<code>markForCheck()</code> vs <code>detectChanges()</code>) и продвинутые DI edge case. Дневник спринта 3 показывает, что практически он понимает проблему OnPush + async, но может не иметь терминологии для интервью.</p>
+<p><strong>Вопросы на интервью:</strong> «Расскажи про <code>YOUTUBE_PLAYER_CONFIG</code> injection token — где он определён, какой <code>providedIn</code> ты использовал, и как его переопределить для отдельного поддерева компонентов?» (его собственный код). Затем глубже: «В дневнике спринта 2 ты написал, что не добавлял OnPush к компонентам, которые устанавливают поле класса после async-вызова. Что произойдёт с change detection в таком случае, и какие два способа это починить?» Проверяет понимание <code>markForCheck()</code> vs перевод на сигналы — именно тот пробел, который отметил ментор.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>amelur — 25 коммитов / 9 PR (9 смерженных) / 4 дневника</h3>
+<p><strong>Что сделала</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 1: Страницы логина и регистрации с Supabase auth; роутинг между страницами; кастомный компонент <code>button</code> с <code>input()</code>/<code>output()</code> для чекпоинта; <code>ngOnInit</code> / <code>ngOnDestroy</code> (PR #13, #12).</li>
+<li>Спринт 2: Страницы «Забыл пароль» и «Смена пароля» (PR #18); <code>canActivate</code> + <code>canDeactivate</code> guards (PR #22); стили для авторизации (PR #28). Дневник: план переписать формы на Reactive Forms.</li>
+<li>Спринт 3: Страница регистрации с Reactive Forms и <code>OnPush</code> (PR #30, #36 — отправлен дважды, второй исправляет первый). Скаффолд страницы профиля (в процессе по дневнику). 4 дневника, спринт 3 — на русском.</li>
+</ul>
+<p><strong>Уровень:</strong> Стабильный, надёжный контрибьютор. Владеет всем доменом авторизации. Выполняет то, что планирует в дневнике: написала «нужно переписать на Reactive Forms» → сдала PR в следующем спринте. Ментор поставил 88 — точно: сильная практика, пробелы на уровне механизмов (директивы, Change Detection).</p>
+<p><strong>Риск:</strong> Низкий. PR с формой регистрации отправлен дважды (#30 и #36) в один день — скорее всего, исправление, а не дублирование. Стоит уточнить.</p>
+<p><strong>Вопросы на интервью:</strong> «Ты реализовала <code>canDeactivate</code> — расскажи: какой интерфейс он реализует, как его вызывает роутер, и когда стоит возвращать Observable вместо boolean?» (её собственная работа). Затем: «Ты перешла на Reactive Forms для страницы регистрации — чем <code>FormGroup</code> с <code>Validators.required</code> отличается от валидации на сигналах с <code>computed()</code>, и почему ты выбрала Reactive Forms?» Проверяет понимание trade-off или просто следование паттерну ZedMalatesta.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>olucens — ~17 коммитов / 4 PR (4 смерженных) / 3 дневника</h3>
+<p><strong>Что сделал</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 1: Компоненты <code>channel-card</code> и <code>channel-list</code> с моковыми данными из сервиса; <code>ViewersPipe</code> для форматирования числа зрителей (K/M/B); цветовая схема для светлой и тёмной темы с определением системных настроек (PR #11, #16). ~8 часов.</li>
+<li>Спринт 2: Header-компонент с <code>RouterLink</code>, условными auth-ссылками, logout через <code>inject(AuthService)</code>; lazy loading для <code>/room</code>; реактивный поиск в <code>channel-list</code> через <code>filteredChannels</code> computed signal; реактивность темы через <code>timeOfDay</code> signal + <code>effect()</code> (PR #27). ~4 часа. Дневник: задокументировал 5 ошибок, которые допустил и исправил (включая нереактивный <code>effect()</code>, компонент-импорт самого себя, некорректный <code>@Inject</code> как property decorator).</li>
+<li>Спринт 3: Исправил использование <code>ViewersPipe</code> (с <code>new ViewersPipe().transform()</code> на настоящий Angular pipe в шаблоне); добавил <code>OnPush</code> для <code>channel-card</code> и <code>channel-list</code>; ввёл <code>InjectionToken</code> <code>THEME_CONFIG</code> через <code>useValue</code>; вынес всю логику темы в <code>ThemeService</code> с по-настоящему реактивным <code>effect()</code> (исправил баг спринта 2); заменил временный footer на компонент <code>Footer</code> с <code>ng-content</code> (PR #31). ~3 часа.</li>
+</ul>
+<p><strong>Уровень:</strong> Присутствует и прогрессирует, но вносит наименьший вклад как по объёму, так и по глубине дневников. При этом дневник спринта 2 — самый честный по документированию ошибок во всей команде. Он сам зафиксировал нереактивный <code>effect()</code> до того, как кто-то обнаружил это извне, и починил его в спринте 3. Оценка 75 и пассивное поведение на интервью — основные флаги; способности, вероятно, есть, не хватает уровня усилий и уверенности при ответах.</p>
+<p><strong>Риск:</strong> Умеренный. Наименьшее количество PR (4 за три спринта), самые короткие записи в дневнике (~3–4 часа в спринте). Дневник спринта 3 заканчивается открытыми вопросами (backend vs Supabase, структура данных профиля) — реальная неопределённость, которая может проявляться как пассивность на защите.</p>
+<p><strong>Вопросы на интервью:</strong> Начать с его собственного исправления: «В дневнике спринта 2 ты написал, что <code>effect()</code> в <code>app.ts</code> не отслеживал никакой сигнал. Объясни, почему это была ошибка, и что ты изменил в спринте 3 для исправления.» Проверяет, понимает ли он механику или просто применил готовое решение. Затем: «Ты использовал <code>InjectionToken</code> с <code>useValue</code> для <code>THEME_CONFIG</code> — какую проблему это решает, если бы ты просто инжектировал <code>ThemeService</code> напрямую?» Проверяет концептуальную глубину vs следование рецепту. Не спрашивай о функциях, которые он не делал.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>В целом:</strong> Команда из трёх человек с полным участием до спринта 3 и работающим задеплоенным приложением (GitHub Pages). Продуктовая концепция внятная и технически амбициозная — совместный просмотр с авторизацией по комнатам, синхронным чатом, планируемым Supabase Realtime. Команда ведёт нормальный GitFlow с CI, ESLint, feature-ветками. Уровень процессной зрелости выше среднего по курсу.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>ZedMalatesta — технически сильный лид: проактивен на интервью, сдаёт нетривиальную работу в каждом спринте, пишет точные дневники с документацией реального обучения. Спринт 3 (Reactive Forms + кастомная директива + DI token + чат) — самый насыщенный один спринт в команде.</li>
+<li>Все трое сдали дневники за спринт 3 до дедлайна — никто не пропал.</li>
+<li>olucens самостоятельно выявил и починил баг с <code>effect()</code> за два спринта — доказательство настоящего обучения, а не просто закрытия задач.</li>
+<li>amelur выполняет то, что планирует: написала «нужно Reactive Forms» → сдала в следующем спринте.</li>
+</ul>
+<p><strong>На что обратить внимание:</strong></p>
+<ul>
+<li>olucens: 75 на Спринте 2, пассивное поведение на интервью. Наименьший вклад по объёму. Нужно проверить: может ли он объяснить <code>InjectionToken</code> и <code>ThemeService</code>, которые только что реализовал, с первых принципов — или выполнил паттерн, не владея им?</li>
+<li>Supabase Realtime: чат сейчас только локальный (мок-данные, нет персистентности). Продуктовое видение (синхронный просмотр, общий чат) требует Realtime. Ни в одном дневнике нет конкретного плана реализации. Стоит спросить ZedMalatesta напрямую: «Что сейчас не так в локальном чате, если в комнате двое пользователей?»</li>
+<li>Дублирующийся PR amelur (#30 и #36, оба с одинаковым заголовком, в один день) — мелкий момент, стоит убедиться, что второй исправляет первый, а не является случайным дублем.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Для ZedMalatesta — углубиться в Change Detection (<code>markForCheck()</code> vs <code>detectChanges()</code> vs сигналы) и продвинутый DI (<code>@Optional</code>, <code>@SkipSelf</code>, multi-providers). Для amelur — попросить защитить выбор между Reactive Forms и сигнальными формами (она использовала оба подхода). Для olucens — использовать его собственный список ошибок из дневника спринта 2 как материал для вопросов: объяснить, что он исправил и почему, а не перечислять фичи.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

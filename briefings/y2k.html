@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Y2K · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Y2K</strong><strong class="lang-ru">Mentor briefing — Y2K</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Y2K</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2 · Sprint 2 refresh</h3>
+<blockquote>Source: repository <code>ngInit/Hive</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the Sprint 2 defence — who did what, what was built, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — sole contributor (ngInit/Aleksei Nikolaev) who left a previous team at course start, created his own team and repo from scratch, and has delivered a progressively ambitious music SPA across three sprints without a single dropout risk. 271 commits across all branches, 71 PRs (63 merged), 6 diary entries, active through the Sprint 2 deadline (last push 2026-06-24). Both Sprint 1 and Sprint 2 interviews returned perfect scores; the Sprint 2 interviewer noted genuine concept fluency. The interview angle is depth probing, not engagement rescue.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Hive — music streaming SPA; Jamendo API catalogue + Firebase authentication</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 22, TypeScript, Angular Material, Firebase Auth, Firestore, Jamendo API v3, GitHub Actions CI, RxJS (debounce, <code>signal()</code>, <code>effect()</code>)</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/ngInit/Hive">https://github.com/ngInit/Hive</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-22</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-24</td></tr>
+<tr><td><strong>Open issues</strong></td><td>9</td></tr>
+<tr><td><strong>Deploy</strong></td><td>Not recorded (no <code>homepage</code> field in repo meta; ask at interview)</td></tr>
+</tbody></table>
+<p>Notable stack choices: Angular Material with customised DI tokens (avoided wrapping the full Input component — decomposed only the needed parts). Repository Pattern with DI tokens (<code>TRACKS_REPOSITORY</code>) backed by <code>MockTracksRepository</code> / <code>JamendoTracksRepository</code> toggled by <code>environment.enableMockData</code>. Firebase Auth + Firestore for user profiles (real registration wired and tested as of sprint 3). Angular 22 migrated from Angular 21 mid-sprint (June 7). Route guards (<code>canActivate</code>), lazy loading for all pages except landing, route transition animations, CI via GitHub Actions running ESLint + Prettier in parallel on <code>main</code> and <code>dev</code>.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>ngInit</code> (Aleksei Nikolaev) — Team Lead. Sole member; team Y2K was created by Aleksei after leaving a previous team at course start.</li>
+</ul>
+<p><strong>Mentor:</strong></p>
+<ul>
+<li>No mentor is listed in <code>participants.json</code> for Y2K. Sprint 1 interview was conducted by <code>aliaksei-sl</code>; Sprint 2 interview by <code>julila</code>. Neither is listed as a standing team mentor.</li>
+</ul>
+<p><strong>External contributors:</strong></p>
+<ul>
+<li>None. All 271 commits across branches originate from Aleksei Nikolaev / <code>ngInit</code>.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>ngInit</strong> (lead)</td><td>271</td><td>71</td><td>63</td><td>6</td><td>2026-06-24</td><td>high — sole contributor, consistent across all three sprints</td></tr>
+</tbody></table>
+<p>Commit count is from <code>git shortlog -sn --all</code> across all remote branches. The contributors API reports 28 (squashed merges to <code>main</code>); total branch activity is 271. Diary count: 1 (sprint 1) + 2 (sprint 2, filed 2026-06-02 and 2026-06-07) + 2 (sprint 3, filed 2026-06-15 and 2026-06-22), plus a meeting notes entry per sprint. All diaries are substantive; sprint-2 and sprint-3 entries each exceed 600 words.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 interview was held by <code>aliaksei-sl</code>. Sprint 2 interview was held by <code>julila</code>. Both resulted in a score of 100.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>ngInit</td><td>100 (aliaksei-sl)</td><td>100 (julila)</td></tr>
+</tbody></table>
+<p><strong>Sprint 2 mentor comment (julila, verbatim):</strong> "Student can freely speak about Angular concept and topics. Good understanding of Angular Materials, routing, guards concepts. Alexey uses sophisticated vocabulary to describe the work he has done. Alexey shows a genuine interest in Angular."</p>
+<p><strong>Sprint 1 mentor comment:</strong> None recorded.</p>
+<p><strong>Reconciliation — alignment between scores and repo activity:</strong></p>
+<p>Both scores are consistent with what is visible in the repository and diaries. The sprint-1 score of 100 aligns with: custom Input component decomposition instead of blind Material wrapping, DI token architecture for the repository pattern (a sophisticated choice for a first encounter with Angular DI), and 10+ PRs merged in the first days of repo existence. The sprint-2 score of 100 aligns with: routing with <code>canActivate</code> guards, lazy loading, Firebase Auth with Firestore integration, <code>signal()</code> + <code>effect()</code> + <code>@HostBinding</code> for popup state management, Angular 22 migration with TypeScript 6 <code>rootDir</code> fix, and CI setup. The mentor's specific observation about "sophisticated vocabulary" and "genuine interest" is consistent with the diary quality — Aleksei explicitly names patterns (Repository Pattern, debounce, DI injection tokens) and explains <em>why</em> he chose them, not just <em>that</em> he used them.</p>
+<p>No divergence between interview scores and repo activity. This is a straightforward high-performer case.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profile</h2>
+<h3>ngInit (Aleksei Nikolaev) — lead · 271 commits (all branches) / 71 PRs (63 merged) / 6 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries, chronological):</p>
+<p><em>Sprint 1 (May 22):</em></p>
+<ul>
+<li>Angular CLI project init with Prettier, ESLint, Husky, Angular Material, lint-staged (PR #2, #3).</li>
+<li>Footer component (PR #6) — simplest component, done first intentionally.</li>
+<li>Header component with two states (guest / authenticated user) — Angular Material Input decomposed to needed parts only (PR #8, #10, #11).</li>
+<li>Main layout (PR #10, #11). README, project structure docs (PR #3).</li>
+<li>~10 hours total (diary: "if counting only project time").</li>
+</ul>
+<p><em>Sprint 2, week 1 (June 2):</em></p>
+<ul>
+<li>Error page with animation and back-to-home button (PR #16, #28).</li>
+<li>About page with Angular Material card and DI token customisation for styling (PR #29).</li>
+<li>TrackCard component with static mock data placeholder (PR #32).</li>
+<li>Jamendo API account, Track model, mock data system.</li>
+<li>Repository Pattern implementation: <code>TRACKS_REPOSITORY</code> DI token, <code>provideRepositories()</code> in <code>app.config.ts</code>, <code>MockTracksRepository</code> / <code>JamendoTracksRepository</code>, <code>TracksService</code> — toggled by <code>environment.enableMockData</code> (PR #44, #43). Documented the insight that Angular discourages <code>.env</code> in favour of <code>environment.*</code> files.</li>
+<li>Carousel component with <code>&lt;ng-content&gt;</code>, scroll buttons, hover-revealed scrollbar, loading state, smart scroll-by-container-width logic (PR #34).</li>
+<li>~40 hours.</li>
+</ul>
+<p><em>Sprint 2, week 2 (June 7):</em></p>
+<ul>
+<li>Tags filter panel with responsive design (PR #51).</li>
+<li>Landing page assembly: tags panel + three carousels (popular tracks, new releases, new albums) (PR #30 extended).</li>
+<li>User page scaffold with <code>Sign Out</code> button.</li>
+<li>Auth service (mock, for header state transitions).</li>
+<li>Routing: lazy loading for all pages except landing, <code>canActivate</code> guard for user page, <code>AuthGuard</code> reading from <code>AuthService</code> (PR #57, #59, #60).</li>
+<li>Route transition animations (PR #74).</li>
+<li>Popup in header with two states (guest/user), closed by click-outside via <code>signal()</code> in header + <code>effect()</code> + <code>@HostBinding</code> in popup (PR #71, #73).</li>
+<li>CI: <code>ci.yml</code> with concurrency cancel, parallel ESLint + Prettier, watching <code>main</code> and <code>dev</code> branches (PR #61). Discovered issue auto-close only works when merging to the default branch — documented in diary.</li>
+<li>Issue templates: <code>.yml</code> templates for feature / refactor / fix / chore / documentation (PR #67).</li>
+<li>~20 hours.</li>
+</ul>
+<p><em>Sprint 3, week 1 (June 15):</em></p>
+<ul>
+<li>Angular 22 migration: resolved <code>sudo</code>-owned <code>node_modules</code> by re-chowning directory; fixed TypeScript 6 <code>TS5011</code> <code>rootDir</code> error manually in <code>tsconfig.app.json</code> / <code>tsconfig.spec.json</code> (PR #82).</li>
+<li>Firebase Auth integration: registered Firebase project, enabled Auth, created Firestore with rules. <code>MockAuthRepository</code> (localStorage) + <code>FirebaseAuthRepository</code>, <code>AUTH_REPOSITORY</code> DI token, <code>AuthService</code> wired to both (PR #94).</li>
+<li>Sign page with animated shutter: two forms (Sign In / Sign Up) on one page; a shutter element slides to reveal the other form and hide the current; <code>opacity</code> transition instead of colour matching to survive cross-monitor colour shifts (PR #96, #98, #99).</li>
+<li>Reactive form validation: <code>FormGroup</code>, <code>Validators.required</code>, <code>Validators.maxLength</code>, <code>Validators.pattern</code> (regex for email), custom directive for password-match validation. ESLint config patched for <code>@typescript-eslint/unbound-method</code> Angular pattern (PR #99).</li>
+<li>Firebase auth routing: <code>fix/auth</code> (PR #102, #103), sign layout (PR #96).</li>
+<li>~40 hours.</li>
+</ul>
+<p><em>Sprint 3, week 2 (June 22):</em></p>
+<ul>
+<li>Jamendo API full model layer: 2 days building typed response models (id type mismatch: <code>number</code> in request, <code>string</code> in response, documented explicitly in diary).</li>
+<li>Refactored track service to single-transport <code>JamendoRepository.get(query)</code> method — moved away from endpoint-per-service to a query-builder pattern inspired by prior Async Race project work.</li>
+<li><code>JamendoService</code> page-level methods: <code>getLandingPageData()</code> (popular + releases + albums in parallel), methods for artist/album/track pages.</li>
+<li>Search with debounce: attempted manual timer approach (caused timer loop crash), then discovered RxJS <code>debounceTime</code> — first explicit RxJS encounter documented with self-awareness ("I have yet to study RxJS properly") (PR #110).</li>
+<li>Album card component (PR #128), track card refactor (PR #134), Jamendo repository fix (PR #132, #133).</li>
+<li>Sprint 3 release (PR #122, #123, #124, release/0.4.0).</li>
+<li>Track page PR open at snapshot (PR #139, open 2026-06-24).</li>
+<li>Meeting notes updated (PR #117, #118).</li>
+<li>~40 hours.</li>
+</ul>
+<p><strong>Level:</strong> Strong individual contributor working well above typical solo-student output. The diaries show a clear pattern: Aleksei encounters a pattern or concept, names it correctly (Repository Pattern, DI token, debounce, <code>canActivate</code>, <code>FormGroup</code>), documents the problem, and explains why the solution works — not just that it does. He is self-aware about gaps ("I still have yet to study RxJS properly", "how to keep API keys safe in production — I want to find out the right way") and does not over-claim. AI use: not mentioned explicitly in any diary entry. The solutions he describes — custom ESLint rule override, TypeScript 6 migration with manual <code>rootDir</code> fix, opacity trick for the shutter animation, password-match custom directive — are too specific and problem-dependent to be blind AI output; they read as genuine debugging sessions.</p>
+<p><strong>Risk:</strong> Low on engagement, moderate on scope. The project is ambitious for a solo student — Firebase, full Jamendo API service layer, sign flows, routing, CI, and an in-progress track page at sprint 3 close. Sprint 3 diary is candid about what is not yet done: player, artist/album/track pages, playlist management (Firestore), profile page. At the interview, confirm what is actually running vs. planned.</p>
+<p><strong>Probe at interview:</strong></p>
+<ol>
+<li>"Walk me through your Repository Pattern setup — the DI token, the providers, and how the app decides which repository to inject." (His work, should be fluent. Tests understanding of Angular DI beyond <code>inject()</code> shorthand.)</li>
+<li>"You migrated to Angular 22 mid-sprint and hit a TypeScript 6 error — what was <code>TS5011</code> and how did you fix it?" (Specific, in diary; tests that he understood it, not just ran a command.)</li>
+<li>"You tried timer-based debounce first, it failed in a specific way, then switched to RxJS <code>debounceTime</code>. What exactly went wrong with the timer approach and how does <code>debounceTime</code> solve it differently?" (Tests whether he understands the RxJS observable chain, not just copied the pattern.)</li>
+<li>"The Firebase docs say you can use GitHub Secrets for API keys. Your meeting notes say you discussed this. Have you done it, and if not, what's holding you back?" (Practical security awareness.)</li>
+<li>Optionally: "Show the Sign page animation — explain the CSS/Angular mechanism behind the shutter." (His most creative UI piece; will reveal animation + signal/effect depth.)</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A genuine one-person team who left a struggling group situation, created his own repo, and has built a substantively scoped music SPA entirely on his own across three sprints. The product is not yet fully deployed but the codebase is architecturally sound for a learner at this stage. Both interview scores are consistent with observable output and diary quality. This briefing has no flags to raise — the interview is a depth probe, not a risk check.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>Aleksei consistently identifies the <em>why</em> behind architectural decisions (DI tokens, Repository Pattern, environment-based toggle, <code>debounceTime</code>) and documents failures honestly (timer loop crash, cross-monitor colour bug, Firebase console errors before enabling Email/Password provider).</li>
+<li>Project tooling is complete and self-managed: GitFlow with PRs, CI on GitHub Actions, issue templates, commit naming rules, Husky pre-commit — all set up and used by a solo student who has no one to review his PRs except himself.</li>
+<li>Diary writing is among the most substantive in the cohort — 6 entries, each with a named section for problems and solutions, time estimates, and forward plans. The meeting notes follow the same format even when the "meeting" is with himself (sprint 1: "there is no one to call").</li>
+<li>Both interviewers gave 100. The Sprint 2 interviewer explicitly noted conceptual fluency and genuine interest, not just task completion.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>Scope: the sprint-3 diary closes with a list of unfinished features — track/artist/album pages, player, playlist CRUD, profile page. At the time of this briefing, PR #139 (track page) is open but not yet merged. Confirm what is actually demo-able.</li>
+<li>API key handling: Aleksei acknowledged in sprint-2 diary that exposing Jamendo API keys via <code>environment.ts</code> is a known gap for production. He mentioned wanting to learn the correct approach. The sprint-1 mentor (<code>aliaksei-sl</code>) advised using GitHub Secrets. Check if this was acted on.</li>
+<li>No deploy URL recorded. Ask where the app is accessible during the interview.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> Aleksei does not need engagement scaffolding — he is self-motivated and has been working at 20–40h/sprint pace. The productive interview direction is architecture depth: ask him to explain one non-obvious decision (Repository Pattern + DI token, or <code>signal()</code> + <code>effect()</code> for popup close-on-outside-click), then push to the edge of his understanding (RxJS observables, Firebase security rules, production key management). His diary trail is specific enough that any of the five probe questions above can be used verbatim as opening questions.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг ментора — Y2K</h1>
+<h3>Кросс-интервью брифинг · RS Angular 2026 Q2 · Обновление Sprint 2</h3>
+<blockquote>Источник: репозиторий <code>ngInit/Hive</code> (коммиты, PR, дневники разработки по всем веткам). Снимок от 2026-06-24. Цель: дать ментору контекст за 2 минуты перед защитой Sprint 2 — кто что сделал, что построено, что проверять на интервью.</blockquote>
+<p><strong>Одной строкой:</strong> Зелёный — единственный участник (ngInit/Алексей Николаев), который в начале курса покинул предыдущую команду, создал собственную команду и репозиторий с нуля и на протяжении трёх спринтов последовательно строил амбициозное музыкальное SPA. 271 коммит по всем веткам, 71 PR (63 смержено), 6 дневников, активен до дедлайна Sprint 2 (последний push 2026-06-24). Оба интервью Sprint 1 и Sprint 2 завершились с максимальным баллом; интервьюер Sprint 2 отметила подлинное владение концепциями. Направление интервью — проверка глубины, а не спасение вовлечённости.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + Стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Hive — музыкальное SPA; каталог треков через Jamendo API + аутентификация через Firebase</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 22, TypeScript, Angular Material, Firebase Auth, Firestore, Jamendo API v3, GitHub Actions CI, RxJS (debounce, <code>signal()</code>, <code>effect()</code>)</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/ngInit/Hive">https://github.com/ngInit/Hive</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-22</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-24</td></tr>
+<tr><td><strong>Открытые issue</strong></td><td>9</td></tr>
+<tr><td><strong>Deploy</strong></td><td>Не зафиксирован (поле <code>homepage</code> в мета репозитория пустое; уточнить на интервью)</td></tr>
+</tbody></table>
+<p>Примечательные архитектурные решения: Angular Material — разобрал Input-компонент на нужные части вместо обёртки целиком. Repository Pattern с DI-токеном (<code>TRACKS_REPOSITORY</code>), <code>provideRepositories()</code> в <code>app.config.ts</code>, два репозитория (<code>MockTracksRepository</code> / <code>JamendoTracksRepository</code>), переключение через <code>environment.enableMockData</code>. Firebase Auth + Firestore для профилей пользователей (реальная регистрация подключена и протестирована к Sprint 3). Миграция на Angular 22 в середине спринта (7 июня). Route guards (<code>canActivate</code>), lazy loading для всех страниц кроме лендинга, анимации переходов, CI через GitHub Actions с параллельным запуском ESLint + Prettier.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (реестр курса):</strong></p>
+<ul>
+<li><code>ngInit</code> (Алексей Николаев) — Тимлид. Единственный участник; команда Y2K создана Алексеем после выхода из предыдущей команды в начале курса.</li>
+</ul>
+<p><strong>Ментор:</strong></p>
+<ul>
+<li>В <code>participants.json</code> для Y2K ментор не указан. Интервью Sprint 1 проводил <code>aliaksei-sl</code>; интервью Sprint 2 — <code>julila</code>. Ни один из них не числится постоянным ментором команды.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong></p>
+<ul>
+<li>Отсутствуют. Все 271 коммит по всем веткам принадлежат Алексею Николаеву / <code>ngInit</code>.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смержено PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>ngInit</strong> (тимлид)</td><td>271</td><td>71</td><td>63</td><td>6</td><td>2026-06-24</td><td>высокий — единственный контрибьютор, стабильный ритм все три спринта</td></tr>
+</tbody></table>
+<p>Число коммитов — из <code>git shortlog -sn --all</code> по всем удалённым веткам. API контрибьюторов даёт 28 (сквошированные мержи в <code>main</code>); реальный объём работы по веткам — 271. Дневников: 1 (Sprint 1) + 2 (Sprint 2, поданы 02.06 и 07.06) + 2 (Sprint 3, поданы 15.06 и 22.06), плюс заметки о встречах к каждому спринту. Все дневники содержательные; записи Sprint 2 и Sprint 3 превышают 600 слов каждая.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценка ментора (баллы за защиту)</h2>
+<p>Интервью Sprint 1 провёл <code>aliaksei-sl</code>. Интервью Sprint 2 провела <code>julila</code>. Оба завершились с оценкой 100.</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>ngInit</td><td>100 (aliaksei-sl)</td><td>100 (julila)</td></tr>
+</tbody></table>
+<p><strong>Комментарий ментора Sprint 2 (julila, дословно, на английском):</strong> "Student can freely speak about Angular concept and topics. Good understanding of Angular Materials, routing, guards concepts. Alexey uses sophisticated vocabulary to describe the work he has done. Alexey shows a genuine interest in Angular."</p>
+<p><strong>Комментарий ментора Sprint 1:</strong> Не оставлен.</p>
+<p><strong>Сопоставление — соответствие баллов и активности в репозитории:</strong></p>
+<p>Оба балла согласуются с тем, что видно в репозитории и дневниках. Оценка 100 за Sprint 1 соответствует: декомпозиции Input-компонента из Angular Material вместо слепого использования, DI-токенной архитектуре для Repository Pattern (нетривиальный выбор при первом знакомстве с Angular DI), а также 10+ смерженным PR в первые дни существования репозитория. Оценка 100 за Sprint 2 соответствует: роутингу с <code>canActivate</code>-гардами, lazy loading, Firebase Auth с Firestore, <code>signal()</code> + <code>effect()</code> + <code>@HostBinding</code> для управления состоянием popup, миграции на Angular 22 с ручным исправлением ошибки TypeScript 6 <code>TS5011</code>, настройке CI. Конкретное наблюдение ментора о «сложном словарном запасе» и «искреннем интересе» согласуется с качеством дневников — Алексей явно называет паттерны (Repository Pattern, debounce, DI-токены) и объясняет <em>почему</em> их выбрал, а не только <em>что</em> использовал.</p>
+<p>Расхождений между баллами на интервью и активностью в репозитории нет. Это стандартный случай сильного исполнителя.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профиль студента</h2>
+<h3>ngInit (Алексей Николаев) — тимлид · 271 коммит (все ветки) / 71 PR (63 смержено) / 6 дневников</h3>
+<p><strong>Что построено</strong> (по PR и дневникам, хронологически):</p>
+<p><em>Sprint 1 (22 мая):</em></p>
+<ul>
+<li>Инициализация проекта через Angular CLI с Prettier, ESLint, Husky, Angular Material, lint-staged (PR #2, #3).</li>
+<li>Компонент footer (PR #6) — самый простой, сделан первым намеренно.</li>
+<li>Компонент header с двумя состояниями (гость / авторизованный пользователь) — Input Angular Material разобран на нужные части (PR #8, #10, #11).</li>
+<li>Main layout (PR #10, #11). README, документация структуры проекта (PR #3).</li>
+<li>Около 10 часов (дневник: «если считать только время на проект»).</li>
+</ul>
+<p><em>Sprint 2, неделя 1 (2 июня):</em></p>
+<ul>
+<li>Страница с ошибкой с анимацией и кнопкой возврата (PR #16, #28).</li>
+<li>Страница About с карточкой Angular Material и кастомизацией DI-токенов для стилизации (PR #29).</li>
+<li>Компонент TrackCard со статичными мок-данными (PR #32).</li>
+<li>Регистрация в Jamendo API, модель Track, система мок-данных.</li>
+<li>Реализация Repository Pattern: DI-токен <code>TRACKS_REPOSITORY</code>, <code>provideRepositories()</code> в <code>app.config.ts</code>, <code>MockTracksRepository</code> / <code>JamendoTracksRepository</code>, <code>TracksService</code> — переключение через <code>environment.enableMockData</code> (PR #44, #43). Зафиксировано понимание того, что Angular не рекомендует <code>.env</code> — вместо него <code>environment.*</code>.</li>
+<li>Компонент Carousel с <code>&lt;ng-content&gt;</code>, кнопками прокрутки, скроллбаром по ховеру, состоянием загрузки и умной прокруткой на ширину контейнера (PR #34).</li>
+<li>Около 40 часов.</li>
+</ul>
+<p><em>Sprint 2, неделя 2 (7 июня):</em></p>
+<ul>
+<li>Панель фильтрации по тегам с responsive-дизайном (PR #51).</li>
+<li>Сборка Landing page: панель тегов + три карусели (популярные треки, новые релизы, новые альбомы).</li>
+<li>Каркас страницы пользователя с кнопкой Sign Out.</li>
+<li>Auth-сервис (мок, для переключения состояния header).</li>
+<li>Роутинг: lazy loading для всех страниц кроме лендинга, <code>canActivate</code>-гард для страницы пользователя, <code>AuthGuard</code> читает из <code>AuthService</code> (PR #57, #59, #60).</li>
+<li>Анимации переходов между страницами (PR #74).</li>
+<li>Popup в header с двумя состояниями (гость/пользователь), закрытие по клику вне — через <code>signal()</code> в header + <code>effect()</code> + <code>@HostBinding</code> в popup (PR #71, #73).</li>
+<li>CI: <code>ci.yml</code> с отменой дублирующих запусков, параллельными ESLint + Prettier, мониторингом веток <code>main</code> и <code>dev</code> (PR #61). Выяснил: автозакрытие issue работает только при мерже в ветку по умолчанию — задокументировано в дневнике.</li>
+<li>Шаблоны для issue: <code>.yml</code>-шаблоны для feature / refactor / fix / chore / documentation (PR #67).</li>
+<li>Около 20 часов.</li>
+</ul>
+<p><em>Sprint 3, неделя 1 (15 июня):</em></p>
+<ul>
+<li>Миграция на Angular 22: решена проблема с <code>node_modules</code> в собственности <code>sudo</code> через <code>chown</code>; вручную исправлена ошибка TypeScript 6 <code>TS5011</code> (<code>rootDir</code>) в <code>tsconfig.app.json</code> / <code>tsconfig.spec.json</code> (PR #82).</li>
+<li>Интеграция Firebase Auth: зарегистрировал проект Firebase, включил Auth, создал Firestore с правилами. <code>MockAuthRepository</code> (localStorage) + <code>FirebaseAuthRepository</code>, DI-токен <code>AUTH_REPOSITORY</code>, <code>AuthService</code> подключён к обоим (PR #94).</li>
+<li>Страница Sign с анимированной «шторкой»: две формы (Sign In / Sign Up) на одной странице; шторка уезжает в сторону, показывая одну форму и скрывая другую; использован <code>opacity</code> вместо подбора цвета (подобранный цвет менял оттенок на втором мониторе — задокументировано с иронией) (PR #96, #98, #99).</li>
+<li>Реактивная валидация форм: <code>FormGroup</code>, <code>Validators.required</code>, <code>Validators.maxLength</code>, <code>Validators.pattern</code> (regex для email), кастомная директива для сравнения паролей. Пропатчен конфиг ESLint для правила <code>@typescript-eslint/unbound-method</code> по Angular-паттерну (PR #99).</li>
+<li>Роутинг для аутентификации: <code>fix/auth</code> (PR #102, #103), sign layout (PR #96).</li>
+<li>Около 40 часов.</li>
+</ul>
+<p><em>Sprint 3, неделя 2 (22 июня):</em></p>
+<ul>
+<li>Полный слой моделей Jamendo API: 2 дня на типизированные модели ответов (несоответствие типов id: <code>number</code> в запросе, <code>string</code> в ответе — задокументировано явно).</li>
+<li>Рефакторинг сервиса треков: единственный транспортный метод <code>JamendoRepository.get(query)</code> — отказался от подхода «endpoint-per-service» в пользу query-builder, вдохновившись опытом Async Race.</li>
+<li><code>JamendoService</code> с методами на уровне страниц: <code>getLandingPageData()</code> (popular + releases + albums параллельно), методы для страниц артиста/альбома/трека.</li>
+<li>Поиск с debounce: первая попытка с ручными таймерами привела к зависанию (таймеры замкнулись в петлю), затем обнаружен RxJS <code>debounceTime</code> — первое осознанное знакомство с RxJS, задокументировано с честным самоанализом («ещё только предстоит хорошенько изучить») (PR #110).</li>
+<li>Карточка альбома (PR #128), рефакторинг TrackCard (PR #134), исправление Jamendo-репозитория (PR #132, #133).</li>
+<li>Релиз Sprint 3 (PR #122, #123, #124, release/0.4.0).</li>
+<li>PR со страницей трека открыт на момент снимка (PR #139, открыт 2026-06-24).</li>
+<li>Заметки о встречах обновлены (PR #117, #118).</li>
+<li>Около 40 часов.</li>
+</ul>
+<p><strong>Уровень:</strong> Сильный индивидуальный исполнитель, работающий значительно выше типичного уровня для соло-студента. Дневники показывают устойчивую картину: Алексей сталкивается с паттерном или концепцией, правильно называет её (Repository Pattern, DI-токен, debounce, <code>canActivate</code>, <code>FormGroup</code>), документирует проблему и объясняет <em>почему</em> решение работает — а не просто <em>что</em> он использовал. Он честен насчёт пробелов («ещё только предстоит хорошенько поучить RxJS», «хочу выяснить, как правильно хранить API-ключи в продакшене»). Использование AI: в дневниках явно не упоминается. Решения, которые он описывает — кастомное правило ESLint, ручное исправление ошибки TypeScript 6 при миграции, фокус trick с <code>opacity</code> для шторки, кастомная директива для сравнения паролей — слишком специфичны и зависимы от контекста, чтобы быть слепым копированием AI-вывода; они читаются как реальные сессии отладки.</p>
+<p><strong>Риски:</strong> Низкий по вовлечённости, умеренный по объёму. Проект амбициозен для соло-студента — Firebase, полный слой сервисов Jamendo API, формы авторизации, роутинг, CI и незавершённая страница треков к концу Sprint 3. Дневник Sprint 3 честно перечисляет незаконченное: плеер, страницы артиста/альбома/трека, управление плейлистами (Firestore), страница профиля. На интервью подтвердить, что реально работает в деплое.</p>
+<p><strong>Вопросы на интервью:</strong></p>
+<ol>
+<li>«Объясни структуру Repository Pattern — DI-токен, провайдеры и как приложение решает, какой репозиторий инжектировать.» (Его работа, должен быть беглым. Проверяет понимание Angular DI глубже <code>inject()</code>.)</li>
+<li>«Ты мигрировал на Angular 22 в середине спринта и получил ошибку TypeScript 6 — что такое <code>TS5011</code> и как ты её исправил?» (Конкретно, из дневника; проверяет, что понял, а не просто запустил команду.)</li>
+<li>«Ты сначала попытался реализовать debounce через таймеры, это сломалось определённым образом, а потом перешёл на <code>debounceTime</code> из RxJS. Что именно пошло не так с таймерами и как <code>debounceTime</code> решает это иначе?» (Проверяет понимание RxJS observable-цепочки, а не просто скопированный паттерн.)</li>
+<li>«Документация Firebase и ментор Алексей-sl советовали использовать GitHub Secrets для API-ключей. Ты это реализовал? Если нет — что мешает?» (Практическое понимание безопасности.)</li>
+<li>Опционально: «Покажи страницу Sign — объясни CSS/Angular-механизм шторки.» (Его самый творческий UI-элемент; раскроет понимание анимации + depth по <code>signal()</code>/<code>effect()</code>.)</li>
+</ol>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая картина:</strong> Настоящая команда из одного человека, который вышел из проблемной группы, создал собственный репозиторий и построил содержательное музыкальное SPA самостоятельно на протяжении трёх спринтов. Продукт ещё не полностью задеплоен, но кодовая база архитектурно обоснована для уровня обучающегося на данном этапе. Оба балла на интервью соответствуют наблюдаемым результатам и качеству дневников. В этом брифинге нет флагов для поднятия — интервью является проверкой глубины, а не проверкой рисков.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>Алексей последовательно определяет <em>почему</em> за архитектурными решениями (DI-токены, Repository Pattern, переключение по environment, <code>debounceTime</code>) и честно документирует неудачи (зависание таймерной петли, баг с цветом на втором мониторе, ошибки Firebase до включения Email/Password-провайдера).</li>
+<li>Инструментарий проекта полностью настроен и поддерживается самостоятельно: GitFlow с PR, CI на GitHub Actions, шаблоны issue, правила именования коммитов, Husky pre-commit — всё настроено и используется соло-студентом, у которого некому делать код-ревью, кроме него самого.</li>
+<li>Дневники — одни из самых содержательных в потоке: 6 записей с именованными разделами для проблем и решений, оценками времени и планами. Заметки о встречах следуют той же структуре, даже когда «встреча» — это разговор с самим собой (Sprint 1: «звонить некому»).</li>
+<li>Оба интервьюера поставили 100. Интервьюер Sprint 2 явно отметила концептуальную беглость и искренний интерес, а не просто выполнение задания.</li>
+</ul>
+<p><strong>Следить:</strong></p>
+<ul>
+<li>Объём: дневник Sprint 3 закрывается списком незавершённого — страницы трека/артиста/альбома, плеер, CRUD плейлистов, страница профиля. На момент снимка PR #139 (страница трека) открыт, но не смержен. Подтвердить, что реально можно показать на демо.</li>
+<li>Ключи API: Алексей признал в дневнике Sprint 2, что хранение Jamendo-ключей через <code>environment.ts</code> — известный недостаток для продакшена. Упомянул желание изучить правильный подход. Ментор Sprint 1 (<code>aliaksei-sl</code>) рекомендовал GitHub Secrets. Проверить, было ли это реализовано.</li>
+<li>URL деплоя не зафиксирован. Спросить, где приложение доступно, на интервью.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Алексею не нужны костыли для вовлечённости — он самомотивирован и работает в темпе 20–40 часов на спринт. Продуктивное направление интервью — архитектурная глубина: попросить объяснить одно нетривиальное решение (Repository Pattern + DI-токен или <code>signal()</code> + <code>effect()</code> для закрытия popup по внешнему клику), затем двигаться к границе его понимания (RxJS observable-цепочки, Firebase security rules, управление ключами в продакшене). Дневниковый след достаточно конкретен, чтобы любой из пяти вопросов выше можно было использовать дословно как открывающий вопрос.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

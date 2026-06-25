@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Runtime terror · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Runtime terror</strong><strong class="lang-ru">Mentor briefing — Runtime terror</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Runtime terror</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>gerlinda137/runtime-terror</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — all three students active through the sprint-2 deadline (2026-06-22); clear ownership lanes; gerlinda137 leads infra and forms, maryanzh drives the Angular feature surface and owns the NestJS backend in a separate repo, radm1la handles auth primitives and UX support pages. Sprint-2 mentor scores (95 / 100 / 85) are consistent with repo output. No silent members, no load imbalance severe enough to flag. Primary watch items are AI reliance on radm1la's side and whether maryanzh's theoretical vocabulary can match her evident practical output.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>CryptoTrade — Angular SPA with real-time market data, portfolio tracking, and trading simulation</td></tr>
+<tr><td><strong>API</strong></td><td>Binance Testnet API (public data + simulated trading)</td></tr>
+<tr><td><strong>Backend</strong></td><td>NestJS + Prisma + Docker (separate repo, owned by maryanzh)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 20+, TypeScript, Angular Material, RxJS → Signals migration mid-course</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/gerlinda137/runtime-terror">https://github.com/gerlinda137/runtime-terror</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Open issues</strong></td><td>20</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://runtime-terror-crypto-trade.netlify.app/">https://runtime-terror-crypto-trade.netlify.app/</a> (Netlify, auto-deploy)</td></tr>
+</tbody></table>
+<p>Notable choices: Angular Material is the primary UI library (not Taiga UI); team negotiated Typography component vs. directive mid-sprint-1 and landed on a directive; signals adoption is gradual — sidebar was refactored from RxJS to signals in sprint 2. A real NestJS backend with Auth, Docker, and Prisma exists in a separate repo (<code>MaryAnzh/Crypto-Trade-Angular_Task-Backend</code>) — unusual for this course, worth verifying its actual state at interview.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>gerlinda137</code> (Angelina Baranova) — Team Lead; Yerevan, Armenia</li>
+<li><code>maryanzh</code> (Maryia Vashchayeva) — Feature contributor + backend owner; Minsk, Belarus</li>
+<li><code>radm1la</code> (Radmila Shamilova) — Auth primitives + UX pages; Tbilisi, Georgia</li>
+</ul>
+<p><strong>Mentors:</strong></p>
+<ul>
+<li>Sprint 1: <code>eu-peregudova</code></li>
+<li>Sprint 2: <code>julia</code> / <code>julila</code> (name variant in dataset — same person)</li>
+</ul>
+<p>No mentor appears as a code contributor. Normal.</p>
+<p><strong>External contributors:</strong> None identified in the repo. All commits map to the three rostered students (gerlinda137 = Angelina Baranova, MaryAnzh = Maryia Vashchayeva, radm1la / CodeRadmila = Radmila Shamilova — two git identities, same person).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>gerlinda137</strong> (lead)</td><td>104</td><td>23</td><td>22</td><td>4</td><td>2026-06-22</td><td>high — lead + infra + forms + sprint-3 release</td></tr>
+<tr><td><strong>maryanzh</strong></td><td>71</td><td>19</td><td>18</td><td>5</td><td>2026-06-22</td><td>high — primary feature engine + NestJS backend</td></tr>
+<tr><td><strong>radm1la</strong></td><td>55</td><td>16</td><td>13</td><td>6</td><td>2026-06-22</td><td>moderate-good — auth + guard + UX pages; most diary entries</td></tr>
+</tbody></table>
+<p>Commit counts from <code>git shortlog -sn --all</code>. radm1la has two git identities (Radmi1a05 = 35 commits, CodeRadmila = 20 commits). PR counts from GitHub API. Three PRs closed without merge for radm1la (duplicate submissions / superseded branches).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>gerlinda137</td><td>100</td><td>95</td></tr>
+<tr><td>maryanzh</td><td>85</td><td>100</td></tr>
+<tr><td>radm1la</td><td>90</td><td>85</td></tr>
+</tbody></table>
+<p><strong>Sprint 1 mentor comments (eu-peregudova):</strong></p>
+<ul>
+<li><strong>gerlinda137 (100):</strong> "You are doing a great job! Keep the momentum going and do not hesitate if you have any questions."</li>
+<li><strong>maryanzh (85):</strong> "You have solid understanding of all of the topics. I suggest focusing more on the specifics of Angular. While it is similar to React on the surface level, the underlying differences are important to understand to avoid incorrect assumptions. There were times when you rushed with not quite correct answers because of that. Because you already have experience, I also recommend spending some time with general programming and patterns, and focus on how to articulate it. Keep up with the good work."</li>
+<li><strong>radm1la (90):</strong> "Your understanding of concepts is solid, try to take on more complex tasks with the project to deepen your knowledge. Continue with the same attitude and I wish you success!"</li>
+</ul>
+<p><strong>Sprint 2 mentor comments (julila):</strong></p>
+<ul>
+<li><strong>gerlinda137 (95):</strong> "Some little mistakes in terminology, open to new concepts, good know-how, but a little difficulties to explain approaches."</li>
+<li><strong>maryanzh (100):</strong> "Good team mate, can explain her thought and ideas, open minded to new ideas."</li>
+<li><strong>radm1la (85):</strong> "Makes mistakes in some theoretical answers, but knows her code."</li>
+</ul>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>gerlinda137 (100 → 95 / high activity):</strong> The small drop from sprint 1 to sprint 2 aligns precisely with the mentor's note about terminology slips and difficulty articulating approaches. Her diary shows she understands what she built (reactive forms, <code>PasswordMatchService</code>, form directive <code>resetForm()</code> pattern) but the sprint-2 work involved more complex concepts (reactive forms, custom validators, conflict resolution). The 95 is fair: strong practitioner, slightly less fluent on Angular-specific vocabulary. No divergence from repo output.</li>
+</ul>
+<ul>
+<li><strong>maryanzh (85 → 100 / high activity):</strong> The sprint-1 score of 85 was accompanied by a specific warning from the mentor about Angular vs. React assumptions causing rushed incorrect answers. The jump to 100 in sprint 2 suggests she addressed this directly — her sprint-2 diary documents deep engagement with routing, lazy loading, signals, and the NestJS backend (32h + 40h over two weeks). The "good team mate, open minded to new ideas" comment at sprint 2 is notably warmer than sprint 1. No divergence; trajectory is positive.</li>
+</ul>
+<ul>
+<li><strong>radm1la (90 → 85 / moderate-good activity):</strong> The slight dip is consistent with the sprint-2 mentor comment ("makes mistakes in some theoretical answers, but knows her code"). Her sprint-2 diary entries are candid about AI reliance — she used AI conversation to figure out the order of auth components (token service → interceptor → guard), read documentation after getting AI answers, and explicitly notes beginner-level code that needed refactoring after mentor PR review. The 85 reflects genuine understanding of what she built, with theoretical gaps. Consistent with diary evidence.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>gerlinda137 (lead) — 104 commits / 23 PRs (22 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Project initialization: Angular CLI setup, Husky, linting (Unicorn), pre-commit hooks (sprint 1 diary 2026-05-18).</li>
+<li>CI/CD: Netlify deploy config (PR #21), branch name validation workflow (PRs #22, #24, #28), linting workflow for PRs.</li>
+<li>Cryptocurrency table component: mock data, custom <code>ChangeColor</code> directive (colors numbers green/red with arrow), two custom pipes — one trims "USDT" from crypto symbol, one prepends "+" to positive numbers; Angular Material table (PR #13).</li>
+<li>Project structure refactor to Angular style guide (PRs #52, #54, #97, #106 — recurring theme across all sprints).</li>
+<li>Login form and multi-step registration form with reactive validation and <code>PasswordMatchService</code> (PRs #89, #91, sprint-2 diary 2026-06-08).</li>
+<li>Contact Us page with form and backend <code>ContactService</code> (PR #105, sprint-3 diary 2026-06-22).</li>
+<li>Sprint-3 release merge (PRs #107, #108 — 2026-06-22).</li>
+<li>Sprint diaries: 2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22.</li>
+</ul>
+<p><strong>Level:</strong> Active and conscientious lead. Her diaries are honest about struggles — she candidly documented the Typography dilemma, the rebasing conflict resolution pain during sprint 2, and the Angular form directive <code>resetForm()</code> discovery in sprint 3. She shows a clear pattern of building something, finding it wrong or sub-optimal, and refactoring — the structure refactor PRs (#52, #54, #97, #106) span all three sprints and show attention to code quality beyond raw feature delivery. Sprint-2 mentor note about "difficulties explaining approaches" is her one weak point — she tends to know the what before the why.</p>
+<p><strong>Risk:</strong> Minor. The sprint-2 diary mentions resolving a lot of merge conflicts after working in a long-lived feature branch ("since most of the work was done by me in a separate branch, I had to rebase develop"). This may reflect a coordination gap with teammates rather than a personal failing. Worth asking about team workflow.</p>
+<p><strong>Probe at interview:</strong> "You built a custom validator with <code>PasswordMatchService</code> — how does it fit into the reactive form? What interface does a cross-field validator implement, and at which level of the form do you attach it?" This tests whether she can articulate the reactive forms model or only describe the UI behavior. Follow-up: "Walk me through the <code>resetForm()</code> fix you documented in sprint 3 — why does <code>form.reset()</code> leave error states, and what does the form directive do differently?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>maryanzh — 71 commits / 19 PRs (18 merged) / 5 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Light/Dark theme system with CSS custom properties and <code>data-theme</code> attribute switching (sprint-1 diary, week 1, 18 hours).</li>
+<li>Sidebar component with Angular Material, responsive layout, theme integration (PR #11).</li>
+<li>Typography directive (migrated from component mid-sprint-1 after team discussion).</li>
+<li>Signal-based inputs migration (away from <code>@Input()</code> decorators, sprint-1 diary week 2).</li>
+<li>NestJS backend (separate repo <code>MaryAnzh/Crypto-Trade-Angular_Task-Backend</code>): Auth module, Prisma User schema, Docker config, <code>UserService</code>, <code>+18</code> age validation, Swagger docs, CORS configuration.</li>
+<li>AuthService on the frontend (PR #56).</li>
+<li>Settings page layout with forms (PR #67, #78).</li>
+<li>Sidebar refactor from RxJS to signals + CSS animation (PR #81) — after mentor feedback.</li>
+<li>ClickOutside custom directive (sprint-2 diary).</li>
+<li>Public API service (Binance market data, PRs #94, #101, #102 — PR #94 was reverted and re-submitted with fixes; final merge PR #102, 2026-06-22).</li>
+<li>Chart component for candlestick/line visualization (PR #104, 2026-06-22).</li>
+<li>5 diaries: sprint-1 ×3 (combined in one file), sprint-2, sprint-3.</li>
+</ul>
+<p><strong>Level:</strong> The strongest technical contributor by scope. Her sprint-1 diary (50 hours across two weeks) is the most detailed of the three — documents the typography component→directive migration rationale, interface naming convention analysis, and cross-referencing public Angular repos for structure decisions. Sprint-2 diary (72 hours over two weeks) covers routing, lazy loading with <code>loadComponent</code>, guards, signals, NestJS CORS, and <code>@HostListener</code>. She documents problems and fixes. The prior React experience noted by sprint-1 mentor appears to have been a temporary calibration issue — sprint-2 score of 100 suggests it was resolved. AI use is mentioned without explicit reflection on validation (unlike gerlinda137 who calls it out).</p>
+<p><strong>Risk:</strong> The public API service had a rough merge (PR #94 opened 2026-06-21, merged 2026-06-22, immediately reverted in PR #101, then re-submitted in PR #102 and merged) — something broke. The sprint-3 diary is notably thin ("Create a service for integration with the public API routes / Create chart component" with no problems or learnings documented). This may indicate time pressure at the sprint-3 close, or the chart component being less understood than the auth/routing work. Probe at interview.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the public API service — how are you fetching Binance market data, and what state management approach are you using for the chart data?" (targets the area with the merge trouble). Also: "You refactored the sidebar from RxJS to signals — what specifically changed? When would you still choose an Observable over a signal?" Tests depth of the signals migration beyond "we switched it."</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>radm1la — 55 commits / 16 PRs (13 merged) / 6 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Header component with Angular Material (PR #12).</li>
+<li>SVG → Angular Material icons replacement with theme-aware styles (PR #17, sprint-1 diary 2026-05-18).</li>
+<li>TokenService with unit tests (separating token management from AuthService, PR #66, sprint-2 diary 2026-05-30).</li>
+<li>Auth interceptor: JWT attachment to HTTP requests + 401 handling → logout (PR #69, sprint-2 diary 2026-05-30).</li>
+<li>Auth guard protecting private routes (PR #70, sprint-2 diary 2026-05-30); later fixed per mentor's PR review comments (PR #99, 2026-06-22 — removed publicRoutes logic from guard).</li>
+<li>404 Not Found page with lazy loading and preload strategy (PR #87, sprint-2 diary 2026-06-08).</li>
+<li>About Us page with <code>TeamMember</code> model, <code>team-data.ts</code> mock array, <code>@for</code>, and signal <code>input()</code> to card component; two custom directives (expand-on-click, hover-lift) (PR #100, sprint-3 diary 2026-06-22).</li>
+<li>6 diaries: sprint-1 ×3 (2026-05-18 for 1h, sprint-1.md combined, sprint-1-2026-05-22), sprint-2 ×2 (2026-05-30, 2026-06-08), sprint-3 (2026-06-22).</li>
+</ul>
+<p><strong>Level:</strong> Honest self-assessor. Her diary entries are candid and often self-deprecating: "wouldn't call it a problem but I'd never written tests and guard before," "my beginner level code lol," "I read docs, checked my old project, asked a lot of questions to AI." The mentor's sprint-2 note ("makes mistakes in some theoretical answers, but knows her code") is consistent — she built working auth primitives (token service, interceptor, guard with unit tests) but may conflate Angular-specific terminology under pressure. The auth guard was revisited in sprint 3 (PR #99 removed the <code>publicRoutes</code> pattern, suggesting the first implementation had a design flaw caught in review). Commit count discrepancy (two git identities: Radmi1a05 + CodeRadmila) is a tooling setup issue, not a red flag — the work is there.</p>
+<p><strong>Risk:</strong> AI reliance is the most explicit of the three students. Sprint-2 diary: "I had a conversation with AI" to determine implementation order; "asked a lot of questions to AI." She does follow up with documentation reading and checks her old projects, but the flow is AI-first rather than docs-first. Worth probing whether she can reconstruct the auth guard logic without a template. The 6 diaries show genuine reflection but also reveal that sprint-1 week-1 output was very light (icon replacement, 1 hour). Her sprint-2 guard was later corrected — make sure she understands the final version, not the original.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the auth guard after the sprint-3 fix — what was wrong with the original <code>publicRoutes</code> pattern, and how does <code>canActivate</code> work with <code>Router</code> and <code>inject()</code> in a functional guard?" This specifically targets the guard revision (PR #99) and tests whether she understands the fix or just applied it. Also: "You wrote unit tests for TokenService — what does your test check, and what did you mock?" Tests whether she can articulate unit testing concepts beyond having written the test.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A healthy three-person team that crossed the sprint-2 finish line with all members active and contributing. The workload split is reasonable: gerlinda137 owns project structure and forms, maryanzh owns the Angular feature surface and an actual backend, radm1la owns auth primitives and UX support pages. No silent members, no one-person-carries-all dynamic. The project has a working deploy and a real NestJS backend — ambitious for a ~6-week course.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>maryanzh's output is technically the broadest (theme system, backend, auth service, signals migration, chart component) and her diary depth is the best of the three. Her sprint-2 score of 100 is credible.</li>
+<li>gerlinda137 is a reliable lead — she keeps structure in order across all sprints, maintains CI/CD, and has documented problem-solving in her diaries. Self-corrects without being told (the refactor PRs across all sprints).</li>
+<li>radm1la's 6 diary entries are the most frequent in the team and show genuine learning progression, including the willingness to write and then fix code after mentor review.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li><strong>AI reliance (radm1la):</strong> most explicit in her diaries. Verify she understands the auth guard logic, not just the implementation steps given to her by AI.</li>
+<li><strong>Theoretical vocabulary (gerlinda137):</strong> sprint-2 mentor flagged "difficulties explaining approaches." The from-scratch explanation probe below will surface whether this has improved.</li>
+<li><strong>Chart component + API service (maryanzh):</strong> the sprint-3 diary is thin, the public API PR had a revert-and-redo sequence, and the chart is brand-new. Probe whether she understands the data flow or assembled it under sprint-close pressure.</li>
+<li><strong>Backend verification:</strong> the NestJS backend is declared and README includes Docker setup instructions. Verify at interview: is it actually running, or scaffolded only? What endpoints does it expose, and are they consumed by the Angular app yet?</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> Use each student's own PR trail to make questions specific. For gerlinda137: reactive forms and the <code>PasswordMatchService</code> validator interface — she built it but the mentor noted articulation difficulty. For maryanzh: the signals migration rationale and the Binance API data flow — she did the most complex work, so push on the "why" not just the "what." For radm1la: the auth guard after its revision and the unit tests — she knows her code but theoretical framing is the gap to probe.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Runtime terror</h1>
+<h3>Межинтервьюный брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>gerlinda137/runtime-terror</code> (коммиты, PR, дневники разработчика по всем веткам). Снэпшот 2026-06-24. Цель: дать ментору контекст за 2 минуты перед защитой — кто что делал, кто понимает, что проверять.</blockquote>
+<p><strong>Одна строка:</strong> Зелёный — все три студентки активны до дедлайна спринта 2 (2026-06-22); чёткие зоны ответственности: gerlinda137 ведёт инфраструктуру и формы, maryanzh — основная фича-разработчик и владелец NestJS-бэкенда в отдельном репозитории, radm1la — примитивы авторизации и вспомогательные UX-страницы. Оценки ментора за спринт 2 (95 / 100 / 85) соответствуют активности в репозитории. Тихих участников нет, серьёзного дисбаланса нагрузки нет. Основные моменты для наблюдения: зависимость radm1la от AI и способность maryanzh подкреплять очевидную практическую компетентность теоретической терминологией.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + Стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>CryptoTrade — Angular SPA с рыночными данными в реальном времени, трекингом портфеля и симуляцией торговли</td></tr>
+<tr><td><strong>API</strong></td><td>Binance Testnet API (публичные данные + виртуальная торговля)</td></tr>
+<tr><td><strong>Бэкенд</strong></td><td>NestJS + Prisma + Docker (отдельный репозиторий, владелец — maryanzh)</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 20+, TypeScript, Angular Material, миграция RxJS → Signals в процессе курса</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/gerlinda137/runtime-terror">https://github.com/gerlinda137/runtime-terror</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-14</td></tr>
+<tr><td><strong>Последний пуш</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Открытые задачи</strong></td><td>20</td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://runtime-terror-crypto-trade.netlify.app/">https://runtime-terror-crypto-trade.netlify.app/</a> (Netlify, автодеплой)</td></tr>
+</tbody></table>
+<p>Примечательные решения: Angular Material — основная UI-библиотека (не Taiga UI); в спринте 1 команда обсудила компонент Typography vs. директива и остановилась на директиве; внедрение сигналов постепенное — sidebar рефакторен с RxJS на сигналы в спринте 2. Реальный NestJS-бэкенд с Auth, Docker и Prisma существует в отдельном репозитории (<code>MaryAnzh/Crypto-Trade-Angular_Task-Backend</code>) — нетипично для данного курса, стоит проверить фактическое состояние на защите.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студентки (согласно ростеру курса):</strong></p>
+<ul>
+<li><code>gerlinda137</code> (Ангелина Баранова) — тимлид; Ереван, Армения</li>
+<li><code>maryanzh</code> (Мария Ващаева) — основной контрибьютор фич + владелец бэкенда; Минск, Беларусь</li>
+<li><code>radm1la</code> (Радмила Шамилова) — примитивы авторизации + UX-страницы; Тбилиси, Грузия</li>
+</ul>
+<p><strong>Менторы:</strong></p>
+<ul>
+<li>Спринт 1: <code>eu-peregudova</code></li>
+<li>Спринт 2: <code>julia</code> / <code>julila</code> (вариант написания в наборе данных — одно и то же лицо)</li>
+</ul>
+<p>Ни один ментор не фигурирует как контрибьютор кода. Норма.</p>
+<p><strong>Внешние контрибьюторы:</strong> Не выявлены. Все коммиты соответствуют трём студенткам из ростера (gerlinda137 = Angelina Baranova, MaryAnzh = Maryia Vashchayeva, radm1la / CodeRadmila = Radmila Shamilova — два git-идентификатора, один человек).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снэпшот активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студентка</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смёрджено PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>gerlinda137</strong> (лид)</td><td>104</td><td>23</td><td>22</td><td>4</td><td>2026-06-22</td><td>высокий — лид + инфра + формы + релиз спринта 3</td></tr>
+<tr><td><strong>maryanzh</strong></td><td>71</td><td>19</td><td>18</td><td>5</td><td>2026-06-22</td><td>высокий — основной фича-движок + NestJS-бэкенд</td></tr>
+<tr><td><strong>radm1la</strong></td><td>55</td><td>16</td><td>13</td><td>6</td><td>2026-06-22</td><td>умеренно высокий — авторизация + страж + UX-страницы; больше всего записей в дневнике</td></tr>
+</tbody></table>
+<p>Количество коммитов по <code>git shortlog -sn --all</code>. У radm1la два git-идентификатора (Radmi1a05 = 35 коммитов, CodeRadmila = 20 коммитов). Количество PR — из GitHub API. Три PR у radm1la закрыты без мёржа (дублирующие сабмиты / superseded ветки).</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (защиты)</h2>
+<table><thead>
+<tr><th>Студентка</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>gerlinda137</td><td>100</td><td>95</td></tr>
+<tr><td>maryanzh</td><td>85</td><td>100</td></tr>
+<tr><td>radm1la</td><td>90</td><td>85</td></tr>
+</tbody></table>
+<p><strong>Комментарии ментора, спринт 1 (eu-peregudova):</strong></p>
+<ul>
+<li><strong>gerlinda137 (100):</strong> «Отлично справляешься! Сохраняй темп и не стесняйся задавать вопросы.»</li>
+<li><strong>maryanzh (85):</strong> «Основы Angular понимаешь уверенно, но советую уделить больше внимания Angular-специфике. Он похож на React внешне, но внутренние различия важны — иначе неверные предположения влекут поспешные ответы. Также рекомендую поработать над общими паттернами программирования и формулировками: это помогает лучше демонстрировать уже имеющуюся экспертизу. Продолжай в том же духе!»</li>
+<li><strong>radm1la (90):</strong> «Концепции понимаешь уверенно — берись за более сложные задачи в проекте, чтобы углубить знания. Продолжай в том же духе!»</li>
+</ul>
+<p><strong>Комментарии ментора, спринт 2 (julila):</strong></p>
+<ul>
+<li><strong>gerlinda137 (95):</strong> «Небольшие ошибки в терминологии, открыта к новым концепциям, хорошее know-how, но немного сложно объяснять подходы.»</li>
+<li><strong>maryanzh (100):</strong> «Хороший командный игрок, умеет объяснить свои мысли и идеи, открыта к новым подходам.»</li>
+<li><strong>radm1la (85):</strong> «Делает ошибки в некоторых теоретических ответах, но свой код знает.»</li>
+</ul>
+<p><strong>Сверка — расхождения между оценками на защите и активностью в репозитории:</strong></p>
+<ul>
+<li><strong>gerlinda137 (100 → 95 / высокая активность):</strong> Небольшое снижение с спринта 1 к спринту 2 точно совпадает с замечанием ментора о терминологических оговорках и трудностях с объяснением подходов. Её дневник показывает, что она понимает построенное (реактивные формы, <code>PasswordMatchService</code>, паттерн <code>resetForm()</code>), но в спринте 2 концепции стали сложнее. Оценка 95 справедлива: сильный практик, чуть менее свободный в Angular-терминологии. Расхождения с активностью в репозитории нет.</li>
+</ul>
+<ul>
+<li><strong>maryanzh (85 → 100 / высокая активность):</strong> Оценка 85 в спринте 1 сопровождалась конкретным предупреждением ментора о React-предположениях, ведущих к поспешным ошибочным ответам. Прыжок до 100 в спринте 2 говорит о том, что она прямо проработала это замечание — её дневник спринта 2 документирует глубокое погружение в роутинг, lazy loading, сигналы и NestJS-бэкенд (32ч + 40ч за две недели). Расхождения нет; траектория позитивная.</li>
+</ul>
+<ul>
+<li><strong>radm1la (90 → 85 / умеренно высокая активность):</strong> Небольшое снижение согласуется с комментарием ментора спринта 2. Её записи в дневнике честно рассказывают о зависимости от AI — она использовала разговор с AI чтобы определить порядок реализации компонентов авторизации, читала документацию после получения AI-ответов, и прямо отмечает «код уровня новичка», который пришлось рефакторить после ревью ментора в PR. Оценка 85 отражает реальное понимание построенного при теоретических пробелах. Соответствует данным дневника.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студенток</h2>
+<h3>gerlinda137 (лид) — 104 коммита / 23 PR (22 смёрджено) / 4 дневника</h3>
+<p><strong>Построила</strong> (из PR и дневников):</p>
+<ul>
+<li>Инициализация проекта: Angular CLI, Husky, линтинг (Unicorn), pre-commit хуки (дневник спринта 1, 2026-05-18).</li>
+<li>CI/CD: конфигурация Netlify (PR #21), валидация имён веток (PR #22, #24, #28), линтинг-воркфлоу для PR.</li>
+<li>Таблица криптовалют: моковые данные, кастомная директива <code>ChangeColor</code> (окрашивает числа в зелёный/красный со стрелкой), два кастомных пайпа — один обрезает «USDT» из символа, второй добавляет «+» к положительным числам; Angular Material table (PR #13).</li>
+<li>Рефакторинг структуры проекта по Angular style guide (PR #52, #54, #97, #106 — сквозная тема всех спринтов).</li>
+<li>Форма входа и многошаговая форма регистрации с реактивной валидацией и <code>PasswordMatchService</code> (PR #89, #91, дневник спринта 2, 2026-06-08).</li>
+<li>Страница «Contact Us» с формой и бэкенд-сервисом <code>ContactService</code> (PR #105, дневник спринта 3, 2026-06-22).</li>
+<li>Релизный мёрдж спринта 3 (PR #107, #108 — 2026-06-22).</li>
+<li>Дневники: 2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22.</li>
+</ul>
+<p><strong>Уровень:</strong> Активный и добросовестный лид. Дневники честны: задокументированы дилемма с Typography, боль разрешения конфликтов при rebase в спринте 2 и находка Angular form directive <code>resetForm()</code> в спринте 3. Прослеживается чёткий паттерн: построила — нашла ошибку — отрефакторила. PR с рефакторингом структуры охватывают все три спринта и показывают внимание к качеству кода. Слабая сторона по замечанию ментора спринта 2 — трудности с артикуляцией подходов (знает «что», чуть хуже — «почему»).</p>
+<p><strong>Риск:</strong> Минимальный. Дневник спринта 2 упоминает большое количество конфликтов при мёрдже из-за долгоживущей фича-ветки. Это может указывать на координационный пробел с командой, не на личную проблему.</p>
+<p><strong>Вопросы на защите:</strong> «Ты создала кастомный валидатор с <code>PasswordMatchService</code> — как он вписывается в реактивную форму? Какой интерфейс реализует кросс-полевой валидатор, и на каком уровне формы он подключается?» Проверяет, может ли она описать модель реактивных форм или только поведение UI. Следом: «Расскажи про фикс с <code>resetForm()</code> из дневника спринта 3 — почему <code>form.reset()</code> оставляет состояние ошибок, и что делает form directive иначе?»</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>maryanzh — 71 коммит / 19 PR (18 смёрджено) / 5 дневников</h3>
+<p><strong>Построила</strong> (из PR и дневников):</p>
+<ul>
+<li>Система светлой/тёмной темы через CSS custom properties и атрибут <code>data-theme</code> (дневник спринта 1, неделя 1, 18 часов).</li>
+<li>Компонент Sidebar с Angular Material, адаптивной вёрсткой и интеграцией темы (PR #11).</li>
+<li>Typography directive (перенесена с компонента в середине спринта 1 после командного обсуждения).</li>
+<li>Миграция на сигнальные инпуты (с <code>@Input()</code> на <code>input()</code>, дневник спринта 1, неделя 2).</li>
+<li>NestJS-бэкенд (отдельный репо <code>MaryAnzh/Crypto-Trade-Angular_Task-Backend</code>): Auth-модуль, Prisma User schema, Docker, <code>UserService</code>, проверка возраста <code>+18</code>, Swagger, CORS.</li>
+<li>AuthService на фронтенде (PR #56).</li>
+<li>Страница настроек с формами (PR #67, #78).</li>
+<li>Рефакторинг Sidebar с RxJS на сигналы + CSS-анимация (PR #81) — после обратной связи ментора.</li>
+<li>Кастомная директива ClickOutside (дневник спринта 2).</li>
+<li>Сервис публичного API (рыночные данные Binance, PR #94, #101, #102 — PR #94 был откачен и переподан с фиксами; итоговый мёрдж PR #102, 2026-06-22).</li>
+<li>Компонент чарта для candlestick/линейной визуализации (PR #104, 2026-06-22).</li>
+<li>5 дневников: спринт 1 ×3 (объединены в одном файле), спринт 2, спринт 3.</li>
+</ul>
+<p><strong>Уровень:</strong> Технически самый широкий вклад из трёх. Дневник спринта 1 (50 часов за две недели) — наиболее детальный в команде: задокументированы рефакторинг typography, анализ соглашений по именованию интерфейсов, сравнение публичных Angular-репозиториев. Дневник спринта 2 (72 часа) охватывает роутинг, lazy loading с <code>loadComponent</code>, стражи, сигналы, NestJS CORS и <code>@HostListener</code>. Использование AI не отражено в дневниках явно (в отличие от gerlinda137 и radm1la). Прыжок от 85 до 100 между спринтами убедителен по данным репозитория.</p>
+<p><strong>Риск:</strong> Сервис публичного API прошёл болезненный мёрдж (PR #94 подан 2026-06-21, смёрджен 2026-06-22, сразу откачен PR #101, затем переподан PR #102). Дневник спринта 3 заметно тонкий — нет ни проблем, ни описания «Что выучила». Возможно, давление дедлайна или компонент чарта менее изучен, чем auth-работа. Стоит проверить на защите.</p>
+<p><strong>Вопросы на защите:</strong> «Расскажи про сервис публичного API — как ты получаешь рыночные данные от Binance, и как управляется состояние для данных чарта?» (целится в проблемную зону с откатом). Также: «Ты рефакторила Sidebar с RxJS на сигналы — что конкретно изменилось? Когда ты всё же выберешь Observable вместо сигнала?» Проверяет глубину понимания миграции, а не только факт её выполнения.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>radm1la — 55 коммитов / 16 PR (13 смёрджено) / 6 дневников</h3>
+<p><strong>Построила</strong> (из PR и дневников):</p>
+<ul>
+<li>Компонент Header с Angular Material (PR #12).</li>
+<li>Замена SVG на иконки Angular Material со стилями по теме (PR #17, дневник спринта 1, 2026-05-18).</li>
+<li>TokenService с юнит-тестами (выделение управления токеном из AuthService, PR #66, дневник спринта 2, 2026-05-30).</li>
+<li>Auth interceptor: прикрепление JWT к HTTP-запросам + обработка 401 → logout (PR #69, дневник спринта 2, 2026-05-30).</li>
+<li>Auth guard защита приватных роутов (PR #70, дневник спринта 2, 2026-05-30); исправлен по ревью ментора (PR #99, 2026-06-22 — убрана логика <code>publicRoutes</code> из стража).</li>
+<li>Страница 404 с lazy loading и стратегией preload (PR #87, дневник спринта 2, 2026-06-08).</li>
+<li>Страница About Us с моделью <code>TeamMember</code>, файлом <code>team-data.ts</code>, директивой <code>@for</code> и сигнальным <code>input()</code> в карточку; две кастомные директивы (expand-on-click, hover-lift) (PR #100, дневник спринта 3, 2026-06-22).</li>
+<li>6 дневников: спринт 1 ×3 (2026-05-18 — 1ч, sprint-1.md общий, sprint-1-2026-05-22), спринт 2 ×2 (2026-05-30, 2026-06-08), спринт 3 (2026-06-22).</li>
+</ul>
+<p><strong>Уровень:</strong> Честный самоанализ. Дневники откровенны и часто самокритичны: «никогда не писала тесты и стражи раньше», «мой код уровня новичка lol», «читала документацию, смотрела старый проект, задавала много вопросов AI». Замечание ментора в спринте 2 («делает ошибки в теоретических ответах, но знает свой код») совпадает с дневниками — она построила работающие примитивы авторизации (token service с тестами, interceptor, guard), но под давлением вопросов может путать Angular-термины. Guard был пересмотрен в спринте 3 (PR #99 убрал паттерн <code>publicRoutes</code> — значит, первая реализация имела дизайн-дефект, пойманный на ревью). Расхождение коммитов (два git-идентификатора) — проблема конфигурации инструментов, не красный флаг.</p>
+<p><strong>Риск:</strong> Зависимость от AI — наиболее явная из трёх. Дневник спринта 2: «я поговорила с AI» чтобы определить порядок реализации; «спрашивала много вопросов у AI». Она дополняет это чтением документации и проверкой старых проектов, но поток AI-first. Стоит проверить, может ли она восстановить логику auth guard без шаблона. Исправленный guard (PR #99) — убедитесь, что она понимает итоговую версию, а не только оригинальную.</p>
+<p><strong>Вопросы на защите:</strong> «Расскажи про auth guard после фикса в спринте 3 — что было не так с исходным паттерном <code>publicRoutes</code> и как работает <code>canActivate</code> с <code>Router</code> и <code>inject()</code> в функциональном страже?» Целится именно в правку (PR #99) и проверяет, понимает ли она исправление или просто применила его. Также: «Ты написала юнит-тесты для TokenService — что именно проверяет твой тест и что ты замокала?» Проверяет способность формулировать концепции тестирования, а не только факт написания тестов.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>В целом:</strong> Здоровая команда из трёх человек, которая пересекла финишную черту спринта 2 при активном участии всех участниц. Распределение нагрузки разумное: gerlinda137 отвечает за структуру проекта и формы, maryanzh — за Angular-фичи и настоящий бэкенд, radm1la — за примитивы авторизации и UX-страницы. Тихих участников нет, нет ситуации «один тащит всех». У проекта есть рабочий деплой и реальный NestJS-бэкенд — амбициозно для ~6-недельного курса.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>Вклад maryanzh технически самый широкий (система тем, бэкенд, auth service, миграция на сигналы, компонент чарта), и детализация её дневников — лучшая из трёх. Оценка 100 в спринте 2 убедительна.</li>
+<li>gerlinda137 — надёжный лид: держит структуру в порядке во всех спринтах, поддерживает CI/CD, документирует решение проблем в дневниках. Самокорректируется без напоминаний (рефакторинг-PR во всех спринтах).</li>
+<li>6 записей в дневнике radm1la — наибольшая частота в команде, показывает реальный прогресс обучения, включая готовность написать и затем исправить код после ревью ментора.</li>
+</ul>
+<p><strong>На заметку:</strong></p>
+<ul>
+<li><strong>Зависимость от AI (radm1la):</strong> наиболее явная в дневниках. Проверить понимание логики auth guard, а не только шагов реализации, подсказанных AI.</li>
+<li><strong>Теоретическая терминология (gerlinda137):</strong> ментор спринта 2 отметил «трудности с объяснением подходов». Зондирующий вопрос «с нуля» покажет, изменилось ли это.</li>
+<li><strong>Компонент чарта + API-сервис (maryanzh):</strong> дневник спринта 3 тонкий, с PR публичного API была ситуация откат-и-переподача, чарт — совсем новый. Проверить, понимает ли она поток данных или собрала под давлением дедлайна.</li>
+<li><strong>Верификация бэкенда:</strong> NestJS-бэкенд заявлен, README содержит инструкции по Docker. Уточнить на защите: он реально работает или только заскаффолден? Какие эндпоинты есть и потребляет ли их Angular-приложение?</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Используй собственный PR-трейл каждой студентки для конкретных вопросов. Для gerlinda137: реактивные формы и интерфейс валидатора в <code>PasswordMatchService</code> — она это построила, но ментор отметил трудности с артикуляцией. Для maryanzh: обоснование миграции на сигналы и поток данных Binance API — она сделала самую сложную работу, поэтому дави на «почему», а не только на «что». Для radm1la: auth guard после правки и юнит-тесты — она знает свой код, но теоретическое оформление — точка для проверки.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

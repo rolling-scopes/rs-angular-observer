@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Red Hot Chili Pipes · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Red Hot Chili Pipes</strong><strong class="lang-ru">Mentor briefing — Red Hot Chili Pipes</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">member inactive</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">участник неактивен</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Red Hot Chili Pipes</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>EVALORE/chili-flow</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — a healthy two-person team. evalore and LenaStask are both strong and active into sprint 3 as of this snapshot, with diaries, commits, and rising mentor scores; they form a working team carrying the project. A third member, SergeyBednyuk, has been inactive since 2026-06-02 (Sprint-1 defence score 0, no sprint-2 record), so the team is assessed on its two active members; his earned score remains on record. The product is alive and deployed.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Chili Flow — Angular SPA for organizing cooking flows, with track/album browsing via Jamendo API and NestJS backend</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 19+, TypeScript strict, Spartan UI (shadcn/ng), Tailwind CSS 4, Signal Forms, NestJS backend, Vercel CI/CD</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/EVALORE/chili-flow">https://github.com/EVALORE/chili-flow</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-12</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-24</td></tr>
+<tr><td><strong>Open issues</strong></td><td>14</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://chili-flow.vercel.app">https://chili-flow.vercel.app</a> (Vercel, auto-deploy via GitHub Actions)</td></tr>
+</tbody></table>
+<p>Notable stack choices: Spartan UI (shadcn for Angular) over Taiga UI — an opinionated choice documented in README. Signal-based primitives throughout: <code>signal()</code>, <code>input()</code>, <code>output()</code>, <code>computed()</code>, <code>linkedSignal()</code>, <code>rxResource()</code>. NestJS backend exists and evalore references database configuration — a genuine backend, not just a README note. LenaStask is actively connecting the frontend to the backend in sprint 3. The repo includes an <code>llm.md</code> instructions file committed by evalore in the initial setup — AI tooling was part of the project from day one.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>evalore</code> — Team Lead (Vladimir Eremia; project founder, repo owner)</li>
+<li><code>LenaStask</code> — Member (Alena Staskevich)</li>
+<li><code>SergeyBednyuk</code> — Member (Siarhei B)</li>
+</ul>
+<p><strong>Mentor:</strong></p>
+<ul>
+<li><code>ievgeniiaabdulina</code> — Sprint 1 interviewer; no commits, normal.</li>
+<li><code>eu-peregudova</code> — Sprint 2 interviewer; no commits, normal.</li>
+</ul>
+<p><strong>External contributors:</strong> None identified.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>evalore</strong> (lead)</td><td>30</td><td>5</td><td>5</td><td>2</td><td>2026-06-24</td><td>high — auth feature in active development</td></tr>
+<tr><td><strong>LenaStask</strong></td><td>32</td><td>7</td><td>5</td><td>3</td><td>2026-06-22</td><td>high — sprint 3 feature branch open, PR pending</td></tr>
+<tr><td><strong>SergeyBednyuk</strong></td><td>19</td><td>4</td><td>3 (1 diary PR closed unmerged)</td><td>1</td><td>2026-06-02</td><td>inactive since 2026-06-02 (0 at Sprint 1 defence, no sprint-2 record)</td></tr>
+</tbody></table>
+<p>Commit counts from <code>git shortlog -sn --all</code> across all remote branches (GitFlow — not just <code>main</code>). LenaStask appears under two git identities (<code>lenaStsk</code> and <code>Alena Staskevich</code>) which are the same person; counts are combined.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 mentor: <code>ievgeniiaabdulina</code>. Sprint 2 mentor: <code>eu-peregudova</code>.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>evalore</td><td>100</td><td>100</td></tr>
+<tr><td>LenaStask</td><td>75</td><td>100</td></tr>
+<tr><td>SergeyBednyuk</td><td>0</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Sprint 1 comments (verbatim):</strong></p>
+<ul>
+<li><strong>evalore (100):</strong> "This student demonstrates a deep understanding of modern Angular principles and excels in critical thinking. Rather than relying on a single method, he deeply analyzes requirements to explain the specific strengths and weaknesses of different approaches, making informed architectural decisions."</li>
+<li><strong>LenaStask (75):</strong> "The student demonstrates a good grasp of frontend development, confidently explaining complex code and foundational Angular concepts with high clarity and assurance. To continue growing, the student should challenge themselves by exploring advanced enterprise state management patterns, evaluating the performance tradeoffs of competing designs."</li>
+<li><strong>SergeyBednyuk (0):</strong> "Student does not respond."</li>
+</ul>
+<p><strong>Sprint 2 comments (verbatim):</strong></p>
+<ul>
+<li><strong>evalore (100):</strong> "Your understanding is deep and thorough, great job!"</li>
+<li><strong>LenaStask (100):</strong> "Great job! You understand concepts really well! Continue deepening your knowledge :)"</li>
+<li><strong>SergeyBednyuk:</strong> No Sprint 2 record (null). Sprint 2 deadline was 2026-06-23 — interview may not have been scheduled, or student did not attend again.</li>
+</ul>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>evalore (100 / 100 / high activity):</strong> No divergence. The scores are consistent with his diary trail and code output. Sprint 1 diary is minimal in depth but his code (project init, Spartan UI integration, lazy loading, tsconfig paths, CI/CD, NestJS backend, auth flow currently in progress) reflects someone who builds first and describes later. The mentor's Sprint 1 comment ("analyzes requirements... informed architectural decisions") aligns with what the repo shows: thoughtful choice of Spartan UI over Taiga, careful config structure.</li>
+</ul>
+<ul>
+<li><strong>LenaStask (75 → 100 / high and increasing activity):</strong> A clean improvement arc with evidence behind it. Sprint 1 diary shows solid fundamentals (Jamendo API integration, custom pipes, signal input/output) but some concepts were freshly learned ("Basic data binding... how to create project"). The 75 at Sprint 1 is consistent with strong practical output but room to grow on theory depth. By Sprint 2 she implemented <code>linkedSignal</code> to replace a <code>computed()</code>/<code>effect()</code> mess, <code>rxResource</code> for backend data, and <code>takeUntilDestroyed(this.destroyRef)</code> for subscription cleanup — and can articulate why each was chosen. The 100 at Sprint 2 is earned.</li>
+</ul>
+<ul>
+<li><strong>SergeyBednyuk (0 / inactive since 2026-06-02):</strong> His Sprint 1 contributions were real: 19 commits across branches, 3 merged PRs, and a substantive Sprint 1 diary (Header component with debounced search, <code>takeUntilDestroyed</code>, signal-based output, 25 hours logged). His earned Sprint 1 mentor score (0, "Student does not respond" — he built the work but did not present at the interview) stays on record. His last commit is 2026-05-27; his artist page PR (#20) merged 2026-06-02 is his only sprint-2 contribution, with no Sprint 2 diary and no Sprint 2 defence record. After 2026-06-02 there is no further activity. The team is assessed on its two active members; this is noted as context, not as a divergence to investigate.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>evalore (lead) — 30 commits / 5 PRs (5 merged) / 2 diaries</h3>
+<p><strong>Built</strong> (from PRs, diaries, and branch inspection):</p>
+<ul>
+<li>Project foundation: Angular project init, Spartan UI library integration, Tailwind 4 configuration, tsconfig paths, ESLint + Prettier, barrel files, lazy loading, 404 page, shared components, <code>AlbumCard</code> and <code>TrackTable</code> components (PR #12, #14 — sprint 1). ~18 hours.</li>
+<li>LLM instructions file committed at project start (<code>feat: add llm instructions</code>) — AI tooling declared upfront.</li>
+<li>Sprint 2: CI/CD via GitHub Actions (lint + Prettier checks + Vercel deploy, PR #43), NestJS backend configuration (database setup, core backend logic referenced in Sprint 2 diary), artist-list feature integration, library playlist management (merged LenaStask's PR #42). ~15 hours reported.</li>
+<li>Sprint 3 (active, unmerged): <code>feature/add-authorization</code> branch — routed login/register forms, auth services, alert and spinner UI components, Spartan field components. Last commit 2026-06-24 22:57.</li>
+</ul>
+<p><strong>Level:</strong> Strongest member by a clear margin. His Sprint 1 diary is brief and slightly formulaic ("Problems: Configuring backend. Solutions: Checked existing solution and tradeoffs") — but this is compensated by the volume and quality of actual commits. He set the project's architectural direction (Spartan UI + Tailwind, NestJS backend, Vercel), handles CI/CD, and is still actively coding the day before this briefing. Two mentor 100s are consistent with what the repo shows.</p>
+<p><strong>Risk:</strong> Sprint 2 diary is mislabeled as "Sprint 1" in its heading — content is correct (CI/CD, backend) but the header error suggests the diary was written quickly. Not a code risk; minor self-documentation sloppiness.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the authorization flow you're building in <code>feature/add-authorization</code> — what does the router guard protect, and how does the auth service communicate with the NestJS backend?" Should be direct since it's his current work. Then: "Why did you choose <code>linkedSignal</code> over <code>effect()</code> for form state in the playlist dialog? Your teammate implemented that — do you understand the tradeoff?" Tests whether he tracks teammates' architectural decisions, not just his own.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>LenaStask — 32 commits / 7 PRs (5 merged, 2 open) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Album page with nested components, Jamendo API integration (<code>HttpClient</code> calls), album data interfaces, custom pipe for track duration conversion (<code>mm:ss</code> format), Spartan UI table integration, component communication via <code>signal input()</code> + <code>output()</code>, <code>ngOnInit</code> for data fetching. PR #9 (Album UI), PR #16 (code review fixes). ~20 hours.</li>
+<li>Sprint 2: Library Page scaffold, playlists list/item components, playlist create and edit dialogs using Spartan UI, Signal Forms with schema-based validation, <code>linkedSignal</code> for form state (replacing <code>computed()</code>/<code>effect()</code>), merged as PR #42. ~20 hours.</li>
+<li>Sprint 3 (active, unmerged): Feature/library-playlist branch (PR #45, open 2026-06-21) — playlist deletion workflow with confirmation dialog, backend integration using <code>rxResource</code> + <code>.reload()</code>, <code>takeUntilDestroyed(this.destroyRef)</code> for subscription cleanup, router guard for private library view, git conflict resolution via <code>git checkout origin/dev -- package.json</code>. Diary PR #46 (open 2026-06-22).</li>
+</ul>
+<p><strong>Level:</strong> Technically the highest commit count across all branches, with three substantive diary entries that show genuine learning progression. Sprint 1 diary is straightforward (learning Angular fundamentals). Sprint 2 diary documents a real conceptual leap: she identified that <code>computed()</code> is read-only and cannot feed a Signal Form engine, switched to <code>linkedSignal</code>, and can explain why. Sprint 3 diary shows comfort with advanced topics: Reactive Graph, Change Detection internals, <code>rxResource</code>, subscription lifecycle. The improvement from 75 to 100 between sprints is supported by concrete evidence in the diaries and code.</p>
+<p><strong>Risk:</strong> Two sprint 3 PRs are open (#45 and #46) but not yet merged. The sprint 3 diary mentions a git merge conflict caused by the dev branch history being rewritten — her fix (cherry-picking package.json from origin/dev) is correct and she documented it clearly. The unmerged state may just reflect timing (PR opened 2026-06-21–22, Sprint 2 deadline was 2026-06-23). Low risk.</p>
+<p><strong>Probe at interview:</strong> "In your Sprint 2 diary you mention that <code>computed()</code> can't be used with Signal Forms — walk me through why that is and what <code>linkedSignal</code> gives you instead." This is from her own writing and tests real understanding vs. copied solution. Then: "You used <code>takeUntilDestroyed(this.destroyRef)</code> in sprint 3. When is <code>destroyRef</code> needed explicitly versus when can you skip the parameter?" Tests depth beyond the happy path.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>SergeyBednyuk — inactive since 2026-06-02 (Sprint-1 defence score 0, no sprint-2 record) — 19 commits / 4 PRs (3 merged, 1 diary PR closed) / 1 diary</h3>
+<p><strong>Note:</strong> SergeyBednyuk has been inactive since 2026-06-02; he scored 0 at the Sprint 1 defence and has no Sprint 2 diary, score, or commits. His Sprint 1 contributions below are factual and remain on record, and his Sprint 1 mentor score is kept in the tables. The team is assessed on its two active members; his earned score remains on record.</p>
+<p><strong>Built</strong> (from PRs and diary):</p>
+<ul>
+<li>Sprint 1: Header component with Spartan UI — responsive 3-section layout (logo + nav, search bar, user button), debounced live search with Reactive Forms + <code>valueChanges</code> + <code>debounceTime</code> + <code>distinctUntilChanged</code>, signal-based <code>output()</code> for event propagation, <code>takeUntilDestroyed()</code> for subscription cleanup. Solved an ESLint output-naming conflict (<code>searchChange</code> instead of <code>search</code>). PRs #8 (header implementation) and #15 (header refactor + dark theme colors). ~25 hours logged.</li>
+<li>Sprint 1 diary PR #11 was submitted (2026-05-18) but closed without merge — his diary content exists only on the <code>siarhei/diary-1</code> branch, not on main. The diary itself is substantive and shows genuine learning.</li>
+<li>Sprint 2: Popular artists list + artist page UI (PR #20, merged 2026-06-02). One commit on <code>siarhei/artists-list-discover</code> dated 2026-05-27; the PR merged 2026-06-02. This is his only sprint-2 contribution.</li>
+<li>No sprint-2 diary on any branch. No commits or PRs after 2026-06-02.</li>
+</ul>
+<p><strong>Level:</strong> Sprint 1 output is real: the diary documents specific technical problem-solving (spartan-ng styling conflict resolved with <code>!bg-transparent</code>, output name renamed to avoid ESLint collision, <code>takeUntilDestroyed()</code> used correctly in the constructor). This is not rote copying — he understood what he was doing. The 25-hour estimate is plausible given the breadth of the header feature.</p>
+<p><strong>Status — inactive since 2026-06-02:</strong> He did not attend the Sprint 1 defence interview (score 0, "Student does not respond"), his sprint-1 diary PR was never merged to main, and after one sprint-2 PR (artist page, merged 2026-06-02) there is no further activity — no sprint-2 diary, no defence record, no commits. There is no interview to prepare for; the note above exists to credit his real sprint-1 work and to make clear the team is assessed on its two active members.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A healthy two-person team carrying the project. Originally three members; SergeyBednyuk has been inactive since 2026-06-02 (noted above, his earned Sprint 1 score kept on record). The two remaining members — evalore and LenaStask — are both strong and active into sprint 3 with diaries and commits, and form a genuine working team. The product is deployed (<a href="https://chili-flow.vercel.app)">https://chili-flow.vercel.app)</a> and more ambitious than a two-person roster suggests: NestJS backend, Signal Forms, Spartan UI, authorization flow in progress. The team is tiered <strong>green</strong> on the two active members.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>evalore is a credible tech lead with consistent 100s and still actively building auth in sprint 3.</li>
+<li>LenaStask shows a well-documented improvement arc: from Angular basics in sprint 1 to <code>linkedSignal</code>, <code>rxResource</code>, and backend integration by sprint 3. Three diaries, all substantive.</li>
+<li>The team runs a structured GitFlow: feature branches, PR reviews, CI/CD on Vercel, issues with sub-issues.</li>
+</ul>
+<p><strong>Inactive member:</strong></p>
+<ul>
+<li>SergeyBednyuk has been inactive since 2026-06-02 (Sprint-1 defence score 0, no sprint-2 record). His Sprint 1 work was real and his earned score is kept on record; this is noted but does not weigh against the team's tier. The artist page (his sprint-2 PR) is merged into the codebase, so any future questions about that surface go to the active members who now own it.</li>
+</ul>
+<p><strong>Watch (minor):</strong></p>
+<ul>
+<li>evalore's Sprint 2 diary is mislabeled ("Sprint 1" heading, sprint-2 content inside) — minor, but shows low investment in self-documentation relative to his code output.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> For evalore: focus on the auth flow in progress and the NestJS backend design — he is most engaged there and the "deep understanding + architectural tradeoff" characterization from the mentor is worth probing with a real scenario. For LenaStask: go to her own diary writing — the <code>linkedSignal</code> vs <code>computed()</code> distinction is a litmus test for whether she internalized the sprint-2 concepts.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Red Hot Chili Pipes</h1>
+<h3>Кросс-интервью брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>EVALORE/chili-flow</code> (коммиты, PR, дневники разработки по всем ветвям). Срез данных: 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, что нужно прощупать.</blockquote>
+<p><strong>Краткая характеристика:</strong> Green — здоровая команда из двух человек. evalore и LenaStask оба сильные и активные в рамках третьего спринта на дату среза — дневники, коммиты, растущие оценки менторов; вдвоём они образуют рабочую команду, которая ведёт проект. Третий участник, SergeyBednyuk, не проявлял активности с 2026-06-02 (балл защиты Sprint 1 — 0, записи по Sprint 2 нет), поэтому команда оценивается по двум активным участникам; его заработанный балл сохранён. Продукт работает и задеплоен.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Chili Flow — Angular SPA для организации кулинарных флоу, с просмотром треков/альбомов через Jamendo API и бэкендом на NestJS</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 19+, TypeScript strict, Spartan UI (shadcn/ng), Tailwind CSS 4, Signal Forms, NestJS (бэкенд), Vercel CI/CD</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/EVALORE/chili-flow">https://github.com/EVALORE/chili-flow</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-12</td></tr>
+<tr><td><strong>Последний пуш</strong></td><td>2026-06-24</td></tr>
+<tr><td><strong>Открытые задачи</strong></td><td>14</td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://chili-flow.vercel.app">https://chili-flow.vercel.app</a> (Vercel, автодеплой через GitHub Actions)</td></tr>
+</tbody></table>
+<p>Примечательные решения по стеку: Spartan UI (shadcn для Angular) вместо Taiga UI — осознанный выбор, зафиксированный в README. Сигнальные примитивы используются везде: <code>signal()</code>, <code>input()</code>, <code>output()</code>, <code>computed()</code>, <code>linkedSignal()</code>, <code>rxResource()</code>. NestJS-бэкенд реальный — evalore упоминает настройку базы данных; LenaStask в третьем спринте активно подключает фронтенд к этому бэкенду. В первичном коммите evalore зафиксировал файл <code>llm.md</code> с инструкциями для ИИ-инструментов — ИИ-ассистенты были частью проекта с первого дня.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (по реестру курса):</strong></p>
+<ul>
+<li><code>evalore</code> — тимлид (Владимир Эремия; основатель проекта, владелец репозитория)</li>
+<li><code>LenaStask</code> — участник (Алена Стаскевич)</li>
+<li><code>SergeyBednyuk</code> — участник (Сергей / Сяргей Б.)</li>
+</ul>
+<p><strong>Ментор:</strong></p>
+<ul>
+<li><code>ievgeniiaabdulina</code> — интервьюер первого спринта; коммитов нет, норма.</li>
+<li><code>eu-peregudova</code> — интервьюер второго спринта; коммитов нет, норма.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong> не обнаружены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Активность (на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветви)</th><th>PR</th><th>Влитые PR</th><th>Дневники</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>evalore</strong> (тимлид)</td><td>30</td><td>5</td><td>5</td><td>2</td><td>2026-06-24</td><td>высокий — фича авторизации в активной разработке</td></tr>
+<tr><td><strong>LenaStask</strong></td><td>32</td><td>7</td><td>5</td><td>3</td><td>2026-06-22</td><td>высокий — ветка третьего спринта открыта, PR на рассмотрении</td></tr>
+<tr><td><strong>SergeyBednyuk</strong></td><td>19</td><td>4</td><td>3 (1 PR с дневником закрыт без влития)</td><td>1</td><td>2026-06-02</td><td>без активности с 2026-06-02 (0 на защите Sprint 1, записи по Sprint 2 нет)</td></tr>
+</tbody></table>
+<p>Количество коммитов — из <code>git shortlog -sn --all</code> по всем удалённым ветвям (GitFlow, не только <code>main</code>). LenaStask фигурирует под двумя git-именами (<code>lenaStsk</code> и <code>Alena Staskevich</code>) — это один человек, счётчик суммирован.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (защиты)</h2>
+<p>Ментор первого спринта: <code>ievgeniiaabdulina</code>. Ментор второго спринта: <code>eu-peregudova</code>.</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>evalore</td><td>100</td><td>100</td></tr>
+<tr><td>LenaStask</td><td>75</td><td>100</td></tr>
+<tr><td>SergeyBednyuk</td><td>0</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Комментарии к оценкам за спринт 1 (дословно):</strong></p>
+<ul>
+<li><strong>evalore (100):</strong> «This student demonstrates a deep understanding of modern Angular principles and excels in critical thinking. Rather than relying on a single method, he deeply analyzes requirements to explain the specific strengths and weaknesses of different approaches, making informed architectural decisions.»</li>
+<li><strong>LenaStask (75):</strong> «The student demonstrates a good grasp of frontend development, confidently explaining complex code and foundational Angular concepts with high clarity and assurance. To continue growing, the student should challenge themselves by exploring advanced enterprise state management patterns, evaluating the performance tradeoffs of competing designs.»</li>
+<li><strong>SergeyBednyuk (0):</strong> «Student does not respond.»</li>
+</ul>
+<p><strong>Комментарии к оценкам за спринт 2 (дословно):</strong></p>
+<ul>
+<li><strong>evalore (100):</strong> «Your understanding is deep and thorough, great job!»</li>
+<li><strong>LenaStask (100):</strong> «Great job! You understand concepts really well! Continue deepening your knowledge :)»</li>
+<li><strong>SergeyBednyuk:</strong> запись о втором спринте отсутствует (null). Дедлайн второго спринта — 2026-06-23; интервью либо не было назначено, либо студент снова не явился.</li>
+</ul>
+<p><strong>Сверка — расхождения между оценками на защите и активностью в репо:</strong></p>
+<ul>
+<li><strong>evalore (100 / 100 / высокая активность):</strong> Расхождений нет. Оценки соответствуют дневникам и коду. Дневник первого спринта краткий по форме, но код (инициализация проекта, Spartan UI, lazy loading, CI/CD, NestJS, авторизационный флоу в процессе) отражает человека, который сначала строит, а описывает потом. Комментарий ментора («анализирует требования... осознанные архитектурные решения») совпадает с тем, что видно в репозитории.</li>
+</ul>
+<ul>
+<li><strong>LenaStask (75 → 100 / высокая и растущая активность):</strong> Чёткая дуга роста с подкреплёнными данными. Дневник первого спринта — уверенные основы (Jamendo API, кастомные пайпы, signal input/output), но часть концептов была изучена по ходу работы. Оценка 75 в первом спринте соответствует сильной практической отдаче при ещё неглубокой теории. Ко второму спринту она реализовала <code>linkedSignal</code> вместо запутанной цепочки <code>computed()</code>/<code>effect()</code>, <code>rxResource</code> для данных от бэкенда и <code>takeUntilDestroyed(this.destroyRef)</code> для очистки подписок — и может объяснить, почему. Оценка 100 заслужена.</li>
+</ul>
+<ul>
+<li><strong>SergeyBednyuk (0 / без активности с 2026-06-02):</strong> Его вклад в первый спринт был реальным: 19 коммитов по ветвям, 3 влитых PR, содержательный дневник первого спринта (компонент Header с дебаунсным поиском, <code>takeUntilDestroyed</code>, сигнальный <code>output()</code>, 25 часов). Его заработанная оценка ментора за первый спринт (0, «Student does not respond» — работу сделал, но на интервью не пришёл) остаётся в записях. Последний коммит — 2026-05-27; страница артистов (PR #20, влит 2026-06-02) — единственный вклад во второй спринт, без дневника и без записи о защите. После 2026-06-02 активности нет. Команда оценивается по двум активным участникам; это отмечено как контекст, а не как расхождение для разбора.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>evalore (тимлид) — 30 коммитов / 5 PR (5 влито) / 2 дневника</h3>
+<p><strong>Что построил</strong> (по PR, дневникам и ветвям):</p>
+<ul>
+<li>Фундамент проекта: инициализация Angular, интеграция Spartan UI, Tailwind 4, tsconfig paths, ESLint + Prettier, barrel files, lazy loading, страница 404, общие компоненты, <code>AlbumCard</code> и <code>TrackTable</code> (PR #12, #14 — спринт 1). ~18 часов.</li>
+<li>Файл инструкций для ИИ-инструментов (<code>feat: add llm instructions</code>) зафиксирован в первичном коммите — ИИ-ассистирование было заявлено сразу.</li>
+<li>Спринт 2: CI/CD через GitHub Actions (проверка lint и Prettier + деплой на Vercel, PR #43), настройка NestJS-бэкенда (база данных, ядро сервиса, по дневнику), интеграция списка артистов, playlist management (влил PR #42 от LenaStask). ~15 часов.</li>
+<li>Спринт 3 (активно, не влито): ветка <code>feature/add-authorization</code> — маршрутизированные формы входа/регистрации, сервисы авторизации, компоненты alert и spinner, поля Spartan UI. Последний коммит: 2026-06-24 22:57.</li>
+</ul>
+<p><strong>Уровень:</strong> Сильнейший участник с явным отрывом. Дневник первого спринта краткий и немного формульный («Problems: Configuring backend. Solutions: Checked existing solution...»), но это компенсируется объёмом и качеством реальных коммитов. Он определил архитектурное направление проекта (Spartan UI + Tailwind, NestJS, Vercel), отвечает за CI/CD и продолжает активно кодить за день до этого брифинга. Два 100 от менторов согласуются с тем, что показывает репозиторий.</p>
+<p><strong>Риск:</strong> Дневник второго спринта озаглавлен «Sprint 1» — содержание правильное (CI/CD, бэкенд), но ошибка в заголовке говорит о том, что дневник писался наспех. Не кодовый риск; незначительная небрежность в документации.</p>
+<p><strong>Что прощупать на интервью:</strong> «Расскажи про авторизационный флоу, который ты строишь в <code>feature/add-authorization</code> — что защищает роутер-гард, и как auth-сервис взаимодействует с NestJS-бэкендом?» — его текущая работа, должен знать свободно. Затем боковой удар: «Почему в диалоге плейлиста твоя коллега выбрала <code>linkedSignal</code> вместо <code>effect()</code>? Ты понимаешь, в чём трейдофф?» — проверяет, отслеживает ли он архитектурные решения команды, а не только свои.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>LenaStask — 32 коммита / 7 PR (5 влито, 2 открыты) / 3 дневника</h3>
+<p><strong>Что построила</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 1: страница альбома с вложенными компонентами, интеграция Jamendo API (<code>HttpClient</code>), интерфейсы для данных альбомов, кастомный пайп для конвертации длительности треков (<code>mm:ss</code>), интеграция таблицы Spartan UI, коммуникация компонентов через <code>signal input()</code> + <code>output()</code>, <code>ngOnInit</code> для загрузки данных. PR #9 (Album UI), PR #16 (правки после код-ревью). ~20 часов.</li>
+<li>Спринт 2: scaffold страницы Library, компоненты списка/элемента плейлистов, диалоги создания и редактирования через Spartan UI, Signal Forms со схемной валидацией, <code>linkedSignal</code> для состояния формы (вместо <code>computed()</code>/<code>effect()</code>), влито как PR #42. ~20 часов.</li>
+<li>Спринт 3 (активно, не влито): ветка <code>feature/library-playlist</code> (PR #45, открыт 2026-06-21) — удаление плейлиста с диалогом подтверждения, подключение к бэкенду через <code>rxResource</code> + <code>.reload()</code>, <code>takeUntilDestroyed(this.destroyRef)</code> для очистки подписок, роутер-гард для приватного Library-вью, разрешение git-конфликта через <code>git checkout origin/dev -- package.json</code>. Дневник (PR #46, открыт 2026-06-22).</li>
+</ul>
+<p><strong>Уровень:</strong> Технически наибольшее количество коммитов по всем ветвям; три содержательных дневника, демонстрирующих реальный прогресс в понимании. Дневник первого спринта — уверенное освоение основ Angular. Дневник второго — документирует настоящий концептуальный прыжок: она выяснила, что <code>computed()</code> работает только для чтения и не подходит для Signal Forms, перешла на <code>linkedSignal</code> и может объяснить почему. Дневник третьего спринта показывает уверенность с продвинутыми темами: Reactive Graph, Change Detection изнутри, <code>rxResource</code>, жизненный цикл подписок. Рост с 75 до 100 между спринтами подкреплён конкретными данными.</p>
+<p><strong>Риск:</strong> Два PR третьего спринта (#45 и #46) открыты, но ещё не влиты. В дневнике третьего спринта описан git-конфликт из-за перезаписи истории ветки dev — её решение (cherry-pick package.json из origin/dev) корректное, задокументировано чётко. Незлитое состояние, скорее всего, просто отражает момент времени (PR открыты 2026-06-21–22, дедлайн второго спринта — 2026-06-23). Низкий риск.</p>
+<p><strong>Что прощупать на интервью:</strong> «В дневнике второго спринта ты пишешь, что <code>computed()</code> нельзя использовать с Signal Forms — объясни, почему, и что даёт <code>linkedSignal</code>.» Это из её собственного текста; проверяет реальное понимание, а не скопированное решение. Затем: «Ты использовала <code>takeUntilDestroyed(this.destroyRef)</code> в третьем спринте. Когда нужно явно передавать <code>destroyRef</code>, а когда можно обойтись без параметра?» — проверяет глубину понимания за пределами счастливого пути.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>SergeyBednyuk — без активности с 2026-06-02 (балл защиты Sprint 1 — 0, записи по Sprint 2 нет) — 19 коммитов / 4 PR (3 влито, 1 PR с дневником закрыт) / 1 дневник</h3>
+<p><strong>Примечание:</strong> SergeyBednyuk не проявлял активности с 2026-06-02; на защите первого спринта он получил 0, дневника, оценки или коммитов за второй спринт нет. Его вклад в первый спринт ниже изложен фактически и остаётся в записях, а заработанная оценка ментора за первый спринт сохраняется в таблицах. Команда оценивается по двум активным участникам; его заработанный балл сохранён.</p>
+<p><strong>Что построил</strong> (по PR и дневнику):</p>
+<ul>
+<li>Спринт 1: компонент Header с Spartan UI — адаптивный трёхсекционный макет (логотип + навигация, поле поиска, кнопка пользователя), дебаунсный поиск с Reactive Forms + <code>valueChanges</code> + <code>debounceTime</code> + <code>distinctUntilChanged</code>, сигнальный <code>output()</code> для распространения событий, <code>takeUntilDestroyed()</code> для очистки подписок. Решил конфликт именования output (<code>searchChange</code> вместо <code>search</code> — конфликт с нативным DOM-событием). PR #8 (реализация header) и PR #15 (рефакторинг + цвета тёмной темы). ~25 часов.</li>
+<li>PR #11 с дневником первого спринта был открыт (2026-05-18), но закрыт без влития — содержимое дневника есть только на ветке <code>siarhei/diary-1</code>, не на main. Сам дневник содержательный, показывает реальное понимание.</li>
+<li>Спринт 2: список популярных артистов + UI страницы артиста (PR #20, влит 2026-06-02). Один коммит на <code>siarhei/artists-list-discover</code> от 2026-05-27. Это единственный вклад во второй спринт.</li>
+<li>Нет дневника второго спринта ни в одной ветке. Нет коммитов или PR после 2026-06-02.</li>
+</ul>
+<p><strong>Уровень:</strong> Работа первого спринта реальная: дневник документирует конкретное решение проблем (конфликт стилей spartan-ng решён через <code>!bg-transparent</code>, переименование output для ESLint, <code>takeUntilDestroyed()</code> правильно применён в конструкторе). Это не механическое копирование — он понимал, что делает. Оценка 25 часов правдоподобна с учётом широты задачи по header.</p>
+<p><strong>Статус — без активности с 2026-06-02:</strong> Не явился на защиту первого спринта (оценка 0, «Student does not respond»), PR с дневником первого спринта так и не влит в main, а после единственного PR во втором спринте (страница артистов, влит 2026-06-02) дальнейшей активности нет — нет дневника второго спринта, нет записи о защите, нет коммитов. Интервью готовить не нужно; примечание выше существует, чтобы зачесть его реальную работу в первом спринте и зафиксировать, что команда оценивается по двум активным участникам.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Заключение для ментора</h2>
+<p><strong>Общая картина:</strong> Здоровая команда из двух человек, которая ведёт проект. Изначально было трое; SergeyBednyuk не проявлял активности с 2026-06-02 (отмечено выше, заработанная оценка за первый спринт сохранена). Двое оставшихся — evalore и LenaStask — оба сильные и активные в рамках третьего спринта, с дневниками и коммитами, и образуют настоящую рабочую команду. Продукт задеплоен (<a href="https://chili-flow.vercel.app)">https://chili-flow.vercel.app)</a> и амбициознее, чем подсказывает состав из двух человек: NestJS-бэкенд, Signal Forms, Spartan UI, авторизационный флоу в процессе. Команда отнесена к уровню <strong>green</strong> по двум активным участникам.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>evalore — убедительный технический лид с двумя 100 подряд и активной работой в третьем спринте.</li>
+<li>LenaStask демонстрирует задокументированную дугу роста: от основ Angular в первом спринте до <code>linkedSignal</code>, <code>rxResource</code> и интеграции с бэкендом к третьему спринту. Три дневника, все содержательные.</li>
+<li>Команда работает по структурированному GitFlow: feature-ветки, PR-ревью, CI/CD на Vercel, задачи с подзадачами в issues.</li>
+</ul>
+<p><strong>Неактивный участник:</strong></p>
+<ul>
+<li>SergeyBednyuk не проявлял активности с 2026-06-02 (балл защиты Sprint 1 — 0, записи по Sprint 2 нет). Его работа в первом спринте была реальной, и заработанная оценка сохранена; это отмечено, но не ставится команде в минус при определении уровня. Страница артистов (его PR за второй спринт) влита в кодовую базу, поэтому любые будущие вопросы по этому участку адресуются активным участникам, которые теперь им владеют.</li>
+</ul>
+<p><strong>На что обратить внимание (незначительное):</strong></p>
+<ul>
+<li>Дневник второго спринта evalore озаглавлен «Sprint 1» при правильном содержании — незначительная небрежность, но показывает невысокий приоритет самодокументирования.</li>
+</ul>
+<p><strong>Рекомендуемый угол для интервью:</strong> Для evalore — сосредоточиться на авторизационном флоу в разработке и архитектуре NestJS-бэкенда: он наиболее вовлечён именно туда, и характеристику ментора («глубокое понимание + архитектурные трейдофф») стоит проверить на реальном сценарии. Для LenaStask — идти от её собственного дневника: различие <code>linkedSignal</code> и <code>computed()</code> — это лакмусовый тест, усвоила ли она концепты второго спринта сама.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

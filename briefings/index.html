@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angular 2026 Q2 Team Dashboard</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav">
+  <span class="lang-en"><strong>Angular 2026 Q2</strong> · Mentor Briefings</span>
+  <span class="lang-ru"><strong>Angular 2026 Q2</strong> · Инструктажи для менторов</span>
+</nav>
+
+<div class="page-hero">
+  <h1 class="lang-en">Angular 2026 Q2<br>Team Dashboard</h1>
+  <h1 class="lang-ru">Angular 2026 Q2<br>Дашборд команд</h1>
+  <p class="index-pub-date lang-en">Snapshot date: 2026-06-24</p>
+  <p class="index-pub-date lang-ru">Дата среза: 2026-06-24</p>
+  <p class="subtitle lang-en">Cross-interview briefings for mentors. Each card links to a full team report — who built what, who understands it, and where to probe.</p>
+  <p class="subtitle lang-ru">Брифинги для менторов на перекрёстных интервью. Каждая карточка ведёт к полному отчёту по команде — кто что построил, кто понимает, что проверять.</p>
+</div>
+
+<div class="context-banner lang-en">Snapshot 2026-06-24 &nbsp;·&nbsp; Sprint 1 &amp; Sprint 2 deadlines passed (Sprint 2 closed 2026-06-23) &nbsp;·&nbsp; both defence rounds reflected where scored.</div>
+<div class="context-banner lang-ru">Снимок 2026-06-24 &nbsp;·&nbsp; дедлайны Спринта 1 и Спринта 2 прошли (Спринт 2 закрыт 2026-06-23) &nbsp;·&nbsp; обе защиты учтены, где оценки есть.</div>
+
+
+<div class="tier-legend lang-en">
+  <span class="tier-legend-title">Health tier legend</span>
+  <span class="tier-legend-item"><span class="tier-badge tier-green">Healthy</span> <span class="tier-legend-desc">All members active through latest sprint, diaries present, project on track.</span></span>
+  <span class="tier-legend-item"><span class="tier-badge tier-amber">Watch</span> <span class="tier-legend-desc">Team will defend, but has flags: load imbalance, thin member, heavy AI reliance, key work unmerged, or behind spec.</span></span>
+  <span class="tier-legend-item"><span class="tier-badge tier-red">At risk</span> <span class="tier-legend-desc">Project stalled / repo dark, de-facto dropout among rostered students, or effectively one contributor. Needs coordinator attention.</span></span>
+</div>
+
+<div class="tier-legend lang-ru">
+  <span class="tier-legend-title">Легенда статусов</span>
+  <span class="tier-legend-item"><span class="tier-badge tier-green">В норме</span> <span class="tier-legend-desc">Все участники активны через последний спринт, дневники присутствуют, проект в графике.</span></span>
+  <span class="tier-legend-item"><span class="tier-badge tier-amber">Под наблюдением</span> <span class="tier-legend-desc">Команда защитится, но есть флаги: дисбаланс нагрузки, слабый участник, незамерженная работа или отставание от спека.</span></span>
+  <span class="tier-legend-item"><span class="tier-badge tier-red">В зоне риска</span> <span class="tier-legend-desc">Проект остановлен, фактический дропаут среди зачисленных или один человек несёт всю команду. Нужно внимание координатора.</span></span>
+</div>
+
+<div class="grid lang-en">
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">404</div>
+    <span class="tier-badge tier-amber">activity slipping</span>
+  </div>
+  <div class="card-oneliner">Amber — DominikObuch is the consistent anchor (100/100), Tserpilouski led infra but dropped to 75 in Sprint 2, waldemarIT is the watch flag: two sprint-2 PRs unmerged as of 2026-06-24, no sprint-3 diary, and a score drop from 100 to 75.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material (MDC)</span><span class="tag">Commercetools API</span><span class="tag">Vitest</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>74 commits</span>
+    <span>27 PRs</span>
+  </div>
+  <a class="card-link" href="404.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">DevFusion</div>
+    <span class="tier-badge tier-amber">depth unverified</span>
+  </div>
+  <div class="card-oneliner">Amber — all three students active through sprint-2 deadline, project progressing steadily, but sprint scores stayed flat (75/75 for zorro-amarillo and s-arashu in both sprints, eka8888 rose from 75 to 100) with zero mentor comments, leaving depth unclear; zorro-amarillo carries the bulk of feature delivery.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript ~5.9</span><span class="tag">Tailwind CSS 4</span><span class="tag">RxJS 7.8</span><span class="tag">Angular Signals</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>77 commits</span>
+    <span>39 PRs</span>
+  </div>
+  <a class="card-link" href="devfusion.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">LazyCoders</div>
+    <span class="tier-badge tier-amber">lowest scores</span>
+  </div>
+  <div class="card-oneliner">Amber — team is active through the sprint-2 deadline and the project is moving, but all three Sprint 1 scores were the lowest in the cohort (70/60/55), no Sprint 2 interview scores are recorded yet, and Aseke09 has been silent since June 5 while DzinaKor and the lead carried the final two weeks.</div>
+  <div class="card-stack"><span class="tag">Angular 17+</span><span class="tag">TypeScript</span><span class="tag">NestJS</span><span class="tag">PostgreSQL</span><span class="tag">Prisma</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>84 commits</span>
+    <span>24 PRs</span>
+  </div>
+  <a class="card-link" href="lazycoders.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">MusicFlowTeam</div>
+    <span class="tier-badge tier-amber">mid scores, no feedback</span>
+  </div>
+  <div class="card-oneliner">Two active, technically strong students who delivered real work through Sprint 3, but both scored 75 at Sprint 2 with no mentor explanation — and an unrostered sprint-1 contributor went silent after week 1.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI v5</span><span class="tag">Firebase Auth</span><span class="tag">Cloud Firestore</span></div>
+  <div class="card-meta">
+    <span>2 members</span>
+    <span>495 commits</span>
+    <span>54 PRs</span>
+  </div>
+  <a class="card-link" href="musicflowteam.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Muze</div>
+    <span class="tier-badge tier-amber">lead inactive, imbalance</span>
+  </div>
+  <div class="card-oneliner">Two-person team with one member (ileshchanka) driving almost all work since June and the lead (vladaworkflow-ops) effectively dark since June 1 — no Sprint 2 defence, no post-June commits; project is progressing but the split is heavily asymmetric.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript</span><span class="tag">Jamendo API v3</span><span class="tag">GitHub Actions CI/CD</span><span class="tag">GitHub Pages</span></div>
+  <div class="card-meta">
+    <span>2 members</span>
+    <span>97 commits</span>
+    <span>15 PRs</span>
+  </div>
+  <a class="card-link" href="muze.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">&lt;ngKitty-delulu-church /&gt;</div>
+    <span class="tier-badge tier-amber">thin member</span>
+  </div>
+  <div class="card-oneliner">Amber — all three students active through sprint 3 close, deployed product, strong lead and solid Alena; kozochkina's 50 sprint-1 score and 9 unmerged PRs are the main flag, plus no sprint-2 mentor scores yet recorded for anyone.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI 5.x</span><span class="tag">RxJS 7</span><span class="tag">NgRx Signal Store</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>569 commits</span>
+    <span>116 PRs</span>
+  </div>
+  <a class="card-link" href="ngkitty-delulu-church.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">RX-Men</div>
+    <span class="tier-badge tier-amber">imbalance, lead burnout</span>
+  </div>
+  <div class="card-oneliner">Amber — elrouss (lead) carries the project with extraordinary output and genuine depth, while prokhorovd grows steadily and is catching up; den987655 ships pages and UI kit pieces but volume is thin (7 PRs / ~300 lines per sprint) and elrouss openly flags team disengagement and burnout in the sprint-3 diary.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">@ngrx/signals</span><span class="tag">RxJS</span><span class="tag">SCSS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>108 commits</span>
+    <span>59 PRs</span>
+  </div>
+  <a class="card-link" href="rx-men.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">six seven</div>
+    <span class="tier-badge tier-amber">AI reliance</span>
+  </div>
+  <div class="card-oneliner">Two-person team with a clear skill gap: reamplify1 is technically strong and independent, klinx01 is active and well-intentioned but self-reports structural AI dependence across all three sprints — the mentor's Sprint 2 score drop and comment confirm the pattern.</div>
+  <div class="card-stack"><span class="tag">Angular 17+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Signals</span><span class="tag">SCSS</span><span class="tag">Angular Material</span></div>
+  <div class="card-meta">
+    <span>2 members</span>
+    <span>54 commits</span>
+    <span>20 PRs</span>
+  </div>
+  <a class="card-link" href="six-seven.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Team 42</div>
+    <span class="tier-badge tier-amber">lead silent, imbalance</span>
+  </div>
+  <div class="card-oneliner">Two active contributors (viktorykings, angelinavakkasova) carried sprint-2/3 feature work through June 22; team lead Ansa2110 went quiet after June 8 with no sprint-2 defence score recorded — load imbalance is the main flag.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript 5.9</span><span class="tag">Angular Material 21</span><span class="tag">Tailwind CSS 4</span><span class="tag">RxJS 7.8</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>53 commits</span>
+    <span>21 PRs</span>
+  </div>
+  <a class="card-link" href="team-42.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">The Team Implementing the Task</div>
+    <span class="tier-badge tier-amber">skips PR review</span>
+  </div>
+  <div class="card-oneliner">Amber — all three students are active through sprint 2 and have full diary trails, but pasha-learns (lead) has no defence scores for either sprint, sashadrozdov94 contributed minimally in sprint 2, and the team skips the PR review culture — all work merges via checkpoint branches authored solely by the lead.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Binance Testnet REST API</span><span class="tag">ApexCharts</span><span class="tag">Angular Signals</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>19 commits</span>
+    <span>3 PRs</span>
+  </div>
+  <a class="card-link" href="the-team-implementing-the-task.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">3 man and 1 framework</div>
+    <span class="tier-badge tier-green">member inactive</span>
+  </div>
+  <div class="card-oneliner">Green — judged on the two active members. vladimirsolo has been inactive since 2026-05-23 (no June commits or diaries), so the team is assessed on its two active members; vladimirsolo's earned work remains on record. yuriyli carries the backbone (CI/CD, deploy, Angular v22) and nakurienota delivered a merged auth PR in June, so this is a working two-person team. Active-member note: nakurienota has 0 diaries all course and no defence score on record — worth a walk-through of his auth code at interview.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Standalone components</span><span class="tag">Angular Signals</span><span class="tag">RxJS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>25 commits</span>
+    <span>18 PRs</span>
+  </div>
+  <a class="card-link" href="3-man-and-1-framework.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Champions</div>
+    <span class="tier-badge tier-green">member inactive</span>
+  </div>
+  <div class="card-oneliner">Green — healthy two-person team delivering a working and growing product (AlenaVP as feature engine, Daniil as infra lead), with diaries and commits through June. Lorenzo-StJohn has been inactive since 2026-05-26 (no June commits, no sprint-2 diary), so the team is assessed on its two active members; his earned Sprint-1 score of 100 remains on record.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI</span><span class="tag">NestJS</span><span class="tag">Supabase</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>354 commits</span>
+    <span>58 PRs</span>
+  </div>
+  <a class="card-link" href="champions.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">music-hub</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Three active, self-directed contributors with a real fullstack product — Angular frontend plus a live NestJS/Supabase backend with JWT auth and Jamendo OAuth; the sprint-2 score dip for Viktor (75) is the only flag worth probing.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">NgRx SignalStore</span><span class="tag">NestJS</span><span class="tag">TypeORM</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>403 commits</span>
+    <span>76 PRs</span>
+  </div>
+  <a class="card-link" href="music-hub.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">ngKittyDebugLeftPaw</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green — all three students active through sprint-2 deadline with diaries, working product on Netlify, and 100/100 from both mentors; the main flag is JsPowWow, an external non-roster contributor who built the Frenzy multiplayer feature.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI</span><span class="tag">Transloco (i18n)</span><span class="tag">NgRx Signals (@ngrx/signals)</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>436 commits</span>
+    <span>73 PRs</span>
+  </div>
+  <a class="card-link" href="ngkittydebugleftpaw.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">NgStorm</div>
+    <span class="tier-badge tier-green">member inactive</span>
+  </div>
+  <div class="card-oneliner">Green — two strong contributors (anast-ananko, iskonplus) form a working team and built a fully deployed bookstore with 255 combined commits and 24 diary entries through June. shchepadzmitry has been inactive since 2026-05-22 (no June commits or diaries), so the team is assessed on its two active members; his earned Sprint-1 score of 50 remains on record.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material</span><span class="tag">commercetools API</span><span class="tag">RxJS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>262 commits</span>
+    <span>81 PRs</span>
+  </div>
+  <a class="card-link" href="ngstorm.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">ngTunes</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Maxed-out team (all 100/100 in both sprints) with a real full-stack product: three active contributors, genuine backend by solidados, substantive diary trail from all three — the main interview job is verifying depth behind the perfect scores.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">PrimeNG</span><span class="tag">SCSS</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>298 commits</span>
+    <span>53 PRs</span>
+  </div>
+  <a class="card-link" href="ngtunes.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">пу-пу-пу</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green team: all three active through the sprint-2 deadline, real NestJS backend running on a private VPS, diaries present for every student — load skews heavily toward tryproxy on backend and savryna on frontend, with shoblinsky owning search/player/queue; imbalance is acknowledged and self-documented rather than hidden.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material</span><span class="tag">NestJS</span><span class="tag">Prisma</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>436 commits</span>
+    <span>66 PRs</span>
+  </div>
+  <a class="card-link" href="pu-pu-pu.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Red Hot Chili Pipes</div>
+    <span class="tier-badge tier-green">member inactive</span>
+  </div>
+  <div class="card-oneliner">A healthy two-person team (evalore and LenaStask) carrying the project steadily into sprint 3 with diaries, commits, and rising mentor scores; a third member (SergeyBednyuk) has been inactive since 2026-06-02 (Sprint-1 defence score 0, no sprint-2 record), so the team is assessed on its two active members; his earned score remains on record.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Spartan UI (shadcn/ng)</span><span class="tag">Tailwind CSS 4</span><span class="tag">Signal Forms</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>81 commits</span>
+    <span>16 PRs</span>
+  </div>
+  <a class="card-link" href="red-hot-chili-pipes.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Runtime terror</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green — all three active through the sprint-2 deadline; balanced workload with clear ownership lanes; gerlinda137 leads infra+forms, maryanzh drives features+backend, radm1la handles auth+guard+UX pages; sprint-2 mentor scores consistent with repo output.</div>
+  <div class="card-stack"><span class="tag">Angular 20+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">RxJS → Signals migration</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>230 commits</span>
+    <span>58 PRs</span>
+  </div>
+  <a class="card-link" href="runtime-terror.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Standalone Squad</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Healthy three-person team with genuinely even workload: lead owns catalog and architecture, Artur closed the full auth flow, Oleg owns profile and cart API integration; all three active through sprint 2, all scored 100/100.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">NgRx Signal Store</span><span class="tag">commercetools HTTP API</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>181 commits</span>
+    <span>30 PRs</span>
+  </div>
+  <a class="card-link" href="standalone-squad.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Stonks</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green — all three members active through the sprint-2 deadline, 100/100 at both defence rounds, complex full-stack crypto SPA with NestJS backend; the only flag is team coordination lag (lead's diary explicitly notes proposals to tighten sync went unacted on) and several core features still open heading into sprint 3.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">RxJS</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>122 commits</span>
+    <span>28 PRs</span>
+  </div>
+  <a class="card-link" href="stonks.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Vejas</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Healthy team — all three members active through the sprint-3 deadline, each with diary entries and merged PRs, but olucens carries the lightest load (4 PRs, 75 at Sprint 2 defence) and writes shorter, less technically-grounded diaries; probe depth at interview.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Reactive Forms</span><span class="tag">Angular Signals</span><span class="tag">Supabase (auth + realtime)</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>76 commits</span>
+    <span>26 PRs</span>
+  </div>
+  <a class="card-link" href="vejas.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Work ass off</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green — all three members carried distinct workstreams through sprint 2 and sprint 3, sprint-2 defence scores 95–100, comprehensive diary trail, NestJS backend actually built and deployed.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript ~5.9</span><span class="tag">NgRx 21 (store/effects/entity)</span><span class="tag">RxJS 7.8</span><span class="tag">NestJS (custom backend)</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>270 commits</span>
+    <span>42 PRs</span>
+  </div>
+  <a class="card-link" href="work-ass-off.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">XAS</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">All three members active through the Sprint 2 deadline with strong mentor scores, clean diaries, and a technically ambitious Commercetools + NestJS stack — the main interview angle is depth-checking SlavikusVOG on NestJS architecture and xevoider on NgRx Signal Store internals.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">NgRx Signal Store</span><span class="tag">Taiga UI</span><span class="tag">Commercetools API</span></div>
+  <div class="card-meta">
+    <span>3 members</span>
+    <span>221 commits</span>
+    <span>47 PRs</span>
+  </div>
+  <a class="card-link" href="xas.html">Read briefing →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Y2K</div>
+    <span class="tier-badge tier-green">Healthy</span>
+  </div>
+  <div class="card-oneliner">Green — solo student (ngInit/Aleksei) building a full-stack music SPA; 271 commits across branches, 71 PRs, 6 diary entries, active through sprint-2 deadline; two perfect interview scores with genuine concept depth confirmed by both mentors.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">Firebase Auth</span><span class="tag">Firestore</span></div>
+  <div class="card-meta">
+    <span>1 member</span>
+    <span>271 commits</span>
+    <span>71 PRs</span>
+  </div>
+  <a class="card-link" href="y2k.html">Read briefing →</a>
+</div>
+</div>
+<div class="grid lang-ru">
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">404</div>
+    <span class="tier-badge tier-amber">активность падает</span>
+  </div>
+  <div class="card-oneliner">Амбер — DominikObuch стабильно силён (100/100), Tserpilouski вёл инфраструктуру но просел на 75 в Sprint 2, waldemarIT уходит ниже: два PR с Sprint 2 до сих пор не смёрджены, нет дневника Sprint 3, спад с 100 до 75.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material (MDC)</span><span class="tag">Commercetools API</span><span class="tag">Vitest</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>74 коммитов</span>
+    <span>27 PR</span>
+  </div>
+  <a class="card-link" href="404.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">DevFusion</div>
+    <span class="tier-badge tier-amber">проверить глубину</span>
+  </div>
+  <div class="card-oneliner">Эмбер — все трое активны к дедлайну спринта 2, проект движется, но оценки зависли на 75 у двух участников (ментор без комментариев), глубину понимания предстоит выяснить; zorro-amarillo несёт основную часть фич.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript ~5.9</span><span class="tag">Tailwind CSS 4</span><span class="tag">RxJS 7.8</span><span class="tag">Angular Signals</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>77 коммитов</span>
+    <span>39 PR</span>
+  </div>
+  <a class="card-link" href="devfusion.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">LazyCoders</div>
+    <span class="tier-badge tier-amber">самые низкие баллы</span>
+  </div>
+  <div class="card-oneliner">Янтарь — команда активна до дедлайна 2-го спринта, но все трое получили самые низкие баллы в когорте за 1-й спринт (70/60/55), оценок за 2-й спринт нет, Aseke09 пропал с 5 июня, а финальные две недели тянули DzinaKor и лид.</div>
+  <div class="card-stack"><span class="tag">Angular 17+</span><span class="tag">TypeScript</span><span class="tag">NestJS</span><span class="tag">PostgreSQL</span><span class="tag">Prisma</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>84 коммитов</span>
+    <span>24 PR</span>
+  </div>
+  <a class="card-link" href="lazycoders.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">MusicFlowTeam</div>
+    <span class="tier-badge tier-amber">средние оценки, без фидбэка</span>
+  </div>
+  <div class="card-oneliner">Два активных и технически сильных студента, реально работавшие вплоть до спринта 3, но оба получили 75 на защите S2 без комментариев ментора — и неучтённый участник спринта 1 исчез после первой недели.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI v5</span><span class="tag">Firebase Auth</span><span class="tag">Cloud Firestore</span></div>
+  <div class="card-meta">
+    <span>2 участника</span>
+    <span>495 коммитов</span>
+    <span>54 PR</span>
+  </div>
+  <a class="card-link" href="musicflowteam.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Muze</div>
+    <span class="tier-badge tier-amber">лид неактивен, дисбаланс</span>
+  </div>
+  <div class="card-oneliner">Команда из двух человек: ileshchanka тянет проект в одиночку с июня, лид vladaworkflow-ops замолчал 1 июня — нет защиты Sprint 2, нет коммитов после этой даты; проект живёт, но нагрузка катастрофически неравномерна.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript</span><span class="tag">Jamendo API v3</span><span class="tag">GitHub Actions CI/CD</span><span class="tag">GitHub Pages</span></div>
+  <div class="card-meta">
+    <span>2 участника</span>
+    <span>97 коммитов</span>
+    <span>15 PR</span>
+  </div>
+  <a class="card-link" href="muze.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">&lt;ngKitty-delulu-church /&gt;</div>
+    <span class="tier-badge tier-amber">слабый участник</span>
+  </div>
+  <div class="card-oneliner">Янтарь — все трое активны до дедлайна, продукт развёрнут; у тимлида и Алены высокая отдача и глубокие дневники, но kozochkina собрала 9 незамёрженных PR и 50 баллов на первом спринте — главная точка для разбора на интервью.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI 5.x</span><span class="tag">RxJS 7</span><span class="tag">NgRx Signal Store</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>569 коммитов</span>
+    <span>116 PR</span>
+  </div>
+  <a class="card-link" href="ngkitty-delulu-church.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">RX-Men</div>
+    <span class="tier-badge tier-amber">дисбаланс, выгорание лида</span>
+  </div>
+  <div class="card-oneliner">Янтарный — elrouss (тимлид) тянет проект с огромным объёмом и реальной глубиной, prokhorovd стабильно растёт; den987655 сдаёт страницы и UI-компоненты, но объём скромный, и elrouss прямо в дневнике спринта 3 пишет о выгорании из-за неравной нагрузки.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">@ngrx/signals</span><span class="tag">RxJS</span><span class="tag">SCSS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>108 коммитов</span>
+    <span>59 PR</span>
+  </div>
+  <a class="card-link" href="rx-men.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">six seven</div>
+    <span class="tier-badge tier-amber">AI-зависимость</span>
+  </div>
+  <div class="card-oneliner">Двое участников с заметным разрывом в уровне: reamplify1 уверен и самостоятелен, klinx01 активен, но сам признаёт, что без нейросети не может декомпозировать задачи — снижение оценки ментора на Sprint 2 это подтверждает.</div>
+  <div class="card-stack"><span class="tag">Angular 17+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Signals</span><span class="tag">SCSS</span><span class="tag">Angular Material</span></div>
+  <div class="card-meta">
+    <span>2 участника</span>
+    <span>54 коммитов</span>
+    <span>20 PR</span>
+  </div>
+  <a class="card-link" href="six-seven.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Team 42</div>
+    <span class="tier-badge tier-amber">лид замолчал, дисбаланс</span>
+  </div>
+  <div class="card-oneliner">Двое участников (viktorykings, angelinavakkasova) несли основную нагрузку спринтов 2–3 до 22 июня; тимлид Ansa2110 замолчал после 8 июня, защита за спринт 2 не зафиксирована — дисбаланс нагрузки главный флаг.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript 5.9</span><span class="tag">Angular Material 21</span><span class="tag">Tailwind CSS 4</span><span class="tag">RxJS 7.8</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>53 коммитов</span>
+    <span>21 PR</span>
+  </div>
+  <a class="card-link" href="team-42.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">The Team Implementing the Task</div>
+    <span class="tier-badge tier-amber">обходят PR-ревью</span>
+  </div>
+  <div class="card-oneliner">Янтарь — все три участника активны и ведут дневники, но у лида нет оценок за оба спринта, у сашадрозда минимальный вклад в спринте 2, и команда обходит PR-ревью, мержа всё через ветки-чекпоинты.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Binance Testnet REST API</span><span class="tag">ApexCharts</span><span class="tag">Angular Signals</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>19 коммитов</span>
+    <span>3 PR</span>
+  </div>
+  <a class="card-link" href="the-team-implementing-the-task.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">3 man and 1 framework</div>
+    <span class="tier-badge tier-green">участник неактивен</span>
+  </div>
+  <div class="card-oneliner">Зелёный — оцениваем по двум активным участникам. vladimirsolo не проявлял активности с 2026-05-23 (в июне нет коммитов и дневников), поэтому команда оценивается по двум активным участникам; наработки vladimirsolo сохранены. yuriyli держит основу (CI/CD, деплой, Angular v22), а nakurienota сдал смерджённый PR с авторизацией в июне — это рабочая команда из двух человек. Заметка по активному участнику: у nakurienota ноль дневников за весь курс и нет оценки с защиты — на интервью стоит пройтись по его коду авторизации.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Standalone components</span><span class="tag">Angular Signals</span><span class="tag">RxJS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>25 коммитов</span>
+    <span>18 PR</span>
+  </div>
+  <a class="card-link" href="3-man-and-1-framework.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Champions</div>
+    <span class="tier-badge tier-green">участник неактивен</span>
+  </div>
+  <div class="card-oneliner">Здоровая команда из двух активных участников (AlenaVP — движок фич, Daniil — инфра и lead): рабочий деплой, зрелый процесс, дневники и коммиты через весь июнь. Lorenzo-StJohn не проявлял активности с 2026-05-26 (в июне нет коммитов, нет дневника Sprint 2), поэтому команда оценивается по двум активным участникам; его заработанный балл Sprint 1 (100) сохранён.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI</span><span class="tag">NestJS</span><span class="tag">Supabase</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>354 коммитов</span>
+    <span>58 PR</span>
+  </div>
+  <a class="card-link" href="champions.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">music-hub</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Три активных участника с реальным фуллстек-продуктом: Angular-фронтенд плюс NestJS/Supabase бэкенд с JWT и Jamendo OAuth; единственный флаг — оценка 75 у Виктора на Sprint 2.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">NgRx SignalStore</span><span class="tag">NestJS</span><span class="tag">TypeORM</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>403 коммитов</span>
+    <span>76 PR</span>
+  </div>
+  <a class="card-link" href="music-hub.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">ngKittyDebugLeftPaw</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёный — все три студента активны до конца спринта 2, дневники ведут, продукт задеплоен; единственный флаг — внешний участник JsPowWow, не числящийся в ростере, который построил мультиплеерную фичу Frenzy.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">Taiga UI</span><span class="tag">Transloco (i18n)</span><span class="tag">NgRx Signals (@ngrx/signals)</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>436 коммитов</span>
+    <span>73 PR</span>
+  </div>
+  <a class="card-link" href="ngkittydebugleftpaw.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">NgStorm</div>
+    <span class="tier-badge tier-green">участник неактивен</span>
+  </div>
+  <div class="card-oneliner">Green — два активных участника (anast-ananko, iskonplus) образуют работающую команду и построили полноценный магазин книг с 255 коммитами и 24 дневниками вплоть до июня. shchepadzmitry не проявлял активности с 2026-05-22 (в июне нет коммитов и дневников), поэтому команда оценивается по двум активным участникам; его заработанный балл Sprint 1 (50) сохранён.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material</span><span class="tag">commercetools API</span><span class="tag">RxJS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>262 коммитов</span>
+    <span>81 PR</span>
+  </div>
+  <a class="card-link" href="ngstorm.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">ngTunes</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Команда с двумя максимумами (по 100 в обоих спринтах), живым NestJS-бэкендом и тремя активными разработчиками до дедлайна — задача ментора убедиться, что за идеальными оценками стоит реальное понимание.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript strict</span><span class="tag">PrimeNG</span><span class="tag">SCSS</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>298 коммитов</span>
+    <span>53 PR</span>
+  </div>
+  <a class="card-link" href="ngtunes.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">пу-пу-пу</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёная команда: все трое активны до дня дедлайна, бэкенд реальный (NestJS + PostgreSQL + VPS), дневники есть у каждого — разделение труда неравное (tryproxy несёт архитектурную нагрузку), но осознанное и задокументированное.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Material</span><span class="tag">NestJS</span><span class="tag">Prisma</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>436 коммитов</span>
+    <span>66 PR</span>
+  </div>
+  <a class="card-link" href="pu-pu-pu.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Red Hot Chili Pipes</div>
+    <span class="tier-badge tier-green">участник неактивен</span>
+  </div>
+  <div class="card-oneliner">Здоровая команда из двух человек (evalore и LenaStask) уверенно ведёт проект в третий спринт — дневники, коммиты, растущие оценки менторов; третий участник (SergeyBednyuk) не проявлял активности с 2026-06-02 (балл защиты Sprint 1 — 0, записи по Sprint 2 нет), поэтому команда оценивается по двум активным участникам; его заработанный балл сохранён.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Spartan UI (shadcn/ng)</span><span class="tag">Tailwind CSS 4</span><span class="tag">Signal Forms</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>81 коммитов</span>
+    <span>16 PR</span>
+  </div>
+  <a class="card-link" href="red-hot-chili-pipes.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Runtime terror</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёный — все трое активны до дедлайна спринта 2; чёткое разделение зон ответственности: gerlinda137 (инфра+формы), maryanzh (фичи+бэкенд), radm1la (авторизация+стражи); оценки ментора совпадают с активностью в репозитории.</div>
+  <div class="card-stack"><span class="tag">Angular 20+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">RxJS → Signals migration</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>230 коммитов</span>
+    <span>58 PR</span>
+  </div>
+  <a class="card-link" href="runtime-terror.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Standalone Squad</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Сильная тройка с ровной нагрузкой: лид ведёт архитектуру и каталог, Артур закрыл всю авторизацию, Олег — профиль и корзину с API; все трое активны до sprint 2, все трое 100/100.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">NgRx Signal Store</span><span class="tag">commercetools HTTP API</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>181 коммитов</span>
+    <span>30 PR</span>
+  </div>
+  <a class="card-link" href="standalone-squad.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Stonks</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёный — все трое активны до дедлайна спринта 2, 100/100 на обоих интервью, сложная full-stack крипто-платформа на NestJS; единственный флаг — координационный провал (лид сам признаёт, что предложения по синхронизации команды остались без ответа) и ряд ключевых фич ещё не готов.</div>
+  <div class="card-stack"><span class="tag">Angular 21+</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">RxJS</span><span class="tag">NestJS</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>122 коммитов</span>
+    <span>28 PR</span>
+  </div>
+  <a class="card-link" href="stonks.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Vejas</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Здоровая команда — все трое активны до дедлайна спринта 3, у каждого есть дневники и смерженные PR, но olucens вносит наименьший вклад (4 PR, 75 на защите Спринта 2) и пишет более поверхностно; на защите стоит проверить глубину понимания.</div>
+  <div class="card-stack"><span class="tag">Angular 19+</span><span class="tag">TypeScript strict</span><span class="tag">Angular Reactive Forms</span><span class="tag">Angular Signals</span><span class="tag">Supabase (auth + realtime)</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>76 коммитов</span>
+    <span>26 PR</span>
+  </div>
+  <a class="card-link" href="vejas.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Work ass off</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёные — три активных участника, все защиты на 95–100, плотный дневниковый след и полноценный NestJS-бэкенд; команда работает как единица.</div>
+  <div class="card-stack"><span class="tag">Angular 21</span><span class="tag">TypeScript ~5.9</span><span class="tag">NgRx 21 (store/effects/entity)</span><span class="tag">RxJS 7.8</span><span class="tag">NestJS (custom backend)</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>270 коммитов</span>
+    <span>42 PR</span>
+  </div>
+  <a class="card-link" href="work-ass-off.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">XAS</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Все трое активны до дедлайна Спринта 2, сильные оценки наставников, чистые дневники и амбициозный стек на Commercetools + NestJS — на интервью стоит проверить глубину знаний SlavikusVOG по архитектуре NestJS и xevoider по NgRx Signal Store.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript strict</span><span class="tag">NgRx Signal Store</span><span class="tag">Taiga UI</span><span class="tag">Commercetools API</span></div>
+  <div class="card-meta">
+    <span>3 участника</span>
+    <span>221 коммитов</span>
+    <span>47 PR</span>
+  </div>
+  <a class="card-link" href="xas.html">Читать инструктаж →</a>
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+    <div class="card-name" style="margin:0;">Y2K</div>
+    <span class="tier-badge tier-green">В норме</span>
+  </div>
+  <div class="card-oneliner">Зелёный — единственный участник (ngInit/Алексей) строит полноценное музыкальное SPA; 271 коммит по всем веткам, 71 PR, 6 дневников, активен до дедлайна Sprint 2; два идеальных балла на интервью, концепции Angular подтверждены обоими менторами.</div>
+  <div class="card-stack"><span class="tag">Angular 22</span><span class="tag">TypeScript</span><span class="tag">Angular Material</span><span class="tag">Firebase Auth</span><span class="tag">Firestore</span></div>
+  <div class="card-meta">
+    <span>1 участник</span>
+    <span>271 коммитов</span>
+    <span>71 PR</span>
+  </div>
+  <a class="card-link" href="y2k.html">Читать инструктаж →</a>
+</div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

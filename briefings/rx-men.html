@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — RX-Men · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — RX-Men</strong><strong class="lang-ru">Mentor briefing — RX-Men</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">imbalance, lead burnout</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">дисбаланс, выгорание лида</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — RX-Men</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>RX-Men/shop-front</code> (commits, PRs, development notes on all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the Sprint 2 defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Amber — elrouss (lead) carries the project with extraordinary output and genuine depth, while prokhorovd grows steadily and is clearly catching up on Angular patterns; den987655 ships pages and UI kit pieces but volume is noticeably lighter (~7 PRs total vs elrouss's 42), and elrouss explicitly writes in the Sprint 3 diary about burnout caused by carrying the team alone. Sprint 2 defence scores are on record (all three interviewed by <code>oreskag</code>): elrouss 100, prokhorovd 80, den987655 80. The product is live, the codebase is high-quality, but the workload imbalance is the primary flag.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Comic book e-commerce SPA — custom UI kit + commercetools backend</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 21, TypeScript strict, @ngrx/signals, RxJS, SCSS, Vitest, commercetools API, GitHub Pages CI/CD</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/RX-Men/shop-front">https://github.com/RX-Men/shop-front</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-11</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-23</td></tr>
+<tr><td><strong>Open issues</strong></td><td>48</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://rx-men.github.io/shop-front/">https://rx-men.github.io/shop-front/</a> (live, HTTP 200)</td></tr>
+</tbody></table>
+<p>Notable stack choices: custom UI kit built from scratch (no Taiga, no Angular Material) with 100% Vitest unit test coverage on primitives, ChangeDetectionStrategy.OnPush enforced via ESLint, commercetools as the backend (significantly more complex than Jamendo-API-only teams), @ngrx/signals for state management. The 48 open GitHub issues reflect the team's active use of GitHub Projects for sprint tracking — not unresolved bugs.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>elrouss</code> — Team Lead (Boris Zashliapin per git history; "Boris Zashliapin" and "Зашляпин Борис" in shortlog)</li>
+<li><code>prokhorovd</code> — member</li>
+<li><code>den987655</code> — member (Denis per git history)</li>
+</ul>
+<p><strong>Mentors:</strong></p>
+<ul>
+<li><code>mummick</code> — Sprint 1 mentor per participants.json. Not in repo contributors. Normal.</li>
+<li><code>oreskag</code> — Sprint 2 mentor per participants.json. Not in repo contributors. Normal.</li>
+</ul>
+<p><strong>External contributors:</strong></p>
+<ul>
+<li>None. All 108 commits (shortlog all branches) map to roster members.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>elrouss</strong> (lead)</td><td>85</td><td>42</td><td>40</td><td>3</td><td>2026-06-23</td><td>high — dominant; infra + full UI kit + home page + catalog + commercetools</td></tr>
+<tr><td><strong>prokhorovd</strong></td><td>9</td><td>10</td><td>8</td><td>3</td><td>2026-06-22</td><td>steady — InputComponent, Sign Up, Sign In; clear Angular growth arc</td></tr>
+<tr><td><strong>den987655</strong></td><td>14</td><td>7</td><td>6</td><td>3</td><td>2026-06-24</td><td>watch — delivers assigned pages but output is ~1 page per sprint; 1 PR open</td></tr>
+</tbody></table>
+<p>Commit counts from <code>git shortlog -sn --all</code> (all branches). elrouss's count includes a second git identity ("Зашляпин Борис", 4 commits) merged into 85 total. den987655's count (14) similarly includes a "Denis" identity (6 commits) used on feature branches.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>Sprint 1 interviews held with mentor <code>mummick</code>. Sprint 2 interviews held with mentor <code>oreskag</code>. No written comments were provided for either sprint by either mentor.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>elrouss</td><td>100</td><td>100</td></tr>
+<tr><td>prokhorovd</td><td>75</td><td>80</td></tr>
+<tr><td>den987655</td><td>75</td><td>80</td></tr>
+</tbody></table>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>elrouss (100/100 / dominant contributor):</strong> Both scores are consistent with the repo evidence. Sprint 1: he set up the entire repository infrastructure — ESLint with <code>ChangeDetectionStrategy.OnPush</code> enforcement, Husky, commitlint, branch protection, CI/CD to GitHub Pages, and shipped 7 fully tested UI kit primitives. Sprint 2: delivered the complete Home page, carousel (no external library, discussed with mentor before building), shared footer, logo, header with search widget, tooltip/popover enhancements, and carried team lead duties including 5+ back-to-back PR reviews. The scores are not surprising; what is notable is how much he produced at 100-level quality while carrying coordination overhead that his diary describes in detail. Sprint 3 diary openly records burnout — mentor should acknowledge this.</li>
+</ul>
+<ul>
+<li><strong>prokhorovd (75 → 80 / steady growth):</strong> The improvement from Sprint 1 to Sprint 2 is well-grounded in the diary evidence. Sprint 1 diary (in Russian) is candid: he built InputComponent, initially over-engineered it with full ControlValueAccessor, then pivoted to <code>model()</code> after recognising CVA was unnecessary for current requirements — a healthy YAGNI application. Sprint 2 diary documents Reactive Forms from scratch (Sign Up page with custom form-level password validator, error states with touched/dirty, navigation guard via <code>confirm()</code> as a placeholder). Sprint 3 diary shows the deepest Angular learning of the team: he independently debugged the <code>catchError</code> placement inside vs outside <code>switchMap</code> (realising outer placement kills the stream after first error), refactored subscription to Subject + <code>switchMap</code> + <code>takeUntilDestroyed</code> after code review feedback. The 80 is plausible — he needs more depth on "why" at the framework level, but the trajectory is clear.</li>
+</ul>
+<ul>
+<li><strong>den987655 (75 → 80 / thin output):</strong> The score is consistent with someone who understands what they implemented but operates at lower depth. Sprint 1: built <code>Empty</code> and <code>Spin</code> UI kit components using Signals API (<code>input()</code>), iterated through code review feedback on styles and architecture. Sprint 2: <code>TeammateCard</code> (flip card with front/back, NgOptimizedImage, <code>focus-within</code> accessibility), <code>About</code> page with lazy routing, <code>NotFound</code> page. Sprint 3: Cart Page with CartService using Angular Signals + commercetools SDK integration (anonymous session flow, SKU-based add-to-cart, version-based optimistic locking). His sprint-3 diary is the most substantive — he navigated commercetools complexity (Tax Category errors, session recovery, scope permissions) hands-on. The 80 is fair, though the interviewer should probe whether he understands the RxJS/Signals patterns elrouss and prokhorovd used or only the parts he built himself.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>elrouss (lead) — 85 commits / 42 PRs (40 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1 (sprint diary 2026-05-18, ~40h): Full repo infrastructure (ESLint with OnPush enforcement, Stylelint, Prettier, Husky, commitlint, branch name validation, CI lint + CD to GitHub Pages). 7 UI kit primitives — <code>Icon</code>, <code>IconButton</code>, <code>IconRouterLink</code>, <code>IconExternalLink</code>, <code>Button</code>, <code>RouterLink</code>, <code>ExternalLink</code> — 100% Vitest unit test coverage including host-binding event tests. Contribution guidelines with code review etiquette (nit/question/praise tags, emoji tracking, author-only thread closure). AI use: Visily.AI and Lovable for wireframing only; actual UI kit built against W3C patterns.</li>
+<li>Sprint 2 (diary 2026-06-08, ~45h): Full Home page delivery — hero block, promo section, product sections, banner, carousel (custom, no external library, decision validated with mentor), shared logo (generated via Gemini prompts + Leonardo.ai + Vectorizer.AI for SVG), shared footer (JSON-driven nav), header with <code>SearchWidget</code> + <code>CartButton</code>, popover, tooltip positioning extension, autofocus directive. Also: 5+ sequential PR reviews to keep team throughput moving, GitHub Projects reform (epic column, labels, sprint grouping), multiple 1:1 syncs with teammates.</li>
+<li>Sprint 3 (diary 2026-06-22, ~40h): Post-sprint-2 merges (header, popover, icon fixes, auth/products service templates). commercetools API integration setup (<code>.env.example</code>, <code>CommercetoolsService</code>, environment wiring, CI secrets). Catalog page — routing, responsive grid (sidebar + product area), <code>CatalogGrid</code>, <code>CatalogService</code>, product mocks in centralised <code>products.json</code> (100 curated comics: 40 Marvel, 30 DC, 20 Dark Horse, 10 Image, metadata sourced manually from a real store). Catalog filters/sorting UI — <code>Drawer</code>, <code>CheckboxGroup</code>, <code>Select</code> shared components, <code>UiService</code> for single-active-drawer coordination and scroll lock, mobile drawer mechanics (PRs 154–157, all merged 2026-06-23).</li>
+</ul>
+<p><strong>Level:</strong> Technically the strongest contributor by a wide margin. The Sprint 1 diary shows architectural maturity: he caught an accessibility bug in community solutions (preventing <code>Tab</code> focus with <code>preventDefault</code>), resolved it correctly (<code>stopPropagation</code>), and documented the W3C pattern. Sprint 2 diary is detailed team-management writing: he tracks PR review lag (5–7 day delays on his own PRs), analyses teammate velocity, identifies the risk of Cart Page delivery, and reflects on the leadership trap of becoming an operational support layer. Sprint 3 diary is the most revealing: he describes burnout from carrying the project while teammates deliver 300–500 lines per two-week cycle, critiques the interview-driven format as competing with building, and expresses loss of interest in the course. This is a candid, grounded assessment — not melodrama.</p>
+<p><strong>Risk:</strong> Burnout is real. He has shipped ~125 hours of documented work across three sprints while functioning as lead, designer, infra owner, and primary feature engineer. The interview is an opportunity to acknowledge this explicitly. There is also one minor flag: elrouss uses AI design tools (Visily.AI, Lovable) and mentions Gemini for logo prompts. His diary shows clear validation and independent decision-making (he rejected Swiper.js, built the carousel himself after discussing with the mentor), so AI-assist here is appropriate. No concern about blind relay.</p>
+<p><strong>Probe at interview:</strong> Ask him to walk through the <code>Drawer</code> + <code>UiService</code> design from Sprint 3 — specifically: "How does <code>UiService</code> ensure only one drawer is active at a time, and how do you handle body scroll lock?" This is his own architecture from last week and tests whether he understood what he built at the abstraction level. Then: "Your sprint-3 diary mentions burnout from uneven team velocity. What would you do differently if you led this team again from the start?" This opens a useful leadership reflection and signals that the coordinator has read his diary honestly.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>prokhorovd — 9 commits / 10 PRs (8 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1 (diary 2026-05-25): Base <code>InputComponent</code> — signal-based <code>model()</code> binding, <code>error</code>/<code>warning</code> boolean inputs, disabled/readonly, label, <code>aria-invalid</code>/<code>aria-describedby</code>, unit tests with centralised <code>APP_TEST_IDS</code>. Initially implemented full <code>ControlValueAccessor</code>, then correctly identified it as unnecessary (ReactiveFormsModule not in use) and refactored to <code>model()</code>. Added password-field extension in Sprint 2 follow-up (PR #107).</li>
+<li>Sprint 2 (diary 2026-06-08): <code>Checkbox</code> component (native HTML, <code>input()</code> / <code>output()</code>, disabled/required states). <code>DatePicker</code> component. Sign Up page with full Reactive Forms: <code>FormGroup</code> with email validator, <code>minLength</code> password, custom form-level password-confirm validator, error display on <code>touched</code>/<code>dirty</code>, <code>ngSubmit</code>. Navigation guard via <code>confirm()</code> placeholder. <code>computed</code>-signal toggle for password visibility.</li>
+<li>Sprint 3 (diary 2026-06-22, done last-minute per diary): Sign In page — <code>FormGroup</code> with email + password + remember-me, <code>AuthService.login()</code> as Observable mock, success navigation, error display. Refactored subscription to Subject + <code>switchMap</code> + <code>takeUntilDestroyed</code> after code review caught an imperative <code>subscribe</code> in an event handler. Independently debugged <code>catchError</code> placement (inner vs outer observable). Centralised commercetools config via <code>InjectionToken</code> + <code>useFactory</code> (PR #153, merged 2026-06-22). PR #151 (Sign In page) open at snapshot date pending final review.</li>
+</ul>
+<p><strong>Level:</strong> The diary arc is one of the cleanest learning narratives in this cohort. Sprint 1: diagnoses his own over-engineering (CVA, design token layers, inputId) and applies YAGNI, documents the SCSS iteration honestly. Sprint 2: explicitly names his React habits as the obstacle ("главная проблема — понять где заканчивается Angular и начинаются мои React-привычки") and shows how he resolves them. Sprint 3: the <code>catchError</code>-inside-<code>switchMap</code> insight is the kind of debugging that requires real understanding of observable stream lifecycle — he found it, understood it, and articulated it in writing. The fact that sprint 3 was done last-minute (he says so plainly) is a yellow flag on pace, but the quality of the output is not compromised.</p>
+<p><strong>Risk:</strong> Sprint 3 was delivered under time pressure ("в горящем режиме", "личные проблемы", "в последнюю ночь"). This is self-disclosed — not reconstructed. The PR is open. The interview happens while the sprint-3 code is not yet fully merged. Verify whether the Sign In page is in main before the interview and adjust scope accordingly.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the <code>catchError</code> fix in your Sign In flow — where was it placed originally, what broke, and why does moving it inside <code>switchMap</code> fix the problem?" This is exactly what he wrote in his diary and tests genuine understanding of higher-order observables. Then: "In Sign Up, how does your custom form-level validator for password confirmation access both fields? Show me the validator function." Tests his Reactive Forms depth beyond the built-in validators.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>den987655 — 14 commits / 7 PRs (6 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1 (diary 2026-05-18): <code>EmptyComponent</code> — Signals API (<code>input()</code> for <code>img</code>, <code>name</code>, <code>description</code>), styles aligned after two code-review cycles. <code>SpinComponent</code> — <code>input()</code> for <code>size</code>, <code>color</code>, <code>description</code>. Both iterated through review (property binding, naming conventions, CSS structure). 3 diary entries include the <code>feat/spin-component</code> branch PR (#50, merged 2026-05-25).</li>
+<li>Sprint 2 (diary 2026-06-08): <code>TeammateCard</code> — flip card with front/back sides, <code>NgOptimizedImage</code>, <code>ExternalLinkComponent</code>, <code>focus-within</code> for keyboard accessibility. <code>About</code> page with lazy routing (<code>loadComponent</code>), data in <code>about.constants.ts</code> + <code>about.json</code>, <code>@for</code> iteration, banner. <code>NotFound</code> page with route wiring. Multiple code-review fix iterations across all three features.</li>
+<li>Sprint 3 (diary 2026-06-22): Cart page — <code>CartService</code> using Angular Signals, <code>add-to-cart</code> events from product cards, SKU field added to product model, commercetools SDK integration (anonymous session flow, cart creation, add-by-SKU, localStorage cart-id persistence), <code>Tax Category</code> error diagnosis and fix, version-based update actions. PR #144 (Cart Page) open at snapshot date.</li>
+</ul>
+<p><strong>Level:</strong> Consistent but lighter than teammates. The sprint-1 diary is structured and self-aware (kanban flow diagram, git workflow notes, reflection on YAGNI vs flexibility). The sprint-2 diary is longer and shows genuine progress — he documents the split between page-level data concerns vs component APIs and learns the <code>loadComponent</code> routing pattern. Sprint-3 diary is the most technically substantive he has written: he navigated real commercetools complexity (Tax Category, anonymous session recovery, scope permissions, <code>version</code> field for optimistic locking) independently and documented the debugging process. This suggests hands-on engagement, not just code-following.</p>
+<p>However: across three sprints he has shipped approximately one main feature per sprint (Empty+Spin, About+NotFound, Cart). His git history is heavier on fix/refactoring commits (11 of 14 GitHub-API commits are <code>fix:</code> or <code>chore:</code>). The compare against elrouss and prokhorovd's deeper Angular work (signals architectures, Reactive Forms, RxJS patterns) is stark. Both of his PRs (#108 About, #144 Cart) are feature pages rather than reusable architecture; both required multiple fix iterations after review.</p>
+<p><strong>Risk:</strong> Cart page PR #144 is open at snapshot date. If it does not merge before the defence, he may be defending a feature that has not passed code review. Elrouss's sprint-3 diary specifically expresses concern about the cart page delivery pace ("concerns about whether the team can finish the Cart Page scope at the current pace"). The 80 score in Sprint 2 implies the interviewer saw surface-level correctness; probe whether he understands the patterns beneath the features he built.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the Cart page — specifically, how does <code>CartService</code> expose cart state to components, and how do product cards communicate an add-to-cart event up to the service?" Tests Signals-based service architecture. Then: "You mentioned that after page refresh the cart was lost. How did you solve that using localStorage and the anonymous session?" Tests whether he understood the session recovery mechanism or copied it from documentation. Avoid questions about elrouss's UI kit internals — focus on the Cart scope he actually owns.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A three-person team with a live, deployable product, a genuinely ambitious scope (custom UI kit + commercetools), and the highest repo activity of any team reviewed at this snapshot. The codebase quality is high, enforced by elrouss's CI/lint stack and active code review culture. All three students have diary entries for every sprint, which is uncommon. However, the contribution split is stark: elrouss has 85 commits and 42 PRs; the other two combined have 23 commits and 17 PRs across three sprints.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>elrouss is among the most technically capable and self-reflective students in the cohort. His diaries read as professional engineering retrospectives, not student journals. His carousel decision (no Swiper.js, built natively after mentor discussion) and <code>UiService</code> drawer coordination pattern show genuine architectural thinking.</li>
+<li>prokhorovd has the sharpest Angular learning arc of the three: from CVA over-engineering in sprint 1 to correctly diagnosing <code>catchError</code> stream termination in sprint 3. His self-awareness about React-to-Angular migration is explicit and productive.</li>
+<li>den987655 is consistent and present — three diary entries, one feature per sprint, real commercetools debugging in sprint 3. He is not carried; he is slower.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>elrouss's burnout disclosure in the sprint-3 diary is the most significant flag. He describes losing interest in the course. Whether this persists into sprint 4 is unknown, but the mentor should address it directly and privately, not just score it.</li>
+<li>den987655's Cart page PR (#144) was open at snapshot. If it hasn't merged, the sprint-3 feature set is incomplete on main.</li>
+<li>The interview-driven format that elrouss criticises ("time goes into interview prep instead of building") may shape his engagement during the defence itself — he may be less invested in it than earlier sprints.</li>
+<li>Imbalance risk: if elrouss's engagement drops, the project delivery capacity drops sharply because prokhorovd and den987655 together are not producing enough volume to compensate.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> For elrouss, treat the interview as a peer conversation, not a knowledge check — his diary makes clear he has outgrown the Q&A format. Ask about architectural decisions and leadership retrospectives. For prokhorovd, the <code>catchError</code>/<code>switchMap</code> arc is the ideal probe — follow his own diary thread and ask him to explain rather than demonstrate. For den987655, stay inside his Cart page scope and test whether he understood the commercetools concepts he documented or worked through them by trial and error alone. The Feynman threshold: can he explain anonymous session flow, SKU, and version-based cart updates without code in front of him?</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг ментора — RX-Men</h1>
+<h3>Кросс-интервью брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>RX-Men/shop-front</code> (коммиты, PR, дневники разработки по всем ветками). Снимок 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты Sprint 2 — кто что сделал, кто понимает, о чём спрашивать.</blockquote>
+<p><strong>Краткое резюме:</strong> Янтарный — elrouss (тимлид) тянет проект с огромным объёмом и реальной глубиной, prokhorovd стабильно растёт и явно нагоняет паттерны Angular; den987655 сдаёт страницы и UI-компоненты, но объём заметно скромнее (~7 PR всего против 42 у elrouss), и elrouss прямо в дневнике спринта 3 пишет о выгорании от того, что несёт проект в одиночку. Очки защиты Sprint 2 зафиксированы (всех троих опрашивал <code>oreskag</code>): elrouss 100, prokhorovd 80, den987655 80. Продукт работает, кодовая база качественная, но неравенство нагрузки — главный флаг.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>SPA-магазин комиксов — кастомный UI-кит + commercetools-бэкенд</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 21, TypeScript strict, @ngrx/signals, RxJS, SCSS, Vitest, commercetools API, CI/CD на GitHub Pages</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/RX-Men/shop-front">https://github.com/RX-Men/shop-front</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-11</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-23</td></tr>
+<tr><td><strong>Открытых issues</strong></td><td>48</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://rx-men.github.io/shop-front/">https://rx-men.github.io/shop-front/</a> (работает, HTTP 200)</td></tr>
+</tbody></table>
+<p>Заметные технологические решения: кастомный UI-кит с нуля (без Taiga, без Angular Material) с 100% покрытием Vitest для примитивов; <code>ChangeDetectionStrategy.OnPush</code> применяется принудительно через ESLint; commercetools в качестве бэкенда (значительно сложнее, чем у команд с Jamendo API); @ngrx/signals для управления состоянием. 48 открытых GitHub Issues — это активное использование GitHub Projects для трекинга спринтов, а не нерешённые баги.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (по реестру курса):</strong></p>
+<ul>
+<li><code>elrouss</code> — тимлид (Борис Зашляпин по истории git; в shortlog «Boris Zashliapin» и «Зашляпин Борис»)</li>
+<li><code>prokhorovd</code> — участник</li>
+<li><code>den987655</code> — участник (Денис по истории git)</li>
+</ul>
+<p><strong>Менторы:</strong></p>
+<ul>
+<li><code>mummick</code> — ментор Sprint 1 по participants.json. В contributors репозитория нет. Норма.</li>
+<li><code>oreskag</code> — ментор Sprint 2 по participants.json. В contributors репозитория нет. Норма.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong></p>
+<ul>
+<li>Нет. Все 108 коммитов (shortlog по всем веткам) принадлежат участникам команды.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смержено PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>elrouss</strong> (тимлид)</td><td>85</td><td>42</td><td>40</td><td>3</td><td>2026-06-23</td><td>высокий — доминирующий; инфра + полный UI-кит + главная + каталог + commercetools</td></tr>
+<tr><td><strong>prokhorovd</strong></td><td>9</td><td>10</td><td>8</td><td>3</td><td>2026-06-22</td><td>стабильный — InputComponent, Sign Up, Sign In; чёткая дуга роста в Angular</td></tr>
+<tr><td><strong>den987655</strong></td><td>14</td><td>7</td><td>6</td><td>3</td><td>2026-06-24</td><td>внимание — сдаёт назначенные страницы, но объём ~1 страница в спринт; 1 PR открыт</td></tr>
+</tbody></table>
+<p>Количество коммитов — из <code>git shortlog -sn --all</code> (все ветки). Цифра elrouss (85) включает второй git-идентификатор («Зашляпин Борис», 4 коммита). У den987655 аналогично: идентификатор «Denis» в feature-ветках (6 коммитов) включён в итог 14.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (очки защиты)</h2>
+<p>Интервью Sprint 1 проводил ментор <code>mummick</code>. Интервью Sprint 2 проводил ментор <code>oreskag</code>. Письменные комментарии ни по одному из спринтов предоставлены не были.</p>
+<table><thead>
+<tr><th>Студент</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>elrouss</td><td>100</td><td>100</td></tr>
+<tr><td>prokhorovd</td><td>75</td><td>80</td></tr>
+<tr><td>den987655</td><td>75</td><td>80</td></tr>
+</tbody></table>
+<p><strong>Сверка — расхождения между очками защиты и активностью в репозитории:</strong></p>
+<ul>
+<li><strong>elrouss (100/100 / доминирующий):</strong> Оба результата соответствуют данным репозитория. Sprint 1: поднял всю инфраструктуру — ESLint с принудительным OnPush, Stylelint, Prettier, Husky, commitlint, защита веток, CI/CD на GitHub Pages — и сдал 7 протестированных UI-примитивов. Sprint 2: полная главная страница, карусель (без внешних библиотек, решение согласовано с ментором), шаред-футер, лого, хедер с поиском, tooltip/popover, руководство code-review и 5+ последовательных PR-ревью. Результаты неудивительны; важно то, что он производил качественный результат уровня 100 при одновременной координационной нагрузке, которую он подробно описывает в дневниках. Дневник спринта 3 прямо фиксирует выгорание — ментор должен это признать.</li>
+</ul>
+<ul>
+<li><strong>prokhorovd (75 → 80 / стабильный рост):</strong> Рост от Sprint 1 к Sprint 2 подтверждён дневниковыми данными. Дневник Sprint 1 (на русском) честен: построил InputComponent, изначально переусложнил через полный ControlValueAccessor, затем вовремя пересмотрел в пользу <code>model()</code>, когда понял, что CVA избыточен — здоровое применение YAGNI. Дневник Sprint 2: Reactive Forms с нуля (Sign Up с кастомным валидатором для паролей, состояния ошибок через touched/dirty, навигационный guard через <code>confirm()</code> как заглушку). Дневник Sprint 3 — самое глубокое Angular-обучение в команде: он самостоятельно отладил расположение <code>catchError</code> внутри vs снаружи <code>switchMap</code> (поняв, что внешняя позиция завершает поток после первой ошибки), переписал подписку на Subject + <code>switchMap</code> + <code>takeUntilDestroyed</code> после code-review. Результат 80 — обоснован: нужна большая глубина по «почему» на уровне фреймворка, но траектория чёткая.</li>
+</ul>
+<ul>
+<li><strong>den987655 (75 → 80 / скромный объём):</strong> Результат согласуется с кем-то, кто понимает то, что реализовал, но работает на меньшей глубине. Sprint 1: <code>Empty</code> и <code>Spin</code> — компоненты UI-кита с Signals API, итерации после code-review по стилям и архитектуре. Sprint 2: <code>TeammateCard</code> (карточка с переворотом front/back, NgOptimizedImage, доступность через <code>focus-within</code>), страница <code>About</code> с lazy-роутингом, страница <code>NotFound</code>. Sprint 3: Cart Page с <code>CartService</code> на Angular Signals + интеграция commercetools SDK (anonymous session flow, добавление по SKU, версионирование). Дневник Sprint 3 — самый содержательный у него: он разобрался с ошибками Tax Category, восстановлением сессии, ограничениями прав доступа — руками, а не по туториалу. Оценка 80 справедлива, но интервьюер должен проверить, понимает ли он RxJS/Signals-паттерны elrouss и prokhorovd или только то, что построил сам.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>elrouss (тимлид) — 85 коммитов / 42 PR (40 смержено) / 3 дневника</h3>
+<p><strong>Что сделал</strong> (из PR и дневников):</p>
+<ul>
+<li>Sprint 1 (дневник 2026-05-18, ~40 ч): полная инфраструктура репозитория — ESLint с принудительным OnPush, Stylelint, Prettier, Husky, commitlint, валидация имён веток, CI (lint) + CD (GitHub Pages). 7 UI-примитивов — <code>Icon</code>, <code>IconButton</code>, <code>IconRouterLink</code>, <code>IconExternalLink</code>, <code>Button</code>, <code>RouterLink</code>, <code>ExternalLink</code> — 100% покрытие Vitest включая тесты host-binding событий. Contribution Guidelines с правилами code-review (теги nit/question/praise, emoji-трекинг, закрытие тредов только автором). AI: Visily.AI и Lovable только для вайрфреймов; UI-кит реализован по W3C-паттернам самостоятельно.</li>
+<li>Sprint 2 (дневник 2026-06-08, ~45 ч): полная главная страница — hero-блок, promo-секция, product sections, баннер, карусель (кастомная, без внешних библиотек, решение согласовано с ментором до реализации), шаред-лого (генерация через Gemini-промпты + Leonardo.ai + Vectorizer.AI для SVG), шаред-футер (навигация из JSON), хедер с <code>SearchWidget</code> + <code>CartButton</code>, попover, расширение позиционирования tooltip, autofocus-директива. Плюс: 5+ последовательных PR-ревью, реформа GitHub Projects (колонка Epics, метки, группировка по спринтам), множественные 1:1-синки с участниками.</li>
+<li>Sprint 3 (дневник 2026-06-22, ~40 ч): дозакрытие PR из Sprint 2 (хедер, popover, правки иконок, шаблоны сервисов auth/products). Настройка интеграции с commercetools (<code>.env.example</code>, <code>CommercetoolsService</code>, secrets в CI). Страница каталога — роутинг, адаптивная сетка (сайдбар + товарная зона), <code>CatalogGrid</code>, <code>CatalogService</code>, моки в централизованном <code>products.json</code> (100 отобранных вручную комиксов: 40 Marvel, 30 DC, 20 Dark Horse, 10 Image, данные взяты с реального магазина комиксов). Фильтры и сортировка каталога — <code>Drawer</code>, <code>CheckboxGroup</code>, <code>Select</code> как шаред-компоненты, <code>UiService</code> для управления единственным активным drawer и блокировки скролла, мобильный drawer (PR 154–157, все смержены 2026-06-23).</li>
+</ul>
+<p><strong>Уровень:</strong> Технически самый сильный участник с большим отрывом. Дневник Sprint 1 показывает архитектурную зрелость: нашёл баг доступности в комьюнити-туториале (блокировка Tab через <code>preventDefault</code>), исправил корректно (<code>stopPropagation</code>) и задокументировал W3C-паттерн. Дневник Sprint 2 — профессиональная ретроспектива: он отслеживает задержки ревью (5–7 дней на его собственные PR), анализирует скорость участников, выявляет риск с Cart Page. Дневник Sprint 3 — самый откровенный: описывает выгорание от того, что несёт проект в одиночку пока участники сдают 300–500 строк за двухнедельный цикл, критикует формат «интервью каждые две недели» как конкурирующий со строительством продукта, говорит о потере интереса к курсу.</p>
+<p><strong>Риск:</strong> Выгорание реальное. Три спринта — около 125 задокументированных часов — при одновременном выполнении ролей лида, дизайнера, инфра-инженера и главного фичерного разработчика. Интервью — возможность прямо это признать. Также: elrouss использует AI-инструменты (Visily.AI, Lovable, Gemini для промптов). Дневники показывают чёткую валидацию и независимые решения (отверг Swiper.js, построил карусель сам после обсуждения с ментором), риска слепого копирования нет.</p>
+<p><strong>Вопросы на интервью:</strong> Попросить описать дизайн <code>Drawer</code> + <code>UiService</code> из Sprint 3: «Как <code>UiService</code> гарантирует, что активен только один drawer одновременно, и как вы блокируете скролл?» Это его собственная архитектура прошлой недели — тест, понял ли он то, что построил, на уровне абстракций. Затем: «В дневнике Sprint 3 вы пишете о выгорании от неравной нагрузки. Что бы вы сделали иначе, если бы снова вели эту команду с самого начала?» Открывает лидерскую рефлексию и сигнализирует, что координатор прочитал его дневник.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>prokhorovd — 9 коммитов / 10 PR (8 смержено) / 3 дневника</h3>
+<p><strong>Что сделал</strong> (из PR и дневников):</p>
+<ul>
+<li>Sprint 1 (дневник 2026-05-25): базовый <code>InputComponent</code> — сигнальный <code>model()</code>, boolean-инпуты <code>error</code>/<code>warning</code>, disabled/readonly, лейбл, <code>aria-invalid</code>/<code>aria-describedby</code>, юнит-тесты с <code>APP_TEST_IDS</code>. Изначально реализовал полный <code>ControlValueAccessor</code>, затем правильно диагностировал избыточность и переписал на <code>model()</code>. Расширение password-поля добавлено в Sprint 2 (PR #107).</li>
+<li>Sprint 2 (дневник 2026-06-08): <code>Checkbox</code> (нативный элемент, <code>input()</code>/<code>output()</code>, disabled/required). <code>DatePicker</code>. Страница Sign Up с полным Reactive Forms: <code>FormGroup</code> с email-валидатором, <code>minLength</code> для пароля, кастомный form-level валидатор совпадения паролей, вывод ошибок через <code>touched</code>/<code>dirty</code>, <code>ngSubmit</code>. Guard через <code>confirm()</code> как заглушку. Переключение видимости пароля через <code>computed</code>-сигнал.</li>
+<li>Sprint 3 (дневник 2026-06-22, сдано в последний момент по его словам): страница Sign In — <code>FormGroup</code> email + password + «запомнить меня», <code>AuthService.login()</code> как Observable-мок, навигация на успех, отображение ошибки. Переписал подписку на Subject + <code>switchMap</code> + <code>takeUntilDestroyed</code> после code-review (было императивное <code>subscribe</code> в обработчике события). Самостоятельно отладил расположение <code>catchError</code>. Централизация конфига commercetools через <code>InjectionToken</code> + <code>useFactory</code> (PR #153, смержен 2026-06-22). PR #151 (Sign In) открыт на дату снимка.</li>
+</ul>
+<p><strong>Уровень:</strong> Дуга дневников — одна из самых чётких в когорте. Sprint 1: диагностирует собственное переусложнение (CVA, слои дизайн-токенов, inputId), применяет YAGNI. Sprint 2: прямо называет React-привычки препятствием и документирует, как их преодолевает. Sprint 3: инсайт с <code>catchError</code> внутри <code>switchMap</code> требует реального понимания жизненного цикла Observable-потоков — он его нашёл, понял и письменно объяснил.</p>
+<p><strong>Риск:</strong> Sprint 3 сдан под давлением времени — открыто признаёт это в дневнике. PR открыт. Если Sign In не смержен до интервью, тема Sprint 3 неполна в main.</p>
+<p><strong>Вопросы на интервью:</strong> «Объясни исправление <code>catchError</code> в Sign In — где он был изначально, что ломалось и почему перемещение внутрь <code>switchMap</code> решает проблему?» Это точно то, что он описал в дневнике, и проверяет понимание higher-order Observable. Затем: «Как твой form-level валидатор совпадения паролей получает доступ к обоим полям? Покажи функцию валидатора.» Проверяет глубину Reactive Forms.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>den987655 — 14 коммитов / 7 PR (6 смержено) / 3 дневника</h3>
+<p><strong>Что сделал</strong> (из PR и дневников):</p>
+<ul>
+<li>Sprint 1 (дневник 2026-05-18): <code>EmptyComponent</code> — Signals API (<code>input()</code> для <code>img</code>, <code>name</code>, <code>description</code>), стили выровнены после двух циклов code-review. <code>SpinComponent</code> — <code>input()</code> для <code>size</code>, <code>color</code>, <code>description</code>. Обе задачи прошли несколько итераций ревью (property binding, naming conventions, CSS-структура).</li>
+<li>Sprint 2 (дневник 2026-06-08): <code>TeammateCard</code> — карточка с переворотом front/back, <code>NgOptimizedImage</code>, <code>ExternalLinkComponent</code>, <code>focus-within</code> для клавиатурной доступности. Страница <code>About</code> с lazy-роутингом (<code>loadComponent</code>), данные в <code>about.constants.ts</code> + <code>about.json</code>, <code>@for</code>-итерация, баннер. Страница <code>NotFound</code> с роутингом. Множественные итерации code-review по всем трём фичам.</li>
+<li>Sprint 3 (дневник 2026-06-22): Cart Page — <code>CartService</code> на Angular Signals, события add-to-cart от карточек товаров, поле SKU в модели товара, подключение commercetools SDK (anonymous session flow, создание корзины, добавление по SKU, хранение cart-id в localStorage), диагностика и исправление ошибки Tax Category, версионные update-actions. PR #144 (Cart Page) открыт на дату снимка.</li>
+</ul>
+<p><strong>Уровень:</strong> Стабильный, но легче участников. Дневник Sprint 1 структурирован и самокритичен (схема kanban-потока, заметки по git-workflow, рефлексия о YAGNI). Дневник Sprint 2 длиннее и показывает прогресс — он документирует разделение между данными страницы и API компонента, осваивает <code>loadComponent</code>. Дневник Sprint 3 — технически самый содержательный у него: commercetools Tax Category, восстановление сессии, ограничения прав — разбирался руками, а не по пошаговому туториалу.</p>
+<p>Вместе с тем: за три спринта сдал примерно по одной основной фиче (~Empty/Spin, About/NotFound, Cart). В git-истории преобладают <code>fix:</code>-коммиты (11 из 14 по GitHub API). Сравнение с более глубокой Angular-работой elrouss и prokhorovd (сигнальные архитектуры, Reactive Forms, RxJS-паттерны) наглядно показывает разрыв. Оба его фичерных PR (#108 About, #144 Cart) — страницы, а не переиспользуемая архитектура; оба потребовали нескольких итераций fix-патчей после ревью.</p>
+<p><strong>Риск:</strong> Cart Page PR #144 открыт на дату снимка. Elrouss в дневнике Sprint 3 прямо выразил сомнение, успеет ли Cart Page закрыться вовремя. Если до интервью PR не смержен, студент защищает незавершённую фичу. Оценка 80 в Sprint 2 говорит об умении объяснить реализованное — нужно проверить, понимает ли он паттерны глубже.</p>
+<p><strong>Вопросы на интервью:</strong> «Объясни Cart Page — как <code>CartService</code> отдаёт состояние корзины компонентам и как карточки товаров передают событие add-to-cart сервису?» Проверяет архитектуру на Signals. Затем: «Ты упоминаешь, что после обновления страницы корзина терялась. Как решил это через localStorage и anonymous session?» Проверяет, понял ли он механизм восстановления сессии или работал на ощупь. Не задавать вопросы о UI-ките elrouss — сосредоточиться на Cart-скоупе, который он реально строил.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>Общее:</strong> Трёхчеловечная команда с работающим задеплоенным продуктом, по-настоящему амбициозным скоупом (кастомный UI-кит + commercetools) и самой высокой репозиторной активностью среди проверенных команд на этот снимок. Качество кодовой базы высокое — обеспечено CI/lint-стеком elrouss и живой культурой code-review. У всех троих есть дневники за каждый спринт, что редкость. При этом разрыв в вкладе резкий: у elrouss 85 коммитов и 42 PR; у двух остальных вместе — 23 коммита и 17 PR за три спринта.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>elrouss — один из наиболее технически сильных и рефлексивных студентов в когорте. Его дневники читаются как профессиональные engineering-ретроспективы, не как студенческие записки. Решение с каруселью (отказ от Swiper.js, реализация нативно после обсуждения с ментором) и <code>UiService</code> для управления drawer-ами показывают подлинное архитектурное мышление.</li>
+<li>prokhorovd — чёткая дуга обучения Angular: от CVA-переусложнения в Sprint 1 до корректной диагностики завершения потока через <code>catchError</code> в Sprint 3. Его честность насчёт React-привычек как препятствия продуктивна.</li>
+<li>den987655 — стабилен и присутствует: три дневника, одна фича в спринт, настоящая отладка commercetools в Sprint 3. Его не несут — он просто медленнее.</li>
+</ul>
+<p><strong>На контроле:</strong></p>
+<ul>
+<li>Признание выгорания elrouss в дневнике Sprint 3 — главный флаг. Он описывает потерю интереса к курсу. Ментору стоит поднять этот разговор напрямую и конфиденциально, а не просто выставить оценку.</li>
+<li>PR #144 (Cart Page den987655) был открыт на дату снимка. Если не смержен до интервью — фича Sprint 3 отсутствует в main.</li>
+<li>Формат с обязательными интервью, который критикует elrouss («время уходит на подготовку к интервью вместо стройки»), может снизить его вовлечённость в саму защиту.</li>
+<li>Риск дисбаланса: если вовлечённость elrouss упадёт, мощность доставки проекта резко снизится, потому что prokhorovd и den987655 вместе не производят достаточного объёма для компенсации.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> С elrouss разговаривать как с коллегой, не проверять знания — его дневники показывают, что он перерос формат Q&A. Спрашивать об архитектурных решениях и лидерских ретроспективах. С prokhorovd: дуга <code>catchError</code>/<code>switchMap</code> — идеальная точка входа, следовать за его дневниковым следом и попросить объяснить, а не показать. С den987655: оставаться внутри Cart-скоупа и проверять, понял ли он концепции commercetools из документации или работал методом проб и ошибок. Порог Фейнмана: может ли он без кода перед глазами объяснить anonymous session flow, SKU и версионные обновления корзины?</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

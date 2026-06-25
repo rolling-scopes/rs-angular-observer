@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — ngTunes · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — ngTunes</strong><strong class="lang-ru">Mentor briefing — ngTunes</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — ngTunes</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>angular2026q2/musicflow</code> (commits, PRs, dev diaries across all branches) + <code>angular2026q2/musicflow-backend</code> (backend repo). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — all three members (cherkasovaa, solidados, ShvetsBy) active through the sprint-2 deadline (last commits 2026-06-22), maxed sprint-1 and sprint-2 interviews (100/100 each), with a genuine full-stack product. The team has meaningful depth: 10 diary entries from cherkasovaa, a fully-authored NestJS backend from solidados, and a complete search/home feature from ShvetsBy. No silent members. The only open question is whether perfect scores reflect command that holds under a Feynman-style question — worth probing per-student at the interview.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>MusicFlow — music streaming SPA (Jamendo API v3, full-stack with NestJS backend)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 21, TypeScript strict, PrimeNG, SCSS, NestJS, Supabase (PostgreSQL), JWT auth with refresh tokens, Jamendo API v3, GitHub Actions CI/CD, GitHub Pages</td></tr>
+<tr><td><strong>Frontend repo</strong></td><td><a href="https://github.com/angular2026q2/musicflow">https://github.com/angular2026q2/musicflow</a></td></tr>
+<tr><td><strong>Backend repo</strong></td><td><a href="https://github.com/angular2026q2/musicflow-backend">https://github.com/angular2026q2/musicflow-backend</a> (NestJS; Railway + Supabase free tier)</td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-09</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Open issues</strong></td><td>10</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://angular2026q2.github.io/musicflow/">https://angular2026q2.github.io/musicflow/</a> (GitHub Pages, Actions-based deploy)</td></tr>
+</tbody></table>
+<p>Notable stack choices: Angular 21 signals used throughout (including <code>httpResource</code>, <code>resource</code>, <code>computed</code>, <code>effect</code>); PrimeNG component library with custom presets (SCSS mixins); NestJS backend on Railway free tier backed by Supabase (PostgreSQL + Auth); separate GitHub organization <code>angular2026q2</code> with its own repos. The team diverged from the course's Jamendo-only pattern by building a real backend — this is their most distinctive choice and worth asking about directly.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>cherkasovaa</code> — Team Lead. Git name: Alina Cherkasova.</li>
+<li><code>solidados</code> — Git name: Pavel Konyakhin. Backend author.</li>
+<li><code>ShvetsBy</code> — Git name: Ivan Shvets.</li>
+</ul>
+<p><strong>Mentors:</strong></p>
+<ul>
+<li><code>karina2409</code> — Sprint 1 interviewer (per score data). Not a repo contributor; normal.</li>
+<li><code>oreskag</code> — Sprint 2 interviewer (per score data). Not a repo contributor; normal.</li>
+</ul>
+<p><strong>External contributors:</strong> None. All repo activity is from rostered members.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (main)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>cherkasovaa</strong> (lead)</td><td>118</td><td>22</td><td>22</td><td>10</td><td>2026-06-22</td><td>high — lead + feature engine</td></tr>
+<tr><td><strong>solidados</strong></td><td>131</td><td>20</td><td>18</td><td>9</td><td>2026-06-22</td><td>high — backend author + front auth</td></tr>
+<tr><td><strong>ShvetsBy</strong></td><td>49</td><td>11</td><td>11</td><td>5</td><td>2026-06-22</td><td>medium — Search/Home; fewer commits but all merged</td></tr>
+</tbody></table>
+<p>Commit counts are from the GitHub contributors API (merged commits on <code>main</code>). solidados has the highest commit count on <code>main</code> but additionally owns 65 commits on the separate <code>musicflow-backend</code> repo, making his total the largest. All three students pushed code on 2026-06-22, the sprint-2 deadline day.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation</h2>
+<p>All three students presented at the Sprint 1 interview (mentor: <code>karina2409</code>) and the Sprint 2 interview (mentor: <code>oreskag</code>). All received 100/100 in both sprints. No verbal comments were provided alongside the sprint-2 scores.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 1 comment</th><th>Sprint 2</th><th>Sprint 2 comment</th></tr>
+</thead><tbody>
+<tr><td>cherkasovaa</td><td>100</td><td>"Very good knowledge of sprint theory. There is an understanding of the structure and project settings"</td><td>100</td><td>—</td></tr>
+<tr><td>solidados</td><td>100</td><td>"The student has an understanding of theory, code, and code structure, and can explain the code he has written."</td><td>100</td><td>—</td></tr>
+<tr><td>ShvetsBy</td><td>100</td><td>"Good knowledge of theory. Can explain theory using code examples. Understands the structure of the project code"</td><td>100</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Reconciliation — scores vs. repo activity:</strong></p>
+<p>All three students have consistent repo evidence for both sprints. There is no paradox analogous to a high-scoring but inactive member here: every sprint-1 max is backed by committed sprint-1 work, and every sprint-2 max is backed by sprint-2 commits through the deadline.</p>
+<p>The single calibration question is whether the second consecutive 100 across all three students reflects genuine depth or a defence format that rewards confident delivery. The sprint-1 comments are brief and surface-level ("understanding of theory, structure"), which makes it hard to gauge how deep the mentor probed. The diary trail suggests all three are genuinely working and reflecting — but the interview should include a from-scratch or explain-from-memory exercise to distinguish surface fluency from internalized understanding.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>cherkasovaa (lead) — 118 commits / 22 PRs (22 merged) / 10 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 0: project bootstrap — <code>angular2026q2</code> organization, repo, branch strategy, commitlint, ESLint, Stylelint with <code>clean-order</code>, Prettier, Husky + lint-staged, PrimeNG integration, Kanban board setup, team role assignment (PR #57 area, diary 2026-05-09).</li>
+<li>Sprint 1: About Us page with team cards and an animated banner (PR #58); favicon update; SCSS fix and stylelint config corrections (PRs #59, #61, #62); project preset fix (PR #57). 4 diary entries for sprint 1 including a canonical commitment to the "small reusable components" principle.</li>
+<li>Sprint 2: Artist page end-to-end with Swagger exploration and custom endpoint request to backend teammate (PR #68, diary 2026-06-02); Albums + Artists pages with <code>CatalogComponent</code> (shared dump component with discriminated union for <code>CatalogData</code>, <code>effect()</code> for accumulation, <code>isInitialLoading</code> / <code>isLoading</code> signal split, PR #71, diary 2026-06-04); auth guard using <code>hasToken</code> computed signal tied to <code>TokenService</code> (diary 2026-06-03); Library page with listening history (date-chip carousel using horizontal scroll, <code>scrollIntoView</code>), playlist creation with reactive forms and drag-and-drop reordering from <code>@angular/cdk</code> (diary 2026-06-22, sprint-3 date label but sprint-2 scope); loading/error states (PR #98); "Play all" button (PR #97); misc fixes (PRs #72, #76, #78, #105, #109, #111).</li>
+<li>Sprint 3 overlap: InjectionToken + <code>useValue</code>/<code>useFactory</code> (PR #103); directives, pipes and forms (PR #101); Library page continued (PR #100).</li>
+</ul>
+<p><strong>Level:</strong> The most prolific feature contributor and the clearest diary writer on the team. Her entries are in Russian, substantive, and document genuine thinking: she catches herself starting implementation before understanding the API response shape ("I started writing functionality before understanding what I receive"), identifies when <code>effect()</code> is less appropriate than <code>computed()</code> for accumulation but explains why she used it anyway, and documents the <code>hasToken</code> reactive chain from first attempt (checking <code>isAuthenticated()</code>, which caused a race condition) to final solution (wrapping the token in a signal inside <code>TokenService</code>). The auth guard diary entry is one of the most technically grounded pieces of writing in the team. No explicit AI-use acknowledgment in her diaries — her work appears self-driven.</p>
+<p><strong>Risk:</strong> The Library page diary (2026-06-22) describes rushed architecture: "I started without thinking about structure and architecture, so I'm not satisfied with the architecture." The same diary says the page "took about a week" but she "returned to it day by day." She clearly values quality but time pressure affected the design. Also: as team lead she did not generate a design herself — the team used AI-generated mockups ("design generated by AI" appears in ShvetsBy's sprint-1 diary). Verify she can reason about design trade-offs, not just execute against them.</p>
+<p><strong>Probe at interview:</strong> Ask her to walk through the <code>hasToken</code> computed signal and why it solved the Library guard's timing problem — she documented the whole journey from broken <code>isAuthenticated()</code> check to the token-signal solution. Then: "In your <code>CatalogComponent</code>, you use a discriminated union type <code>CatalogData</code> — can you write that type definition from memory, and explain what <code>discriminated union</code> means in TypeScript?" Her diary names the concept explicitly, so this tests whether she owns it or just typed the words.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>solidados — 131 commits (main) + 65 (backend) / 20 PRs (18 merged) / 9 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 0–1 (backend, separate repo): NestJS project scaffold; <code>AuthModule</code> with JWT + refresh token rotation; <code>TokenService</code> (dual <code>localStorage</code>/<code>sessionStorage</code>); <code>SupabaseService</code> with service-role vs. anon-key split to avoid RLS collisions; <code>MusicModule</code> wrapping Jamendo API v3; <code>UsersModule</code>; CI/CD deploy to Railway; <code>KeepAliveTask</code> with <code>KEEP_ALIVE_ENABLED</code> env guard.</li>
+<li>Sprint 1 (frontend): project configuration refactor (tsconfig paths <code>@core/&lt;em&gt;</code>, <code>@shared/&lt;/em&gt;</code>; OnPush CD; SCSS; Angular 21 schematics), CI/CD split into <code>build</code> + <code>deploy</code> jobs with the native <code>actions/deploy-pages@v4</code>; SPA 404 fallback; <code>SidebarComponent</code> with Signal-based <code>isActive</code> routing from <code>@angular/router</code> replacing broken <code>router.url</code> computed; icon registry standardization; Album Page with dual <code>httpResource</code> for metadata + tracks, <code>DurationPipe</code>, <code>PlayCountPipe</code>, <code>SubHeaderComponent</code>, <code>TrackComponent</code> (PRs #43–63 range, diary entries #10–12).</li>
+<li>Sprint 2 (frontend): full auth modal system — <code>SignInModal</code>, <code>SignUpModal</code>, <code>ForgotPasswordModal</code> using Reactive Forms (<code>FormBuilder.nonNullable.group</code>), <code>BaseAuthModal</code> abstract class eliminating modal code duplication, <code>FormFieldComponent</code> with <code>FormControl</code> (not <code>AbstractControl</code>), <code>SubmitButtonComponent</code>, SCSS mixins for modal containers; <code>TokenService</code> dual-storage; <code>authInterceptor</code> (relative <code>/api/</code> → absolute URL rewrite); <code>ResetPasswordPage</code> extracting tokens from URL hash, <code>history.replaceState</code> to clean address bar; <code>MusicPlayerService</code> integration; responsive design (PR #73); reset password (PR #69); auth email/username support (PR #67).</li>
+<li>Sprint 3 (started): Profile/Settings/Directives/Pipes/Forms (PR #106, #107); interceptor refactor (PR #108, #110).</li>
+</ul>
+<p><strong>Level:</strong> The team's system architect. His backend diary (sprint-0 entry) opened with an architecture diagram of both frontend and backend before writing a line of code — and he stuck to it. The sprint-2 frontend diary is technically the most detailed writing on the team: it documents every problem and solution at the level of root cause (e.g., the Supabase singleton/RLS collision — diagnosed through Postgres logs, root-caused to in-memory session state on the service-role client, resolved by splitting into two Supabase clients). He understands what he is doing at a deeper level than most course participants: he cites the Angular 21 <code>isActive</code> function API as the Signal-native replacement for deprecated <code>router.isActive()</code>, then goes and implements it. His English technical writing (sprint-1 diaries) is precise and structured. No AI-use mention beyond the team's shared AI-generated design.</p>
+<p><strong>Risk:</strong> With 131 main-branch commits plus a separate backend repo, there is a real risk his sprint-2 interview scope is undefined — he built so much that a generic "what did you build?" question will produce a ten-minute monologue. The mentor should pick a specific system (auth modals OR the Supabase dual-client fix) and ask him to explain it from first principles. Also: backend deployment on Railway Free Tier had a keep-alive abuse issue he caught and fixed — ask what the failure mode was and how he diagnosed it. Tests whether he monitors production or just ships.</p>
+<p><strong>Probe at interview:</strong> "Walk me through the Supabase dual-client fix — what was the symptom, how did you diagnose it, and why did the service-role client start behaving like a user client?" (Entry #15, very specific problem-solution). Then: "What is the difference between <code>sessionStorage</code> and <code>localStorage</code>, and why does your <code>TokenService</code> check both on read instead of just one?" Tests whether the token persistence logic was reasoned through or copy-pasted.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>ShvetsBy — 49 commits / 11 PRs (11 merged) / 5 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: <code>ItemDetailsComponent</code> (reusable image + title + description with <code>ng-content</code>); <code>DropdownMenu</code> reusable wrapper over PrimeNG with two configurable inputs; <code>CoverCardComponent</code> using <code>ng-content</code>; <code>SmallCardComponent</code>; SCSS breakpoints discussion and migration to CSS custom properties; player controls components (<code>ControlButton</code>, <code>ControlsBar</code>, <code>Timestep</code>, <code>Volume</code>); <code>RecentlyPlayedComponent</code>; misc fixes (PRs #52–65, diary 2026-05-18, 2026-05-25).</li>
+<li>Sprint 2: Home page (<code>HomeService</code> with genre enum + <code>toSignal</code>, genre tags with random color helper, <code>RecentlyPlayedComponent</code> integration, Popular Tracks + New Releases sections); Search page (URL-driven query params, load-more pattern with offset signal, genre filter from PrimeNG multi-select, sort by name/date as frontend array operations vs. sort by popularity as extra API request, live search with debounce, <code>GenresService</code> extracted as shared service) (PRs #74, #75, diary entries 2026-06-03, 2026-06-05, 2026-06-07); <code>feat: overlay directive</code> (PR #104); feature/home update PR #99.</li>
+<li>Sprint 3 (started): search page refactor, <code>httpResource</code> migration (diary 2026-06-13, 2026-06-18).</li>
+</ul>
+<p><strong>Level:</strong> A solid mid-tier contributor whose work is real and complete. His diary writing is in Russian, more casual and bullet-pointy than his teammates', but shows genuine reasoning: he chose <code>HttpClient</code> + signals over <code>httpResource</code> in sprint 2 because Angular 21 still marks it experimental (noting it became stable in v22), then reconsidered after a mentor call and migrated in sprint 3 — that's a decision made with evidence, not at random. He also caught and resolved the SCSS breakpoint discussion (correctly explaining why CSS custom properties cannot be used in SCSS <code>@media</code> blocks). His commit count (49) is lower than teammates, but all 11 of his PRs merged, and the Home + Search features are complete and functional.</p>
+<p><strong>Risk:</strong> His diaries are less detailed than solidados and cherkasovaa. The sprint-2 search page diary reads more like a stream-of-consciousness working log than a technical post-mortem — it shows he was thinking through the problem live but does not demonstrate the same level of architectural reflection. The <code>httpResource</code> migration happened in sprint 3, so the sprint-2 defence may find him explaining the <code>toSignal</code> pattern rather than <code>httpResource</code>. Verify which API he actually used in the version he demoed for sprint 2.</p>
+<p><strong>Probe at interview:</strong> Ask him to walk through how the Search page handles the case where a user changes the genre filter: "Does the page make a new API request, sort the existing results, or both — and how does the code decide?" (He documented this split explicitly in the diary: genre/popularity = API request; name/date = array sort.) Then: "You chose <code>toSignal</code> over <code>httpResource</code> for the home service in sprint 2. What is the difference between them, and what did you gain or lose with each?" Tests whether the framework choice was deliberate.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A strong team with a genuine full-stack product. Three active contributors, all working through the sprint-2 deadline. The project scope is ambitious and mostly delivered: Angular 21 signals throughout, a real NestJS backend with JWT auth + Supabase, a working music player, search with filters, playlists with drag-and-drop. No inactive member, no silent branches, no red flags.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>solidados is one of the stronger technical students in the cohort: backend + frontend, deep problem-solving documented at root-cause level, clean code architecture decisions.</li>
+<li>cherkasovaa is a credible team lead: she bootstrapped the project, manages the Kanban, contributes the most sprint-2 features, and her diary writing shows genuine Angular concept internalization.</li>
+<li>All three are active writers with diary continuity across sprints — rare for a three-person team.</li>
+<li>GitFlow discipline is consistent: feature branches, PR reviews, semantic commits, CI gating.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>Perfect scores (100/100 twice) with brief sprint-1 comments raise a calibration question: verify depth with one specific Feynman exercise per student.</li>
+<li>cherkasovaa's Library page diary flags rushed architecture — she is self-aware about it, which is a good sign, but check whether she can describe what she would do differently.</li>
+<li>ShvetsBy's commit count is noticeably lower than teammates (49 vs. 118 and 131). His features are complete but fewer. The diary writing is thinner. This is not a red flag — the work exists — but the mentor should gauge whether his conceptual grasp matches the team average.</li>
+<li>AI-generated design mockups are the team's UI foundation. No student acknowledges significant AI code generation, but it is worth asking briefly — the project complexity makes it unlikely to be purely AI-assisted, but the interview should include a small live exercise.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> Per student, pick one specific system they built and ask them to explain it from first principles — avoid generic "what did you build in sprint 2?" questions. For cherkasovaa: the <code>hasToken</code> auth guard chain. For solidados: the Supabase dual-client architecture. For ShvetsBy: the Search page request vs. client-side sort decision. The diary trail makes these questions specific and fair: you are asking about things they demonstrably thought through.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг ментора — ngTunes</h1>
+<h3>Кросс-интервью брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>angular2026q2/musicflow</code> (коммиты, PR, дневники разработки по всем веткам) + <code>angular2026q2/musicflow-backend</code> (бэкенд-репо). Снэпшот 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, что проверить.</blockquote>
+<p><strong>Тезис:</strong> Зелёный — все три участника (cherkasovaa, solidados, ShvetsBy) активны до дедлайна спринта 2 (последние коммиты 2026-06-22), получили максимальные оценки на обоих интервью (100/100), и у них есть настоящий full-stack продукт. Глубина у команды есть: 10 дневниковых записей от cherkasovaa, полноценный NestJS-бэкенд от solidados, завершённый поиск и главная страница от ShvetsBy. Молчащих участников нет. Единственный открытый вопрос — насколько идеальные оценки выдержат проверку Фейнманом. Стоит проверить каждого.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>MusicFlow — стриминговое SPA (Jamendo API v3, полноценный стек с NestJS-бэкендом)</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 21, TypeScript strict, PrimeNG, SCSS, NestJS, Supabase (PostgreSQL), JWT-авторизация с ротацией refresh-токенов, Jamendo API v3, GitHub Actions CI/CD, GitHub Pages</td></tr>
+<tr><td><strong>Фронтенд-репо</strong></td><td><a href="https://github.com/angular2026q2/musicflow">https://github.com/angular2026q2/musicflow</a></td></tr>
+<tr><td><strong>Бэкенд-репо</strong></td><td><a href="https://github.com/angular2026q2/musicflow-backend">https://github.com/angular2026q2/musicflow-backend</a> (NestJS; Railway + Supabase free tier)</td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-09</td></tr>
+<tr><td><strong>Последний пуш</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Открытых issues</strong></td><td>10</td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://angular2026q2.github.io/musicflow/">https://angular2026q2.github.io/musicflow/</a> (GitHub Pages, деплой через Actions)</td></tr>
+</tbody></table>
+<p>Примечательные решения: Angular 21 signals используются повсеместно (включая <code>httpResource</code>, <code>resource</code>, <code>computed</code>, <code>effect</code>); PrimeNG с кастомными пресетами (SCSS-миксины); NestJS-бэкенд на Railway free tier с Supabase (PostgreSQL + Auth); отдельная GitHub-организация <code>angular2026q2</code> с собственными репозиториями. Команда отошла от паттерна «только Jamendo» и построила реальный бэкенд — это их главное отличие от большинства команд курса, и о нём стоит спросить напрямую.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (по ростеру курса):</strong></p>
+<ul>
+<li><code>cherkasovaa</code> — тимлид. В git: Alina Cherkasova.</li>
+<li><code>solidados</code> — в git: Pavel Konyakhin. Автор бэкенда.</li>
+<li><code>ShvetsBy</code> — в git: Ivan Shvets.</li>
+</ul>
+<p><strong>Менторы:</strong></p>
+<ul>
+<li><code>karina2409</code> — интервьюер спринта 1 (по данным оценок). В репозитории не присутствует; это норма.</li>
+<li><code>oreskag</code> — интервьюер спринта 2 (по данным оценок). В репозитории не присутствует; это норма.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong> Нет. Вся активность в репозитории — от участников ростера.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снэпшот активности (по состоянию на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (main)</th><th>PR</th><th>Смёрженных PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>cherkasovaa</strong> (тимлид)</td><td>118</td><td>22</td><td>22</td><td>10</td><td>2026-06-22</td><td>высокий — тимлид + главный двигатель фич</td></tr>
+<tr><td><strong>solidados</strong></td><td>131</td><td>20</td><td>18</td><td>9</td><td>2026-06-22</td><td>высокий — единственный автор бэкенда + фронтенд авторизация</td></tr>
+<tr><td><strong>ShvetsBy</strong></td><td>49</td><td>11</td><td>11</td><td>5</td><td>2026-06-22</td><td>средний — поиск/главная; меньше коммитов, но все PR смёрджены</td></tr>
+</tbody></table>
+<p>Количество коммитов — по GitHub contributors API (смёрженные коммиты в <code>main</code>). У solidados наибольшее число коммитов в <code>main</code>, плюс 65 коммитов в отдельном репо <code>musicflow-backend</code>, что делает его суммарный вклад самым большим. Все три студента пушили код 2026-06-22 — в день дедлайна спринта 2.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора</h2>
+<p>Все три студента прошли интервью по спринту 1 (ментор: <code>karina2409</code>) и по спринту 2 (ментор: <code>oreskag</code>). Все получили 100/100 в обоих спринтах. Комментарии к оценкам спринта 2 не предоставлены.</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Комментарий к спринту 1</th><th>Спринт 2</th><th>Комментарий к спринту 2</th></tr>
+</thead><tbody>
+<tr><td>cherkasovaa</td><td>100</td><td>«Very good knowledge of sprint theory. There is an understanding of the structure and project settings»</td><td>100</td><td>—</td></tr>
+<tr><td>solidados</td><td>100</td><td>«The student has an understanding of theory, code, and code structure, and can explain the code he has written.»</td><td>100</td><td>—</td></tr>
+<tr><td>ShvetsBy</td><td>100</td><td>«Good knowledge of theory. Can explain theory using code examples. Understands the structure of the project code»</td><td>100</td><td>—</td></tr>
+</tbody></table>
+<p><strong>Сверка: оценки vs. активность в репозитории:</strong></p>
+<p>У всех трёх студентов есть последовательные доказательства работы в обоих спринтах. Здесь нет парадокса «высокая оценка — молчащий участник»: каждый максимум в спринте 1 подкреплён реальными коммитами спринта 1, а каждый максимум в спринте 2 — коммитами вплоть до дедлайна.</p>
+<p>Один калибровочный вопрос: второй подряд максимум у всех троих — это реальная глубина или формат защиты, который поощряет уверенную подачу? Комментарии спринта 1 короткие и поверхностные («понимание теории, структуры»), из них сложно судить, насколько глубоко проверял ментор. Дневниковый след говорит о том, что все трое реально работают и рефлексируют — но на интервью стоит включить задание «объясни с нуля» или «воспроизведи по памяти», чтобы отличить поверхностное владение от усвоенного понимания.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>cherkasovaa (тимлид) — 118 коммитов / 22 PR (22 смёрджено) / 10 дневников</h3>
+<p><strong>Что сделала</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 0: запуск проекта — организация <code>angular2026q2</code>, репо, стратегия веток, commitlint, ESLint, Stylelint с <code>clean-order</code>, Prettier, Husky + lint-staged, интеграция PrimeNG, канбан-доска, распределение ролей (дневник 2026-05-09).</li>
+<li>Спринт 1: страница About Us с карточками команды и анимированным баннером (PR #58); фавиконка; правки SCSS и конфигурации stylelint (PR #59, #61, #62). 4 дневниковых записи по спринту 1, включая канонический принцип «маленькие переиспользуемые компоненты».</li>
+<li>Спринт 2: страница Artist от начала до конца с разбором Swagger и запросом новых эндпоинтов у коллеги-бэкендера (PR #68, дневник 2026-06-02); страницы Albums + Artists с <code>CatalogComponent</code> (общий dump-компонент с discriminated union для <code>CatalogData</code>, <code>effect()</code> для накопления, разделение <code>isInitialLoading</code> / <code>isLoading</code>, PR #71, дневник 2026-06-04); auth guard с <code>computed</code>-сигналом <code>hasToken</code> из <code>TokenService</code> (дневник 2026-06-03); страница Library с историей прослушивания (карусель из чипов с горизонтальным скроллом, <code>scrollIntoView</code>), создание плейлистов на reactive forms и drag-and-drop сортировкой через <code>@angular/cdk</code> (дневник 2026-06-22); состояния загрузки/ошибки (PR #98); кнопка «Play all» (PR #97).</li>
+<li>Спринт 3 (начало): InjectionToken + <code>useValue</code>/<code>useFactory</code> (PR #103); директивы, пайпы и формы (PR #101); страница Library, продолжение (PR #100).</li>
+</ul>
+<p><strong>Уровень:</strong> Самый продуктивный контрибьютор фич и самый чёткий автор дневников в команде. Записи на русском, содержательные, отражают реальное мышление: она замечает, что начала писать функционал до того, как разобралась в структуре ответа от API, идентифицирует случаи, когда <code>effect()</code> менее уместен, чем <code>computed()</code>, но объясняет почему всё равно использовала его, и документирует цепочку <code>hasToken</code> от первой попытки (проверка <code>isAuthenticated()</code>, вызвавшей race condition) до финального решения (обёртка токена в signal внутри <code>TokenService</code>). Дневниковая запись о guard — одна из наиболее технически обоснованных в команде. Явного упоминания использования ИИ в дневниках нет — работа выглядит самостоятельной.</p>
+<p><strong>Риск:</strong> В дневнике по странице Library (2026-06-22) сама признаёт: «Сначала нужно было думать, а потом делать» — она не продумала архитектуру заранее и осталась недовольна результатом. Также: дизайн-макеты в проекте сгенерированы ИИ (упоминается в дневнике ShvetsBy). Стоит проверить, умеет ли она рассуждать об архитектурных компромиссах, а не только воплощать готовый дизайн.</p>
+<p><strong>Вопрос на интервью:</strong> Попросить провести через цепочку <code>hasToken</code>: почему проверка <code>isAuthenticated()</code> вызвала проблему с guard, и как обёртка токена в signal решила её — весь путь задокументирован. Затем: «В <code>CatalogComponent</code> ты используешь discriminated union тип <code>CatalogData</code> — напиши это определение типа по памяти и объясни, что значит discriminated union в TypeScript». Термин упомянут в дневнике явно — проверяет, является ли он усвоенным или просто промелькнул в коде.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>solidados — 131 коммит (main) + 65 (бэкенд) / 20 PR (18 смёрджено) / 9 дневников</h3>
+<p><strong>Что сделал</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 0–1 (бэкенд, отдельный репо): scaffold NestJS; <code>AuthModule</code> с JWT + ротацией refresh-токенов; <code>TokenService</code> (dual <code>localStorage</code>/<code>sessionStorage</code>); <code>SupabaseService</code> с разделением service-role и anon-key клиентов (предотвращение RLS-коллизий); <code>MusicModule</code> над Jamendo API v3; <code>UsersModule</code>; деплой в Railway; <code>KeepAliveTask</code> с env-флагом <code>KEEP_ALIVE_ENABLED</code>.</li>
+<li>Спринт 1 (фронтенд): рефактор конфигурации (tsconfig paths <code>@core/&lt;em&gt;</code>, <code>@shared/&lt;/em&gt;</code>; OnPush CD; SCSS; Angular 21 schematics); CI/CD разбит на <code>build</code> + <code>deploy</code> с нативным <code>actions/deploy-pages@v4</code>; SPA 404 fallback; <code>SidebarComponent</code> с Signal-based <code>isActive</code> из <code>@angular/router</code> вместо сломанного <code>router.url</code> computed; реестр иконок; страница Album с dual <code>httpResource</code>, <code>DurationPipe</code>, <code>PlayCountPipe</code>, <code>SubHeaderComponent</code>, <code>TrackComponent</code>.</li>
+<li>Спринт 2 (фронтенд): полная система auth-модальных окон (<code>SignInModal</code>, <code>SignUpModal</code>, <code>ForgotPasswordModal</code>) на Reactive Forms, абстрактный <code>BaseAuthModal</code>, <code>FormFieldComponent</code> с <code>FormControl</code>, <code>SubmitButtonComponent</code>, SCSS-миксины для модалок; <code>authInterceptor</code> (переписывание <code>/api/</code> → абсолютный URL); <code>ResetPasswordPage</code> с извлечением токенов из URL-хэша и очисткой адресной строки; интеграция <code>MusicPlayerService</code>; адаптивный дизайн (PR #73).</li>
+<li>Спринт 3 (начало): Profile/Settings/Directives/Pipes/Forms (PR #106, #107); рефактор интерсептора (PR #108, #110).</li>
+</ul>
+<p><strong>Уровень:</strong> Системный архитектор команды. Дневник спринта 0 открывается архитектурной диаграммой обоих приложений — и он ей следовал. Дневник спринта 2 — технически самые детальные записи в команде: каждая проблема задокументирована с указанием первопричины (например, коллизия Supabase-синглтона/RLS — диагностирована через Postgres Logs, первопричина в in-memory сессии на service-role клиенте, решена разделением на два клиента). Понимает глубже большинства: цитирует сигнал-нативный <code>isActive</code> из Angular 21 как замену устаревшего <code>router.isActive()</code> — и идёт реализовывать. Технические записи на английском — точные и структурированные.</p>
+<p><strong>Риск:</strong> С 131 коммитом в main плюс отдельным бэкенд-репо существует реальный риск, что на интервью нет чёткой точки входа: «что ты делал в спринте 2?» породит десятиминутный монолог. Ментору стоит выбрать конкретную систему (auth-модалки ИЛИ Supabase dual-client fix) и копать вглубь. Также: бэкенд на Railway free tier пережил Keep-Alive злоупотребление, которое solidados поймал и исправил — хороший вопрос о мониторинге продакшна.</p>
+<p><strong>Вопрос на интервью:</strong> «Объясни Supabase dual-client fix: что была за симптом, как ты диагностировал, почему service-role клиент начал вести себя как пользовательский?» (Entry #15, очень конкретная проблема/решение). Затем: «Чем отличается <code>sessionStorage</code> от <code>localStorage</code>, и почему твой <code>TokenService</code> при чтении проверяет оба хранилища, а не одно?» Проверяет, была ли логика хранения токенов осмыслена или скопирована.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>ShvetsBy — 49 коммитов / 11 PR (11 смёрджено) / 5 дневников</h3>
+<p><strong>Что сделал</strong> (по PR и дневникам):</p>
+<ul>
+<li>Спринт 1: <code>ItemDetailsComponent</code> (картинка + заголовок + описание с <code>ng-content</code>); переиспользуемый dropdown-wrapper над PrimeNG; <code>CoverCardComponent</code> через <code>ng-content</code>; <code>SmallCardComponent</code>; обсуждение SCSS-брейкпоинтов и переход на CSS custom properties; компоненты управления плеером (<code>ControlButton</code>, <code>ControlsBar</code>, <code>Timestep</code>, <code>Volume</code>); <code>RecentlyPlayedComponent</code>.</li>
+<li>Спринт 2: главная страница (<code>HomeService</code> с enum жанров + <code>toSignal</code>, теги жанров с хелпером случайного цвета, Popular Tracks + New Releases); страница поиска (параметры запроса в URL, load-more с offset-сигналом, фильтр по жанрам через PrimeNG multi-select, сортировка по имени/дате как операции над массивом vs. сортировка по популярности как доп. API-запрос, live-поиск, <code>GenresService</code> вынесен как отдельный сервис) (PR #74, #75, дневники 2026-06-03, 2026-06-05, 2026-06-07); overlay directive (PR #104).</li>
+<li>Спринт 3 (начало): рефактор страницы поиска, миграция на <code>httpResource</code> (дневник 2026-06-13, 2026-06-18).</li>
+</ul>
+<p><strong>Уровень:</strong> Надёжный средний контрибьютор: работа реальная и завершённая. Дневники на русском, в более свободном стиле, чем у коллег, но с реальными рассуждениями: он выбрал <code>HttpClient</code> + signals вместо <code>httpResource</code> в спринте 2, потому что Angular 21 всё ещё помечает его как экспериментальный (заметив, что стабильным он стал в v22), затем передумал после консультации с ментором и мигрировал в спринте 3 — это решение, принятое с доказательствами, а не случайно. Также правильно разобрался с SCSS-брейкпоинтами: объяснил, почему CSS custom properties нельзя использовать в <code>@media</code>-блоках SCSS. Количество коммитов ниже (49 против 118 и 131), но все 11 PR смёрджены, а фичи Home и Search работают.</p>
+<p><strong>Риск:</strong> Дневники менее подробны, чем у коллег. Запись по странице поиска читается как живое рабочее мышление, а не технический пост-мортем — видно процесс, но нет той же архитектурной рефлексии. Миграция на <code>httpResource</code> произошла в спринте 3, поэтому на интервью по спринту 2 он может объяснять <code>toSignal</code>, а не <code>httpResource</code>. Нужно уточнить, какой именно API он использовал в задемонстрированной версии.</p>
+<p><strong>Вопрос на интервью:</strong> Попросить объяснить, как страница поиска обрабатывает смену фильтра жанра: «Делает ли страница новый API-запрос, сортирует существующие результаты или и то и другое — и как код это решает?» (Он явно задокументировал это разделение в дневнике: жанр/популярность = API-запрос; имя/дата = сортировка массива.) Затем: «Ты выбрал <code>toSignal</code> вместо <code>httpResource</code> для HomeService в спринте 2. В чём разница и что ты выиграл или потерял с каждым подходом?» Проверяет, был ли выбор фреймворка осознанным.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Выводы для ментора</h2>
+<p><strong>В целом:</strong> Сильная команда с настоящим full-stack продуктом. Три активных участника, все работали до дедлайна спринта 2. Масштаб проекта амбициозный и в основном реализован: Angular 21 signals повсеместно, реальный NestJS-бэкенд с JWT-авторизацией + Supabase, рабочий музыкальный плеер, поиск с фильтрами, плейлисты с drag-and-drop. Нет молчащих участников, нет заброшенных веток, нет красных флагов.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>solidados — один из самых технически сильных студентов в потоке: бэкенд + фронтенд, проблемы задокументированы на уровне первопричины, чистые архитектурные решения.</li>
+<li>cherkasovaa — убедительный тимлид: она запустила проект, ведёт канбан, вносит наибольший вклад в фичи спринта 2, а дневники показывают реальное усвоение концепций Angular.</li>
+<li>Все трое регулярно пишут дневники с преемственностью между спринтами — редкость для трёхчеловечной команды.</li>
+<li>GitFlow-дисциплина последовательна: feature-ветки, ревью PR, semantic commits, CI-ограничения.</li>
+</ul>
+<p><strong>Обратить внимание:</strong></p>
+<ul>
+<li>Идеальные оценки (100/100 дважды) при коротких комментариях спринта 1 ставят под вопрос глубину калибровки — проверить одним конкретным упражнением Фейнмана с каждым студентом.</li>
+<li>Дневник cherkasovaa по странице Library фиксирует торопливую архитектуру — она сама об этом говорит, что хороший знак, но стоит уточнить, что бы она сделала иначе.</li>
+<li>Количество коммитов ShvetsBy заметно ниже, чем у коллег (49 против 118 и 131). Его фичи завершены, но их меньше, и дневники тоньше. Это не красный флаг, но ментору стоит оценить, соответствует ли его концептуальное понимание среднему уровню команды.</li>
+<li>Дизайн-макеты — основа UI команды — сгенерированы ИИ. Никто из студентов не признаёт значительной генерации кода с помощью ИИ, но стоит спросить вскользь — сложность проекта делает маловероятным, что он полностью AI-generated, но на интервью стоит включить небольшое живое упражнение.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Для каждого студента выбрать конкретную систему, которую он создал, и попросить объяснить её с нуля — избегать общего «что ты сделал в спринте 2?». Для cherkasovaa: цепочка auth guard с <code>hasToken</code>. Для solidados: архитектура Supabase dual-client. Для ShvetsBy: решение API-запрос vs. клиентская сортировка на странице поиска. Дневниковый след делает эти вопросы конкретными и честными: вы спрашиваете о том, что они явно обдумывали.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

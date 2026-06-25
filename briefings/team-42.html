@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Team 42 · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Team 42</strong><strong class="lang-ru">Mentor briefing — Team 42</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">lead silent, imbalance</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-amber">лид замолчал, дисбаланс</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Team 42</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>Ansa2110/team-42-store</code> (commits, PRs, dev diaries across all branches). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Amber — two active members (viktorykings, angelinavakkasova) carried sprint-2/3 feature delivery through June 22 with consistent diary trails, while team lead Ansa2110 went quiet after June 8 with only a route guard and a deploy to show for sprint 2, and no sprint-2 defence score on record. The product shipped; the team balance did not hold.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Team 42 Store — e-commerce Angular SPA (browsing, search, cart, user auth)</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 21, TypeScript 5.9, Angular Material 21, Tailwind CSS 4, RxJS 7.8, DummyJSON API</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/Ansa2110/team-42-store">https://github.com/Ansa2110/team-42-store</a></td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-22</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Open issues</strong></td><td>9</td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://ansa2110.github.io/team-42-store">https://ansa2110.github.io/team-42-store</a> (GitHub Pages, CI via webpack.yml)</td></tr>
+</tbody></table>
+<p>Notable stack choices: Angular Material for component library alongside Tailwind 4 (both coexist); DummyJSON used as backend substitute (viktorykings diary: "typed the actual response from network tab because the declared type didn't match reality"); GitHub Pages deploy with a webpack.yml CI pipeline (Ansa2110's sprint-2 contribution). No NestJS; no commercetools — the scope is simpler than some other teams.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>Ansa2110</code> — Team Lead (Ansar, per README)</li>
+<li><code>viktorykings</code> — Member (Viktoryia, per README)</li>
+<li><code>angelinavakkasova</code> — Member (Angelina, per README)</li>
+</ul>
+<p><strong>Mentor:</strong> None listed in <code>participants.json</code> for this team.</p>
+<p><strong>External contributors:</strong> None detected. All commits map to the three rostered students.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>viktorykings</strong></td><td>27</td><td>7</td><td>7</td><td>3</td><td>2026-06-22</td><td>high — top contributor; all sprints present</td></tr>
+<tr><td><strong>angelinavakkasova</strong></td><td>16</td><td>8</td><td>8</td><td>4</td><td>2026-06-22</td><td>high — auth owner; 4 diaries through sprint 3</td></tr>
+<tr><td><strong>Ansa2110</strong> (lead)</td><td>10</td><td>6</td><td>6</td><td>3</td><td>2026-06-08</td><td>amber — quiet since June 8; no sprint-2 score</td></tr>
+</tbody></table>
+<p>Commit counts are from the GitHub contributors API (merged to main). Angular teams use GitFlow; diary files live on <code>dev</code> and <code>development-notes/*</code> branches and are indexed accordingly.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Mentor S1</th><th>Sprint 2</th><th>Mentor S2</th><th>S2 comment</th></tr>
+</thead><tbody>
+<tr><td>Ansa2110 (lead)</td><td>75</td><td>iambigbobby</td><td>—</td><td>—</td><td>No S2 score recorded</td></tr>
+<tr><td>viktorykings</td><td>100</td><td>iambigbobby</td><td>100</td><td>yauhenpachankou</td><td>_(no comment)_</td></tr>
+<tr><td>angelinavakkasova</td><td>50</td><td>iambigbobby</td><td>50</td><td>yauhenpachankou</td><td>_(no comment)_</td></tr>
+</tbody></table>
+<p>S2 mentor comments are empty for this team — no textual feedback was provided.</p>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<ul>
+<li><strong>viktorykings (S1=100 / S2=100 / high activity):</strong> Scores are consistent with output. Viktoryia built the main page (PR #1), catalog page with products service (PR #38), loading directive (PR #39), and brought ESLint + Husky online (PR #32). Her sprint-2 diary is terse ("added catalog page, set up routes, localstorage service, linter, husky") but the PR trail is real. Sprint-3 diary confirms she hooked up the DummyJSON products API and built an attribute directive — both are advanced sprint-3 deliverables. No divergence.</li>
+</ul>
+<ul>
+<li><strong>angelinavakkasova (S1=50 / S2=50 / high activity):</strong> This is the most significant divergence — and now a persistent one. Her repo output across all three sprints is substantial: sprint-1 auth module with signals and <code>input()</code>/<code>output()</code> (PR #3), auth refactor with Reactive Forms (PR #12), 404 page (PR #14), asset organization (PR #35), 404 UI improvement (PR #36), full auth module with HttpClient + HTTP interceptor + InjectionToken + OnPush change detection + OAuth prep (PR #40, merged 2026-06-22). Her sprint-3 diary demonstrates clear understanding of interceptors, InjectionToken, token storage, and OAuth architecture limitations. Two different mentors (iambigbobby at S1, yauhenpachankou at S2) independently landed on 50 across two consecutive sprints. That consistency changes the reading: this is no longer a single-interview anomaly that a date or a bad day could explain away. The most likely interpretation is an articulation-under-pressure gap — she writes and ships strong code but cannot yet explain it fluently in a live defence — rather than a knowledge gap, given the depth in her diaries and PRs. But two consistent 50s against strong output is a more persistent signal than a one-off, and it is genuinely worth probing at the next defence: confirm whether the wall is verbal articulation or actual understanding, because the answer determines whether she is underscored or correctly scored.</li>
+</ul>
+<ul>
+<li><strong>Ansa2110 (S1=75 / no S2 / amber activity):</strong> The 75 at sprint 1 is fair: she contributed routing with lazy loading, a <code>PromoCountdownBanner</code> component, and layout/header work — sprint-1 fundamentals covered. Sprint-2 diary (2026-06-09) documents adding a route guard and deploying to GitHub Pages — legitimate work, but thin compared to teammates. No sprint-2 defence score on record. Given she went quiet after June 8 while her teammates shipped through June 22, the question is whether she sat the sprint-2 interview at all, and what she can show for sprint-2 period beyond the guard.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>viktorykings — 27 commits / 7 PRs (7 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Main page components — product sections, advantages section, input/output data passing between components. Tailwind 4 theme setup; spent 30 min on <code>@theme</code> placement relative to <code>@import 'tailwindcss'</code> (resolved through docs + Reddit). PR #1 (main page), PR #2 (sprint-1 dev notes).</li>
+<li>Sprint 2: Catalog page (PR #8, first version), ESLint + Husky + lint-staged (PR #32), catalog page refinement with products service and localstorage (PR #38), loading button directive (PR #39). Sprint-2 diary records: couldn't pass signal data to component because she forgot to bind it; fixed by reading docs. <code>routerLink</code> also failed; fixed same way. 10 hours logged.</li>
+<li>Sprint 3: Attribute directive (no problems noted), DummyJSON products API integration — typed actual API response from network tab when declared type didn't match, rendered category list and products on catalog page. Added promo banner. PR #42 (Sprint 3 merge).</li>
+</ul>
+<p><strong>Level:</strong> Consistent and self-correcting. The diary style is terse and in Russian, which is fine — the PR output backs the claims. The "forgot to bind signal to component" moment in sprint 2 is honest and shows she debugs independently through documentation. Sprint-3 work (real API, typing from network response) shows growing practical Angular depth. Top contributor by commit count.</p>
+<p><strong>Risk:</strong> Sprint-2 score is 100 but diary indicates some gaps (signal binding miss, routerLink confusion). These are minor for sprint 2. Worth checking: does she understand <em>why</em> signals require binding vs. plain variables, not just that it was needed?</p>
+<p><strong>Probe at interview:</strong> "In your catalog page, you integrated the DummyJSON API with a products service. Walk me through how data flows from the HTTP call into the template — what Angular features are involved?" Then: "You implemented a loading directive in sprint 2 — is it structural or attribute? What does it do, and how does Angular know when to activate it?" Both should be easy for her given the PR trail; they test whether the understanding is genuine.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>angelinavakkasova — 16 commits / 8 PRs (8 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Auth module — <code>LoginForm</code>, <code>RegisterForm</code>, <code>AuthPage</code> components using Angular CLI. Signal-based mode toggle in <code>AuthPage</code>. <code>input()</code> / <code>output()</code> for component communication. PR #3. Standalone components, lifecycle hooks (<code>ngOnInit</code>, <code>ngOnDestroy</code>), basic <code>signal()</code> — all documented in sprint-1 diary (2026-05-25), which is the most detailed entry in the repo.</li>
+<li>Sprint-1 continuation: Auth refactor with Reactive Forms (<code>FormBuilder</code>, <code>Validators</code>, <code>formControlName</code>, <code>markAllAsTouched</code>), improved layout per design mockup, Google/GitHub OAuth buttons (UI only), <code>AuthService</code> as mock placeholder. PR #12. 4–5 hours.</li>
+<li>Sprint 2 / UI: 404 page with responsive layout and Angular Material icons (PR #14), asset organization in <code>public/assets/</code> (PR #35), 404 UI refinement for mobile (PR #36). Sprint-2 diary covers asset structure, Tailwind responsive breakpoints. 4h.</li>
+<li>Sprint 3 (PR #40, merged 2026-06-22): Full auth integration — replaced mock <code>AuthService</code> with <code>HttpClient</code> calls to DummyJSON; HTTP interceptor for authorization headers; <code>InjectionToken</code> for centralized config; <code>OnPush</code> change detection on auth components; token storage in <code>localStorage</code>; auto-redirect after login; route protection; accessibility fixes (unique IDs on form inputs). Google and GitHub OAuth applications configured, environment-based config prepared. Sprint-3 diary: 7–9 hours. She explicitly notes GitHub OAuth can't be fully done on the frontend (client secret requires backend) — this is architecturally correct and shows she understands the constraint rather than just hitting a wall.</li>
+</ul>
+<p><strong>Level:</strong> The strongest Angular understanding in this team on paper. Sprint-1 diary is the most substantive piece of writing in the repo — genuine reflection, not a list of bullet points. The progression from <code>signal()</code> in sprint 1 to <code>InjectionToken</code> + HTTP interceptor + <code>OnPush</code> in sprint 3 is coherent and documented. The tension is that two mentors scored her 50 across both sprint-1 and sprint-2 defences. Key question for the next interview: can she explain her code fluently under pressure, or does she know it on paper but struggles to articulate it live?</p>
+<p><strong>Risk:</strong> Two consecutive 50s (S1 iambigbobby, S2 yauhenpachankou) are the flag — and because they come from two different mentors across two sprints, this is a consistent read, not a one-off bad interview. The repo output is clearly strong, so the most plausible explanation is articulation under pressure: she ships solid code but cannot yet defend it verbally. The alternative — that she leans heavily on AI for the implementation and does not own the reasoning — cannot be ruled out from the data alone and is exactly what the live walk-through is designed to test. Probe her on the interceptor and InjectionToken: if she can explain her own code from scratch, she is underscored on articulation and coaching her on defence delivery is the fix; if she stalls, the two 50s were a fair and persistent read of a genuine understanding gap.</p>
+<p><strong>Probe at interview:</strong> "Walk me through your HTTP interceptor — what class/interface does it implement, where is it registered, and what does it actually inject into the request?" This directly tests work she claims to own (PR #40). Then: "You used <code>InjectionToken</code> for configuration — why not just a constant? What problem does the token solve?" If she can answer both fluently, the two 50s underrepresent her and the gap is verbal delivery, not knowledge. If she struggles on her own code, the consistent score across two mentors was accurate.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Ansa2110 (lead) — 10 commits / 6 PRs (6 merged) / 3 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Sprint 1: Header and footer (diary 2026-05-24). Routing with lazy loading, separating auth page from main layout with child routes (diary 2026-05-25, PR #5, #6, #7). <code>PromoCountdownBanner</code> component: <code>@Input()</code> for title/button text/end date, <code>@Output()</code> for click and timer expiry events, <code>ngOnInit</code> / <code>ngOnDestroy</code> for timer start/clear. Helped teammate viktorykings understand Git branch workflow (noted in diary).</li>
+<li>Sprint 2: Route guard (PR #33), deploying to GitHub Pages (diary 2026-06-09), noting deployment styling issue (styles break on GH Pages). That's the documented sprint-2 scope. Last commit: 2026-06-08. Last PR merged: 2026-06-08.</li>
+<li>No activity after 2026-06-08. No sprint-3 diary. No sprint-2 defence score recorded.</li>
+</ul>
+<p><strong>Level:</strong> Sprint-1 output shows she understood routing, lazy loading, component communication (<code>@Input</code>/<code>@Output</code>), and lifecycle hooks — the fundamentals. Her diary writing is in English, short but clear. The <code>PromoCountdownBanner</code> is a meaningful sprint-1 exercise. However, sprint-2 contribution is thin (one guard, one deploy) and she stopped contributing while teammates continued for two more weeks. The deploy styling issue she noted was apparently left unresolved without a follow-up PR.</p>
+<p><strong>Risk (significant):</strong> Ansa2110 is the team lead and the most senior-seeming voice in early diaries, but her sprint-2 output was minimal and she went dark on June 8 — two weeks before sprint-2 closed. No sprint-2 defence score is on record. This is the team's main risk flag. Whether this is a personal situation, burnout, or effective dropout is unknown. The fact that her teammates continued shipping means the team wasn't blocked — but as lead, she should be able to account for sprint-2 period.</p>
+<p><strong>Probe at interview:</strong> Start with what she definitely built: "Walk me through the route guard you added — what interface does it implement, how does it check authentication, and what happens if the user isn't logged in?" (PR #33, diary 2026-06-09 — this is hers). Then: "You deployed to GitHub Pages and noticed styles broke. What caused that and did you fix it?" If she can't explain the guard she wrote, or can't account for the styling bug she herself logged, that tells you something. Avoid asking about catalog page, auth interceptor, or loading directive — those are other people's work.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A three-person team with a functional deployed product and active sprint-2/3 delivery from two members. The team used GitFlow correctly, maintains a <code>dev</code> branch with per-student <code>development-notes/</code> branches for diaries, and all PRs were reviewed and merged. The product itself (e-commerce SPA with real API integration) is on track. The load balance is not.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>viktorykings is consistent and self-correcting — she logs what broke, why, and how she fixed it. Three sprints of steady output.</li>
+<li>angelinavakkasova owns the most technically demanding module (auth) and her sprint-3 work — HTTP interceptor, InjectionToken, OnPush, OAuth architecture awareness — is genuinely impressive on paper for this point in the course. The open question is whether she can defend it verbally: two mentors scored her 50 across both sprints, so the live walk-through matters here more than for anyone else on the team.</li>
+<li>The team runs a real GitFlow with branch-per-feature, PR reviews, ESLint, Husky, and lint-staged. Process hygiene is above average.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>Ansa2110 went quiet after June 8. No sprint-2 score, no sprint-3 activity. As team lead, this is the most important thing to surface at the next defence. If she sat the sprint-2 interview and the score isn't in the system, that's an administrative gap. If she didn't sit it, that needs to be addressed.</li>
+<li>Angelina's two consecutive 50s (S1 and S2, from two different mentors) vs. her strong repo output: this is a persistent read, not a one-off. Most likely an articulation-under-pressure gap rather than a knowledge gap, but worth confirming directly — the next interview should test whether she can explain her own auth code from scratch.</li>
+<li>DummyJSON as backend: it doesn't persist registered users (Angelina notes this in sprint-3 diary). The team should be ready to explain this limitation and discuss how a real auth backend would differ.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> For each student, go directly to the feature they claim as theirs and ask for a code-level walk-through (the Feynman threshold). Angelina: HTTP interceptor registration and InjectionToken rationale — this is the deciding probe given two consecutive 50s; her ability to explain her own code live is the open question, not whether the code exists. Viktoryia: signal binding in catalog component + attribute directive mechanics. Ansa2110: route guard implementation and the GitHub Pages deploy styling bug she logged but apparently didn't fix. Avoid generic Angular theory questions for Ansa2110 — focus on what she documented herself.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Team 42</h1>
+<h3>Межинтервью брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>Ansa2110/team-42-store</code> (коммиты, PR, дневники разработки по всем веткам). Снимок: 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, что проверять.</blockquote>
+<p><strong>Одной строкой:</strong> Amber — двое активных участников (viktorykings, angelinavakkasova) несли фичи спринтов 2–3 до 22 июня с регулярными дневниками, тогда как тимлид Ansa2110 замолчал после 8 июня с минимальным вкладом в спринт 2 и без зафиксированной оценки за спринт-2 защиту. Продукт задеплоен; баланс нагрузки — нет.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект и стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Team 42 Store — e-commerce Angular SPA (каталог, поиск, корзина, авторизация)</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 21, TypeScript 5.9, Angular Material 21, Tailwind CSS 4, RxJS 7.8, DummyJSON API</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/Ansa2110/team-42-store">https://github.com/Ansa2110/team-42-store</a></td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-22</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Открытых issues</strong></td><td>9</td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://ansa2110.github.io/team-42-store">https://ansa2110.github.io/team-42-store</a> (GitHub Pages, CI через webpack.yml)</td></tr>
+</tbody></table>
+<p>Важные решения по стеку: Angular Material и Tailwind 4 используются совместно; DummyJSON как замена бэкенда (viktorykings в дневнике: «типизировала реальный ответ из вкладки network, потому что задекларированный тип не совпадал»); GitHub Pages деплой с CI-пайплайном через webpack.yml — вклад Ansa2110 в спринт 2. NestJS и commercetools в проекте отсутствуют — scope проще, чем у ряда других команд.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (по реестру курса):</strong></p>
+<ul>
+<li><code>Ansa2110</code> — Team Lead (Ансар, по README)</li>
+<li><code>viktorykings</code> — Участник (Виктория, по README)</li>
+<li><code>angelinavakkasova</code> — Участник (Ангелина, по README)</li>
+</ul>
+<p><strong>Ментор:</strong> В <code>participants.json</code> для этой команды ментор не указан.</p>
+<p><strong>Внешние контрибьюторы:</strong> Не обнаружены. Все коммиты относятся к трём участникам команды.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты</th><th>PR</th><th>Влитых PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>viktorykings</strong></td><td>27</td><td>7</td><td>7</td><td>3</td><td>2026-06-22</td><td>высокий — топ по коммитам; все спринты представлены</td></tr>
+<tr><td><strong>angelinavakkasova</strong></td><td>16</td><td>8</td><td>8</td><td>4</td><td>2026-06-22</td><td>высокий — владелец модуля auth; 4 дневника включая спринт 3</td></tr>
+<tr><td><strong>Ansa2110</strong> (lead)</td><td>10</td><td>6</td><td>6</td><td>3</td><td>2026-06-08</td><td>amber — молчит с 8 июня; оценка за спринт 2 не зафиксирована</td></tr>
+</tbody></table>
+<p>Количество коммитов — из GitHub contributors API (влитые в main). Команда использует GitFlow; дневниковые файлы находятся в ветках <code>dev</code> и <code>development-notes/*</code> и индексировались соответственно.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки ментора (баллы за защиту)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Ментор С1</th><th>Спринт 2</th><th>Ментор С2</th><th>Комментарий С2</th></tr>
+</thead><tbody>
+<tr><td>Ansa2110 (lead)</td><td>75</td><td>iambigbobby</td><td>—</td><td>—</td><td>Оценка за С2 не зафиксирована</td></tr>
+<tr><td>viktorykings</td><td>100</td><td>iambigbobby</td><td>100</td><td>yauhenpachankou</td><td>_(комментарий отсутствует)_</td></tr>
+<tr><td>angelinavakkasova</td><td>50</td><td>iambigbobby</td><td>50</td><td>yauhenpachankou</td><td>_(комментарий отсутствует)_</td></tr>
+</tbody></table>
+<p>Текстовые комментарии по С2 для данной команды отсутствуют — ментор оценки без пояснений не оставил.</p>
+<p><strong>Сверка — расхождения между оценками на защите и активностью в репозитории:</strong></p>
+<ul>
+<li><strong>viktorykings (С1=100 / С2=100 / высокая активность):</strong> Оценки соответствуют вкладу. Виктория собрала главную страницу (PR #1), страницу каталога с сервисом продуктов (PR #38), директиву загрузки (PR #39), настроила ESLint + Husky (PR #32). Дневник спринта 2 краткий, но PR-история реальная. В спринте 3 подключила DummyJSON API и реализовала атрибутивную директиву. Расхождений нет.</li>
+</ul>
+<ul>
+<li><strong>angelinavakkasova (С1=50 / С2=50 / высокая активность):</strong> Наиболее значимое расхождение в команде — и теперь устойчивое. Вывод репозитория за все три спринта весомый: auth-модуль спринта 1 на сигналах с <code>input()</code>/<code>output()</code> (PR #3), рефактор auth с Reactive Forms (PR #12), страница 404 (PR #14), организация ассетов (PR #35), улучшение 404 для мобильных (PR #36), полный модуль авторизации с HttpClient + HTTP interceptor + InjectionToken + OnPush + подготовка OAuth (PR #40, влит 2026-06-22). Дневник спринта 3 демонстрирует чёткое понимание интерцепторов, InjectionToken, хранения токенов и ограничений OAuth-архитектуры на фронтенде. Два разных ментора (iambigbobby на С1, yauhenpachankou на С2) независимо поставили 50 в двух подряд идущих спринтах. Эта согласованность меняет трактовку: это уже не аномалия одного интервью, которую можно списать на дату или неудачный день. Наиболее вероятное объяснение — разрыв в артикуляции под давлением: она пишет и сдаёт сильный код, но пока не может бегло объяснить его на живой защите, — а не пробел в знаниях, учитывая глубину её дневников и PR. Но две согласованные 50 при сильном выводе — более устойчивый сигнал, чем разовая, и его действительно стоит проверить на следующей защите: выяснить, упирается ли она в вербальное объяснение или в реальное понимание, потому что от ответа зависит, недооценена она или оценена справедливо.</li>
+</ul>
+<ul>
+<li><strong>Ansa2110 (С1=75 / нет С2 / amber-активность):</strong> 75 в спринте 1 обоснована: маршрутизация с lazy loading, <code>PromoCountdownBanner</code>, layout/header — базовые темы спринта 1. Дневник спринта 2 (09.06.2026) фиксирует добавление route guard и деплой на GitHub Pages — реальная, но минимальная работа для двухнедельного спринта. Оценка за спринт-2 защиту не зафиксирована. Учитывая что с 8 июня активность прекратилась, тогда как коллеги продолжали работать до 22 июня, ключевой вопрос: проходила ли она интервью по спринту 2 вообще.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>viktorykings — 27 коммитов / 7 PR (7 влито) / 3 дневника</h3>
+<p><strong>Что реализовано</strong> (из PR и дневников):</p>
+<ul>
+<li>Спринт 1: Компоненты главной страницы — секции продуктов и преимуществ, передача данных через input/output. Настройка темы Tailwind 4; потратила 30 минут на расположение <code>@theme</code> относительно <code>@import 'tailwindcss'</code> (решила через документацию и Reddit). PR #1, PR #2.</li>
+<li>Спринт 2: Страница каталога (PR #8, первая версия), ESLint + Husky + lint-staged (PR #32), доработка каталога с сервисом продуктов и localStorage (PR #38), директива кнопки-загрузки (PR #39). В дневнике: «не получалось передать данные из сигнала — забыла забайндить в компонент»; не работал routerLink — решила чтением документации. 10 часов.</li>
+<li>Спринт 3: Атрибутивная директива («сложностей не было»), интеграция DummyJSON API для продуктов — типизировала реальный ответ из вкладки network, потому что тип не совпадал. Вывод категорий и продуктов на странице каталога. Промобаннер. PR #42.</li>
+</ul>
+<p><strong>Уровень:</strong> Стабильная, самостоятельно корректирует ошибки. Тернистый стиль дневников на русском — нормально, PR-история подтверждает сказанное. Ошибка с привязкой сигнала в спринте 2 — честная запись и самостоятельная отладка. Работа в спринте 3 (реальный API, типизация по network) показывает растущую Angular-прагматику.</p>
+<p><strong>Риск:</strong> Оценка 100 в спринте 2, при этом в дневнике — пропуск с биндингом сигнала и проблема с routerLink. Это минорно для спринта 2. Стоит проверить: понимает ли она <em>почему</em> сигналы требуют привязки, а не просто что это нужно сделать?</p>
+<p><strong>Что спросить на интервью:</strong> «Расскажи, как данные от HTTP-вызова к DummyJSON попадают в шаблон страницы каталога — какие Angular-механизмы задействованы?» Затем: «Ты реализовала директиву загрузки — это структурная или атрибутивная директива? Что она делает и как Angular понимает, когда её активировать?» Обе задачи должны быть посильны, учитывая PR-историю.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>angelinavakkasova — 16 коммитов / 8 PR (8 влито) / 4 дневника</h3>
+<p><strong>Что реализовано</strong> (из PR и дневников):</p>
+<ul>
+<li>Спринт 1: Модуль auth — <code>LoginForm</code>, <code>RegisterForm</code>, <code>AuthPage</code> через Angular CLI. Переключение режимов на сигнале в <code>AuthPage</code>. <code>input()</code> / <code>output()</code> для связи компонентов. PR #3. Дневник 2026-05-25 — самый развёрнутый в репозитории: standalone components, lifecycle hooks, сравнение с React.</li>
+<li>Продолжение С1: Рефактор auth с Reactive Forms (<code>FormBuilder</code>, <code>Validators</code>, <code>formControlName</code>, <code>markAllAsTouched</code>), доработка макета, кнопки Google/GitHub OAuth (только UI), <code>AuthService</code>-заглушка. PR #12. 4–5 часов.</li>
+<li>Спринт 2 / UI: 404-страница с адаптивной вёрсткой и Angular Material icons (PR #14), организация ассетов в <code>public/assets/</code> (PR #35), доработка 404 для мобильных (PR #36). Дневник С2: Tailwind responsive, файловые соглашения. 4 часа.</li>
+<li>Спринт 3 (PR #40, влит 2026-06-22): Полная интеграция auth — замена mock-<code>AuthService</code> на HttpClient + DummyJSON; HTTP-интерцептор для заголовков авторизации; <code>InjectionToken</code> для централизованной конфигурации; <code>OnPush</code> на auth-компонентах; хранение токена в localStorage; авторедирект после входа; защита маршрутов; исправление доступности (уникальные id на полях формы). Google- и GitHub OAuth-приложения настроены, env-конфигурация подготовлена. Дневник С3: 7–9 часов. Явно указывает, что GitHub OAuth нельзя полностью реализовать на фронтенде (client secret требует бэкенда) — архитектурно корректный вывод.</li>
+</ul>
+<p><strong>Уровень:</strong> Наибольшее Angular-понимание в команде — на бумаге. Прогрессия от <code>signal()</code> в спринте 1 до <code>InjectionToken</code> + HTTP-интерцептор + OnPush в спринте 3 — последовательная и задокументированная. Напряжение в том, что два ментора поставили ей 50 на защитах и спринта 1, и спринта 2. Главный вопрос следующего интервью: может ли она бегло объяснить свой код под давлением, или знает его на бумаге, но не умеет защитить вслух?</p>
+<p><strong>Риск:</strong> Две подряд идущие 50 (С1 iambigbobby, С2 yauhenpachankou) — это флаг, и поскольку их поставили два разных ментора в двух спринтах, это согласованная оценка, а не одно неудачное интервью. Вывод репозитория явно сильный, поэтому наиболее правдоподобное объяснение — артикуляция под давлением: она сдаёт крепкий код, но пока не может защитить его вслух. Альтернатива — что она сильно опирается на ИИ в реализации и не владеет рассуждением — по одним данным не исключается и проверяется именно живым разбором кода. Проверьте интерцептор и InjectionToken: если она объяснит свой код с нуля — она недооценена по части артикуляции, и решение — тренировать подачу на защите; если запнётся — две согласованные оценки двух менторов были справедливым и устойчивым отражением реального пробела в понимании.</p>
+<p><strong>Что спросить на интервью:</strong> «Расскажи про HTTP-интерцептор — какой интерфейс он реализует, где регистрируется и что именно добавляет в запрос?» Это её код из PR #40. Затем: «Ты использовала <code>InjectionToken</code> для конфигурации — зачем, если можно просто константу? Какую проблему решает токен?» Если бегло отвечает на оба — две 50 недооценивают её, и пробел в вербальной подаче, а не в знаниях. Если запинается на собственном коде — согласованная оценка двух менторов была точной.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Ansa2110 (lead) — 10 коммитов / 6 PR (6 влито) / 3 дневника</h3>
+<p><strong>Что реализовано</strong> (из PR и дневников):</p>
+<ul>
+<li>Спринт 1: Хедер и футер (дневник 2026-05-24). Маршрутизация с lazy loading, разделение страницы auth и основного layout с child routes (дневник 2026-05-25, PR #5, #6, #7). Компонент <code>PromoCountdownBanner</code>: <code>@Input()</code> для заголовка/текста кнопки/даты окончания, <code>@Output()</code> для клика и истечения таймера, <code>ngOnInit</code>/<code>ngOnDestroy</code> для запуска/очистки. Помогла коллеге viktorykings разобраться с Git-ветками (упомянуто в дневнике).</li>
+<li>Спринт 2: Route guard (PR #33), деплой на GitHub Pages (дневник 2026-06-09), отмечает что стили после деплоя отображаются некорректно. Это весь задокументированный вклад спринта 2. Последний коммит: 2026-06-08. Последний влитый PR: 2026-06-08.</li>
+<li>После 2026-06-08 — никакой активности. Дневника за спринт 3 нет. Оценки за спринт-2 защиту нет.</li>
+</ul>
+<p><strong>Уровень:</strong> Вывод спринта 1 показывает понимание маршрутизации, lazy loading, компонентного взаимодействия (<code>@Input</code>/<code>@Output</code>), lifecycle hooks — базовые темы охвачены. Дневниковые записи по-английски, короткие, но внятные. <code>PromoCountdownBanner</code> — полноценное упражнение спринта 1. Однако вклад в спринт 2 минимален (один guard, один деплой), и активность прекратилась, пока коллеги продолжали работать ещё две недели.</p>
+<p><strong>Риск (значимый):</strong> Ansa2110 — тимлид, и её ранние дневники звучат как организующая сила команды. Но после 8 июня она пропала. Оценки за спринт-2 защиту нет. Коллеги не были заблокированы, но как тимлид она должна суметь отчитаться за период спринта 2. Проблема со стилями деплоя, которую она сама зафиксировала, судя по всему, так и не была решена.</p>
+<p><strong>Что спросить на интервью:</strong> Начните с того, что точно её: «Расскажи про route guard — какой интерфейс он реализует, как проверяется авторизация и что происходит, если пользователь не вошёл?» (PR #33, дневник 2026-06-09). Затем: «Ты задеплоила на GitHub Pages и заметила, что стили сломались. В чём причина и была ли проблема исправлена?» Если не может объяснить guard, который сама написала, — это важный сигнал. Не спрашивайте про каталог, интерцептор или директиву загрузки — это чужая работа.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Вывод для ментора</h2>
+<p><strong>В целом:</strong> Команда из трёх человек с работающим задеплоенным продуктом и активной разработкой двух участников в спринтах 2–3. Команда использует GitFlow, ведёт ветки <code>development-notes/</code> для дневников, все PR рецензировались и вливались. Продукт (e-commerce SPA с реальной API-интеграцией) на ходу. Баланс нагрузки — нет.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>viktorykings стабильна и самокорректируется — фиксирует что сломалось, почему и как починила. Три спринта без перерыва.</li>
+<li>angelinavakkasova владеет самым технически насыщенным модулем (auth), и её работа в спринте 3 — HTTP-интерцептор, InjectionToken, OnPush, понимание ограничений OAuth — серьёзный результат для этого этапа курса на бумаге. Открытый вопрос — сможет ли она защитить это вслух: два ментора поставили ей 50 в обоих спринтах, поэтому живой разбор кода здесь важнее, чем для кого-либо ещё в команде.</li>
+<li>Команда соблюдает реальный GitFlow с ветками под каждую фичу, PR-ревью, ESLint, Husky, lint-staged. Культура процесса выше среднего.</li>
+</ul>
+<p><strong>На что обратить внимание:</strong></p>
+<ul>
+<li>Ansa2110 замолчала после 8 июня. Нет оценки за С2, нет активности в С3. Как тимлид — это главное, что нужно выяснить на следующей защите. Если интервью С2 было, но оценки нет в системе — это административный пробел. Если интервью не было — нужно разобраться.</li>
+<li>Две подряд идущие 50 у Angelina (С1 и С2, от двух разных менторов) vs. её сильный вывод репозитория: это устойчивая оценка, а не разовая. Скорее всего разрыв в артикуляции под давлением, а не пробел в знаниях, но это стоит проверить напрямую — следующее интервью должно выяснить, может ли она объяснить собственный auth-код с нуля.</li>
+<li>DummyJSON как бэкенд не сохраняет зарегистрированных пользователей (Angelina отмечает это в дневнике С3). Команда должна быть готова объяснить это ограничение и обсудить, как выглядел бы настоящий auth-бэкенд.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Для каждого студента — взять то, что они называют своей работой, и попросить объяснить на уровне кода (тест Фейнмана). Angelina: регистрация HTTP-интерцептора и обоснование InjectionToken — это решающая проверка с учётом двух подряд 50; открытый вопрос — сможет ли она объяснить собственный код вслух, а не существует ли код. Viktoryia: биндинг сигнала в компоненте каталога + механика атрибутивной директивы. Ansa2110: реализация route guard и баг со стилями деплоя, который она сама зафиксировала. Избегайте абстрактных вопросов по Angular-теории для Ansa2110 — опирайтесь на то, что она задокументировала сама.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>

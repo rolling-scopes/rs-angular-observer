@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentor briefing — Stonks · Mentor Briefing</title>
+<script>
+(function(){
+  var stored = localStorage.getItem('briefing-lang');
+  var lang = (stored === 'ru') ? 'ru' : 'en';
+  document.documentElement.setAttribute('data-lang', lang);
+  document.addEventListener('DOMContentLoaded', function(){
+    var btns = document.querySelectorAll('.lang-toggle button');
+    btns.forEach(function(btn){
+      if(btn.dataset.lang === lang) btn.classList.add('active');
+      btn.addEventListener('click', function(){
+        var l = btn.dataset.lang;
+        document.documentElement.setAttribute('data-lang', l);
+        localStorage.setItem('briefing-lang', l);
+        btns.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+      });
+    });
+  });
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #161616;
+  --border: #222222;
+  --text: #e8e8e8;
+  --text-dim: #888888;
+  --text-muted: #555555;
+  --accent: #c084fc;
+  --accent-dim: #7c3aed;
+  --code-bg: #0f0f0f;
+  --measure: 72ch;
+}
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Language toggle ── */
+.lang-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 1.25rem;
+  z-index: 100;
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  background: var(--bg-card);
+}
+.lang-toggle button {
+  padding: 0.3rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  letter-spacing: 0.04em;
+}
+.lang-toggle button.active {
+  background: var(--accent-dim);
+  color: #fff;
+}
+.lang-toggle button:hover:not(.active) {
+  background: #1e1e1e;
+  color: var(--text-dim);
+}
+
+/* ── Language visibility ── */
+html[data-lang="en"] .lang-ru { display: none; }
+html[data-lang="ru"] .lang-en { display: none; }
+
+/* ── Nav ── */
+.nav {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+}
+.nav a { color: var(--text-dim); }
+.nav a:hover { color: var(--accent); }
+
+/* ── Hero / page header ── */
+.page-hero {
+  padding: 4rem 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+.page-hero .subtitle {
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  max-width: 55ch;
+}
+
+/* ── Grid / index ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  padding: 0 0 4rem;
+}
+.card {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  transition: background 0.15s ease;
+}
+.card:hover { background: var(--bg-card-hover); }
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.card-oneliner {
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 0.9rem;
+}
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.card-meta span::before { content: ''; }
+.tag {
+  display: inline-block;
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  white-space: nowrap;
+}
+.card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+.card-link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ── Report page ── */
+.report-wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 2rem 2rem 6rem;
+}
+.report-wrap h1 {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 2rem 0 0.5rem;
+}
+.report-wrap h2 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2.25rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.report-wrap h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.75rem 0 0.5rem;
+}
+.report-wrap h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin: 1.25rem 0 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.report-wrap p {
+  margin-bottom: 1rem;
+  font-size: 0.9375rem;
+}
+.report-wrap ul, .report-wrap ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.report-wrap li { margin-bottom: 0.35rem; font-size: 0.9375rem; }
+.report-wrap blockquote {
+  border-left: 3px solid var(--accent-dim);
+  padding: 0.6rem 1rem;
+  margin: 1.25rem 0;
+  color: var(--text-dim);
+  font-style: italic;
+  background: #111111;
+  font-size: 0.9rem;
+}
+.report-wrap code {
+  font-family: ui-monospace, 'Fira Code', 'Cascadia Code', Menlo, monospace;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  font-size: 0.85em;
+  color: #c9d1d9;
+}
+.report-wrap pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.report-wrap pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82rem;
+}
+/* ── Tables ── */
+.report-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  display: block;
+}
+.report-wrap th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--accent-dim);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.report-wrap td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.report-wrap tr:last-child td { border-bottom: none; }
+.report-wrap tr:hover td { background: #111; }
+.report-wrap strong { font-weight: 600; color: var(--text); }
+.report-wrap em { color: var(--text-dim); }
+
+/* ── Back link ── */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+.back-link:hover { color: var(--accent); }
+
+/* ── Signal badge ── */
+.signal-high { color: #4ade80; }
+.signal-medium { color: #facc15; }
+.signal-low { color: #f87171; }
+
+/* ── Health tier badge ── */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 3px;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: ui-monospace, 'Fira Code', Menlo, monospace;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tier-badge::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tier-green  { color: #3fb950; border-color: rgba(63,185,80,0.35); background: rgba(63,185,80,0.08); }
+.tier-green::before  { background: #3fb950; }
+.tier-amber  { color: #d29922; border-color: rgba(210,153,34,0.35); background: rgba(210,153,34,0.08); }
+.tier-amber::before  { background: #d29922; }
+.tier-red    { color: #f85149; border-color: rgba(248,81,73,0.35);  background: rgba(248,81,73,0.08); }
+.tier-red::before    { background: #f85149; }
+
+/* ── Publication date line ── */
+.pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tier legend ── */
+.tier-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  padding: 0 2rem;
+}
+.tier-legend-title {
+  width: 100%;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+}
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tier-legend-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Index pub date ── */
+.index-pub-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 1200px;
+  margin: 0 auto 0.5rem;
+  padding: 0 2rem;
+}
+
+/* ── Context banner ── */
+.context-banner {
+  max-width: 1200px;
+  margin: 0.75rem auto 1.25rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.8125rem;
+  color: #c9a227;
+  background: rgba(210, 153, 34, 0.07);
+  border: 1px solid rgba(210, 153, 34, 0.28);
+  border-radius: 4px;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 2rem 1rem 1rem; }
+  .grid { margin: 1rem 0 0; border-left: none; border-top: none; }
+  .card { border-left: none; border-right: none; }
+  .report-wrap { padding: 1rem 1rem 4rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .lang-toggle { top: 0.5rem; right: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" aria-label="Language selector">
+  <button data-lang="en">EN</button>
+  <button data-lang="ru">RU</button>
+</div>
+<nav class="nav"><a href="index.html">← All teams</a> · <strong class="lang-en">Mentor briefing — Stonks</strong><strong class="lang-ru">Mentor briefing — Stonks</strong></nav>
+
+<div class="report-wrap">
+  <a class="back-link lang-en" href="index.html">← All teams</a>
+  <a class="back-link lang-ru" href="index.html">← Все команды</a>
+  <p class="pub-date lang-en">Report published: 2026-06-24 &nbsp; <span class="tier-badge tier-green">Healthy</span></p>
+  <p class="pub-date lang-ru">Отчёт опубликован: 2026-06-24 &nbsp; <span class="tier-badge tier-green">В норме</span></p>
+  <div class="lang-en">
+<h1>Mentor briefing — Stonks</h1>
+<h3>Cross-interview briefing · RS Angular 2026 Q2</h3>
+<blockquote>Source: repository <code>Cryptangular/crypto-trade-ui</code> (commits, PRs, dev diaries on the <code>development-notes</code> branch). Snapshot 2026-06-24. Goal: give the mentor context in 2 minutes before the defence — who did what, who understands it, what to probe.</blockquote>
+<p><strong>One-liner:</strong> Green — all three members (aliakseiDrob, AnatoliRub, Zhdko) active through the sprint-2 deadline (last commits 2026-06-22/23), all scored 100 at both Sprint 1 and Sprint 2 defence rounds. The project is ambitious: Angular SPA with a real NestJS + PostgreSQL backend, Binance Spot Testnet WebSocket streams, and HttpOnly cookie auth. The flag is not dropout risk but coordination discipline: the lead's own diary notes that proposals to tighten team sync "went no further than likes in the channel." Several major features (order book widget, Markets page WebSocket, settings form integration) are in-progress heading into sprint 3.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Project + Stack</h2>
+<table><thead>
+<tr><th>Field</th><th>Value</th></tr>
+</thead><tbody>
+<tr><td><strong>Project</strong></td><td>Crypto Trade UI — Angular SPA for virtual crypto trading using Binance Spot Testnet</td></tr>
+<tr><td><strong>Stack</strong></td><td>Angular 21+, TypeScript, Angular Material, RxJS, NestJS, PostgreSQL, Prisma ORM, Docker, Binance Spot Testnet API, Vitest, GitHub Actions CI/CD</td></tr>
+<tr><td><strong>Repo</strong></td><td><a href="https://github.com/Cryptangular/crypto-trade-ui">https://github.com/Cryptangular/crypto-trade-ui</a></td></tr>
+<tr><td><strong>Deploy</strong></td><td><a href="https://stonks.com.ru">https://stonks.com.ru</a> (TimeWeb)</td></tr>
+<tr><td><strong>Created</strong></td><td>2026-05-06</td></tr>
+<tr><td><strong>Last push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Open issues</strong></td><td>5</td></tr>
+</tbody></table>
+<p>Notable stack choices: the team rolled their own UI kit (StxButton, StxToaster, StxInput, StxHeader) on top of Angular Material rather than adopting a third-party component library wholesale. NestJS backend is not a stated-in-README ambition that went unbuilt — it is running in Docker with PostgreSQL, Prisma migrations, and real endpoints consumed by the frontend. Binance Spot Testnet (not the live API) is used for WebSocket streams and order book data. Auth uses HttpOnly cookies with a separate refresh-token endpoint — a deliberate security upgrade over the original JWT-in-JS approach.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Roster</h2>
+<p><strong>Students (course roster):</strong></p>
+<ul>
+<li><code>aliakseiDrob</code> — Team Lead</li>
+<li><code>AnatoliRub</code> — member</li>
+<li><code>Zhdko</code> — member</li>
+</ul>
+<p><strong>Mentor:</strong></p>
+<ul>
+<li><code>khasekai</code> (appears as "Hanna" in git shortlog) — 5 commits, all code review participation. Normal; no penalty.</li>
+</ul>
+<p><strong>External contributors:</strong> none identified.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Activity snapshot (as of 2026-06-24)</h2>
+<table><thead>
+<tr><th>Student</th><th>Commits (all branches)</th><th>PRs</th><th>Merged PRs</th><th>Diaries</th><th>Last active</th><th>Signal</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong> (lead)</td><td>47</td><td>7</td><td>7</td><td>4</td><td>2026-06-22</td><td>high — full-stack auth, Markets page, NestJS backend; candid diary</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>43</td><td>10</td><td>9</td><td>4</td><td>2026-06-23</td><td>high — CI/CD, UI components, settings, HMAC/Binance backend</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>32</td><td>11</td><td>11</td><td>4</td><td>2026-06-23</td><td>high — UI kit owner; toaster, header, injection token; 11/11 merged</td></tr>
+</tbody></table>
+<p>Commit counts from <code>git shortlog -sn --all</code> across all branches (includes development notes branch). GitHub contributors API counts (main-branch merges only) differ: aliakseiDrob 47, AnatoliRub 14, Zhdko 32 — the gap for Anatoliy reflects work on feature branches not yet merged to main (PR #32 settings page still open at snapshot date). All three students used the <code>development-notes</code> branch as a dedicated diary track and submitted PRs from named feature branches.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Mentor evaluation (defence scores)</h2>
+<p>All three students participated in both Sprint 1 (mentor: <code>khasekai</code>) and Sprint 2 (mentor: <code>karina2409</code>) defence interviews.</p>
+<table><thead>
+<tr><th>Student</th><th>Sprint 1</th><th>Sprint 2</th></tr>
+</thead><tbody>
+<tr><td>aliakseiDrob</td><td>100</td><td>100</td></tr>
+<tr><td>AnatoliRub</td><td>100</td><td>100</td></tr>
+<tr><td>Zhdko</td><td>100</td><td>100</td></tr>
+</tbody></table>
+<p>No mentor comments were provided for Sprint 1. Sprint 2 mentor comments (<code>karina2409</code>) verbatim:</p>
+<p><strong>aliakseiDrob (Sprint 2):</strong> "The student understands the theory of the sprint well, and can explain the theory and show it in code. He knows and can explain some nuances."</p>
+<p><strong>AnatoliRub (Sprint 2):</strong> "The student can explain the theory in his own words and with an example in code, and he also know the definitions of the theory. He may get confused about the theory, but he eventually come to the right conclusions. Even if student don't know a particular definition, he can describe it using analogies with other technologies. He has a thirst for knowledge and is interested in how different technologies work in Angular."</p>
+<p><strong>Zhdko (Sprint 2):</strong> "The student answered the main questions, which demonstrates his knowledge of the theory. He is able to explain the theory using code. The student also answered most of the additional questions, which shows his depth of understanding of the topic."</p>
+<p><strong>Reconciliation — divergences between defence scores and repo activity:</strong></p>
+<p>The scores and activity are consistent across the board. All three students are genuinely active and all three earned max scores at both defences. A few texture notes:</p>
+<ul>
+<li><strong>aliakseiDrob (100/100 / high activity):</strong> The most complex backend work on the team sits with him — the auth flow (register form + login form, JWT → HttpOnly cookie refactor, custom error codes to distinguish "token expired" from "not logged in" on the frontend). His 2026-06-22 diary is the most candid on the team, noting coordination problems and WebSocket friction. The max score is credible; the diary shows genuine problem-solving rather than surface coverage.</li>
+</ul>
+<ul>
+<li><strong>AnatoliRub (100/100 / high activity):</strong> The Sprint 2 comment ("may get confused about the theory but eventually comes to the right conclusions") is the subtlest qualifier on this team. His diary acknowledges writing backend logic 3–4 times before settling on an approach, and is openly critical of the theory-vs-code trade-off imposed by interview prep. That self-awareness is a good sign; probe whether his understanding of the components he built (injection tokens, exception filters, HMAC validators) holds under follow-up.</li>
+</ul>
+<ul>
+<li><strong>Zhdko (100/100 / high activity):</strong> The Sprint 2 comment notes he answered "most of the additional questions" — not all. His work is the most UI-concentrated: Angular Material theming, custom components, a TransitionEvent-based animation refactor for the toaster, RxJS debounce in the header. The diary trail is technically precise (he names event property filtering logic, <code>computed()</code> signal rationale, architectural dependency violation and how he resolved it). Consistent with the score.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Per-student profiles</h2>
+<h3>aliakseiDrob (lead) — 47 commits / 7 PRs (7 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Registration form (PR #22): Reactive Forms with custom validators; ControlValueAccessor pattern for custom checkbox (Sprint 1); <code>inject(NgControl)</code> with <code>{ self: true }</code> isolation to avoid circular DI.</li>
+<li>Guard (PR #26): route guard for authenticated areas.</li>
+<li>Login page (PR #29): Signals Forms approach alongside Reactive Forms for the registration page — deliberately different to compare approaches.</li>
+<li>Footer (PR #31).</li>
+<li>NestJS backend: registration and login endpoints, JWT auth, then refactored to HttpOnly cookies with a <code>/refresh</code> endpoint. Custom exception classes to distinguish <code>TOKEN_EXPIRED</code> from <code>NOT_LOGGED_IN</code> (both return 401, resolved via custom error codes). CORS + SameSite cookie handling across ports.</li>
+<li>Markets page (in progress at diary snapshot): Binance Spot Testnet WebSocket streams; could not find a single URL to stream all pairs in one connection — opened separate streams per pair as a workaround; plans to fix.</li>
+<li>4 diary entries (2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22). The 2026-06-22 entry is the most detailed: describes the cookie refactor, the WebSocket workaround, and a candid team retrospective where he proposed tighter coordination but received only "likes in the channel."</li>
+</ul>
+<p><strong>Level:</strong> The strongest full-stack contributor on the team. His diary writing is substantive and honest about what he doesn't understand yet ("I don't yet see the full picture of the project"). The cookie-refactor story (original JWT, team discussion with Anatoliy, switch to HttpOnly, then discovering the 401 disambiguation problem) shows genuine iterative backend reasoning, not tutorial-following. He explicitly names upcoming tasks (Binance integration) as "really interesting" — motivated, not just grinding.</p>
+<p><strong>Risk:</strong> The Markets page WebSocket workaround (one stream per pair) is a known debt he flagged himself. He plans to resolve it — but if this is what surfaces at the interview, confirm he understands <em>why</em> it's suboptimal (stream overhead, connection limits) rather than just that it's "not how it should be." Also: his 2026-06-22 diary notes that team coordination proposals went unactioned beyond group-chat likes. As lead, he should be able to articulate what he tried and what the outcome was.</p>
+<p><strong>Probe at interview:</strong> "Walk me through how you solved the 401 disambiguation problem on the frontend — when your token expires versus when the user has never logged in, both return 401. What did you change on the backend and how does the frontend know which case it is?" This is his own documented problem and solution; it tests real understanding. Then: "What would a correct Binance WebSocket implementation look like — why is the separate-stream-per-pair approach a problem?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AnatoliRub — 43 commits / 10 PRs (9 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>CI/CD pipeline (PR #2): GitHub Actions, deploy to TimeWeb.</li>
+<li>UI Input component (PR #9): <code>ControlValueAccessor</code>, Angular Material integration.</li>
+<li>Three-dot menu component (Sprint 1/2): custom Angular Material overlay behavior.</li>
+<li>Dropdown component (Sprint 1/2): planned and iterated; described in Sprint 2 diary as "almost done."</li>
+<li>Main layout (PR #27): page scaffold.</li>
+<li>Settings page (PR #32, open at snapshot): settings form + settings service, NestJS settings module as isolated domain zone, exception filter for unified error format on backend, secretKey encryption/decryption service, HMAC-signature validator for Binance API authorization. Order book WebSocket gateway (in progress).</li>
+<li>4 diary entries (2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22). Sprint 2 week 2 diary (dated 2026-06-08 header but described as Sprint 3) is the longest and most technically dense; includes a pointed meta-critique of how interview prep shifts focus away from building.</li>
+</ul>
+<p><strong>Level:</strong> Comfortable across the full stack. The settings module work — exception filter, HMAC validator, secretKey service, unified request/response types — shows someone thinking about architecture, not just feature delivery. His diary's self-criticism ("rewrote the backend logic 3–4 times") is paired with an explanation: he was normalizing the approach, not flailing. The critique of interview-prep trade-offs is honest and specific; his frustration is grounded in a real tension he named accurately.</p>
+<p><strong>Risk:</strong> PR #32 (settings page) is still open at snapshot date — the settings form integration between frontend and backend is the most complex piece he owns. The Sprint 2 mentor comment notes he "may get confused" initially. Worth checking whether he can explain his settings module architecture cold, without the code in front of him. Also: his Sprint 2 diary mentions the order book WebSocket gateway is working with the public (not testnet) Binance API — confirm he understands the tradeoff and why the testnet URL didn't work.</p>
+<p><strong>Probe at interview:</strong> "You built an exception filter on the NestJS side and said it lets you unify error handling on the frontend. Walk me through: what does the filter intercept, what shape does it send to the client, and how does the Angular side consume it?" This is his own design; it covers NestJS interceptors, error propagation, and Angular <code>catchError</code> — all sprint-2 topics. Then: "What is the HMAC-signature validator doing and why does Binance require it?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Zhdko — 32 commits / 11 PRs (11 merged) / 4 diaries</h3>
+<p><strong>Built</strong> (from PRs and diaries):</p>
+<ul>
+<li>Angular Material theme (PR #3, #4): dark palette via <code>ng g @angular/material:theme</code>, custom color adjustments with AI assistance for shading (acknowledged explicitly); global CSS reset (PR #5).</li>
+<li>StxButton component (PR #6): custom wrapper with <code>@if/@else</code> for dynamic Material directive switching; deliberate file-structure discipline.</li>
+<li>StxToaster + ToastService (PR #8): adapted from a prior project, then refactored via code review to replace <code>setTimeout</code> with native <code>transitionend</code> events; <code>animatingToastIds</code> signal; test suite rewritten with <code>detectChanges</code> to avoid async hangs in Vitest. Sprint 2: StxToasterConfig injection token (PR #33) for flexible per-call configuration.</li>
+<li>Button styling improvements (PR #10).</li>
+<li>StxHeader (PR #30, merged 2026-06-21): dynamic navigation with <code>computed()</code> signals splitting PUBLIC/PRIVATE routes; <code>StxInput</code> integration with <code>debounceTime(300)</code> + <code>distinctUntilChanged()</code> RxJS pipeline; corrected architectural error (had put route logic in a <code>NavigationService</code> causing core→pages dependency; moved it into the component as a computed signal per code review).</li>
+<li>4 diary entries (2026-05-16, 2026-05-17, 2026-05-31, 2026-06-22). All technically precise; each documents a specific problem, the failed first approach, and the resolution.</li>
+</ul>
+<p><strong>Level:</strong> The most disciplined diary writer on the team. His entries follow a consistent structure: goal → problem → failed approach → solution → resource. The toaster story (setTimeout → TransitionEvent, then Vitest fix) is a genuine learning arc: he was told to fix the <code>setTimeout</code> reliance, researched <code>transitionend</code>, implemented it, then debugged the downstream test failures by understanding why <code>whenStable()</code> hung. The header diary shows he caught and corrected an architectural layering violation after code review. AI use is mentioned for the theme color adjustment — not for logic.</p>
+<p><strong>Risk:</strong> The Sprint 2 mentor comment notes he answered "most" additional questions — minor qualifier. His work is heavily UI-kit oriented; he has not touched the backend. At interview, the probe should stay on his actual domain (Angular concepts: signals, injection tokens, RxJS operators, change detection) but should go deeper than the mechanics — ask about the "why."</p>
+<p><strong>Probe at interview:</strong> "In your toaster component, you replaced <code>setTimeout</code> with <code>transitionend</code> events and then had to rewrite the Vitest tests. Walk me through why the tests were hanging with the original approach and what you changed to fix them — not just what you changed, but why <code>whenStable()</code> was the problem." This tests real understanding of Angular's zone.js / microtask model, which the fix implicitly required him to reason about. Then: "You moved route logic out of a <code>NavigationService</code> into a <code>computed()</code> in the header component. What architectural problem did the service create, and why does <code>computed()</code> in the component solve it?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Conclusion for the mentor</h2>
+<p><strong>Overall:</strong> A consistently strong three-person team. All members are active through the sprint-2 deadline, all earned max scores at both defence rounds, and the project is genuinely more ambitious than most in the cohort (full NestJS backend with Docker, Binance WebSocket integration, HttpOnly cookie auth). The work is distributed — each person owns a coherent domain. There are no dropout risks and no significant knowledge gaps detected in the diary trail.</p>
+<p><strong>Strengths:</strong></p>
+<ul>
+<li>aliakseiDrob's full-stack auth work (JWT → HttpOnly cookie refactor, 401 disambiguation, refresh token endpoint) is the most technically sophisticated backend work on the team and is credibly documented.</li>
+<li>Zhdko's diary writing is the most precise on the team: problem/solution format, named failure modes, code review responses, architectural self-correction. The TransitionEvent refactor is a standout example of understanding-driven debugging.</li>
+<li>AnatoliRub's settings module — isolated domain zone, unified error format, HMAC validator — shows architectural thinking above beginner level, even if the first-pass implementation required multiple rewrites.</li>
+<li>The team runs proper GitFlow (named feature branches, PR-per-feature, code review with mentor participation) and all four diary slots are filled by all three members.</li>
+</ul>
+<p><strong>Watch:</strong></p>
+<ul>
+<li>Coordination lag: aliakseiDrob's sprint-2 diary explicitly names the problem — "proposals to tighten sync went no further than likes in the channel." This has not caused a member to go silent, but several features are still open heading into sprint 3 (Markets page WebSocket, settings form, order book widget). If the team does not tighten sync, the final product may be a collection of partially-integrated modules rather than a working trading platform.</li>
+<li>PR #32 (settings page): still open at snapshot. Anatoliy's most complex deliverable is in review. Ask whether it's close to merge or blocked.</li>
+<li>Binance WebSocket workarounds: both aliakseiDrob (Markets page) and AnatoliRub (order book gateway) hit Binance API friction and both used public API as a fallback. Probe whether they understand the testnet limitations they encountered vs. their own implementation choices.</li>
+</ul>
+<p><strong>Recommended interview angle:</strong> All three students score 100 and have substantive diary trails — generic questions will not differentiate surface-level prep from genuine understanding. Use their documented failure-and-fix moments as the entry point: aliakseiDrob's 401 disambiguation, Zhdko's <code>transitionend</code> + Vitest fix, AnatoliRub's NestJS exception filter design. Each of these can be turned from "you documented this" into "explain it without looking at the code." That is the Feynman threshold test.</p>
+  </div>
+  <div class="lang-ru">
+<h1>Брифинг для ментора — Stonks</h1>
+<h3>Межинтервью-брифинг · RS Angular 2026 Q2</h3>
+<blockquote>Источник: репозиторий <code>Cryptangular/crypto-trade-ui</code> (коммиты, PR, дев-дневники в ветке <code>development-notes</code>). Снимок 2026-06-24. Цель: дать ментору контекст за 2 минуты до защиты — кто что делал, кто понимает, что проверять.</blockquote>
+<p><strong>Одна строка:</strong> Зелёный — все три участника (aliakseiDrob, AnatoliRub, Zhdko) активны до дедлайна спринта 2 (последние коммиты 2026-06-22/23), у всех 100 баллов на обеих защитах. Проект амбициозный: Angular SPA с полноценным NestJS + PostgreSQL бэкендом, WebSocket-стримами Binance Spot Testnet и авторизацией через HttpOnly-куки. Флаг — не риск выбывания, а дисциплина командной координации: лид в собственном дневнике прямо пишет, что предложения по синхронизации команды "дальше лайков в канале не пошли". Несколько ключевых фич (виджет стакана, WebSocket на Markets Page, форма настроек) ещё в работе к началу спринта 3.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Проект + стек</h2>
+<table><thead>
+<tr><th>Поле</th><th>Значение</th></tr>
+</thead><tbody>
+<tr><td><strong>Проект</strong></td><td>Crypto Trade UI — Angular SPA для виртуальной торговли криптовалютой через Binance Spot Testnet</td></tr>
+<tr><td><strong>Стек</strong></td><td>Angular 21+, TypeScript, Angular Material, RxJS, NestJS, PostgreSQL, Prisma ORM, Docker, Binance Spot Testnet API, Vitest, GitHub Actions CI/CD</td></tr>
+<tr><td><strong>Репозиторий</strong></td><td><a href="https://github.com/Cryptangular/crypto-trade-ui">https://github.com/Cryptangular/crypto-trade-ui</a></td></tr>
+<tr><td><strong>Деплой</strong></td><td><a href="https://stonks.com.ru">https://stonks.com.ru</a> (TimeWeb)</td></tr>
+<tr><td><strong>Создан</strong></td><td>2026-05-06</td></tr>
+<tr><td><strong>Последний push</strong></td><td>2026-06-22</td></tr>
+<tr><td><strong>Открытые issue</strong></td><td>5</td></tr>
+</tbody></table>
+<p>Примечательные решения: команда написала собственный UI-кит (StxButton, StxToaster, StxInput, StxHeader) поверх Angular Material, а не взяла готовую библиотеку компонентов. NestJS-бэкенд — не декларация из README, которая так и не была реализована: он работает в Docker с PostgreSQL, Prisma-миграциями и реальными эндпоинтами, которые потребляет фронтенд. Binance Spot Testnet (не реальное API) используется для WebSocket-стримов и данных стакана. Авторизация — через HttpOnly-куки с отдельным эндпоинтом рефреша — намеренный апгрейд безопасности относительно изначального JWT-в-JS-подхода.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Состав команды</h2>
+<p><strong>Студенты (ростер курса):</strong></p>
+<ul>
+<li><code>aliakseiDrob</code> — тимлид</li>
+<li><code>AnatoliRub</code> — участник</li>
+<li><code>Zhdko</code> — участник</li>
+</ul>
+<p><strong>Ментор:</strong></p>
+<ul>
+<li><code>khasekai</code> (в git shortlog — "Hanna") — 5 коммитов, всё участие в код-ревью. Норма; штрафа нет.</li>
+</ul>
+<p><strong>Внешние контрибьюторы:</strong> не обнаружены.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Снимок активности (на 2026-06-24)</h2>
+<table><thead>
+<tr><th>Студент</th><th>Коммиты (все ветки)</th><th>PR</th><th>Смёрженных PR</th><th>Дневников</th><th>Последняя активность</th><th>Сигнал</th></tr>
+</thead><tbody>
+<tr><td><strong>aliakseiDrob</strong> (лид)</td><td>47</td><td>7</td><td>7</td><td>4</td><td>2026-06-22</td><td>высокий — full-stack авторизация, Markets Page, NestJS бэкенд; откровенный дневник</td></tr>
+<tr><td><strong>AnatoliRub</strong></td><td>43</td><td>10</td><td>9</td><td>4</td><td>2026-06-23</td><td>высокий — CI/CD, UI-компоненты, страница настроек, HMAC/Binance бэкенд</td></tr>
+<tr><td><strong>Zhdko</strong></td><td>32</td><td>11</td><td>11</td><td>4</td><td>2026-06-23</td><td>высокий — владелец UI-кита; тостер, хедер, injection token; 11/11 PR смёрджены</td></tr>
+</tbody></table>
+<p>Количество коммитов — из <code>git shortlog -sn --all</code> по всем веткам (включая ветку с дневниками). Данные GitHub Contributors API (только мёрджи в main) отличаются: aliakseiDrob 47, AnatoliRub 14, Zhdko 32 — разрыв для Анатолия объясняется работой на feature-ветках, ещё не смёрдженных в main (PR #32 форма настроек открыт на дату снимка). Все трое используют ветку <code>development-notes</code> как выделенный трек дневников и открывают PR из именованных feature-веток.</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Оценки менторов (защиты)</h2>
+<p>Все три студента участвовали в защитах Спринта 1 (ментор: <code>khasekai</code>) и Спринта 2 (ментор: <code>karina2409</code>).</p>
+<table><thead>
+<tr><th>Студент</th><th>Спринт 1</th><th>Спринт 2</th></tr>
+</thead><tbody>
+<tr><td>aliakseiDrob</td><td>100</td><td>100</td></tr>
+<tr><td>AnatoliRub</td><td>100</td><td>100</td></tr>
+<tr><td>Zhdko</td><td>100</td><td>100</td></tr>
+</tbody></table>
+<p>По Спринту 1 комментарии менторов не предоставлены. Комментарии ментора Спринта 2 (<code>karina2409</code>) дословно:</p>
+<p><strong>aliakseiDrob (Спринт 2):</strong> "Студент хорошо понимает теорию спринта и может объяснять её с показом в коде. Знает и умеет объяснять некоторые нюансы."</p>
+<p><strong>AnatoliRub (Спринт 2):</strong> "Студент может объяснять теорию своими словами и на примере в коде, а также знает определения. Может запутаться в теории, но в итоге приходит к правильным выводам. Даже если не знает конкретного определения, умеет описывать через аналогии с другими технологиями. Стремится к знаниям и интересуется тем, как работают разные технологии в Angular."</p>
+<p><strong>Zhdko (Спринт 2):</strong> "Студент ответил на основные вопросы, что демонстрирует знание теории. Умеет объяснять теорию через код. Также ответил на большинство дополнительных вопросов, что свидетельствует о глубине понимания темы."</p>
+<p><strong>Сверка — расхождения между результатами защит и активностью в репозитории:</strong></p>
+<p>Оценки и активность согласуются у всех троих. Все студенты реально активны, все получили максимальные баллы на обеих защитах. Несколько нюансов:</p>
+<ul>
+<li><strong>aliakseiDrob (100/100 / высокая активность):</strong> Самая сложная бэкенд-работа на команде — у него: авторизация (форма регистрации + форма логина, рефакторинг JWT → HttpOnly-куки, кастомные коды ошибок для разграничения "токен истёк" от "не авторизован" на фронтенде). Дневник от 2026-06-22 — самый откровенный в команде: описывает проблемы с координацией и трудности WebSocket. Максимальный балл обоснован; дневник отражает настоящую итеративную отладку, а не поверхностное прохождение материала.</li>
+</ul>
+<ul>
+<li><strong>AnatoliRub (100/100 / высокая активность):</strong> Комментарий Спринта 2 ("может запутаться в теории, но приходит к правильным выводам") — самая мягкая оговорка в команде. Его дневник признаёт, что бэкенд-логику переписывал 3–4 раза, и открыто критикует компромисс "теория vs код" из-за подготовки к интервью. Само это осознание — хороший знак; стоит проверить, держится ли понимание построенных им компонентов (injection token, фильтр исключений, HMAC-валидатор) под уточняющими вопросами.</li>
+</ul>
+<ul>
+<li><strong>Zhdko (100/100 / высокая активность):</strong> Комментарий Спринта 2 — ответил на "большинство" дополнительных вопросов, не на все. Его работа наиболее сосредоточена на UI: тема Angular Material, кастомные компоненты, рефакторинг анимации тостера на TransitionEvent, RxJS debounce в хедере. Дневниковый след технически точный (называет логику фильтрации событий по property, обоснование <code>computed()</code>, нарушение архитектурных границ и способ его решения). Соответствует оценке.</li>
+</ul>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Профили студентов</h2>
+<h3>aliakseiDrob (лид) — 47 коммитов / 7 PR (7 смёрджены) / 4 дневника</h3>
+<p><strong>Что сделано</strong> (из PR и дневников):</p>
+<ul>
+<li>Форма регистрации (PR #22): Reactive Forms с кастомными валидаторами; паттерн ControlValueAccessor для кастомного чекбокса (Спринт 1); <code>inject(NgControl)</code> с <code>{ self: true }</code> для изоляции DI и предотвращения цикличных зависимостей.</li>
+<li>Гард (PR #26): роутовый гард для аутентифицированных зон.</li>
+<li>Страница логина (PR #29): подход Signals Forms рядом с Reactive Forms на странице регистрации — намеренное сравнение подходов.</li>
+<li>Футер (PR #31).</li>
+<li>NestJS бэкенд: эндпоинты регистрации и входа, JWT авторизация, затем рефакторинг на HttpOnly-куки с отдельным эндпоинтом <code>/refresh</code>. Кастомные классы исключений для разграничения <code>TOKEN_EXPIRED</code> от <code>NOT_LOGGED_IN</code> (оба возвращают 401, решено через кастомные коды ошибок). Настройка CORS + SameSite-кук на разных портах localhost.</li>
+<li>Markets Page (в процессе на момент снимка дневника): WebSocket-стримы Binance Spot Testnet; не нашёл единый URL для стриминга всех пар — открыл отдельный стрим на каждую пару как временный костыль; планирует исправить.</li>
+<li>4 дневника (2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22). Запись от 2026-06-22 — самая детальная: описывает рефакторинг кук, обходное решение WebSocket и откровенный командный ретроспектив, где он предложил усилить координацию, но получил в ответ только "лайки в канале".</li>
+</ul>
+<p><strong>Уровень:</strong> Самый сильный full-stack контрибьютор в команде. Дневниковые записи содержательны и честны в том, чего он ещё не понимает ("пока не вижу полной картины проекта"). История с рефакторингом кук (изначальный JWT, обсуждение с Анатолием, переход на HttpOnly, затем обнаружение проблемы разграничения 401) демонстрирует настоящее итеративное серверное мышление, а не следование туториалу. Называет интеграцию Binance "реально интересной задачей" — мотивирован, а не просто отрабатывает.</p>
+<p><strong>Риск:</strong> Обходное решение WebSocket на Markets Page (отдельный стрим на пару) — известный долг, который он сам зафиксировал. На интервью стоит проверить, понимает ли он <em>почему</em> это субоптимально (накладные расходы на соединения, лимиты стримов), а не просто что "так быть не должно". Также: дневник от 2026-06-22 отмечает, что предложения по координации команды остались без конкретных действий. Как лид, он должен уметь объяснить, что пробовал и каков был результат.</p>
+<p><strong>Вопрос на интервью:</strong> "Расскажи, как ты решил проблему разграничения 401 на фронтенде — когда токен истёк и когда пользователь вообще не авторизован, оба случая возвращают 401. Что ты изменил на бэкенде и как фронтенд понимает, какой случай перед ним?" Это его собственная задокументированная проблема и решение; проверяет реальное понимание. Затем: "Как должна выглядеть корректная реализация Binance WebSocket — почему подход с отдельным стримом на пару является проблемой?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>AnatoliRub — 43 коммита / 10 PR (9 смёрджены) / 4 дневника</h3>
+<p><strong>Что сделано</strong> (из PR и дневников):</p>
+<ul>
+<li>CI/CD-пайплайн (PR #2): GitHub Actions, деплой на TimeWeb.</li>
+<li>Компонент StxInput (PR #9): <code>ControlValueAccessor</code>, интеграция с Angular Material.</li>
+<li>Компонент three-dot menu (Спринт 1/2): кастомное поведение Material overlay.</li>
+<li>Компонент Dropdown (Спринт 1/2): планировался и итерировался; в дневнике Спринта 2 описан как "почти готов".</li>
+<li>Main layout (PR #27): скаффолд страницы.</li>
+<li>Страница настроек (PR #32, открыт на момент снимка): форма и сервис настроек, NestJS-модуль настроек как изолированная доменная зона, фильтр исключений для единого формата ошибок на бэкенде, сервис шифрования/дешифрования secretKey, HMAC-валидатор для авторизации запросов к Binance API. WebSocket gateway для стакана (в процессе).</li>
+<li>4 дневника (2026-05-18, 2026-05-25, 2026-06-08, 2026-06-22). Дневник за вторую неделю Спринта 2 (заголовок 2026-06-08, описан как Спринт 3) — самый длинный и технически насыщенный; содержит развёрнутую мета-критику того, как подготовка к интервью смещает фокус от написания кода.</li>
+</ul>
+<p><strong>Уровень:</strong> Уверен в себе по всему стеку. Работа над модулем настроек — фильтр исключений, HMAC-валидатор, сервис secretKey, единые типы запроса/ответа — показывает человека, думающего об архитектуре, а не только о фиче. Самокритика в дневнике ("переписывал логику 3–4 раза") сопровождается объяснением: нормализовывал подход, а не метался. Критика компромисса "теория vs интервью" честна и конкретна; его фрустрация имеет реальное основание.</p>
+<p><strong>Риск:</strong> PR #32 (страница настроек) открыт на момент снимка — самая сложная его фича ещё на ревью. Комментарий ментора Спринта 2 отмечает, что "может запутаться" поначалу. Стоит проверить, может ли он объяснить архитектуру своего модуля настроек без кода перед глазами. Также: дневник Спринта 2 упоминает, что WebSocket gateway для стакана работает с публичным (не тестовым) API Binance — стоит уточнить, понимает ли он этот компромисс и почему тестовый URL не подошёл.</p>
+<p><strong>Вопрос на интервью:</strong> "Ты построил фильтр исключений на стороне NestJS и сказал, что это унифицирует обработку ошибок на фронтенде. Расскажи: что перехватывает фильтр, какую форму он отправляет клиенту и как Angular-сторона её потребляет?" Это его собственный дизайн; охватывает NestJS interceptors, проброс ошибок и Angular <code>catchError</code> — всё топики Спринта 2. Затем: "Что делает HMAC-валидатор и зачем Binance его требует?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h3>Zhdko — 32 коммита / 11 PR (11 смёрджены) / 4 дневника</h3>
+<p><strong>Что сделано</strong> (из PR и дневников):</p>
+<ul>
+<li>Тема Angular Material (PR #3, #4): тёмная палитра через <code>ng g @angular/material:theme</code>, кастомные корректировки оттенков с помощью ИИ (явно упомянуто); глобальный CSS-ресет (PR #5).</li>
+<li>Компонент StxButton (PR #6): обёртка с <code>@if/@else</code> для динамического переключения Material-директив; дисциплинированная структура файлов.</li>
+<li>StxToaster + ToastService (PR #8): адаптирован из предыдущего проекта, затем рефакторинг по ревью — замена <code>setTimeout</code> на нативные события <code>transitionend</code>; сигнал <code>animatingToastIds</code>; тест-сьют переписан с <code>detectChanges</code> вместо <code>whenStable()</code> для устранения зависаний в Vitest. Спринт 2: injection token StxToasterConfig (PR #33) для гибкой конфигурации.</li>
+<li>Улучшения стилей кнопки (PR #10).</li>
+<li>StxHeader (PR #30, смёрджен 2026-06-21): динамическая навигация через <code>computed()</code> сигналы, разделяющие PUBLIC/PRIVATE роуты; интеграция <code>StxInput</code> с пайплайном <code>debounceTime(300)</code> + <code>distinctUntilChanged()</code> из RxJS; исправил архитектурную ошибку (вынес логику роутов в <code>NavigationService</code>, что создало зависимость core → pages; перенёс в компонент как computed-сигнал после ревью).</li>
+<li>4 дневника (2026-05-16, 2026-05-17, 2026-05-31, 2026-06-22). Все технически точные; каждый документирует конкретную проблему, первую неудачную попытку и её решение.</li>
+</ul>
+<p><strong>Уровень:</strong> Самый дисциплинированный автор дневников в команде. Записи следуют устойчивой структуре: цель → проблема → неудачный подход → решение → ресурс. История с тостером (setTimeout → TransitionEvent, затем фикс Vitest) — настоящая дуга обучения: ему сказали убрать зависимость от <code>setTimeout</code>, он исследовал <code>transitionend</code>, реализовал, затем отладил падение тестов, разобравшись, почему <code>whenStable()</code> зависал. Дневник по хедеру показывает, что он поймал и исправил архитектурное нарушение слоёв после ревью. Использование ИИ упомянуто для настройки цветов темы — не для логики.</p>
+<p><strong>Риск:</strong> Комментарий ментора Спринта 2 — ответил на "большинство" дополнительных вопросов, не на все. Его работа сосредоточена на UI; к бэкенду он не прикасался. На интервью зонд должен оставаться в его реальной области (Angular: сигналы, injection tokens, RxJS, change detection), но уходить глубже механики — спрашивать "почему".</p>
+<p><strong>Вопрос на интервью:</strong> "В компоненте тостера ты заменил <code>setTimeout</code> на события <code>transitionend</code> и потом переписал Vitest-тесты. Объясни, почему тесты зависали с изначальным подходом и что ты изменил, чтобы это исправить — не что именно изменил, а почему <code>whenStable()</code> была проблемой." Это проверяет реальное понимание модели zone.js / microtask в Angular, которую ему пришлось неявно осмыслить для исправления. Затем: "Ты перенёс логику роутов из <code>NavigationService</code> в <code>computed()</code> в компоненте хедера. Какую архитектурную проблему создавал сервис и почему <code>computed()</code> в компоненте её решает?"</p>
+<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0;">
+<h2>Итог для ментора</h2>
+<p><strong>Общая оценка:</strong> Стабильно сильная команда из трёх человек. Все участники активны до дедлайна Спринта 2, у всех максимальные баллы на обеих защитах, и проект объективно амбициознее большинства в когорте (полноценный NestJS-бэкенд с Docker, WebSocket-интеграция Binance, авторизация через HttpOnly-куки). Работа распределена: у каждого — связная доменная зона. Рисков выбывания нет, значительных пробелов в знаниях по дневниковому следу не выявлено.</p>
+<p><strong>Сильные стороны:</strong></p>
+<ul>
+<li>Full-stack авторизация aliakseiDrob (JWT → рефакторинг на HttpOnly-куки, разграничение 401, эндпоинт рефреша) — технически наиболее сложная бэкенд-работа в команде, достоверно задокументированная.</li>
+<li>Дневники Zhdko — самые точные в команде: формат проблема/решение, названные режимы отказа, ответы на ревью, самостоятельная архитектурная корректировка. Рефакторинг TransitionEvent — показательный пример отладки через понимание.</li>
+<li>Модуль настроек AnatoliRub — изолированная доменная зона, единый формат ошибок, HMAC-валидатор — архитектурное мышление выше начального уровня, даже с учётом нескольких итераций реализации.</li>
+<li>Команда ведёт правильный GitFlow (именованные feature-ветки, PR на фичу, ревью с участием ментора), все четыре слота дневников заполнены у всех троих.</li>
+</ul>
+<p><strong>На что обратить внимание:</strong></p>
+<ul>
+<li>Координационный провал: дневник aliakseiDrob от Спринта 2 прямо называет проблему — "предложения по усилению синхронизации дальше лайков в канале не пошли". Это не привело к тому, что кто-то замолчал, но несколько фич ещё открыты к началу Спринта 3 (Markets Page WebSocket, форма настроек, виджет стакана). Если команда не наладит синхронизацию, финальный продукт может оказаться набором слабо интегрированных модулей вместо работающей торговой платформы.</li>
+<li>PR #32 (страница настроек): открыт на момент снимка. Самая сложная фича Анатолия — на ревью. Стоит уточнить, близко ли к мёрджу или есть блокеры.</li>
+<li>Обходные решения Binance WebSocket: и aliakseiDrob (Markets Page), и AnatoliRub (gateway стакана) столкнулись с ограничениями Binance API и оба использовали публичное API как запасной вариант. Стоит проверить, понимают ли они ограничения тестового API и как они соотносятся с их собственными реализационными решениями.</li>
+</ul>
+<p><strong>Рекомендуемый угол интервью:</strong> Все трое набирают 100 и имеют содержательный дневниковый след — стандартные вопросы не разграничат поверхностную подготовку от настоящего понимания. Используйте задокументированные ими моменты "ошибка → исправление" как точку входа: разграничение 401 у aliakseiDrob, <code>transitionend</code> + фикс Vitest у Zhdko, дизайн NestJS exception filter у AnatoliRub. Каждый из этих случаев можно превратить из "ты это задокументировал" в "объясни без кода перед глазами". Это и есть тест по порогу Фейнмана.</p>
+  </div>
+</div>
+<footer class="site-footer lang-en">Angular 2026 Q2 · Cross-interview mentor briefings · Generated 2026-06-24</footer>
+<footer class="site-footer lang-ru">Angular 2026 Q2 · Инструктажи для менторов · Сформировано 2026-06-24</footer>
+</body>
+</html>
