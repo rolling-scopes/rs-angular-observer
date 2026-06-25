@@ -24,6 +24,7 @@
     "diaryGrade": false,
     "selfAssessment": false,
     "awards": false,
+    "sprintDefences": true,
     "showTeamConditions": false
   },
   "landingIntro": {
