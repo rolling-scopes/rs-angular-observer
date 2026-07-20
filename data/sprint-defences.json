@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-25T11:25:57.398Z",
-  "asOf": "2026-06-24",
+  "generatedAt": "2026-07-20T17:54:19.399Z",
+  "asOf": "2026-07-20",
   "source": "RS Angular_ Student to Mentor Presentation (Responses).csv",
   "maxScore": 100,
   "sprints": [
@@ -16,7 +16,7 @@
         },
         {
           "github": "Alena1409",
-          "teamName": "<ngKitty-delulu-church />",
+          "teamName": "ngKittyDebugRight",
           "score": 100
         },
         {
@@ -81,8 +81,8 @@
         },
         {
           "github": "dashque",
-          "teamName": "<ngKitty-delulu-church />",
-          "score": 100
+          "teamName": "ngKittyDebugRight",
+          "score": 92
         },
         {
           "github": "den987655",
@@ -166,8 +166,8 @@
         },
         {
           "github": "kozochkina82",
-          "teamName": "<ngKitty-delulu-church />",
-          "score": 50
+          "teamName": "ngKittyDebugRight",
+          "score": 85
         },
         {
           "github": "LenaStask",
@@ -344,12 +344,22 @@
     {
       "id": "sprint2",
       "label": "Sprint 2 — Routing & Signals",
-      "scored": 50,
+      "scored": 62,
       "students": [
         {
           "github": "agtugchik",
           "teamName": "Standalone Squad",
           "score": 100
+        },
+        {
+          "github": "Alena1409",
+          "teamName": "ngKittyDebugRight",
+          "score": 96
+        },
+        {
+          "github": "AlenaVP",
+          "teamName": "Champions",
+          "score": 80
         },
         {
           "github": "AlexGorSer",
@@ -387,6 +397,11 @@
           "score": 90
         },
         {
+          "github": "Aseke09",
+          "teamName": "LazyCoders",
+          "score": 75
+        },
+        {
           "github": "Atikin132",
           "teamName": "Standalone Squad",
           "score": 100
@@ -395,6 +410,11 @@
           "github": "cherkasovaa",
           "teamName": "ngTunes",
           "score": 100
+        },
+        {
+          "github": "dashque",
+          "teamName": "ngKittyDebugRight",
+          "score": 93
         },
         {
           "github": "den987655",
@@ -415,6 +435,11 @@
           "github": "dzichonka",
           "teamName": "Work ass off",
           "score": 100
+        },
+        {
+          "github": "dzinakor",
+          "teamName": "LazyCoders",
+          "score": 75
         },
         {
           "github": "DzmitryAliakseyeu",
@@ -447,6 +472,11 @@
           "score": 95
         },
         {
+          "github": "ileshchanka",
+          "teamName": "Muze",
+          "score": 75
+        },
+        {
           "github": "inalitvinka",
           "teamName": "MusicFlowTeam",
           "score": 75
@@ -467,6 +497,11 @@
           "score": 100
         },
         {
+          "github": "kozochkina82",
+          "teamName": "ngKittyDebugRight",
+          "score": 85
+        },
+        {
           "github": "LenaStask",
           "teamName": "Red Hot Chili Pipes",
           "score": 100
@@ -479,6 +514,16 @@
         {
           "github": "mero93",
           "teamName": "music-hub",
+          "score": 100
+        },
+        {
+          "github": "mikhalenkadaniil",
+          "teamName": "Champions",
+          "score": 80
+        },
+        {
+          "github": "mukhammadyor17",
+          "teamName": "LazyCoders",
           "score": 100
         },
         {
@@ -520,6 +565,11 @@
           "github": "s-arashu",
           "teamName": "DevFusion",
           "score": 75
+        },
+        {
+          "github": "sashadrozdov94-spec",
+          "teamName": "The Team Implementing the Task",
+          "score": 95
         },
         {
           "github": "savryna",
@@ -567,8 +617,18 @@
           "score": 100
         },
         {
+          "github": "vitalina-oleksiienko",
+          "teamName": "The Team Implementing the Task",
+          "score": 90
+        },
+        {
           "github": "vitiok2021",
           "teamName": "music-hub",
+          "score": 75
+        },
+        {
+          "github": "vladaworkflow-ops",
+          "teamName": "Muze",
           "score": 75
         },
         {
@@ -597,6 +657,485 @@
           "score": 75
         }
       ]
+    },
+    {
+      "id": "sprint3",
+      "label": "Sprint 3 — Directives, Pipes & Forms",
+      "scored": 53,
+      "students": [
+        {
+          "github": "agtugchik",
+          "teamName": "Standalone Squad",
+          "score": 100
+        },
+        {
+          "github": "Alena1409",
+          "teamName": "ngKittyDebugRight",
+          "score": 100
+        },
+        {
+          "github": "AlenaVP",
+          "teamName": "Champions",
+          "score": 85
+        },
+        {
+          "github": "AlexGorSer",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 100
+        },
+        {
+          "github": "aliakseiDrob",
+          "teamName": "Stonks",
+          "score": 100
+        },
+        {
+          "github": "amelur",
+          "teamName": "Vejas",
+          "score": 80
+        },
+        {
+          "github": "anast-ananko",
+          "teamName": "NgStorm",
+          "score": 100
+        },
+        {
+          "github": "angelinavakkasova",
+          "teamName": "Team 42",
+          "score": 75
+        },
+        {
+          "github": "Aseke09",
+          "teamName": "LazyCoders",
+          "score": 70
+        },
+        {
+          "github": "Atikin132",
+          "teamName": "Standalone Squad",
+          "score": 100
+        },
+        {
+          "github": "cherkasovaa",
+          "teamName": "ngTunes",
+          "score": 100
+        },
+        {
+          "github": "dashque",
+          "teamName": "ngKittyDebugRight",
+          "score": 95
+        },
+        {
+          "github": "den987655",
+          "teamName": "RX-Men",
+          "score": 100
+        },
+        {
+          "github": "DominikObuch",
+          "teamName": "404",
+          "score": 100
+        },
+        {
+          "github": "dzichonka",
+          "teamName": "Work ass off",
+          "score": 98
+        },
+        {
+          "github": "dzinakor",
+          "teamName": "LazyCoders",
+          "score": 80
+        },
+        {
+          "github": "DzmitryAliakseyeu",
+          "teamName": "Work ass off",
+          "score": 95
+        },
+        {
+          "github": "eka8888",
+          "teamName": "DevFusion",
+          "score": 80
+        },
+        {
+          "github": "elrouss",
+          "teamName": "RX-Men",
+          "score": 100
+        },
+        {
+          "github": "evalore",
+          "teamName": "Red Hot Chili Pipes",
+          "score": 100
+        },
+        {
+          "github": "evgeniia-korolova",
+          "teamName": "music-hub",
+          "score": 100
+        },
+        {
+          "github": "gerlinda137",
+          "teamName": "Runtime terror",
+          "score": 90
+        },
+        {
+          "github": "ileshchanka",
+          "teamName": "Muze",
+          "score": 85
+        },
+        {
+          "github": "iskonplus",
+          "teamName": "NgStorm",
+          "score": 100
+        },
+        {
+          "github": "klinx01",
+          "teamName": "six seven",
+          "score": 95
+        },
+        {
+          "github": "kostevoleg",
+          "teamName": "Standalone Squad",
+          "score": 100
+        },
+        {
+          "github": "kozochkina82",
+          "teamName": "ngKittyDebugRight",
+          "score": 85
+        },
+        {
+          "github": "LenaStask",
+          "teamName": "Red Hot Chili Pipes",
+          "score": 100
+        },
+        {
+          "github": "maryanzh",
+          "teamName": "Runtime terror",
+          "score": 90
+        },
+        {
+          "github": "mero93",
+          "teamName": "music-hub",
+          "score": 95
+        },
+        {
+          "github": "mikhalenkadaniil",
+          "teamName": "Champions",
+          "score": 50
+        },
+        {
+          "github": "ngInit",
+          "teamName": "Y2K",
+          "score": 100
+        },
+        {
+          "github": "Oksi2510",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 100
+        },
+        {
+          "github": "olucens",
+          "teamName": "Vejas",
+          "score": 100
+        },
+        {
+          "github": "pavelkuvsh1noff",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 100
+        },
+        {
+          "github": "prokhorovd",
+          "teamName": "RX-Men",
+          "score": 0
+        },
+        {
+          "github": "radm1la",
+          "teamName": "Runtime terror",
+          "score": 90
+        },
+        {
+          "github": "reamplify1",
+          "teamName": "six seven",
+          "score": 100
+        },
+        {
+          "github": "savryna",
+          "teamName": "пу-пу-пу",
+          "score": 85
+        },
+        {
+          "github": "shoblinsky",
+          "teamName": "пу-пу-пу",
+          "score": 75
+        },
+        {
+          "github": "shvetsby",
+          "teamName": "ngTunes",
+          "score": 100
+        },
+        {
+          "github": "SlavikusVOG",
+          "teamName": "XAS",
+          "score": 85
+        },
+        {
+          "github": "Snitkon",
+          "teamName": "Work ass off",
+          "score": 95
+        },
+        {
+          "github": "solidados",
+          "teamName": "ngTunes",
+          "score": 100
+        },
+        {
+          "github": "tryproxy",
+          "teamName": "пу-пу-пу",
+          "score": 100
+        },
+        {
+          "github": "Tserpilouski",
+          "teamName": "404",
+          "score": 80
+        },
+        {
+          "github": "viktorykings",
+          "teamName": "Team 42",
+          "score": 75
+        },
+        {
+          "github": "vitiok2021",
+          "teamName": "music-hub",
+          "score": 90
+        },
+        {
+          "github": "waldemarIT",
+          "teamName": "404",
+          "score": 90
+        },
+        {
+          "github": "xevoider",
+          "teamName": "XAS",
+          "score": 100
+        },
+        {
+          "github": "ZedMalatesta",
+          "teamName": "Vejas",
+          "score": 100
+        },
+        {
+          "github": "Zhdko",
+          "teamName": "Stonks",
+          "score": 75
+        },
+        {
+          "github": "zorro-amarillo",
+          "teamName": "DevFusion",
+          "score": 80
+        }
+      ]
+    },
+    {
+      "id": "sprint4",
+      "label": "Sprint 4 — HTTP, RxJS & Testing",
+      "scored": 40,
+      "students": [
+        {
+          "github": "agtugchik",
+          "teamName": "Standalone Squad",
+          "score": 85
+        },
+        {
+          "github": "Alena1409",
+          "teamName": "ngKittyDebugRight",
+          "score": 100
+        },
+        {
+          "github": "AlenaVP",
+          "teamName": "Champions",
+          "score": 90
+        },
+        {
+          "github": "AlexGorSer",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 95
+        },
+        {
+          "github": "anast-ananko",
+          "teamName": "NgStorm",
+          "score": 100
+        },
+        {
+          "github": "angelinavakkasova",
+          "teamName": "Team 42",
+          "score": 85
+        },
+        {
+          "github": "Atikin132",
+          "teamName": "Standalone Squad",
+          "score": 85
+        },
+        {
+          "github": "cherkasovaa",
+          "teamName": "ngTunes",
+          "score": 30
+        },
+        {
+          "github": "dashque",
+          "teamName": "ngKittyDebugRight",
+          "score": 96
+        },
+        {
+          "github": "den987655",
+          "teamName": "RX-Men",
+          "score": 75
+        },
+        {
+          "github": "DominikObuch",
+          "teamName": "404",
+          "score": 98
+        },
+        {
+          "github": "dzinakor",
+          "teamName": "LazyCoders",
+          "score": 30
+        },
+        {
+          "github": "eka8888",
+          "teamName": "DevFusion",
+          "score": 100
+        },
+        {
+          "github": "elrouss",
+          "teamName": "RX-Men",
+          "score": 100
+        },
+        {
+          "github": "evalore",
+          "teamName": "Red Hot Chili Pipes",
+          "score": 100
+        },
+        {
+          "github": "evgeniia-korolova",
+          "teamName": "music-hub",
+          "score": 100
+        },
+        {
+          "github": "gerlinda137",
+          "teamName": "Runtime terror",
+          "score": 95
+        },
+        {
+          "github": "ileshchanka",
+          "teamName": "Muze",
+          "score": 85
+        },
+        {
+          "github": "iskonplus",
+          "teamName": "NgStorm",
+          "score": 100
+        },
+        {
+          "github": "klinx01",
+          "teamName": "six seven",
+          "score": 67
+        },
+        {
+          "github": "kostevoleg",
+          "teamName": "Standalone Squad",
+          "score": 90
+        },
+        {
+          "github": "kozochkina82",
+          "teamName": "ngKittyDebugRight",
+          "score": 85
+        },
+        {
+          "github": "LenaStask",
+          "teamName": "Red Hot Chili Pipes",
+          "score": 100
+        },
+        {
+          "github": "maryanzh",
+          "teamName": "Runtime terror",
+          "score": 100
+        },
+        {
+          "github": "mero93",
+          "teamName": "music-hub",
+          "score": 100
+        },
+        {
+          "github": "mikhalenkadaniil",
+          "teamName": "Champions",
+          "score": 100
+        },
+        {
+          "github": "ngInit",
+          "teamName": "Y2K",
+          "score": 100
+        },
+        {
+          "github": "Oksi2510",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 95
+        },
+        {
+          "github": "pavelkuvsh1noff",
+          "teamName": "ngKittyDebugLeftPaw",
+          "score": 95
+        },
+        {
+          "github": "radm1la",
+          "teamName": "Runtime terror",
+          "score": 90
+        },
+        {
+          "github": "reamplify1",
+          "teamName": "six seven",
+          "score": 67
+        },
+        {
+          "github": "s-arashu",
+          "teamName": "DevFusion",
+          "score": 90
+        },
+        {
+          "github": "shvetsby",
+          "teamName": "ngTunes",
+          "score": 100
+        },
+        {
+          "github": "SlavikusVOG",
+          "teamName": "XAS",
+          "score": 75
+        },
+        {
+          "github": "Tserpilouski",
+          "teamName": "404",
+          "score": 85
+        },
+        {
+          "github": "viktorykings",
+          "teamName": "Team 42",
+          "score": 90
+        },
+        {
+          "github": "vitiok2021",
+          "teamName": "music-hub",
+          "score": 75
+        },
+        {
+          "github": "waldemarIT",
+          "teamName": "404",
+          "score": 90
+        },
+        {
+          "github": "xevoider",
+          "teamName": "XAS",
+          "score": 90
+        },
+        {
+          "github": "zorro-amarillo",
+          "teamName": "DevFusion",
+          "score": 100
+        }
+      ]
     }
   ],
   "undefended": {
@@ -607,19 +1146,26 @@
       "yuriyli"
     ],
     "sprint2": [
-      "alena1409",
-      "alenavp",
       "ansa2110",
-      "aseke09",
-      "dashque",
-      "dzinakor",
-      "ileshchanka",
-      "kozochkina82",
       "lorenzo-stjohn",
-      "mikhalenkadaniil",
+      "nakurienota",
+      "pasha-learns",
+      "sergeybednyuk",
+      "shchepadzmitry",
+      "vladimirsolo",
+      "yuriyli"
+    ],
+    "sprint3": [
+      "anatolirub",
+      "annevci",
+      "ansa2110",
+      "dusixx",
+      "inalitvinka",
+      "lorenzo-stjohn",
       "mukhammadyor17",
       "nakurienota",
       "pasha-learns",
+      "s-arashu",
       "sashadrozdov94-spec",
       "sergeybednyuk",
       "shchepadzmitry",
@@ -627,7 +1173,41 @@
       "vladaworkflow-ops",
       "vladimirsolo",
       "yuriyli"
+    ],
+    "sprint4": [
+      "aliakseidrob",
+      "amelur",
+      "anatolirub",
+      "annevci",
+      "ansa2110",
+      "aseke09",
+      "dusixx",
+      "dzichonka",
+      "dzmitryaliakseyeu",
+      "inalitvinka",
+      "lorenzo-stjohn",
+      "mukhammadyor17",
+      "nakurienota",
+      "olucens",
+      "pasha-learns",
+      "prokhorovd",
+      "sashadrozdov94-spec",
+      "savryna",
+      "sergeybednyuk",
+      "shchepadzmitry",
+      "shoblinsky",
+      "snitkon",
+      "solidados",
+      "tryproxy",
+      "vitalina-oleksiienko",
+      "vladaworkflow-ops",
+      "vladimirsolo",
+      "yuriyli",
+      "zedmalatesta",
+      "zhdko"
     ]
   },
-  "unmatchedStudents": []
+  "unmatchedStudents": [
+    "sergey496"
+  ]
 }
